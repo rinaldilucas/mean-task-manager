@@ -1,0 +1,64 @@
+/* ============================================== */
+/* ============= material overrides ============= */
+/* ============================================== */
+
+.mat-paginator-outer-container {
+    height: 60px !important;
+}
+
+mat-card {
+    border-radius: 0px !important;
+    width: 300px;
+    margin-bottom: unset;
+    margin: 10px;
+    min-width: 250px;
+}
+
+mat-form-field {
+    padding: 3px;
+}
+
+mat-toolbar {
+    justify-content: space-between;
+}
+
+mat-row {
+    cursor: pointer;
+}
+
+.mat-drawer-container {
+    position: unset !important;
+}
+
+.mat-bottom-sheet-container {
+    padding: 0 !important;
+}
+
+.mat-bottom-sheet-container-large {
+    min-width: 100% !important;
+    height: 85vh;
+}
+
+.mat-form-field-label-wrapper {
+    font-size: 17px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.mat-button {
+    font-size: vw(16) !important;
+}
+
+mat-row {
+    padding: vw(8) 0;
+}
+
+.mat-toolbar {
+    min-height: $headerSize !important;
+    height: $headerSize !important;
+}
+
+.mat-toolbar-row {
+    min-height: $headerSize !important;
+    height: $headerSize !important;
+}

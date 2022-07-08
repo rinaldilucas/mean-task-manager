@@ -1,0 +1,58 @@
+/* ============================================== */
+/* =================== fonts ==================== */
+/* ============================================== */
+
+$font-main: "Montserrat", sans-serif;
+
+/* ============================================== */
+/* =================== colors =================== */
+/* ============================================== */
+
+$primary: map-get($app-theme, primary);
+$accent: map-get($app-theme, accent);
+$danger: map-get($app-theme, danger);
+
+$default: $white;
+
+$primary-hover: $onix;
+$secondary: $white;
+
+$button: $blue-strong-alt;
+$button-hover: $gray;
+
+$secondary: $blue;
+$secondary-hover: $blue-strong;
+
+$background: $white;
+$background-primary: $blue;
+$background-secondary: $black;
+
+$border: $gray;
+$border-primary: $primary;
+$border-secondary: $secondary;
+
+$outline: $gray-light;
+
+$headerSize: 0.6rem;
+$tableHeaderSize: 1.14rem;
+
+$transition-time: 0.3s;
+$transition-time-function: ease-in-out;
+
+/* ============================================== */
+/* ================ dimensions  ================= */
+/* ============================================== */
+
+$layout-desktop: 1366px;
+$layout-desktop-height: 930px;
+$layout-desktop-original: null;
+
+$layout-tablet: 1024px;
+$layout-tablet-height: 768px;
+$layout-tablet-original: null;
+
+$layout-mobile: 368px;
+$layout-mobile-height: 960px;
+$layout-mobile-original: null;
+
+$mobile-factor: 1;

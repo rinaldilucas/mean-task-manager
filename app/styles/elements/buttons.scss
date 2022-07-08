@@ -1,0 +1,9 @@
+.button {
+    width: 100%;
+    transition: $transition-time !important;
+
+    &:hover {
+        background-color: mat-color($primary, 800);
+        transform: translateY(vw(-4));
+    }
+}

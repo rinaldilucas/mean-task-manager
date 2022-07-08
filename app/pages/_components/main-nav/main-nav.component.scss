@@ -1,0 +1,38 @@
+@import "app/styles/core/theme";
+@import "~include-media/dist/_include-media";
+
+$primary: map-get($app-theme, primary);
+
+.sidenav {
+    width: 155px;
+}
+
+.nav-list a mat-icon {
+    padding-right: 10px;
+}
+
+.nav-list a {
+    letter-spacing: 0px;
+}
+
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav-bottom {
+    bottom: 0px !important;
+    position: absolute !important;
+}
+
+.user-menu {
+    padding-top: 0px;
+}
+
+.active-link {
+    background: mat-color($primary, 500) !important;
+}
+
+.mat-nav-list a.active {
+    background: mat-color($primary, 500) !important;
+    color: mat-color($primary, 50) !important;
+}

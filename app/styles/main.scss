@@ -1,0 +1,39 @@
+/* ============================================== */
+/* ================== libs ====================== */
+/* ============================================== */
+@import "~normalize-scss/sass/normalize/import-now";
+@import "~include-media/dist/_include-media";
+
+/* ============================================== */
+/* ================== core  ===================== */
+/* ============================================== */
+@import "./app/styles/core/constants.scss";
+@import "./app/styles/core/theme";
+@import "./app/styles/core/config";
+@import "./app/styles/core/functions";
+@import "./app/styles/core/layout";
+@import "./app/styles/core/helper";
+@import "./app/styles/core/mixins";
+@import "./app/styles/core/accessibility";
+@import "./app/styles/core/material";
+
+/* ============================================== */
+/* ================ components ================== */
+/* ============================================== */
+
+@import "./app/styles/components/form";
+@import "./app/styles/components/form-modal";
+@import "./app/styles/components/list";
+@import "./app/styles/components/page";
+@import "./app/styles/components/component";
+
+/* ============================================== */
+/* ================= elements =================== */
+/* ============================================== */
+@import "./app/styles/elements/loader";
+@import "./app/styles/elements/buttons";
+@import "./app/styles/elements/icon";
+
+/* ============================================== */
+/* ================ animations ================== */
+/* ============================================== */

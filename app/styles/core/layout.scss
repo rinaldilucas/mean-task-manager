@@ -1,0 +1,80 @@
+/* ============================================== */
+/* ========== material layout overrides ========= */
+/* ============================================== */
+
+@function define-typography-level($font-size, $line-height: $font-size, $font-weight: 400, $font-family: null, $letter-spacing: normal) {
+    @return (font-size: $font-size, line-height: $line-height, font-weight: $font-weight, font-family: $font-family, letter-spacing: $letter-spacing);
+}
+
+$custom-typography: mat-typography-config(
+    $font-family: $font-main,
+    $headline: define-typography-level(0.48rem, 1.1rem, 400),
+    $title: define-typography-level(0.26rem, 0.3rem, 500),
+    $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
+    $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
+    $body-1: define-typography-level(0.14rem, 0.2rem, 400),
+    $body-2: define-typography-level(0.14rem, 0.2rem, 400),
+    $caption: define-typography-level(0.14rem, 0.2rem, 400),
+    $button: define-typography-level(0.16rem, 0.28rem, 500),
+    $input: define-typography-level(inherit, 1.125, 400),
+);
+@include mat-core($custom-typography);
+
+/* ============================================== */
+/* =================== layout =================== */
+/* ============================================== */
+
+html {
+    font-size: mobile-vw($pixel-base, true);
+
+    @include media(">=desktop") {
+        font-size: desktop-vw($pixel-base, true);
+    }
+
+    @include media(">common-desktop") {
+        font-size: desktop-fixed($pixel-base, $size-common-desktop);
+    }
+
+    max-width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+body {
+    height: auto;
+    font-size: vw(12);
+    font-family: $font-main;
+    width: 100%;
+    max-width: 100vw;
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    width: vw(10);
+}
+
+::-webkit-scrollbar-thumb {
+    background: mat-color($primary, 500);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: mat-color($primary, 600);
+    border-radius: 99px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.page {
+    &-container {
+        min-height: calc(100vh - #{$headerSize});
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    &-wrapper {
+        padding: vw(40);
+    }
+}

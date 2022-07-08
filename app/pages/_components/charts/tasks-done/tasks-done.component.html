@@ -1,0 +1,5 @@
+<div class="chart-wrapper">
+    <div *ngIf="tasks && tasks.length > 0">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [colors]="pieChartColors" [options]="pieChartOptions"></canvas>
+    </div>
+</div>

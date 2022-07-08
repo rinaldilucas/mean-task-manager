@@ -9,5 +9,8 @@
     "editor.tabSize": 4,
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

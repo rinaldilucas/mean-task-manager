@@ -1,0 +1,166 @@
+<div class="page-container">
+    <div class="dashboard" fxLayoutAlign="center center" *ngIf="tasks && tasks.length > 0">
+        <!-- <mat-card>
+            <app-initial-funds></app-initial-funds>
+        </mat-card> -->
+
+        <mat-card>
+            <app-tasks-done></app-tasks-done>
+        </mat-card>
+
+        <!-- <mat-card>
+            <app-profit-over-funds></app-profit-over-funds>
+        </mat-card>
+
+        <mat-card>
+            <app-week-earnings></app-week-earnings>
+        </mat-card> -->
+    </div>
+
+    <div class="list" fxLayoutAlign="center center">
+        <div class="list__wrapper mat-elevation-z1">
+            <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
+                <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+            </div>
+
+            <div class="list__header">
+                <div class="list__header-title">
+                    <span class="header-title">{{ "title.tasks" | translate }}</span>
+
+                    <button class="list__header-button" color="primary" mat-fab (click)="add()">
+                        <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}">add</mat-icon>
+                    </button>
+                </div>
+
+                <div class="list__header-search">
+                    <mat-form-field>
+                        <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput (keyup.enter)="filterTasks(searchInput.value)" [value]="search" />
+                    </mat-form-field>
+
+                    <button mat-icon-button>
+                        <mat-icon matTooltip="{{ 'task-list.refresh' | translate }}" (click)="refresh()">refresh</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="list__body">
+                <div *ngIf="!isLoading && (!tasks || tasks.length == 0)" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
+                    <div>
+                        <mat-icon class="icon icon--big">sms</mat-icon>
+                    </div>
+                    <div>{{ "task-list.empty" | translate }}</div>
+                </div>
+
+                <div *ngIf="!isLoading && searchedTasks && searchedTasks.length == 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
+                    <div>
+                        <mat-icon class="icon icon--big">sms</mat-icon>
+                    </div>
+                    <div>{{ "task-list.empty-search" | translate }}</div>
+                </div>
+
+                <div *ngIf="!isLoading && tasks && !!tasks.length && (!searchedTasks || searchedTasks.length > 0)" class="table">
+                    <cdk-virtual-scroll-viewport *ngIf="this.tasks && this.tasks.length > 0" class="list__body-table" tvsItemSize="20">
+                        <table [hidden]="isLoading || !tasks || !tasks.length" mat-table [dataSource]="tasksDataSource" matSort>
+                            <ng-container matColumnDef="date">
+                                <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <h3 class="list__body-title">{{ "table.date" | translate }}</h3>
+                                </mat-cell>
+                                <mat-cell class="column-name" mat-cell *matCellDef="let task">
+                                    <h2>
+                                        {{ task.date | date: "EEEE" }}
+                                        <p>{{ task.date | date: "dd/MM/yyyy" }}</p>
+                                    </h2>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="title">
+                                <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <h3 class="list__body-title">{{ "table.title" | translate }}</h3>
+                                </mat-cell>
+                                <mat-cell mat-cell *matCellDef="let task">{{ task.title }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                                <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <h3 class="list__body-title">{{ "table.description" | translate }}</h3>
+                                </mat-cell>
+                                <mat-cell mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <h3 class="list__body-title">{{ "table.status" | translate }}</h3>
+                                </mat-cell>
+                                <mat-cell mat-cell *matCellDef="let task">
+                                    <div [ngSwitch]="task.status">
+                                        <div *ngSwitchDefault>{{ "table.to-do" | translate }}</div>
+                                        <div *ngSwitchCase="'to_do'">{{ "table.to-do" | translate }}</div>
+                                        <div *ngSwitchCase="'progress'">{{ "table.in-progress" | translate }}</div>
+                                        <div *ngSwitchCase="'done'">{{ "table.done" | translate }}</div>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <h3 class="list__body-title">{{ "table.category" | translate }}</h3>
+                                </mat-cell>
+                                <mat-cell mat-cell *matCellDef="let task">{{ task.category }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-cell mat-header-cell *matHeaderCellDef></mat-cell>
+
+                                <mat-cell mat-cell *matCellDef="let task">
+                                    <button
+                                        mat-icon-button
+                                        matTooltip="{{ 'table.actions.progress' | translate }}"
+                                        class="list__body-actions"
+                                        (click)="changeStatus(task, status.progress); $event.stopPropagation()"
+                                    >
+                                        <mat-icon>360 icon</mat-icon>
+                                    </button>
+                                    <button
+                                        mat-icon-button
+                                        matTooltip="{{ 'table.actions.done' | translate }}"
+                                        class="list__body-actions"
+                                        (click)="changeStatus(task, status.done); $event.stopPropagation()"
+                                    >
+                                        <mat-icon>check</mat-icon>
+                                    </button>
+                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="delete(task); $event.stopPropagation()">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions-mobile">
+                                <mat-cell mat-header-cell *matHeaderCellDef></mat-cell>
+
+                                <mat-cell mat-cell *matCellDef="let task">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation(); $event.preventDefault()">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <ng-template matMenuContent>
+                                            <button mat-menu-item (click)="delete(task); $event.stopPropagation()"><span>Remove</span></button>
+                                        </ng-template>
+                                    </mat-menu>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+                            <mat-row mat-row *matRowDef="let task; columns: displayedColumns" (click)="edit(task._id); $event.stopPropagation()"> </mat-row>
+                        </table>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+
+                <div [hidden]="isLoading || (tasks && tasks.length === 0)">
+                    <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

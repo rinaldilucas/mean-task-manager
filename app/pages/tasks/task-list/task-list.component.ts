@@ -1,0 +1,135 @@
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+
+import { ITask } from '@app/scripts/models/task.interface';
+import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { TaskService } from '@app/scripts/services/task.service';
+import { UtilService } from '@app/scripts/services/util.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { Subscription } from 'rxjs';
+
+@Component({
+    selector: 'app-task-list',
+    templateUrl: './task-list.component.html',
+    styleUrls: ['./task-list.component.scss'],
+})
+export class TaskListComponent implements OnInit {
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
+
+    lgColumns = ['date', 'title', 'description', 'status', 'category', 'actions'];
+    mdColumns = ['date', 'title', 'description', 'status', 'actions'];
+    smColumns = ['date', 'title', 'status', 'actions-mobile'];
+    xsColumns = ['date', 'title', 'status', 'actions-mobile'];
+    displayedColumns: string[] = this.lgColumns;
+
+    title = 'Tasks';
+    search = '';
+    searchedTasks: ITask[] = null;
+    isLoading = true;
+    isSearching = false;
+
+    tasksDataSource = new TableVirtualScrollDataSource<ITask>();
+    tasks: ITask[] = [];
+    status = EStatus;
+
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private taskService: TaskService,
+        private utilService: UtilService,
+        private router: Router,
+        private snackBar: MatSnackBar,
+        private media: MediaObserver,
+        private titleService: Title,
+        private translateService: TranslateService,
+    ) {}
+
+    ngOnInit(): void {
+        this.translateService.get('title.tasks').subscribe((text: string) => {
+            this.titleService.setTitle(`${text} — Mean Stack Template`);
+        });
+        this.verifyResolution();
+        this.refresh();
+        this.taskService.emitTask.subscribe(() => this.refresh());
+    }
+
+    refresh(): void {
+        this.taskService.listTasksByUser().subscribe((result: IQueryResult<ITask>) => {
+            this.tasks = result.data;
+            this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
+            this.isLoading = false;
+            this.changeDetector.markForCheck();
+        });
+    }
+
+    verifyResolution(): void {
+        this.media.asObservable().subscribe((change: MediaChange[]) => {
+            if (change[0].mqAlias === 'xs') this.displayedColumns = this.xsColumns;
+            else if (change[0].mqAlias === 'sm') this.displayedColumns = this.smColumns;
+            else if (change[0].mqAlias === 'md') this.displayedColumns = this.mdColumns;
+            else this.displayedColumns = this.lgColumns;
+            this.changeDetector.detectChanges();
+        });
+    }
+
+    filterTasks(text: string) {
+        if (text === '') {
+            this.searchInput.nativeElement.value = '';
+            this.isSearching = false;
+            this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
+            this.searchedTasks = null;
+        } else {
+            this.searchedTasks = this.tasks.filter((result: ITask) => result.title.toString().toLowerCase().includes(this.searchInput.nativeElement.value));
+
+            if (!!this.searchedTasks.length) {
+                this.tasksDataSource = this.utilService.setDataSource(this.searchedTasks, this.sort, this.paginator);
+            } else {
+                this.tasksDataSource = this.utilService.setDataSource(this.searchedTasks, this.sort, this.paginator);
+            }
+        }
+    }
+
+    add(): void {
+        this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/add`]);
+    }
+
+    edit(id: string): void {
+        this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/edit`, id]);
+    }
+
+    changeStatus(task: ITask, status: EStatus): void {
+        task.status = status;
+
+        this.taskService.updateTask(task).subscribe(
+            () => {
+                this.snackBar.open('Task status changed.', null, { duration: 5000 });
+                this.taskService.emitTask.emit();
+                this.changeDetector.markForCheck();
+            },
+            () => {
+                this.snackBar.open('Error changing task status.', null, { duration: 8000 });
+            },
+        );
+    }
+
+    delete(task: ITask): void {
+        this.taskService.deleteTask(task._id).subscribe(
+            () => {
+                this.snackBar.open('Task removed.', null, { duration: 5000 });
+                this.taskService.emitTask.emit();
+                this.changeDetector.markForCheck();
+            },
+            () => {
+                this.snackBar.open('Error removing task.', null, { duration: 8000 });
+            },
+        );
+    }
+}

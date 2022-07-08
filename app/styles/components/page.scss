@@ -1,0 +1,27 @@
+.page {
+    min-height: calc(100vh - #{$headerSize});
+
+    @include media(">=desktop") {
+        margin: vw(80) 0 0 0 !important;
+        min-height: vw(750);
+    }
+
+    &__wrapper {
+        max-width: vw(1000);
+        height: 100%;
+        width: 100%;
+    }
+
+    &__content {
+        min-height: calc(100vh - #{$headerSize});
+
+        @include media(">=desktop") {
+            min-height: vw(750);
+        }
+
+        &-wrapper {
+            padding: vw(70) vw(50);
+            height: 100%;
+        }
+    }
+}

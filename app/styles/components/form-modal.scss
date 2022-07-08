@@ -1,0 +1,37 @@
+.form-modal {
+    min-height: vw(750);
+    max-width: vw(580);
+    width: 100%;
+
+    &__header {
+        height: vw(60);
+        padding: vw(7);
+        box-shadow: 0 vw(3) vw(5) rgba(0, 0, 0, 0.15);
+        display: flex;
+        place-content: center space-between;
+
+        &-wrapper {
+            display: flex;
+            place-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        h2 {
+            font-weight: 300;
+            margin: 0 auto 0 0;
+            padding-left: vw(25);
+        }
+    }
+
+    &__body {
+        margin-top: vw(50);
+        height: calc(100% - 0.74rem);
+        display: flex;
+        place-items: center;
+
+        &-wrapper {
+            padding: vw(25) vw(75);
+        }
+    }
+}

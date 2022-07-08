@@ -1,0 +1,68 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+        #drawer
+        class="sidenav mat-elevation-z1"
+        fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="isLogged"
+    >
+        <mat-nav-list class="nav-list">
+            <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
+                <mat-icon matTooltip="Tasks">create</mat-icon>
+                {{ "navigation.tasks" | translate }}
+            </a>
+            <a class="sidenav-bottom" mat-list-item [routerLink]="['settings/']" routerLinkActive="active">
+                <mat-icon matTooltip="Tools">settings</mat-icon>
+                {{ "navigation.settings" | translate }}
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" *ngIf="isLogged">
+            <div>
+                <button type="button" mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <button type="button" mat-icon-button (click)="changeLanguage('pt-br')">BR</button>
+
+                <button type="button" mat-icon-button (click)="changeLanguage('en')">EN</button>
+            </div>
+
+            <div>{{ this.time | date: "HH:mm" }}</div>
+
+            <div>
+                <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
+                    <mat-icon>account_circle</mat-icon>
+                </button>
+
+                <mat-menu #userMenu="matMenu">
+                    <mat-nav-list class="user-menu">
+                        <a mat-list-item [routerLink]="['/profile/']"> {{ "navigation.profile" | translate }} </a>
+                    </mat-nav-list>
+
+                    <mat-nav-list class="user-menu">
+                        <a mat-list-item (click)="logout()"> {{ "navigation.logout" | translate }} </a>
+                    </mat-nav-list>
+                </mat-menu>
+            </div>
+        </mat-toolbar>
+
+        <mat-toolbar color="primary" *ngIf="!isLogged">
+            <h2>
+                <a [routerLink]="'/'">{{ "app.title" | translate }}</a>
+            </h2>
+
+            <div>
+                <a mat-button routerLink="register" routerLinkActive="active">{{ "navigation.register" | translate }}</a>
+                <a mat-button routerLink="login" routerLinkActive="active">{{ "navigation.login" | translate }}</a>
+            </div>
+        </mat-toolbar>
+
+        <div class="mat-app-background page-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

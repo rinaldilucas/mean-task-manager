@@ -1,0 +1,36 @@
+<div class="page-container">
+    <div class="page" fxLayoutAlign="center center">
+        <div class="page__wrapper mat-elevation-z1">
+            <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
+                <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+            </div>
+            <div class="page__content">
+                <div class="page__content-wrapper">
+                    <h2>{{ "title.categories" | translate }}</h2>
+
+                    <mat-form-field class="component__chip" appearance="fill">
+                        <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
+
+                        <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">
+                            <mat-chip *ngFor="let category of categories" (removed)="removeCategory(category)">
+                                {{ category.title }}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                            <input
+                                placeholder="{{ 'settings.new-category' | translate }}"
+                                #categoryInput
+                                [formControl]="categoryCtrl"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="saveCategory($event)"
+                            />
+                        </mat-chip-list>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,75 @@
+{
+    "app": {
+        "description": "Mean Stack Template",
+        "title": "My Notes WebApp"
+    },
+    "auth": {
+        "password": "Senha",
+        "remember-me": "Manter logado",
+        "username": "Usuário"
+    },
+    "button": {
+        "register": "Registrar",
+        "save": "Salvar",
+        "signin": "Entrar"
+    },
+    "error": {
+        "maxlength": "Você deve preencher um texto que não exceda {{value}} caracteres.",
+        "minlength": "Você deve preencher um texto que exceda {{value}} caracteres."
+    },
+    "input": {
+        "category": "Categoria",
+        "choose-due-date": "Escolhar data limite",
+        "description": "Descrição",
+        "title": "Título"
+    },
+    "navigation": {
+        "login": "Entrar",
+        "logout": "Sair",
+        "profile": "Perfil",
+        "register": "Registrar",
+        "settings": "Configurações",
+        "tasks": "Tarefas"
+    },
+    "settings": {
+        "categories-names": "Nomes de categorias",
+        "category-selection": "Seleção de categoria",
+        "new-category": "Nova categoria..."
+    },
+    "table": {
+        "actions": {
+            "done": "Finalizar",
+            "progress": "Marcar como em progresso",
+            "remove": "Remover"
+        },
+        "category": "Categoria",
+        "date": "Data",
+        "description": "Descrição",
+        "done": "Feito",
+        "in-progress": "Em progresso",
+        "status": "Status",
+        "title": "Título",
+        "to-do": "A fazer"
+    },
+    "task-list": {
+        "empty": "Sem tarefas registradas.",
+        "empty-search": "Nenhuma tarefa encontrada em sua pesquisa.",
+        "refresh": "Atualizar",
+        "search": "Procurar",
+        "title-tooltip": "Adicionar tarefa"
+    },
+    "title": {
+        "add-task": "Adicionar Tarefa",
+        "categories": "Categorias",
+        "edit-task": "Editar Tarefa",
+        "login": "Login",
+        "profile": "Configurações do Perfil",
+        "register": "Registrar",
+        "tasks": "Tarefas",
+        "home": "Início",
+        "settings": "Configurações"
+    },
+    "messages": {
+        "language-changed": "Linguagem alterada."
+    }
+}

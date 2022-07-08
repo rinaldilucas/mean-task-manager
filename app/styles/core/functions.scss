@@ -1,0 +1,146 @@
+@use "sass:math";
+
+/* ============================================== */
+/* ================= functions ================== */
+/* ============================================== */
+
+@function strip-unit($number) {
+    @if type-of($number) == "number" and not unitless($number) {
+        @return ($number / ($number * 0 + 1));
+    }
+
+    @return $number;
+}
+
+@function vw($pixel: 0) {
+    @return (strip-unit($pixel) / ($convert-base / 10)) * 1rem;
+}
+
+@function per($pixel: 0, $base: 0) {
+    @return #{math.div(strip-unit($pixel), strip-unit($base)) * 100%};
+}
+
+@function desktop-vw($pixel: 0, $base: false) {
+    @if $base {
+        $base: $convert-base;
+    } @else {
+        $base: 100;
+    }
+
+    @if $layout-desktop-original {
+        $pixel: resize($pixel, $layout-desktop-original, $layout-desktop);
+    }
+
+    @return ((strip-unit($pixel) / strip-unit($layout-desktop)) * $base) * 1vw;
+}
+
+@function desktop-vh($pixel: 0) {
+    @return #{(strip-unit($pixel) / strip-unit($layout-desktop-height)) * 100}vh;
+}
+
+@function desktop-fixed($pixel: 0, $target-size: null) {
+    @if $target-size {
+        $pixel: resize($pixel, $layout-desktop, $target-size);
+    }
+
+    @if $layout-desktop-original {
+        $pixel: resize($pixel, $layout-desktop-original, $layout-desktop);
+    }
+
+    @return (strip-unit($pixel) * ($convert-base / 100)) * 1px;
+}
+
+@function tablet-vw($pixel: 0, $base: false) {
+    @if $base {
+        $base: $convert-base;
+    } @else {
+        $base: 100;
+    }
+
+    @if $layout-tablet-original {
+        $pixel: resize($pixel, $layout-tablet-original, $layout-tablet);
+    }
+
+    @return (math.div(strip-unit($pixel), strip-unit($layout-tablet)) * $base) * 1vw;
+}
+
+@function tablet-vh($pixel: 0) {
+    @return #{(strip-unit($pixel) / strip-unit($layout-tablet-height)) * 100}vh;
+}
+
+@function tablet-fixed($pixel: 0, $target-size: null) {
+    @if $target-size {
+        $pixel: resize($pixel, $layout-desktop, $target-size);
+    }
+
+    @if $layout-tablet-original {
+        $pixel: resize($pixel, $layout-tablet-original, $layout-tablet);
+    }
+
+    @return (strip-unit($pixel) * math.div($convert-base, 100)) * 1px;
+}
+
+@function mobile-vw($pixel: 0, $base: false) {
+    @if $base {
+        $base: $convert-base;
+    } @else {
+        $base: 100;
+    }
+
+    @if $layout-mobile-original {
+        $pixel: resize($pixel, $layout-mobile-original, $layout-mobile);
+    }
+
+    @return (((strip-unit($pixel) / strip-unit($layout-mobile)) * $base) * $mobile-factor) * 1vw;
+}
+
+@function mobile-vh($pixel: 0) {
+    @return #{(strip-unit($pixel) / strip-unit($layout-mobile-height)) * 100}vh;
+}
+
+@function mobile-fixed($pixel: 0, $target-size: null) {
+    @if $target-size {
+        $pixel: resize($pixel, $layout-desktop, $target-size);
+    }
+
+    @if $layout-mobile-original {
+        $pixel: resize($pixel, $layout-mobile-original, $layout-mobile);
+    }
+
+    @return (strip-unit($pixel) * math.div($convert-base, 100)) * 1px;
+}
+
+@function desktop-va($pixel: 0) {
+    @return calc(#{strip-unit($pixel)} * math.div((100vh + 100vw), (#{strip-unit($layout-desktop)} + #{strip-unit($layout-desktop-height)})));
+}
+
+@function mobile-va($pixel: 0) {
+    @return calc(#{strip-unit($pixel)} * math.div((100vh + 100vw), (#{strip-unit($layout-mobile)} + #{strip-unit($layout-mobile-height)})));
+}
+
+@function tablet-va($pixel: 0) {
+    @return calc(#{strip-unit($pixel)} * math.div((100vh + 100vw), (#{strip-unit($layout-tablet)} + #{strip-unit($layout-tablet-height)})));
+}
+
+@function resize($pixel, $pixel_from: 0, $pixel_to: 0) {
+    @return ((strip-unit($pixel) * strip-unit($pixel_to)) / strip-unit($pixel_from));
+}
+
+@function to-desktop-vw($pixel: 0, $layout-size: 0) {
+    $percent: math.div($pixel, $layout-size);
+    @return vw($layout-desktop * $percent);
+}
+
+@function to-tablet-vw($pixel: 0, $layout-size: 0) {
+    $percent: math.div($pixel, $layout-size);
+    @return vw($layout-tablet * $percent);
+}
+
+@function to-mobile-vw($pixel: 0, $layout-size: 0) {
+    $percent: math.div($pixel, $layout-size);
+    @return vw($layout-mobile * $percent);
+}
+
+@function zerofill($i) {
+    @return #{str-slice("00", 0, 2 - str-length(#{$i}))} $i;
+}

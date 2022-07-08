@@ -1,0 +1,19 @@
+/* ============================================== */
+/* ================== mixins ==================== */
+/* ============================================== */
+
+@mixin transition($second) {
+    -webkit-transition: all $second ease-in-out;
+    -moz-transition: all $second ease-in-out;
+    transition: all $second ease-in-out;
+}
+
+/* ============================================== */
+/* ================== fonts ===================== */
+/* ============================================== */
+
+@mixin font($font-name, $font-size: 1.8rem, $line-height: 2.2rem) {
+    font-family: $font-name, "Verdana", "sans-serif";
+    font-size: $font-size;
+    line-height: $line-height;
+}
