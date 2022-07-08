@@ -1,5 +1,7 @@
 -   entender ecmascript
--   adicionar busca de usuario async no cadastro
+-   salvar token atraves do pipe no proprio servico
+-   alterar jwtotken para x-access-token
+-   adicionar busca de usuario async no cadastro (validacao custom async)
 -   melhorar autenticate com async e await
 -   adicionar traducao no backend
 -   adicionar guard com permissao user
@@ -12,14 +14,11 @@
 -   tabela com ajax para paginacao
 -   configurar formato de data correto em ingles e pt
 -   refresh token
-    logout snack
--   mudar pra yarn
+    adicionar snackbar ao logout
 -   aplicar lazy loading nos modulos
 -   criar uma aplicacao angular do zero com yarn e ir acrescentando as coisas
 -   aplicar swagger
 -   adicionar protractor
--   atualizar pra angular 13
--   atualizar pra node 16
 -   facelift
 -   fazer gif pro screenshot
 -   ajustar dev dependencias e dependencies no mean angular
