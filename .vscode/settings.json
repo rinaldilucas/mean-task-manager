@@ -1,0 +1,13 @@
+{
+    "search.exclude": {
+        "**/docs": true,
+        "package-lock.json": true,
+        "node_modules": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "git.ignoreLimitWarning": true
+}

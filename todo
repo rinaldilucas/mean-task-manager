@@ -1,0 +1,26 @@
+-   entender ecmascript
+-   adicionar busca de usuario async no cadastro
+-   melhorar autenticate com async e await
+-   adicionar traducao no backend
+-   adicionar guard com permissao user
+-   adicionar validacao no backend (quantidade de caracteres form)
+-   adicionar strictnull
+-   fazer graficos
+-   theming e fazer dark mode
+-   verificar manter logado e sessiom / deletar sessao com metodo delete
+-   verificar traducoes no site todo
+-   tabela com ajax para paginacao
+-   configurar formato de data correto em ingles e pt
+-   refresh token
+    logout snack
+-   mudar pra yarn
+-   aplicar lazy loading nos modulos
+-   criar uma aplicacao angular do zero com yarn e ir acrescentando as coisas
+-   aplicar swagger
+-   adicionar protractor
+-   atualizar pra angular 13
+-   atualizar pra node 16
+-   facelift
+-   fazer gif pro screenshot
+-   ajustar dev dependencias e dependencies no mean angular
+-   corrigir criptografia em alterar senha
