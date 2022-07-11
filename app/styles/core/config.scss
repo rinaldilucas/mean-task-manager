@@ -8,9 +8,9 @@ $font-main: "Montserrat", sans-serif;
 /* =================== colors =================== */
 /* ============================================== */
 
-$primary: map-get($app-theme, primary);
-$accent: map-get($app-theme, accent);
-$danger: map-get($app-theme, danger);
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+$danger: map-get($theme, danger);
 
 $default: $white;
 

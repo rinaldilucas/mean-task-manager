@@ -1,4 +1,6 @@
 @import "~@angular/material/theming";
+@import "./component-themes.scss";
+
 @include mat-core();
 
 $app-primary: (
@@ -117,10 +119,20 @@ $app-background: (
     "A700": "#bfbfbf",
 );
 
-$app-theme-primary: mat-palette($app-primary);
-$app-theme-accent: mat-palette($app-accent);
-$app-theme-warn: mat-palette($app-danger);
+$primary: mat-palette($app-primary);
+$accent: mat-palette($app-accent);
+$warn: mat-palette($app-danger);
+$theme: mat-light-theme($primary, $accent, $warn);
 
-$app-theme: mat-light-theme($app-theme-primary, $app-theme-accent, $app-theme-warn);
+@include angular-material-theme($theme);
+@include component-themes($theme);
 
-@include angular-material-theme($app-theme);
+.darkMode {
+    $dark-primary: mat-palette($app-primary);
+    $dark-accent: mat-palette($app-accent);
+    $dark-warn: mat-palette($app-danger);
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+    @include angular-material-theme($dark-theme);
+    @include component-themes($dark-theme);
+}

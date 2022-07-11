@@ -1,0 +1,5 @@
+@import "../../pages/_components/main-nav/main-nav.component";
+
+@mixin component-themes($theme) {
+    @include nav-theme($theme);
+}
