@@ -5,8 +5,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
 import { UserService } from '@app/scripts/services/user.service';
-import { ERole } from '@app/scripts/models/enum/role.enum';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
+import { ERole } from '@app/scripts/models/enum/role.enum';
 import { IAuthData } from '@app/scripts/models/authData.interface';
 
 @Injectable({
@@ -15,12 +15,12 @@ import { IAuthData } from '@app/scripts/models/authData.interface';
 export class AuthService {
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private isAuthenticated = false;
-    private loggedUser: IAuthData;
-    private tokenTimer: ReturnType<typeof setTimeout>;
-    private authStatusListener = new Subject<boolean>();
     private rawToken: string;
     private decodedToken: IJwtToken;
+    private tokenTimer: ReturnType<typeof setTimeout>;
+    private isAuthenticated = false;
+    private loggedUser: IAuthData;
+    private authStatusListener = new Subject<boolean>();
 
     constructor(private router: Router, public userService: UserService) {}
 
@@ -34,10 +34,6 @@ export class AuthService {
 
     getUserId(): string {
         return this.loggedUser.userId;
-    }
-
-    getUsername(): string {
-        return this.loggedUser.username;
     }
 
     getUserRole(): ERole {
@@ -55,14 +51,28 @@ export class AuthService {
         if (token) {
             const expiresInDuration = result.expiresIn;
             this.setAuthTimer(expiresInDuration);
-            this.decodeJwtToken(result);
             this.isAuthenticated = true;
+            this.decodeJwtToken(this.rawToken);
             this.authStatusListener.next(true);
+            const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
+
+            this.saveAuthData(token, expirationDate, this.loggedUser.userId);
             this.emitMenu.emit(true);
             return true;
         } else {
             return false;
         }
+    }
+
+    logout(): void {
+        this.userService.logout(this.getToken()).subscribe();
+        this.rawToken = null;
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        clearTimeout(this.tokenTimer);
+        this.clearAuthData();
+        this.router.navigate(['/']);
+        this.emitMenu.emit(false);
     }
 
     verifyAuthorization(): boolean {
@@ -76,8 +86,9 @@ export class AuthService {
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
 
         if (expiresIn > 0) {
+            this.rawToken = authInformation.token;
+            this.decodeJwtToken(this.rawToken);
             this.isAuthenticated = true;
-            this.loggedUser.userId = authInformation.userId;
             this.setAuthTimer(expiresIn / 1000);
             this.authStatusListener.next(true);
             return true;
@@ -86,39 +97,21 @@ export class AuthService {
         return false;
     }
 
-    decodeJwtToken(payload: IJwtPayload): void {
-        const helper = new JwtHelperService();
-        this.decodedToken = helper.decodeToken(payload.token) as IJwtToken;
-
-        this.loggedUser = {
-            role: this.decodedToken.role as ERole,
-            username: this.decodedToken.username,
-            userId: this.decodedToken.userId,
-            expirationDate: new Date(new Date().getTime() + payload.expiresIn * 1000),
-        };
-
-        localStorage.setItem('token', payload.token);
-        localStorage.setItem('expiration', this.loggedUser.expirationDate.toISOString());
-        localStorage.setItem('userId', this.loggedUser.userId);
-        localStorage.setItem('username', this.loggedUser.username);
-    }
-
-    getAuthData(): IAuthData {
+    getAuthData(): IJwtPayload {
         const token = localStorage.getItem('token');
         const expirationDate = localStorage.getItem('expiration');
         const userId = localStorage.getItem('userId');
-        const username = localStorage.getItem('username');
-        const role = localStorage.getItem('role') as ERole;
+        const userRole = localStorage.getItem('userRole') as ERole;
 
         if (!token || !expirationDate) {
             return undefined;
         }
 
         return {
+            token,
             expirationDate: new Date(expirationDate),
             userId,
-            username,
-            role,
+            userRole,
         };
     }
 
@@ -126,21 +119,26 @@ export class AuthService {
         this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
     }
 
+    private saveAuthData(token: string, expirationDate: Date, userId: string): void {
+        localStorage.setItem('token', token);
+        localStorage.setItem('expiration', expirationDate.toISOString());
+        localStorage.setItem('userId', userId);
+    }
+
     private clearAuthData(): void {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
-        localStorage.removeItem('username');
     }
 
-    logout(): void {
-        this.userService.logout(this.getToken()).subscribe();
-        this.rawToken = null;
-        this.isAuthenticated = false;
-        this.authStatusListener.next(false);
-        clearTimeout(this.tokenTimer);
-        this.clearAuthData();
-        this.router.navigate(['/']);
-        this.emitMenu.emit(false);
+    private decodeJwtToken(token: string): void {
+        const helper = new JwtHelperService();
+        this.decodedToken = helper.decodeToken(token) as IJwtToken;
+
+        this.loggedUser = {
+            role: this.decodedToken.role as ERole,
+            username: this.decodedToken.username,
+            userId: this.decodedToken.userId,
+        };
     }
 }

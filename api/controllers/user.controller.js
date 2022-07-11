@@ -112,12 +112,13 @@ exports.authenticate = async (request, response) => {
         }
 
         const token = jwt.sign({ username: user.username, userId: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-        const jwtToken = {
+        const jwtPayload = {
             token: token,
             expiresIn: 60 * 60,
+            userId: user._id,
         };
 
-        httpHandler.success(response, jwtToken, StatusCode.SuccessOK);
+        httpHandler.success(response, jwtPayload, StatusCode.SuccessOK);
     } catch (error) {
         if (language == 'en') httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Error authorizing token. Error: ${error.message}.`);
         else httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Erro autorizando token. Erro: ${error.message}.`);

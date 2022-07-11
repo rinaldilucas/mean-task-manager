@@ -37,10 +37,7 @@ export class MainNavComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        setInterval(() => {
-            this.time = new Date();
-        }, 1000);
-
+        setInterval(() => (this.time = new Date()), 1000);
         this.isLogged = this.authService.getIsAuth();
         this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
     }
@@ -55,6 +52,15 @@ export class MainNavComponent implements OnInit {
     }
 
     changeLanguage(language: string): void {
+        this.translateService.use(language);
+
+        this.translateService.get('messages.language-changed').subscribe((text: string) => {
+            let message = text;
+            this.snackBar.open(message, undefined, { duration: 5000 });
+        });
+    }
+
+    changeTheme(language: string): void {
         this.translateService.use(language);
 
         this.translateService.get('messages.language-changed').subscribe((text: string) => {
