@@ -38,14 +38,14 @@ export class TasksDoneComponent implements OnInit {
             this.pieChartData = [];
             this.pieChartLabels = [];
 
-            if (!!this.tasks.length) {
-                this.pieChartData.push(this.tasks.filter((task) => task.status === 'to_do').length);
-                this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'to_do').length} To Do`);
-                this.pieChartData.push(this.tasks.filter((task) => task.status === 'progress').length);
-                this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'progress').length} Progress`);
-                this.pieChartData.push(this.tasks.filter((task) => task.status === 'done').length);
-                this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'done').length} Done`);
-            }
+            // if (!!this.tasks.length) {
+            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'ToDo').length);
+            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'ToDo').length} To Do`);
+            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'progress').length);
+            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'progress').length} Progress`);
+            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'done').length);
+            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'done').length} Done`);
+            // }
         });
     }
 }

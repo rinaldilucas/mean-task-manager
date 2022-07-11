@@ -66,5 +66,10 @@
         "profile": "Profile Settings",
         "register": "Register",
         "tasks": "Tasks"
+    },
+    "messages": {
+        "language-changed": "Language changed.",
+        "user-logout": "User successfully logout.",
+        "user-login": "User successfully logged."
     }
 }

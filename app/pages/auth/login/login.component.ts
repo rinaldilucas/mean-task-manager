@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IJwtToken } from '@app/scripts/models/jwToken.interface';
+import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 
 @Component({
     selector: 'app-log-in',
@@ -50,7 +51,7 @@ export class LogInComponent implements OnInit {
         const user = { ...this.form.value } as IUser;
 
         this.userService.authenticate(user.username, user.password).subscribe(
-            (result: IQueryResult<IJwtToken>) => {
+            (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
                     this.snackBar.open('Authentication error.', null, { duration: 8000 });
                     return;

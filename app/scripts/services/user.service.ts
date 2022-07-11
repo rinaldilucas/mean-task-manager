@@ -7,9 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '@app/environments/environment';
 import { IUser } from '@app/scripts/models/user.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IAuthData } from '@app/scripts/models/authData.interface';
-import { IJwtToken } from '@app/scripts/models/jwToken.interface';
 import { UtilService } from '@app/scripts/services/util.service';
+import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -42,10 +41,10 @@ export class UserService {
         return this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.utilService.errorHandler));
     }
 
-    authenticate(username: string, password: string): Observable<IQueryResult<IJwtToken>> {
-        const authData: IAuthData = { username, password };
+    authenticate(username: string, password: string): Observable<IQueryResult<IJwtPayload>> {
+        const credentials = { username, password };
         const url = `${this.url}/authenticate?language=${this.translateService.currentLang}`;
-        return this.http.post<IQueryResult<IJwtToken>>(url, authData).pipe(catchError(this.utilService.errorHandler));
+        return this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.utilService.errorHandler));
     }
 
     register(user: IUser): Observable<IQueryResult<IUser>> {

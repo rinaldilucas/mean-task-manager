@@ -1,6 +1,6 @@
 const Category = require('../models/category.model');
-const { StatusCode } = require('status-code-enum');
 const httpHandler = require('../utils/http-handler');
+const { StatusCode } = require('status-code-enum');
 
 exports.findAll = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
@@ -10,7 +10,8 @@ exports.findAll = (request, response) => {
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding categories. Error: ${error.message}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding categories. Error: ${error.message}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar categorias. Erro: ${error.message}.`);
         });
 };
 
@@ -20,30 +21,29 @@ exports.findOne = (request, response) => {
     Category.findById(request.params._id)
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category doesn't exists.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Categoria de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
-            }
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Could not delete category with id ${request.params._id}. Error: ${error}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving category with id ${request.params._id}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar categoria com id ${request.params._id}.`);
         });
 };
 
 exports.create = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
-    const category = new Category(request.body);
 
+    const category = new Category(request.body);
     category
         .save()
         .then((result) => {
             httpHandler.success(response, result, StatusCode.SuccessCreated);
         })
         .catch((error) => {
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating category. Error: ${error.message}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating category. Error: ${error.message}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar categoria. Erro: ${error.message}.`);
         });
 };
 
@@ -53,15 +53,13 @@ exports.delete = (request, response) => {
     Category.findByIdAndRemove(request.params._id)
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Categoria de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessAccepted);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
-            }
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Could not delete category with id ${request.params._id}. Error: ${error}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing category with id ${request.params._id}. Error: ${error}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover categoria de id ${request.params._id}. Erro: ${error}.`);
         });
 };

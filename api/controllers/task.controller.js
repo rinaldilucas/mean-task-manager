@@ -1,6 +1,6 @@
 const Task = require('../models/task.model');
-const { StatusCode } = require('status-code-enum');
 const httpHandler = require('../utils/http-handler');
+const { StatusCode } = require('status-code-enum');
 
 exports.findAllByUser = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
@@ -11,28 +11,25 @@ exports.findAllByUser = (request, response) => {
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
         });
 };
 
 exports.findOne = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
 
-    Task.findOne({ _id: request.params._i2d })
+    Task.findOne({ _id: request.params._id })
         .then((result) => {
             if (!result) {
-                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task doesn't exists.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa não existe.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-            }
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving Task with id ${request.params._id}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving task with id ${request.params._id}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefa com id ${request.params._id}.`);
         });
 };
 
@@ -45,7 +42,8 @@ exports.create = (request, response) => {
             httpHandler.success(response, result, StatusCode.SuccessCreated);
         })
         .catch((error) => {
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating task. Error: ${error.message}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating task. Error: ${error.message}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar tarefa. Erro: ${error.message}.`);
         });
 };
 
@@ -55,16 +53,14 @@ exports.update = (request, response) => {
     Task.findByIdAndUpdate(request.body._id, request.body, { new: true })
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-            }
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating task with id ${request.params._id}. Error: ${error}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating task with id ${request.params._id}. Error: ${error}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar tarefa de id ${request.params._id}. Erro: ${error}.`);
         });
 };
 
@@ -74,15 +70,13 @@ exports.delete = (request, response) => {
     Task.findByIdAndRemove(request.params._id)
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessAccepted);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-            }
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Could not delete task with id ${request.params._id}. Error: ${error}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing task with id ${request.params._id}. Error: ${error}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover tarefa de id ${request.params._id}. Erro: ${error}.`);
         });
 };

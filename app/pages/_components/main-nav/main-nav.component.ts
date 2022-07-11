@@ -42,14 +42,16 @@ export class MainNavComponent implements OnInit {
         }, 1000);
 
         this.isLogged = this.authService.getIsAuth();
-
-        this.authService.emitMenu.subscribe((result: boolean) => {
-            this.isLogged = result;
-        });
+        this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
     }
 
     logout(): void {
         this.authService.logout();
+
+        this.translateService.get('messages.user-logout').subscribe((text: string) => {
+            let message = text;
+            this.snackBar.open(message, undefined, { duration: 5000 });
+        });
     }
 
     changeLanguage(language: string): void {

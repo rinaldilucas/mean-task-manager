@@ -1,21 +1,21 @@
 <div class="page-container">
-    <div class="dashboard" fxLayoutAlign="center center" *ngIf="tasks && tasks.length > 0">
-        <!-- <mat-card>
+    <!-- <div class="dashboard" fxLayoutAlign="center center" *ngIf="tasks && tasks.length > 0">
+       <mat-card>
             <app-initial-funds></app-initial-funds>
-        </mat-card> -->
+        </mat-card>
 
         <mat-card>
             <app-tasks-done></app-tasks-done>
-        </mat-card>
+        </mat-card> -
 
-        <!-- <mat-card>
+         <mat-card>
             <app-profit-over-funds></app-profit-over-funds>
         </mat-card>
 
         <mat-card>
             <app-week-earnings></app-week-earnings>
-        </mat-card> -->
-    </div>
+        </mat-card> 
+    </div> -->
 
     <div class="list" fxLayoutAlign="center center">
         <div class="list__wrapper mat-elevation-z1">
@@ -94,7 +94,7 @@
                                 <mat-cell mat-cell *matCellDef="let task">
                                     <div [ngSwitch]="task.status">
                                         <div *ngSwitchDefault>{{ "table.to-do" | translate }}</div>
-                                        <div *ngSwitchCase="'to_do'">{{ "table.to-do" | translate }}</div>
+                                        <div *ngSwitchCase="'toDo'">{{ "table.to-do" | translate }}</div>
                                         <div *ngSwitchCase="'progress'">{{ "table.in-progress" | translate }}</div>
                                         <div *ngSwitchCase="'done'">{{ "table.done" | translate }}</div>
                                     </div>

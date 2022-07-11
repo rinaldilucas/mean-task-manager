@@ -70,6 +70,8 @@
         "settings": "Configurações"
     },
     "messages": {
-        "language-changed": "Linguagem alterada."
+        "language-changed": "Linguagem alterada.",
+        "user-logout": "Usuário deslogado com sucesso.",
+        "user-login": "Usuário logado com sucesso."
     }
 }

@@ -1,6 +1,6 @@
-const { StatusCode } = require('status-code-enum');
 const passport = require('passport');
 const httpHandler = require('../utils/http-handler');
+const { StatusCode } = require('status-code-enum');
 
 module.exports = {
     bearer: (request, response, next) => {
@@ -26,7 +26,7 @@ module.exports = {
                 _id: payload._id,
             };
 
-            return next();
+            next();
         })(request, response, next);
     },
 };

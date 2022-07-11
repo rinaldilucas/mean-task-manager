@@ -1,9 +1,9 @@
 const User = require('../models/user.model');
-const { StatusCode } = require('status-code-enum');
 const httpHandler = require('../utils/http-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const blacklistHandler = require('../redis/blacklist-handler');
+const { StatusCode } = require('status-code-enum');
 
 exports.findAll = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
@@ -13,8 +13,8 @@ exports.findAll = (request, response) => {
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            if (language) httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding users. Error: ${error.message}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding users. Error: ${error.message}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}.`);
         });
 };
 
@@ -24,37 +24,14 @@ exports.findOne = (request, response) => {
     User.findOne({ _id: request.params._id })
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User doesn't exists.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessOK);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-            }
-
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving User with id ${request.params._id}.`);
-        });
-};
-
-exports.findByUsername = (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
-
-    User.findOne({ username: request.params._id })
-        .then((result) => {
-            if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User doesn't exists.`);
-            }
-
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-            }
-
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving User with id ${request.params._id}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving user with id ${request.params._id}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuário com id ${request.params._id}.`);
         });
 };
 
@@ -64,17 +41,14 @@ exports.update = (request, response) => {
     User.findByIdAndUpdate(request.body._id, request.body, { new: true })
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
             }
-
-            httpHandler.success(response, result, StatusCode.SuccessOK);
+            httpHandler.success(response, result);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-            }
-
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
         });
 };
 
@@ -84,17 +58,14 @@ exports.delete = (request, response) => {
     User.findByIdAndRemove(request.params._id)
         .then((result) => {
             if (!result) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
             }
-
             httpHandler.success(response, result, StatusCode.SuccessAccepted);
         })
         .catch((error) => {
-            if (error.kind === 'ObjectId' || error.name === 'NotFound') {
-                httpHandler.error(response, error, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-            }
-
-            httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Could not delete user with id ${request.params._id}. Error: ${error}.`);
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing user with id ${request.params._id}. Error: ${error}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover usuário de id ${request.params._id}. Erro: ${error}.`);
         });
 };
 
@@ -111,21 +82,16 @@ exports.register = async (request, response) => {
             password: hashPash,
         });
 
-        User.findOne({ username: request.body.username })
-            .then((user) => {
-                if (user) {
-                    httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists.`);
-                }
-
-                newUser.save().then((result) => {
-                    httpHandler.success(response, result, StatusCode.SuccessCreated);
-                });
-            })
-            .catch((error) => {
-                httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
-            });
+        User.findOne({ username: request.body.username }).then((user) => {
+            if (user) {
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with id ${request.params._id}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de id ${request.params._id} já existe.`);
+            }
+            newUser.save().then((result) => httpHandler.success(response, result, StatusCode.SuccessCreated));
+        });
     } catch (error) {
-        httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
+        if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar usuário. Erro: ${error.message}.`);
     }
 };
 
@@ -134,22 +100,27 @@ exports.authenticate = async (request, response) => {
 
     try {
         const user = await User.findOne({ username: request.body.username });
-        if (!user) return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `You have entered an invalid username.`);
+        if (!user) {
+            if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid username.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Usuário inválido.`);
+        }
 
         const validated = await bcrypt.compare(request.body.password, user.password);
-        if (!validated) return httpHandler.error(response, {}, StatusCode.ClientErrorForbidden, `You have entered an invalid password.`);
+        if (!validated) {
+            if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid password.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Senha inválida.`);
+        }
 
         const token = jwt.sign({ username: user.username, userId: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-
         const jwtToken = {
             token: token,
-            expiresIn: 3600,
-            userId: user._id,
+            expiresIn: 60 * 60,
         };
 
         httpHandler.success(response, jwtToken, StatusCode.SuccessOK);
     } catch (error) {
-        httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error authorizing. Error: ${error.message}.`);
+        if (language == 'en') httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Error authorizing token. Error: ${error.message}.`);
+        else httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Erro autorizando token. Erro: ${error.message}.`);
     }
 };
 
@@ -161,6 +132,7 @@ exports.logout = async (request, response) => {
         await blacklistHandler.add(token);
         httpHandler.success(response, {}, StatusCode.SuccessOK);
     } catch (error) {
-        httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error logging out. Error: ${error.message}.`);
+        if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error logging out. Error: ${error.message}.`);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao deslogar. Erro: ${error.message}.`);
     }
 };

@@ -15,9 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             catchError((error) => {
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
                     this.authService.logout();
-                    location.reload();
                 }
-
                 return throwError(error);
             }),
         );

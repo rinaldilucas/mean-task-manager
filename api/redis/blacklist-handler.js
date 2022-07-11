@@ -11,10 +11,12 @@ function generateTokenHash(token) {
 
 module.exports = {
     add: async (token) => {
-        const expirationDate = jwt.decode(token).exp;
-        const tokenHash = generateTokenHash(token);
-        await setAsync(tokenHash, '');
-        blacklist.expireat(tokenHash, expirationDate);
+        if (token) {
+            const expirationDate = jwt.decode(token).exp;
+            const tokenHash = generateTokenHash(token);
+            await setAsync(tokenHash, '');
+            blacklist.expireat(tokenHash, expirationDate);
+        }
     },
 
     hasToken: async (token) => {
