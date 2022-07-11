@@ -30,7 +30,7 @@
 
                 <button type="button" mat-icon-button (click)="changeLanguage('en')">EN</button>
 
-                <button type="button" mat-icon-button (click)="changeTheme('en')">Change theme</button>
+                <mat-slide-toggle [formControl]="toggleTheme"> </mat-slide-toggle>
             </div>
 
             <div>{{ this.time | date: "HH:mm" }}</div>
