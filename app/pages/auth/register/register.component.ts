@@ -36,9 +36,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.translateService.get('title.register').subscribe((text: string) => {
-            this.titleService.setTitle(`${text} — Mean Stack Template`);
-        });
+        this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     register(): void {

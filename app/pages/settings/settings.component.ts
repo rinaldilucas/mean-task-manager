@@ -41,9 +41,7 @@ export class SettingsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.translateService.get('title.settings').subscribe((text: string) => {
-            this.titleService.setTitle(`${text} — Mean Stack Template`);
-        });
+        this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.refresh();
     }
 
