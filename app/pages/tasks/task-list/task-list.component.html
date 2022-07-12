@@ -38,7 +38,7 @@
                     </mat-form-field>
 
                     <button mat-icon-button>
-                        <mat-icon matTooltip="{{ 'task-list.refresh' | translate }}" (click)="refresh()">refresh</mat-icon>
+                        <mat-icon matTooltip="{{ 'task-list.search' | translate }}" (click)="filterTasks(searchInput.value)">done</mat-icon>
                     </button>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                 </div>
 
                 <div [hidden]="isLoading || (tasks && tasks.length === 0)">
-                    <mat-paginator [length]="pageCount" [pageSizeOptions]="[pageSize, pageSize * 2, pageSize * 4]" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [length]="pageCount" [pageSizeOptions]="pageSizeOptions" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
         </div>

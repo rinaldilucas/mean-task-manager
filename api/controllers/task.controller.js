@@ -6,61 +6,54 @@ exports.findAllByUser = async (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
 
     const async = require('async');
-    let pageIndex = +request.query.pageIndex;
-    const pageSize = +request.query.pageSize;
+    const pageIndex = +request.query.pageIndex ?? 1;
+    const pageSize = +request.query.pageSize ?? 5;
+    const hasSearchTerm = request.query.searchTerm;
 
-    var countQuery = function (callback) {
-        Task.find({ userId: request.params.userId })
+    var countQuery = (callback) => {
+        var findQuery = {
+            userId: request.params.userId,
+        };
+
+        if (hasSearchTerm) {
+            findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+        }
+
+        Task.find(findQuery)
+            .find({ userId: request.params.userId })
             .sort({ date: -1 })
             .countDocuments({}, (error, count) => {
                 if (error) callback(error, null);
                 else callback(null, count);
             });
     };
-
-    if (pageIndex) {
-        var retrieveQuery = function (callback) {
-            Task.find({ userId: request.params.userId })
-                .sort({ date: -1 })
-                .skip(pageIndex * pageSize)
-                .limit(pageSize)
-                .exec((error, documents) => {
-                    if (error) callback(error, null);
-                    else callback(null, documents);
-                });
+    var retrieveQuery = (callback) => {
+        var findQuery = {
+            userId: request.params.userId,
         };
 
-        async.parallel([countQuery, retrieveQuery], function (error, results) {
-            if (error) {
-                if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
-                else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-            }
+        if (hasSearchTerm) {
+            findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+        }
 
-            httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
-        });
-    } else {
-        var retrieveQuery = function (callback) {
-            Task.find({ userId: request.params.userId })
-                .sort({ date: -1 })
-                .limit(pageSize)
-                .exec((error, docs) => {
-                    if (error) {
-                        callback(error, null);
-                    } else {
-                        callback(null, docs);
-                    }
-                });
-        };
+        Task.find(findQuery)
+            .sort({ date: -1 })
+            .skip(pageIndex * pageSize)
+            .limit(pageSize)
+            .exec((error, documents) => {
+                if (error) callback(error, null);
+                else callback(null, documents);
+            });
+    };
 
-        async.parallel([countQuery, retrieveQuery], function (error, results) {
-            if (error) {
-                if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
-                else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-            }
+    async.parallel([countQuery, retrieveQuery], function (error, results) {
+        if (error) {
+            if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
+            else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
+        }
 
-            httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
-        });
-    }
+        httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
+    });
 };
 
 exports.findOne = (request, response) => {

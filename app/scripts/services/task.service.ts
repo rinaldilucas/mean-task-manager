@@ -17,16 +17,20 @@ export class TaskService {
 
     constructor(private http: HttpClient, private utilService: UtilService, private authService: AuthService, private translateService: TranslateService) {}
 
-    listTasksByUser(pageSize: number): Observable<IQueryResult<ITask>> {
+    listTasksByUser(pageSize: number, searchTerm?: string, pageIndex?: number): Observable<IQueryResult<ITask>> {
         const id = this.authService.getUserId();
-        const url = `${this.url}/user/${id}?pageSize=${pageSize}&language=${this.translateService.currentLang}`;
+        let url = `${this.url}/user/${id}?language=${this.translateService.currentLang}`;
+
+        if (!!pageSize) url += `&pageSize=${pageSize}`;
+        if (!!pageIndex) url += `&pageIndex=${pageIndex}`;
+        if (!!searchTerm) url += `&searchTerm=${searchTerm}`;
 
         return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
-    listTasksByUserOffset(pageIndex: number, pageSize: number): Observable<IQueryResult<ITask>> {
+    filterTasksByUser(searchTerm: string): Observable<IQueryResult<ITask>> {
         const id = this.authService.getUserId();
-        const url = `${this.url}/user/${id}?pageIndex=${pageIndex}&pageSize=${pageSize}&language=${this.translateService.currentLang}`;
+        const url = `${this.url}/user/${id}?searchTerm=${searchTerm}&language=${this.translateService.currentLang}`;
 
         return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.utilService.errorHandler));
     }

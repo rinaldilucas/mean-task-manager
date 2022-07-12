@@ -43,6 +43,7 @@ export class TaskListComponent implements OnInit {
 
     pageSize = 5;
     pageCount = 1;
+    pageSizeOptions = [5, 10, 20];
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -82,23 +83,6 @@ export class TaskListComponent implements OnInit {
         });
     }
 
-    filterTasks(text: string) {
-        if (text === '') {
-            this.searchInput.nativeElement.value = '';
-            this.isSearching = false;
-            this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
-            this.searchedTasks = [];
-        } else {
-            this.searchedTasks = this.tasks.filter((result: ITask) => result.title.toString().toLowerCase().includes(this.searchInput.nativeElement.value));
-
-            if (!!this.searchedTasks.length) {
-                this.tasksDataSource = this.utilService.setDataSource(this.searchedTasks, this.sort, this.paginator);
-            } else {
-                this.tasksDataSource = this.utilService.setDataSource(this.searchedTasks, this.sort, this.paginator);
-            }
-        }
-    }
-
     add(): void {
         this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/add`]);
     }
@@ -131,11 +115,30 @@ export class TaskListComponent implements OnInit {
         });
     }
 
+    filterTasks(text: string) {
+        if (text === '') {
+            this.searchInput.nativeElement.value = '';
+            this.isSearching = false;
+            this.refresh();
+        } else {
+            const searchTerm = text.trim().toLowerCase();
+
+            this.taskService.listTasksByUser(this.pageSize, searchTerm).subscribe((result: IQueryResult<ITask>) => {
+                this.tasks = result.data;
+                this.pageCount = result.count;
+                this.tasksDataSource = this.utilService.setDataSource(this.tasks);
+                this.isLoading = false;
+                this.changeDetector.markForCheck();
+            });
+        }
+    }
+
     onPaginateChange(event: PageEvent): any {
         const pageIndex = event.pageIndex;
-        const pageSize = event.pageSize;
+        const searchTerm = this.searchInput.nativeElement.value ?? null;
+        this.pageSize = event.pageSize;
 
-        this.taskService.listTasksByUserOffset(pageIndex, pageSize).subscribe((result: IQueryResult<ITask>) => {
+        this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex).subscribe((result: IQueryResult<ITask>) => {
             this.tasks = result.data;
             this.pageCount = result.count;
             this.tasksDataSource = this.utilService.setDataSource(this.tasks);
