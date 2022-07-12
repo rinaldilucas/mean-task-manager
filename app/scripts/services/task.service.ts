@@ -10,9 +10,7 @@ import { UtilService } from '@app/scripts/services/util.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TaskService {
     emitTask: EventEmitter<ITask> = new EventEmitter<ITask>();
     private url: string = environment.baseUri + '/tasks';

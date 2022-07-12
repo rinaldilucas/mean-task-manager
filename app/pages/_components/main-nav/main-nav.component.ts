@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, HostBinding } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { UserService } from '@app/scripts/services/user.service';
     selector: 'app-main-nav',
     templateUrl: './main-nav.component.html',
     styleUrls: ['./main-nav.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainNavComponent implements OnInit {
     @HostBinding('class') className = '';

@@ -5,9 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IQuery } from '@app/scripts/models/query.interface';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class QueriesHandlerService {
     constructor(public http: HttpClient) {}
 

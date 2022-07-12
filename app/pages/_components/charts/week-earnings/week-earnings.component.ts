@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, Colors } from 'ng2-charts';
 
@@ -6,6 +6,7 @@ import { Label, Colors } from 'ng2-charts';
     selector: 'app-week-earnings',
     templateUrl: './week-earnings.component.html',
     styleUrls: ['./week-earnings.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeekEarningsComponent {
     barChartLabels: Label[] = [' FEB', ' MAR', ' APR', ' MAY'];

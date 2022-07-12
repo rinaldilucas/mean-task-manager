@@ -10,9 +10,7 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { UtilService } from '@app/scripts/services/util.service';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
     private url: string = environment.baseUri + '/users';

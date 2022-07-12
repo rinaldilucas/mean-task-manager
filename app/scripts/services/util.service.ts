@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { ITask } from '@app/scripts/models/task.interface';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UtilService {
     setDataSource(list: ITask[], sort: MatSort, paginator: MatPaginator): TableVirtualScrollDataSource<ITask> {
         const dataSource = new TableVirtualScrollDataSource(list);

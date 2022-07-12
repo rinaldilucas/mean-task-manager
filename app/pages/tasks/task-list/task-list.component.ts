@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,12 +13,12 @@ import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { TaskService } from '@app/scripts/services/task.service';
 import { UtilService } from '@app/scripts/services/util.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-task-list',
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
@@ -53,9 +53,7 @@ export class TaskListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.translateService.get('title.tasks').subscribe((text: string) => {
-            this.titleService.setTitle(`${text} — Mean Stack Template`);
-        });
+        this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.verifyResolution();
         this.refresh();
         this.taskService.emitTask.subscribe(() => this.refresh());

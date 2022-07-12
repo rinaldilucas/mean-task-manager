@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Colors } from 'ng2-charts';
 
@@ -10,6 +10,7 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
     selector: 'app-tasks-done',
     templateUrl: './tasks-done.component.html',
     styleUrls: ['./tasks-done.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksDoneComponent implements OnInit {
     tasks: ITask[];

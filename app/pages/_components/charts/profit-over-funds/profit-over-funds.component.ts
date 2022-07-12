@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { MultiDataSet, Label, Colors } from 'ng2-charts';
 
@@ -6,6 +6,7 @@ import { MultiDataSet, Label, Colors } from 'ng2-charts';
     selector: 'app-profit-over-funds',
     templateUrl: './profit-over-funds.component.html',
     styleUrls: ['./profit-over-funds.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfitOverFundsComponent {
     donutChartType: ChartType = 'doughnut';

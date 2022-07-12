@@ -9,9 +9,7 @@ import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { UtilService } from '@app/scripts/services/util.service';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CategoryService {
     emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
     private url: string = environment.baseUri + '/categories';

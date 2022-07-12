@@ -9,9 +9,7 @@ import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { IAuthData } from '@app/scripts/models/authData.interface';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 

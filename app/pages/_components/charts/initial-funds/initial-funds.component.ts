@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { MultiDataSet, Label, Colors } from 'ng2-charts';
 
@@ -6,6 +6,7 @@ import { MultiDataSet, Label, Colors } from 'ng2-charts';
     selector: 'app-initial-funds',
     templateUrl: './initial-funds.component.html',
     styleUrls: ['./initial-funds.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InitialFundsComponent implements OnInit {
     lineChartType: ChartType = 'line';
