@@ -21,9 +21,9 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent implements OnInit {
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
+    @ViewChild(MatSort) sort!: MatSort;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
 
     lgColumns = ['date', 'title', 'description', 'status', 'category', 'actions'];
     mdColumns = ['date', 'title', 'description', 'status', 'actions'];
@@ -33,7 +33,7 @@ export class TaskListComponent implements OnInit {
 
     title = 'Tasks';
     search = '';
-    searchedTasks: ITask[] = null;
+    searchedTasks: ITask[] = [];
     isLoading = true;
     isSearching = false;
 
@@ -83,7 +83,7 @@ export class TaskListComponent implements OnInit {
             this.searchInput.nativeElement.value = '';
             this.isSearching = false;
             this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
-            this.searchedTasks = null;
+            this.searchedTasks = [];
         } else {
             this.searchedTasks = this.tasks.filter((result: ITask) => result.title.toString().toLowerCase().includes(this.searchInput.nativeElement.value));
 
@@ -108,22 +108,22 @@ export class TaskListComponent implements OnInit {
 
         this.taskService.updateTask(task).subscribe(
             () => {
-                this.snackBar.open('Task status changed.', null, { duration: 5000 });
+                this.snackBar.open('Task status changed.', undefined, { duration: 5000 });
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => this.snackBar.open('Error changing task status.', null, { duration: 8000 }),
+            () => this.snackBar.open('Error changing task status.', undefined, { duration: 8000 }),
         );
     }
 
     delete(task: ITask): void {
         this.taskService.deleteTask(task._id).subscribe(
             () => {
-                this.snackBar.open('Task removed.', null, { duration: 5000 });
+                this.snackBar.open('Task removed.', undefined, { duration: 5000 });
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => this.snackBar.open('Error removing task.', null, { duration: 8000 }),
+            () => this.snackBar.open('Error removing task.', undefined, { duration: 8000 }),
         );
     }
 }

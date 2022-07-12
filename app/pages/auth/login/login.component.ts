@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
@@ -54,32 +53,32 @@ export class LogInComponent implements OnInit {
         this.userService.authenticate(user.username, user.password).subscribe(
             (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
-                    this.snackBar.open('Authentication error.', null, { duration: 8000 });
+                    this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
                     return;
                 }
 
                 if (this.authService.authenticateToken(result.data[0])) {
-                    this.snackBar.open('Logged with success.', null, { duration: 8000 });
+                    this.snackBar.open('Logged with success.', undefined, { duration: 8000 });
                     this.router.navigate([`${this.router.url.split(/\/(login)\/?/gi)[0]}/tasks`]);
                 }
             },
             (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorNotFound) {
-                    this.snackBar.open("Username don't exists.", null, { duration: 8000 });
+                    this.snackBar.open("Username don't exists.", undefined, { duration: 8000 });
                     return;
                 }
                 if (error.status === StatusCode.ClientErrorForbidden) {
-                    this.snackBar.open("Password doesn't match.", null, { duration: 8000 });
+                    this.snackBar.open("Password doesn't match.", undefined, { duration: 8000 });
                     return;
                 }
-                this.snackBar.open('Authentication error.', null, { duration: 8000 });
+                this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
             },
         );
     }
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', null, { duration: 8000 });
+            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
             this.highlightRequiredInput();
             return false;
         }
@@ -89,7 +88,7 @@ export class LogInComponent implements OnInit {
     highlightRequiredInput(): void {
         this.form.markAllAsTouched();
         for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input).valid) {
+            if (!this.form.get(input)?.valid) {
                 const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
                 (invalidControl as HTMLInputElement).focus();
                 break;

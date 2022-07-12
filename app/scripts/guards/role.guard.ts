@@ -16,7 +16,7 @@ export class RoleGuard implements CanActivate {
             return true;
         }
 
-        this.snackBar.open('User without permission.', null, { duration: 5000 });
+        this.snackBar.open('User without permission.', undefined, { duration: 5000 });
         this.router.navigate(['/tasks']);
         return false;
     }

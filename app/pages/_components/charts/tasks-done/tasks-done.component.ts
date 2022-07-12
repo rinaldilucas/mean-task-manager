@@ -13,7 +13,7 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksDoneComponent implements OnInit {
-    tasks: ITask[];
+    tasks!: ITask[];
     pieChartType: ChartType = 'doughnut';
     pieChartLabels: any[] = [];
     pieChartData: any = [];

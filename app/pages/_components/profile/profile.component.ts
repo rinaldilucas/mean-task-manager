@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     form: FormGroup;
     isSaving = false;
     isLoading = true;
-    user: IUser;
+    user!: IUser;
 
     constructor(
         private userService: UserService,
@@ -63,16 +63,16 @@ export class ProfileComponent implements OnInit {
         this.userService.updateUser(user).subscribe(
             () => {
                 this.form.reset();
-                this.snackBar.open('Profile edited with success.', null, { duration: 5000 });
+                this.snackBar.open('Profile edited with success.', undefined, { duration: 5000 });
                 this.refresh();
             },
-            () => this.snackBar.open('Error editing profile.', null, { duration: 8000 }),
+            () => this.snackBar.open('Error editing profile.', undefined, { duration: 8000 }),
         );
     }
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', null, { duration: 8000 });
+            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
             this.highlightRequiredInput();
             return false;
         }
@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
     highlightRequiredInput(): void {
         this.form.markAllAsTouched();
         for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input).valid) {
+            if (!this.form.get(input)?.valid) {
                 const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
                 (invalidControl as HTMLInputElement).focus();
                 break;

@@ -20,17 +20,17 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit {
-    @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
+    @ViewChild(MatSort) sort!: MatSort;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     isLoading = true;
     isSearching = false;
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
     categoryCtrl = new FormControl();
-    filteredCategories: Observable<string[]>;
-    categories: ICategory[];
+    filteredCategories!: Observable<string[]>;
+    categories: ICategory[] = [];
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -72,18 +72,18 @@ export class SettingsComponent implements OnInit {
         this.categoryService.createCategory(category).subscribe(
             (result: IQueryResult<ICategory>) => {
                 if (!result || !result.success) {
-                    this.snackBar.open('Error adding the category.', null, { duration: 8000 });
+                    this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
                     return;
                 }
 
-                this.snackBar.open('Category added successfully.', null, { duration: 5000 });
+                this.snackBar.open('Category added successfully.', undefined, { duration: 5000 });
                 this.categoryService.emitCategory.emit(result.data[0]);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
                 this.categories.push(result.data[0]);
             },
             () => {
-                this.snackBar.open('Error adding the category.', null, { duration: 8000 });
+                this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
@@ -94,11 +94,11 @@ export class SettingsComponent implements OnInit {
         this.categoryService.deleteCategory(category._id).subscribe(
             (result: IQueryResult<ICategory>) => {
                 if (!result || !result?.success) {
-                    this.snackBar.open('Error removing the category.', null, { duration: 8000 });
+                    this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
                     return;
                 }
 
-                this.snackBar.open('Category removed with success.', null, { duration: 5000 });
+                this.snackBar.open('Category removed with success.', undefined, { duration: 5000 });
                 this.categoryService.emitCategory.emit(category);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
@@ -106,7 +106,7 @@ export class SettingsComponent implements OnInit {
                 this.categories.splice(index, 1);
             },
             () => {
-                this.snackBar.open('Error removing the category.', null, { duration: 8000 });
+                this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },

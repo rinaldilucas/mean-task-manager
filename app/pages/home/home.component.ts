@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomepageComponent implements OnInit {
-    title: string;
+    title!: string;
 
     constructor(private titleService: Title, private translateService: TranslateService) {}
 

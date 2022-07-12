@@ -25,7 +25,7 @@
         "module": "es2020",
         "lib": ["es2015", "dom"],
         "allowSyntheticDefaultImports": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "noImplicitAny": true
     },
     "angularCompilerOptions": {

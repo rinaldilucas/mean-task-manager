@@ -21,7 +21,7 @@ import { UserService } from '@app/scripts/services/user.service';
 export class MainNavComponent implements OnInit {
     @HostBinding('class') className = '';
     time = new Date();
-    opened: boolean;
+    opened!: boolean;
     isLogged = false;
     toggleTheme = new FormControl(false);
 

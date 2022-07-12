@@ -13,11 +13,11 @@ import { IAuthData } from '@app/scripts/models/authData.interface';
 export class AuthService {
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private rawToken: string;
-    private decodedToken: IJwtToken;
-    private tokenTimer: ReturnType<typeof setTimeout>;
+    private rawToken!: string;
+    private decodedToken!: IJwtToken;
+    private tokenTimer!: ReturnType<typeof setTimeout>;
     private isAuthenticated = false;
-    private loggedUser: IAuthData;
+    private loggedUser!: IAuthData;
     private authStatusListener = new Subject<boolean>();
 
     constructor(private router: Router, public userService: UserService) {}
@@ -68,7 +68,7 @@ export class AuthService {
 
     logout(): void {
         this.userService.logout(this.getToken()).subscribe();
-        this.rawToken = null;
+        this.rawToken = '';
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         clearTimeout(this.tokenTimer);
@@ -99,14 +99,14 @@ export class AuthService {
         return false;
     }
 
-    getAuthData(): IJwtPayload {
-        const token = localStorage.getItem('token');
-        const expirationDate = localStorage.getItem('expiration');
-        const userId = localStorage.getItem('userId');
+    getAuthData(): IJwtPayload | false {
+        const token = localStorage.getItem('token') as string;
+        const expirationDate = localStorage.getItem('expiration') as string;
+        const userId = localStorage.getItem('userId') as string;
         const userRole = localStorage.getItem('userRole') as ERole;
 
         if (!token || !expirationDate) {
-            return undefined;
+            return false;
         }
 
         return {
@@ -114,6 +114,7 @@ export class AuthService {
             expirationDate: new Date(expirationDate),
             userId,
             userRole,
+            expiresIn: 0,
         };
     }
 

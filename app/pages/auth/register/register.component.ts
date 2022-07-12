@@ -51,26 +51,26 @@ export class RegisterComponent implements OnInit {
         this.userService.register(user).subscribe(
             (result: IQueryResult<IUser>) => {
                 if (!result || !result.success) {
-                    this.snackBar.open('Error creating user.', null, { duration: 8000 });
+                    this.snackBar.open('Error creating user.', undefined, { duration: 8000 });
                 }
 
-                this.snackBar.open('User created with success.', null, { duration: 5000 });
+                this.snackBar.open('User created with success.', undefined, { duration: 5000 });
                 this.router.navigate([`${this.router.url.split(/\/(register)\/?/gi)[0]}/login`]);
             },
             (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorConflict) {
-                    this.snackBar.open('Username already taken.', null, { duration: 8000 });
+                    this.snackBar.open('Username already taken.', undefined, { duration: 8000 });
                     return;
                 }
 
-                this.snackBar.open('Error creating user.', null, { duration: 8000 });
+                this.snackBar.open('Error creating user.', undefined, { duration: 8000 });
             },
         );
     }
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', null, { duration: 8000 });
+            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
             this.highlightRequiredInput();
             return false;
         }
@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
     highlightRequiredInput(): void {
         this.form.markAllAsTouched();
         for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input).valid) {
+            if (!this.form.get(input)?.valid) {
                 const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
                 (invalidControl as HTMLInputElement).focus();
                 break;

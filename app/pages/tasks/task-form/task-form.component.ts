@@ -23,7 +23,7 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormEntryComponent {
-    title: string;
+    title!: string;
 
     constructor(private bottomSheet: MatBottomSheet, private router: Router, private route: ActivatedRoute, private titleService: Title, private translateService: TranslateService) {
         this.open();
@@ -50,14 +50,14 @@ export class TaskFormEntryComponent {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
-    @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger: MatAutocompleteTrigger;
+    @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
-    title: string;
+    title!: string;
     isSaving = false;
     form: FormGroup;
 
-    categories: ICategory[];
-    categoriesFilteredOptions: Observable<ICategory[]>;
+    categories!: ICategory[];
+    categoriesFilteredOptions!: Observable<ICategory[]>;
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -132,23 +132,23 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             task.status = EStatus.toDo;
             this.taskService.createTask(task).subscribe(
                 () => {
-                    this.snackBar.open('Task added with success.', null, { duration: 5000 });
+                    this.snackBar.open('Task added with success.', undefined, { duration: 5000 });
                     this.taskService.emitTask.emit(task);
                     this.form.reset();
                     this.close();
                 },
-                () => this.snackBar.open('Error adding the task.', null, { duration: 8000 }),
+                () => this.snackBar.open('Error adding the task.', undefined, { duration: 8000 }),
             );
         } else {
             task._id = this.id;
             this.taskService.updateTask(task).subscribe(
                 () => {
-                    this.snackBar.open('Task edited with success.', null, { duration: 5000 });
+                    this.snackBar.open('Task edited with success.', undefined, { duration: 5000 });
                     this.form.reset();
                     this.taskService.emitTask.emit();
                     this.close();
                 },
-                () => this.snackBar.open('Error updating the task.', null, { duration: 8000 }),
+                () => this.snackBar.open('Error updating the task.', undefined, { duration: 8000 }),
             );
         }
     }
@@ -168,7 +168,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', null, { duration: 8000 });
+            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
             this.highlightRequiredInput();
             return false;
         }
@@ -178,7 +178,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     highlightRequiredInput(): void {
         this.form.markAllAsTouched();
         for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input).valid) {
+            if (!this.form.get(input)?.valid) {
                 const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
                 (invalidControl as HTMLInputElement).focus();
                 break;
