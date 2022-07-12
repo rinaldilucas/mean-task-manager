@@ -44,6 +44,9 @@ import { SettingsComponent } from '@app/pages/settings/settings.component';
 // MODALS
 import { TaskFormBottomSheetComponent, TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
 
+// PIPES
+import { ConvertDatePipe } from '@app/scripts/pipes/convertDate.pipe';
+
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -66,6 +69,7 @@ registerLocaleData(localePt, 'pt-BR');
         WeekEarningsComponent,
         InitialFundsComponent,
         ProfitOverFundsComponent,
+        ConvertDatePipe,
     ],
     entryComponents: [TaskFormBottomSheetComponent],
     imports: [
