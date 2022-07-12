@@ -16,7 +16,9 @@
         "category": "Category",
         "choose-due-date": "Choose a due date",
         "description": "Description",
-        "title": "Title"
+        "password": "Password",
+        "title": "Title",
+        "username": "Username"
     },
     "login": {
         "authentication-error": "Authentication error.",
@@ -99,6 +101,7 @@
         "login": "Login",
         "profile": "Profile Settings",
         "register": "Register",
+        "settings": "Settings",
         "tasks": "Tasks"
     }
 }
