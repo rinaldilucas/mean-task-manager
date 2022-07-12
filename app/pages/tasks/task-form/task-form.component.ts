@@ -137,9 +137,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
                     this.form.reset();
                     this.close();
                 },
-                () => {
-                    this.snackBar.open('Error adding the task.', null, { duration: 8000 });
-                },
+                () => this.snackBar.open('Error adding the task.', null, { duration: 8000 }),
             );
         } else {
             task._id = this.id;
@@ -150,9 +148,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
                     this.taskService.emitTask.emit();
                     this.close();
                 },
-                () => {
-                    this.snackBar.open('Error updating the task.', null, { duration: 8000 });
-                },
+                () => this.snackBar.open('Error updating the task.', null, { duration: 8000 }),
             );
         }
     }

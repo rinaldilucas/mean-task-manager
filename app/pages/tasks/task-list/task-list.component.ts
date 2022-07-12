@@ -114,9 +114,7 @@ export class TaskListComponent implements OnInit {
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => {
-                this.snackBar.open('Error changing task status.', null, { duration: 8000 });
-            },
+            () => this.snackBar.open('Error changing task status.', null, { duration: 8000 }),
         );
     }
 
@@ -127,9 +125,7 @@ export class TaskListComponent implements OnInit {
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => {
-                this.snackBar.open('Error removing task.', null, { duration: 8000 });
-            },
+            () => this.snackBar.open('Error removing task.', null, { duration: 8000 }),
         );
     }
 }

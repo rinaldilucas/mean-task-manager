@@ -40,6 +40,10 @@ export class AuthService {
         return this.loggedUser.role;
     }
 
+    getLoggedUser(): IAuthData {
+        return this.loggedUser;
+    }
+
     getAuthStatusListener(): Observable<boolean> {
         return this.authStatusListener.asObservable();
     }

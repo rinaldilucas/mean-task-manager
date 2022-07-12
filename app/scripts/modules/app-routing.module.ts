@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 // GUARD
 import { AuthGuard } from '@app/scripts/guards/auth.guard';
+import { RoleGuard } from '@app/scripts/guards/role.guard';
 
 // PAGES
 import { LogInComponent } from '@app/pages/auth/login/login.component';
@@ -16,6 +17,9 @@ import { SettingsComponent } from '@app/pages/settings/settings.component';
 
 // MODALS
 import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
+
+// ENUM
+import { ERole } from '@app/scripts/models/enum/role.enum';
 
 const routes: Routes = [
     { path: 'home', component: HomepageComponent },
@@ -31,10 +35,10 @@ const routes: Routes = [
         ],
     },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.admin } },
     { path: 'callback', component: EmptyPageComponent, canActivate: [AuthGuard] },
     { path: '', pathMatch: 'full', redirectTo: 'home' },
-    { path: '**', pathMatch: 'full', redirectTo: 'tasks', canActivate: [AuthGuard] },
+    { path: '**', pathMatch: 'full', component: EmptyPageComponent },
 ];
 
 @NgModule({

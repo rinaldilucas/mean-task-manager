@@ -65,9 +65,7 @@ export class ProfileComponent implements OnInit {
                 this.snackBar.open('Profile edited with success.', null, { duration: 5000 });
                 this.refresh();
             },
-            () => {
-                this.snackBar.open('Error editing profile.', null, { duration: 8000 });
-            },
+            () => this.snackBar.open('Error editing profile.', null, { duration: 8000 }),
         );
     }
 
