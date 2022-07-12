@@ -9,10 +9,10 @@ import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
-    setDataSource(list: ITask[], sort: MatSort, paginator: MatPaginator): TableVirtualScrollDataSource<ITask> {
+    setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
         const dataSource = new TableVirtualScrollDataSource(list);
-        dataSource.sort = sort;
-        dataSource.paginator = paginator;
+        if (sort) dataSource.sort = sort;
+        if (paginator) dataSource.paginator = paginator;
 
         return dataSource;
     }

@@ -66,17 +66,6 @@ export class AuthService {
         }
     }
 
-    logout(): void {
-        this.userService.logout(this.getToken()).subscribe();
-        this.rawToken = '';
-        this.isAuthenticated = false;
-        this.authStatusListener.next(false);
-        clearTimeout(this.tokenTimer);
-        this.clearAuthData();
-        this.router.navigate(['/']);
-        this.emitMenu.emit(false);
-    }
-
     verifyAuthorization(): boolean {
         const authInformation = this.getAuthData();
 
@@ -99,6 +88,21 @@ export class AuthService {
         return false;
     }
 
+    logout(): void {
+        this.userService.logout(this.getToken()).subscribe();
+        this.rawToken = '';
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        clearTimeout(this.tokenTimer);
+        this.clearAuthData();
+        this.router.navigate(['/']);
+        this.emitMenu.emit(false);
+    }
+
+    private setAuthTimer(duration: number): void {
+        this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
+    }
+
     getAuthData(): IJwtPayload | false {
         const token = localStorage.getItem('token') as string;
         const expirationDate = localStorage.getItem('expiration') as string;
@@ -116,10 +120,6 @@ export class AuthService {
             userRole,
             expiresIn: 0,
         };
-    }
-
-    private setAuthTimer(duration: number): void {
-        this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
     }
 
     private saveAuthData(token: string, expirationDate: Date, userId: string): void {

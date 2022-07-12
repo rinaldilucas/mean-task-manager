@@ -34,19 +34,18 @@ export class TasksDoneComponent implements OnInit {
     }
 
     getDailyEarnings(): void {
-        this.taskService.listTasksByUser().subscribe((result: IQueryResult<ITask>) => {
-            this.tasks = result.data;
-            this.pieChartData = [];
-            this.pieChartLabels = [];
-
-            // if (!!this.tasks.length) {
-            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'ToDo').length);
-            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'ToDo').length} To Do`);
-            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'progress').length);
-            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'progress').length} Progress`);
-            //     this.pieChartData.push(this.tasks.filter((task) => task.status === 'done').length);
-            //     this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'done').length} Done`);
-            // }
-        });
+        // this.taskService.listTasksByUser().subscribe((result: IQueryResult<ITask>) => {
+        //     this.tasks = result.data;
+        //     this.pieChartData = [];
+        //     this.pieChartLabels = [];
+        //     if (!!this.tasks.length) {
+        //         this.pieChartData.push(this.tasks.filter((task) => task.status === 'ToDo').length);
+        //         this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'ToDo').length} To Do`);
+        //         this.pieChartData.push(this.tasks.filter((task) => task.status === 'progress').length);
+        //         this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'progress').length} Progress`);
+        //         this.pieChartData.push(this.tasks.filter((task) => task.status === 'done').length);
+        //         this.pieChartLabels.push(`${this.tasks.filter((task) => task.status === 'done').length} Done`);
+        //     }
+        // });
     }
 }

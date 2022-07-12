@@ -19,11 +19,13 @@ export class UserService {
 
     listUsers(): Observable<IQueryResult<IUser>[]> {
         const url = `${this.url}?language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<IUser>[]>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
     getUser(id: string): Observable<IQueryResult<IUser>> {
         const url = `${this.url}/${id}?language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
@@ -36,22 +38,26 @@ export class UserService {
 
     updateUser(user: IUser): Observable<IQueryResult<IUser>> {
         const url = `${this.url}?language=${this.translateService.currentLang}`;
+
         return this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.utilService.errorHandler));
     }
 
     authenticate(username: string, password: string): Observable<IQueryResult<IJwtPayload>> {
         const credentials = { username, password };
         const url = `${this.url}/authenticate?language=${this.translateService.currentLang}`;
+
         return this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.utilService.errorHandler));
     }
 
     register(user: IUser): Observable<IQueryResult<IUser>> {
         const url = `${this.url}/register?language=${this.translateService.currentLang}`;
+
         return this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.utilService.errorHandler));
     }
 
     logout(token: string): Observable<IQueryResult<IUser>> {
         const url = `${this.url}/logout?language=${this.translateService.currentLang}`;
+
         return this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.utilService.errorHandler));
     }
 }

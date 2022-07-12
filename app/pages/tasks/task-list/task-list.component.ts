@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
@@ -41,6 +41,9 @@ export class TaskListComponent implements OnInit {
     tasks: ITask[] = [];
     status = EStatus;
 
+    pageSize: number = 5;
+    pageCount: number = 1;
+
     constructor(
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
@@ -60,8 +63,9 @@ export class TaskListComponent implements OnInit {
     }
 
     refresh(): void {
-        this.taskService.listTasksByUser().subscribe((result: IQueryResult<ITask>) => {
+        this.taskService.listTasksByUser(this.pageSize).subscribe((result: IQueryResult<ITask>) => {
             this.tasks = result.data;
+            this.pageCount = result.count;
             this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
             this.isLoading = false;
             this.changeDetector.markForCheck();
@@ -125,5 +129,18 @@ export class TaskListComponent implements OnInit {
             },
             () => this.snackBar.open('Error removing task.', undefined, { duration: 8000 }),
         );
+    }
+
+    onPaginateChange(event: PageEvent): any {
+        const pageIndex = event.pageIndex;
+        const pageSize = event.pageSize;
+
+        this.taskService.listTasksByUserOffset(pageIndex, pageSize).subscribe((result: IQueryResult<ITask>) => {
+            this.tasks = result.data;
+            this.pageCount = result.count;
+            this.tasksDataSource = this.utilService.setDataSource(this.tasks);
+            this.isLoading = false;
+            this.changeDetector.markForCheck();
+        });
     }
 }

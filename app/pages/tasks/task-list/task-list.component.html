@@ -44,21 +44,21 @@
             </div>
 
             <div class="list__body">
-                <div *ngIf="!isLoading && (!tasks || tasks.length == 0)" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
+                <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
                     <div>
                         <mat-icon class="icon icon--big">sms</mat-icon>
                     </div>
                     <div>{{ "task-list.empty" | translate }}</div>
                 </div>
 
-                <div *ngIf="!isLoading && searchedTasks && searchedTasks.length == 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
+                <div *ngIf="!isLoading && searchedTasks && searchedTasks.length > 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
                     <div>
                         <mat-icon class="icon icon--big">sms</mat-icon>
                     </div>
                     <div>{{ "task-list.empty-search" | translate }}</div>
                 </div>
 
-                <div *ngIf="!isLoading && tasks && !!tasks.length && (!searchedTasks || searchedTasks.length > 0)" class="table">
+                <div *ngIf="!isLoading && tasks && !!tasks.length && searchedTasks?.length === 0" class="table">
                     <cdk-virtual-scroll-viewport *ngIf="this.tasks && this.tasks.length > 0" class="list__body-table" tvsItemSize="20">
                         <table [hidden]="isLoading || !tasks || !tasks.length" mat-table [dataSource]="tasksDataSource" matSort>
                             <ng-container matColumnDef="date">
@@ -157,7 +157,7 @@
                 </div>
 
                 <div [hidden]="isLoading || (tasks && tasks.length === 0)">
-                    <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [length]="pageCount" [pageSizeOptions]="[pageSize, pageSize * 2, pageSize * 4]" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
         </div>

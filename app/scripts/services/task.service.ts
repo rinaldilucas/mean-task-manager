@@ -17,14 +17,23 @@ export class TaskService {
 
     constructor(private http: HttpClient, private utilService: UtilService, private authService: AuthService, private translateService: TranslateService) {}
 
-    listTasksByUser(): Observable<IQueryResult<ITask>> {
+    listTasksByUser(pageSize: number): Observable<IQueryResult<ITask>> {
         const id = this.authService.getUserId();
-        const url = `${this.url}/user/${id}?language=${this.translateService.currentLang}`;
+        const url = `${this.url}/user/${id}?pageSize=${pageSize}&language=${this.translateService.currentLang}`;
+
+        return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.utilService.errorHandler));
+    }
+
+    listTasksByUserOffset(pageIndex: number, pageSize: number): Observable<IQueryResult<ITask>> {
+        const id = this.authService.getUserId();
+        const url = `${this.url}/user/${id}?pageIndex=${pageIndex}&pageSize=${pageSize}&language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
     getTask(id: string): Observable<IQueryResult<ITask>> {
         const url = `${this.url}/${id}?language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 

@@ -18,16 +18,19 @@ export class CategoryService {
 
     listCategories(): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}?language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
     getCategory(id: string): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}/${id}?language=${this.translateService.currentLang}`;
+
         return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
     createCategory(category: ICategory): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}?language=${this.translateService.currentLang}`;
+
         return this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.utilService.errorHandler));
     }
 
