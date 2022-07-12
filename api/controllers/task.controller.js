@@ -12,12 +12,9 @@ exports.findAllByUser = async (request, response) => {
     var countQuery = function (callback) {
         Task.find({ userId: request.params.userId })
             .sort({ date: -1 })
-            .count({}, (error, count) => {
-                if (error) {
-                    callback(error, null);
-                } else {
-                    callback(null, count);
-                }
+            .countDocuments({}, (error, count) => {
+                if (error) callback(error, null);
+                else callback(null, count);
             });
     };
 
@@ -27,27 +24,21 @@ exports.findAllByUser = async (request, response) => {
                 .sort({ date: -1 })
                 .skip(pageIndex * pageSize)
                 .limit(pageSize)
-                .exec((error, docs) => {
-                    if (error) {
-                        callback(error, null);
-                    } else {
-                        callback(null, docs);
-                    }
+                .exec((error, documents) => {
+                    if (error) callback(error, null);
+                    else callback(null, documents);
                 });
         };
 
         async.parallel([countQuery, retrieveQuery], function (error, results) {
             if (error) {
-                if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
-                else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-                return;
+                if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
+                else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
             }
 
             httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
         });
     } else {
-        pageIndex = 1;
-
         var retrieveQuery = function (callback) {
             Task.find({ userId: request.params.userId })
                 .sort({ date: -1 })
@@ -63,9 +54,8 @@ exports.findAllByUser = async (request, response) => {
 
         async.parallel([countQuery, retrieveQuery], function (error, results) {
             if (error) {
-                if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
-                else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-                return;
+                if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
+                else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
             }
 
             httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
