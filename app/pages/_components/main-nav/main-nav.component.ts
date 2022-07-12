@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -6,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 import { AuthService } from '@app/scripts/services/auth.service';
 import { TaskService } from '@app/scripts/services/task.service';
@@ -19,7 +18,6 @@ import { UserService } from '@app/scripts/services/user.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainNavComponent implements OnInit {
-    @HostBinding('class') className = '';
     time = new Date();
     opened!: boolean;
     isLogged = false;
@@ -39,7 +37,6 @@ export class MainNavComponent implements OnInit {
         public userService: UserService,
         public changeDetector: ChangeDetectorRef,
         public router: Router,
-        private overlay: OverlayContainer,
     ) {}
 
     ngOnInit(): void {
@@ -47,34 +44,31 @@ export class MainNavComponent implements OnInit {
         this.isLogged = this.authService.getIsAuth();
         this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
 
-        this.toggleTheme.valueChanges.subscribe((darkMode) => {
-            const darkClassName = 'darkMode';
-            this.className = darkMode ? darkClassName : '';
-            if (darkMode) {
-                this.overlay.getContainerElement().classList.add(darkClassName);
+        const darkClassName = 'darkMode';
+        const previousTheme = localStorage.getItem('theme') as string;
+        if (previousTheme) {
+            document.body.classList.add(darkClassName);
+            this.toggleTheme = new FormControl(true);
+        }
+
+        this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
+            if (enableDarkMode) {
+                document.body.classList.add(darkClassName);
+                localStorage.setItem('theme', darkClassName);
             } else {
-                this.overlay.getContainerElement().classList.remove(darkClassName);
+                document.body.classList.remove(darkClassName);
+                localStorage.removeItem('theme');
             }
         });
     }
 
     logout(): void {
         this.authService.logout();
-
-        this.translateService.get('messages.user-logout').subscribe((text: string) => {
-            let message = text;
-            this.snackBar.open(message, undefined, { duration: 5000 });
-        });
+        this.translateService.get('messages.user-logout').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
     }
 
     changeLanguage(language: string): void {
         this.translateService.use(language);
-
-        this.translateService.get('messages.language-changed').subscribe((text: string) => {
-            let message = text;
-            this.snackBar.open(message, undefined, { duration: 5000 });
-        });
+        this.translateService.get('messages.language-changed').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
     }
-
-    changeTheme(): void {}
 }
