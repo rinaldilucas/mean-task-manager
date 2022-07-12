@@ -69,6 +69,7 @@ export class MainNavComponent implements OnInit {
 
     changeLanguage(language: string): void {
         this.translateService.use(language);
+        localStorage.setItem('language', language);
         this.translateService.get('messages.language-changed').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
     }
 }
