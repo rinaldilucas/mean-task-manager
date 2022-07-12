@@ -58,14 +58,14 @@ export class ProfileComponent implements OnInit {
         user.username = this.form.controls['username'].value ? this.form.controls['username'].value : user.username;
         user.password = this.form.controls['password'].value ? this.form.controls['password'].value : user.password;
 
-        this.userService.updateUser(user).subscribe(
-            () => {
+        this.userService.updateUser(user).subscribe({
+            next: () => {
                 this.form.reset();
                 this.snackBar.open('Profile edited with success.', undefined, { duration: 5000 });
                 this.refresh();
             },
-            () => this.snackBar.open('Error editing profile.', undefined, { duration: 8000 }),
-        );
+            error: () => this.snackBar.open('Error editing profile.', undefined, { duration: 8000 }),
+        });
     }
 
     isValidForm(): boolean {

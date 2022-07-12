@@ -41,8 +41,8 @@ export class TaskListComponent implements OnInit {
     tasks: ITask[] = [];
     status = EStatus;
 
-    pageSize: number = 5;
-    pageCount: number = 1;
+    pageSize = 5;
+    pageCount = 1;
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -110,25 +110,25 @@ export class TaskListComponent implements OnInit {
     changeStatus(task: ITask, status: EStatus): void {
         task.status = status;
 
-        this.taskService.updateTask(task).subscribe(
-            () => {
+        this.taskService.updateTask(task).subscribe({
+            next: () => {
                 this.snackBar.open('Task status changed.', undefined, { duration: 5000 });
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => this.snackBar.open('Error changing task status.', undefined, { duration: 8000 }),
-        );
+            error: () => this.snackBar.open('Error changing task status.', undefined, { duration: 8000 }),
+        });
     }
 
     delete(task: ITask): void {
-        this.taskService.deleteTask(task._id).subscribe(
-            () => {
+        this.taskService.deleteTask(task._id).subscribe({
+            next: () => {
                 this.snackBar.open('Task removed.', undefined, { duration: 5000 });
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            () => this.snackBar.open('Error removing task.', undefined, { duration: 8000 }),
-        );
+            error: () => this.snackBar.open('Error removing task.', undefined, { duration: 8000 }),
+        });
     }
 
     onPaginateChange(event: PageEvent): any {

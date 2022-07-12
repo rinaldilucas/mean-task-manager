@@ -46,8 +46,8 @@ export class RegisterComponent implements OnInit {
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
 
-        this.userService.register(user).subscribe(
-            (result: IQueryResult<IUser>) => {
+        this.userService.register(user).subscribe({
+            next: (result: IQueryResult<IUser>) => {
                 if (!result || !result.success) {
                     this.snackBar.open('Error creating user.', undefined, { duration: 8000 });
                 }
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
                 this.snackBar.open('User created with success.', undefined, { duration: 5000 });
                 this.router.navigate([`${this.router.url.split(/\/(register)\/?/gi)[0]}/login`]);
             },
-            (error: IQueryResult<IUser>) => {
+            error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorConflict) {
                     this.snackBar.open('Username already taken.', undefined, { duration: 8000 });
                     return;
@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
                 this.snackBar.open('Error creating user.', undefined, { duration: 8000 });
             },
-        );
+        });
     }
 
     isValidForm(): boolean {

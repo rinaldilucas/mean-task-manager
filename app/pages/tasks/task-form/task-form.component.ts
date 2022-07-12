@@ -123,33 +123,31 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     save(): void {
-        if (!this.isValidForm()) {
-            return;
-        }
+        if (!this.isValidForm()) return;
 
         const task = { ...this.form.value, userId: this.authService.getUserId() } as ITask;
         if (!this.id) {
             task.status = EStatus.toDo;
-            this.taskService.createTask(task).subscribe(
-                () => {
+            this.taskService.createTask(task).subscribe({
+                next: () => {
                     this.snackBar.open('Task added with success.', undefined, { duration: 5000 });
                     this.taskService.emitTask.emit(task);
                     this.form.reset();
                     this.close();
                 },
-                () => this.snackBar.open('Error adding the task.', undefined, { duration: 8000 }),
-            );
+                error: () => this.snackBar.open('Error adding the task.', undefined, { duration: 8000 }),
+            });
         } else {
             task._id = this.id;
-            this.taskService.updateTask(task).subscribe(
-                () => {
+            this.taskService.updateTask(task).subscribe({
+                next: () => {
                     this.snackBar.open('Task edited with success.', undefined, { duration: 5000 });
                     this.form.reset();
                     this.taskService.emitTask.emit();
                     this.close();
                 },
-                () => this.snackBar.open('Error updating the task.', undefined, { duration: 8000 }),
-            );
+                error: () => this.snackBar.open('Error updating the task.', undefined, { duration: 8000 }),
+            });
         }
     }
 

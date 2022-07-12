@@ -67,8 +67,8 @@ export class SettingsComponent implements OnInit {
             return;
         }
 
-        this.categoryService.createCategory(category).subscribe(
-            (result: IQueryResult<ICategory>) => {
+        this.categoryService.createCategory(category).subscribe({
+            next: (result: IQueryResult<ICategory>) => {
                 if (!result || !result.success) {
                     this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
                     return;
@@ -80,17 +80,17 @@ export class SettingsComponent implements OnInit {
                 this.categoryInput.nativeElement.value = '';
                 this.categories.push(result.data[0]);
             },
-            () => {
+            error: () => {
                 this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
-        );
+        });
     }
 
     removeCategory(category: ICategory): void {
-        this.categoryService.deleteCategory(category._id).subscribe(
-            (result: IQueryResult<ICategory>) => {
+        this.categoryService.deleteCategory(category._id).subscribe({
+            next: (result: IQueryResult<ICategory>) => {
                 if (!result || !result?.success) {
                     this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
                     return;
@@ -103,11 +103,11 @@ export class SettingsComponent implements OnInit {
                 const index = this.categories.indexOf(category);
                 this.categories.splice(index, 1);
             },
-            () => {
+            error: () => {
                 this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
-        );
+        });
     }
 }

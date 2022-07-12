@@ -48,8 +48,8 @@ export class LogInComponent implements OnInit {
 
         const user = { ...this.form.value } as IUser;
 
-        this.userService.authenticate(user.username, user.password).subscribe(
-            (result: IQueryResult<IJwtPayload>) => {
+        this.userService.authenticate(user.username, user.password).subscribe({
+            next: (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
                     this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
                     return;
@@ -60,7 +60,7 @@ export class LogInComponent implements OnInit {
                     this.router.navigate([`${this.router.url.split(/\/(login)\/?/gi)[0]}/tasks`]);
                 }
             },
-            (error: IQueryResult<IUser>) => {
+            error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorNotFound) {
                     this.snackBar.open("Username don't exists.", undefined, { duration: 8000 });
                     return;
@@ -71,7 +71,7 @@ export class LogInComponent implements OnInit {
                 }
                 this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
             },
-        );
+        });
     }
 
     isValidForm(): boolean {
