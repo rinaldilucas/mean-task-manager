@@ -61,16 +61,16 @@ export class ProfileComponent implements OnInit {
         this.userService.updateUser(user).subscribe({
             next: () => {
                 this.form.reset();
-                this.snackBar.open('Profile edited with success.', undefined, { duration: 5000 });
+                this.translateService.get('profile.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.refresh();
             },
-            error: () => this.snackBar.open('Error editing profile.', undefined, { duration: 8000 }),
+            error: () => this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
         });
     }
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
+            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput();
             return false;
         }

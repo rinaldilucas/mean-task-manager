@@ -35,7 +35,7 @@ const routes: Routes = [
         ],
     },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.admin } },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
     { path: 'callback', component: EmptyPageComponent, canActivate: [AuthGuard] },
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', component: EmptyPageComponent },

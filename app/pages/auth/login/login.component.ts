@@ -47,36 +47,35 @@ export class LogInComponent implements OnInit {
         }
 
         const user = { ...this.form.value } as IUser;
-
         this.userService.authenticate(user.username, user.password).subscribe({
             next: (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
-                    this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
+                    this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
 
                 if (this.authService.authenticateToken(result.data[0])) {
-                    this.snackBar.open('Logged with success.', undefined, { duration: 8000 });
+                    this.translateService.get('login.login-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     this.router.navigate([`${this.router.url.split(/\/(login)\/?/gi)[0]}/tasks`]);
                 }
             },
             error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorNotFound) {
-                    this.snackBar.open("Username don't exists.", undefined, { duration: 8000 });
+                    this.translateService.get('login.user-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
                 if (error.status === StatusCode.ClientErrorForbidden) {
-                    this.snackBar.open("Password doesn't match.", undefined, { duration: 8000 });
+                    this.translateService.get('input.password-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
-                this.snackBar.open('Authentication error.', undefined, { duration: 8000 });
+                this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             },
         });
     }
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
+            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput();
             return false;
         }

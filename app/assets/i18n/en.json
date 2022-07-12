@@ -3,11 +3,6 @@
         "description": "Mean Stack Template",
         "title": "My Notes WebApp"
     },
-    "auth": {
-        "password": "Password",
-        "remember-me": "Remember me",
-        "username": "Username"
-    },
     "button": {
         "register": "Register",
         "save": "Save",
@@ -23,6 +18,21 @@
         "description": "Description",
         "title": "Title"
     },
+    "login": {
+        "authentication-error": "Authentication error.",
+        "login-success": "Logged with success.",
+        "password": "Password",
+        "password-error": "Password doesn't match.",
+        "remember-me": "Remember me",
+        "user-error": "Username don't exists.",
+        "username": "Username"
+    },
+    "messages": {
+        "language-changed": "Language changed.",
+        "mandatory-fields": "You must fill the mandatory fields.",
+        "user-logout": "User successfully logout.",
+        "user-without-permission": "User without the required permission."
+    },
     "navigation": {
         "login": "Login",
         "logout": "Logout",
@@ -31,8 +41,21 @@
         "settings": "Settings",
         "tasks": "Tasks"
     },
+    "profile": {
+        "edit-error": "Error editing profile.",
+        "edit-success": "Profile edited with success."
+    },
+    "register": {
+        "create-error": "Error creating user.",
+        "create-success": "User created with success.",
+        "username-error": "Username already taken."
+    },
     "settings": {
         "categories-names": "Categories names",
+        "category-create-error": "Error adding the category.",
+        "category-create-success": "Category added successfully.",
+        "category-remove-error": "Error removing the category.",
+        "category-remove-success": "Category removed with success.",
         "category-selection": "Category selection",
         "new-category": "New category..."
     },
@@ -51,25 +74,31 @@
         "title": "Title",
         "to-do": "To do"
     },
+    "task-form": {
+        "create-error": "Error adding the task.",
+        "create-success": "Task created with success.",
+        "edit-error": "Error updating the task.",
+        "edit-success": "Task edited with success."
+    },
     "task-list": {
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",
+        "remove": "Task removed.",
+        "remove-error": "Error removing task.",
         "search": "Search",
+        "status-change": "Task status changed.",
+        "status-change-error": "Error changing task status.",
         "title-tooltip": "Add task"
     },
     "title": {
         "add-task": "Add Task",
         "categories": "Categories",
         "edit-task": "Edit Task",
+        "home": "Home",
         "login": "Login",
         "profile": "Profile Settings",
         "register": "Register",
         "tasks": "Tasks"
-    },
-    "messages": {
-        "language-changed": "Language changed.",
-        "user-logout": "User successfully logout.",
-        "user-login": "User successfully logged."
     }
 }

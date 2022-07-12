@@ -96,22 +96,22 @@ export class TaskListComponent implements OnInit {
 
         this.taskService.updateTask(task).subscribe({
             next: () => {
-                this.snackBar.open('Task status changed.', undefined, { duration: 5000 });
+                this.translateService.get('task-list.status-change').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            error: () => this.snackBar.open('Error changing task status.', undefined, { duration: 8000 }),
+            error: () => this.translateService.get('task-list.status-change-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
         });
     }
 
     delete(task: ITask): void {
         this.taskService.deleteTask(task._id).subscribe({
             next: () => {
-                this.snackBar.open('Task removed.', undefined, { duration: 5000 });
+                this.translateService.get('task-list.remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            error: () => this.snackBar.open('Error removing task.', undefined, { duration: 8000 }),
+            error: () => this.translateService.get('task-list.remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
         });
     }
 

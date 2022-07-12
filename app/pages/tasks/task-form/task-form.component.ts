@@ -130,23 +130,23 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             task.status = EStatus.toDo;
             this.taskService.createTask(task).subscribe({
                 next: () => {
-                    this.snackBar.open('Task added with success.', undefined, { duration: 5000 });
+                    this.translateService.get('task-form.create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                     this.taskService.emitTask.emit(task);
                     this.form.reset();
                     this.close();
                 },
-                error: () => this.snackBar.open('Error adding the task.', undefined, { duration: 8000 }),
+                error: () => this.translateService.get('task-form.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
             });
         } else {
             task._id = this.id;
             this.taskService.updateTask(task).subscribe({
                 next: () => {
-                    this.snackBar.open('Task edited with success.', undefined, { duration: 5000 });
+                    this.translateService.get('task-form.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                     this.form.reset();
                     this.taskService.emitTask.emit();
                     this.close();
                 },
-                error: () => this.snackBar.open('Error updating the task.', undefined, { duration: 8000 }),
+                error: () => this.translateService.get('task-form.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
             });
         }
     }
@@ -166,7 +166,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
     isValidForm(): boolean {
         if (!this.form.valid) {
-            this.snackBar.open('You must fill the mandatory fields.', undefined, { duration: 8000 });
+            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput();
             return false;
         }

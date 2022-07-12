@@ -70,18 +70,18 @@ export class SettingsComponent implements OnInit {
         this.categoryService.createCategory(category).subscribe({
             next: (result: IQueryResult<ICategory>) => {
                 if (!result || !result.success) {
-                    this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
+                    this.translateService.get('settings.category-create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
 
-                this.snackBar.open('Category added successfully.', undefined, { duration: 5000 });
+                this.translateService.get('settings.category-create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.categoryService.emitCategory.emit(result.data[0]);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
                 this.categories.push(result.data[0]);
             },
             error: () => {
-                this.snackBar.open('Error adding the category.', undefined, { duration: 8000 });
+                this.translateService.get('settings.category-create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
@@ -92,19 +92,20 @@ export class SettingsComponent implements OnInit {
         this.categoryService.deleteCategory(category._id).subscribe({
             next: (result: IQueryResult<ICategory>) => {
                 if (!result || !result?.success) {
-                    this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
+                    this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
 
-                this.snackBar.open('Category removed with success.', undefined, { duration: 5000 });
+                this.translateService.get('settings.category-remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.categoryService.emitCategory.emit(category);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
                 const index = this.categories.indexOf(category);
                 this.categories.splice(index, 1);
+                this.changeDetector.markForCheck();
             },
             error: () => {
-                this.snackBar.open('Error removing the category.', undefined, { duration: 8000 });
+                this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
