@@ -1,7 +1,7 @@
 module.exports = function (app) {
     const passportMiddleware = require('../middleware/passport.middleware');
     const validatorMiddleware = require('../middleware/validator.middleware');
-    const { body } = require('express-validator');
+    const { check } = require('express-validator');
 
     const tasks = require('../controllers/task.controller');
 
@@ -14,7 +14,12 @@ module.exports = function (app) {
     // CREATE
     app.post(
         '/api/tasks', //
-        body('title').isLength({ min: 2 }).not().isEmpty().trim(),
+        check('title') //
+            .isLength({ min: 2 })
+            .withMessage('Must be at least 2 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
         validatorMiddleware.verifyValidations,
         passportMiddleware.applyBearerStrategy,
         tasks.create,

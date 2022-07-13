@@ -1,7 +1,7 @@
 module.exports = function (app) {
     const passportMiddleware = require('../middleware/passport.middleware');
     const validatorMiddleware = require('../middleware/validator.middleware');
-    const { body } = require('express-validator');
+    const { check } = require('express-validator');
 
     const users = require('../controllers/user.controller');
 
@@ -23,8 +23,22 @@ module.exports = function (app) {
     // REGISTER
     app.post(
         '/api/users/register', //
-        body('username').isLength({ min: 5, max: 150 }).not().isEmpty().trim(),
-        body('password').isLength({ min: 8, max: 150 }).not().isEmpty().trim(),
+        check('username', 'Must be at least 5 and lesser than 150 chars long') //
+            .isLength({ min: 5 })
+            .withMessage('Must be at least 5 chars long')
+            .isLength({ max: 150 })
+            .withMessage('Must be lesser than 150 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long') //
+            .isLength({ min: 8 })
+            .withMessage('Must be at least 8 chars long')
+            .isLength({ max: 150 })
+            .withMessage('Must be lesser than 150 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
         validatorMiddleware.verifyValidations,
         users.register,
     );
@@ -32,8 +46,22 @@ module.exports = function (app) {
     // AUTHENTICATE
     app.post(
         '/api/users/authenticate', //
-        body('username').isLength({ min: 5, max: 150 }).not().isEmpty().trim(),
-        body('password').isLength({ min: 8, max: 150 }).not().isEmpty().trim(),
+        check('username', 'Must be at least 5 and lesser than 150 chars long') //
+            .isLength({ min: 5 })
+            .withMessage('Must be at least 5 chars long')
+            .isLength({ max: 150 })
+            .withMessage('Must be lesser than 150 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long') //
+            .isLength({ min: 8 })
+            .withMessage('Must be at least 8 chars long')
+            .isLength({ max: 150 })
+            .withMessage('Must be lesser than 150 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
         validatorMiddleware.verifyValidations,
         users.authenticate,
     );
@@ -44,7 +72,14 @@ module.exports = function (app) {
     // CHANGE PASSWORD
     app.post(
         '/api/users/changePassword', //
-        body('password').isLength({ min: 8, max: 150 }).not().isEmpty().trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long') //
+            .isLength({ min: 8 })
+            .withMessage('Must be at least 8 chars long')
+            .isLength({ max: 150 })
+            .withMessage('Must be lesser than 150 chars long')
+            .not()
+            .isEmpty()
+            .trim(),
         validatorMiddleware.verifyValidations,
         users.changePassword,
     );
