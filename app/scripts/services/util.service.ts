@@ -25,24 +25,27 @@ export class UtilService {
     }
 
     errorHandler(result: HttpErrorResponse): Observable<never> {
-        let errorObject;
+        let errorResponse: any;
 
-        errorObject = {
+        errorResponse = {
             success: result.error.success,
             status: result.status,
             message: '',
         };
 
         if (!!result?.error?.message) {
-            errorObject.message = result.error.message;
+            errorResponse.message = result.error.message;
             console.log(`[${result.status}] - Message: ${result.error.message}`);
+        } else if (result?.error?.validationErrors?.length > 0) {
+            console.log(`[${result.status}] - Message: Validation Error.`);
+            console.table(result.error.validationErrors);
         } else if (!!result?.error) {
             console.log(`[${result.status}] - Message: ${result.error}`);
         } else {
             console.log(`[${result.status}] - Message: ${result.message}`);
         }
 
-        return throwError(errorObject);
+        return throwError(() => errorResponse);
     }
 
     isValidForm(form: FormGroup<any>): boolean {

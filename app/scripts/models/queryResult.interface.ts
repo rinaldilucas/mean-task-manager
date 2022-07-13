@@ -4,4 +4,5 @@ export interface IQueryResult<T> {
     data: T[];
     status: number;
     count: number;
+    validationErrors: any[];
 }

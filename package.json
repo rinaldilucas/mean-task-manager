@@ -29,6 +29,7 @@
         "dotenv": "^16.0.0",
         "e2e": "0.0.8",
         "express": "^4.17.1",
+        "express-validator": "^6.14.2",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.15",
         "moment": "^2.29.2",

@@ -1,20 +1,28 @@
-const verifyAuthToken = require('../middleware/check-auth');
-
 module.exports = function (app) {
+    const passportMiddleware = require('../middleware/passport.middleware');
+    const validatorMiddleware = require('../middleware/validator.middleware');
+    const { body } = require('express-validator');
+
     const tasks = require('../controllers/task.controller');
 
     // GET ALL TASKS BY USER
-    app.get('/api/tasks/user/:userId', verifyAuthToken.bearer, tasks.findAllByUser);
+    app.get('/api/tasks/user/:userId', passportMiddleware.applyBearerStrategy, tasks.findAllByUser);
 
     // GET BY ID
-    app.get('/api/tasks/:_id', verifyAuthToken.bearer, tasks.findOne);
+    app.get('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, tasks.findOne);
 
     // CREATE
-    app.post('/api/tasks', verifyAuthToken.bearer, tasks.create);
+    app.post(
+        '/api/tasks', //
+        body('title').isLength({ min: 2 }).not().isEmpty().trim(),
+        validatorMiddleware.verifyValidations,
+        passportMiddleware.applyBearerStrategy,
+        tasks.create,
+    );
 
     // UPDATE
-    app.put('/api/tasks', verifyAuthToken.bearer, tasks.update);
+    app.put('/api/tasks', passportMiddleware.applyBearerStrategy, tasks.update);
 
     // DELETE
-    app.delete('/api/tasks/:_id', verifyAuthToken.bearer, tasks.delete);
+    app.delete('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, tasks.delete);
 };

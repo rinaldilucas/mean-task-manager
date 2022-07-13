@@ -1,4 +1,6 @@
+const { isArray } = require('lodash');
 const { StatusCode } = require('status-code-enum');
+var util = require('util');
 
 const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
     response.status(statusCode);
@@ -22,14 +24,20 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
 
     if (message) {
         console.log(message);
-    } else {
+    } else if (Array.isArray(error)) {
+        console.log('Validation errors:');
+        console.table(error);
+    } else if (typeof error === 'string' || error instanceof String) {
         console.log(error);
     }
+
+    let responseMessage = message || error.message || error.toString();
 
     return response.json({
         success: false,
         status: statusCode,
-        message: message || error.message || error.toString(),
+        message: !Array.isArray(error) ? responseMessage : null,
+        validationErrors: Array.isArray(error) ? error : [],
     });
 };
 

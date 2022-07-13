@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const blacklistHandler = require('../redis/blacklist-handler');
 const { StatusCode } = require('status-code-enum');
+const { body, validationResult } = require('express-validator');
 
 exports.findAll = (request, response) => {
     const language = request.headers.language;
