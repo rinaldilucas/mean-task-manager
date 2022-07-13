@@ -1,0 +1,109 @@
+{
+    "app": {
+        "description": "Mean Stack Template",
+        "title": "My Notes WebApp"
+    },
+    "button": {
+        "register": "Register",
+        "save": "Save",
+        "signin": "Login"
+    },
+    "error": {
+        "maxlength": "You must fill in text that does not exceed {{value}} characters.",
+        "minlength": "You must fill in text that exceeds {{value}} characters.",
+        "user-exists": "The username already has been taken."
+    },
+    "input": {
+        "category": "Category",
+        "choose-due-date": "Choose a due date",
+        "description": "Description",
+        "password": "Password",
+        "title": "Title",
+        "username": "Username"
+    },
+    "login": {
+        "authentication-error": "Authentication error.",
+        "login-success": "Logged with success.",
+        "password": "Password",
+        "credentials-error": "Password or username doesn't match.",
+        "password-error": "Password doesn't match.",
+        "remember-me": "Remember me",
+        "user-error": "Username don't exists.",
+        "username": "Username"
+    },
+    "messages": {
+        "language-changed": "Language changed.",
+        "mandatory-fields": "You must fill the mandatory fields.",
+        "user-logout": "User successfully logout.",
+        "user-without-permission": "User without the required permission."
+    },
+    "navigation": {
+        "login": "Login",
+        "logout": "Logout",
+        "profile": "Profile",
+        "register": "Register",
+        "settings": "Settings",
+        "tasks": "Tasks"
+    },
+    "profile": {
+        "edit-error": "Error editing profile.",
+        "edit-success": "Profile edited with success."
+    },
+    "register": {
+        "create-error": "Error creating user.",
+        "create-success": "User created with success.",
+        "username-error": "Username already taken."
+    },
+    "settings": {
+        "categories-names": "Categories names",
+        "category-create-error": "Error adding the category.",
+        "category-create-success": "Category added successfully.",
+        "category-remove-error": "Error removing the category.",
+        "category-remove-success": "Category removed with success.",
+        "category-selection": "Category selection",
+        "new-category": "New category..."
+    },
+    "table": {
+        "actions": {
+            "done": "Set as done",
+            "progress": "Mark as in progress",
+            "remove": "Remove"
+        },
+        "category": "Category",
+        "date": "Date",
+        "description": "Description",
+        "done": "Done",
+        "in-progress": "In progress",
+        "status": "Status",
+        "title": "Title",
+        "to-do": "To do"
+    },
+    "task-form": {
+        "create-error": "Error adding the task.",
+        "create-success": "Task created with success.",
+        "edit-error": "Error updating the task.",
+        "edit-success": "Task edited with success."
+    },
+    "task-list": {
+        "empty": "No tasks.",
+        "empty-search": "No tasks found in your search.",
+        "refresh": "Refresh",
+        "remove": "Task removed.",
+        "remove-error": "Error removing task.",
+        "search": "Search",
+        "status-change": "Task status changed.",
+        "status-change-error": "Error changing task status.",
+        "title-tooltip": "Add task"
+    },
+    "title": {
+        "add-task": "Add Task",
+        "categories": "Categories",
+        "edit-task": "Edit Task",
+        "home": "Home",
+        "login": "Login",
+        "profile": "Profile Settings",
+        "register": "Register",
+        "settings": "Settings",
+        "tasks": "Tasks"
+    }
+}

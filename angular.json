@@ -35,8 +35,8 @@
                             "extractLicenses": true,
                             "fileReplacements": [
                                 {
-                                    "replace": "environments/environment.ts",
-                                    "with": "environments/environment.prod.ts"
+                                    "replace": "app/environments/environment.ts",
+                                    "with": "app/environments/environment.prod.ts"
                                 }
                             ],
                             "namedChunks": false,
