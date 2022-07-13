@@ -46,6 +46,17 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
+    logout(): void {
+        this.userService.logout(this.getToken()).subscribe();
+        this.rawToken = '';
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        clearTimeout(this.tokenTimer);
+        this.clearAuthData();
+        this.router.navigate(['/']);
+        this.emitMenu.emit(false);
+    }
+
     authenticateToken(result: IJwtPayload): boolean {
         const token = result.token;
         this.rawToken = token;
@@ -88,21 +99,6 @@ export class AuthService {
         return false;
     }
 
-    logout(): void {
-        this.userService.logout(this.getToken()).subscribe();
-        this.rawToken = '';
-        this.isAuthenticated = false;
-        this.authStatusListener.next(false);
-        clearTimeout(this.tokenTimer);
-        this.clearAuthData();
-        this.router.navigate(['/']);
-        this.emitMenu.emit(false);
-    }
-
-    private setAuthTimer(duration: number): void {
-        this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
-    }
-
     getAuthData(): IJwtPayload | false {
         const token = localStorage.getItem('token') as string;
         const expirationDate = localStorage.getItem('expiration') as string;
@@ -132,6 +128,10 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
+    }
+
+    private setAuthTimer(duration: number): void {
+        this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
     }
 
     private decodeJwtToken(token: string): void {

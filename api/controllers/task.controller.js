@@ -3,7 +3,7 @@ const httpHandler = require('../utils/http-handler');
 const { StatusCode } = require('status-code-enum');
 
 exports.findAllByUser = async (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
+    const language = request.headers.language;
 
     const async = require('async');
     const pageIndex = +request.query.pageIndex ?? 1;
@@ -57,7 +57,7 @@ exports.findAllByUser = async (request, response) => {
 };
 
 exports.findOne = (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
+    const language = request.headers.language;
 
     Task.findOne({ _id: request.params._id })
         .then((result) => {
@@ -74,7 +74,7 @@ exports.findOne = (request, response) => {
 };
 
 exports.create = (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
+    const language = request.headers.language;
 
     const task = new Task(request.body);
     task.save()
@@ -88,7 +88,7 @@ exports.create = (request, response) => {
 };
 
 exports.update = (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
+    const language = request.headers.language;
 
     Task.findByIdAndUpdate(request.body._id, request.body, { new: true })
         .then((result) => {
@@ -105,7 +105,7 @@ exports.update = (request, response) => {
 };
 
 exports.delete = (request, response) => {
-    const language = request.query.language === 'en' ? 'en' : 'pt';
+    const language = request.headers.language;
 
     Task.findByIdAndRemove(request.params._id)
         .then((result) => {

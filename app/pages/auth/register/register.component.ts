@@ -10,6 +10,7 @@ import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
+import { UsernameValidator } from '@app/scripts/validators/username.validator';
 
 @Component({
     selector: 'app-register',
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
         private translateService: TranslateService,
     ) {
         this.form = this.formBuilder.group({
-            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [this.userService.verifyUsernameTaken()]],
+            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [UsernameValidator.createValidator(this.userService)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }

@@ -66,6 +66,10 @@ export class LogInComponent implements OnInit {
                     this.translateService.get('input.password-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
+                if (error.status === StatusCode.ClientErrorUnauthorized) {
+                    this.translateService.get('login.credentials-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    return;
+                }
                 this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             },
         });

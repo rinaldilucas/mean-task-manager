@@ -14,7 +14,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError((error) => {
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
-                    this.authService.logout();
+                    const isUserPreviouslyLogged = !!localStorage.getItem('token');
+
+                    if (isUserPreviouslyLogged) {
+                        this.authService.logout();
+                    }
                 }
                 return throwError(error);
             }),

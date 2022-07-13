@@ -25,6 +25,7 @@
         "authentication-error": "Authentication error.",
         "login-success": "Logged with success.",
         "password": "Password",
+        "credentials-error": "Password or username doesn't match.",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",
         "user-error": "Username don't exists.",

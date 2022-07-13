@@ -25,6 +25,7 @@
         "authentication-error": "Erro de autenticação.",
         "login-success": "Logado com sucesso.",
         "password": "Senha",
+        "credentials-error": "Senha ou usuário não conferem.",
         "password-error": "Senhas não conferem.",
         "remember-me": "Manter logado",
         "user-error": "Usuário não existe.",
