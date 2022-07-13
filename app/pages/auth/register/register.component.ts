@@ -11,6 +11,7 @@ import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { UsernameValidator } from '@app/scripts/validators/username.validator';
+import { UtilService } from '@app/scripts/services/util.service';
 
 @Component({
     selector: 'app-register',
@@ -29,6 +30,7 @@ export class RegisterComponent implements OnInit {
         private router: Router,
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
+        private utilService: UtilService,
     ) {
         this.form = this.formBuilder.group({
             username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [UsernameValidator.createValidator(this.userService)]],
@@ -37,16 +39,14 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     register(): void {
-        if (!this.isValidForm()) {
-            return;
-        }
+        if (!this.utilService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
-
         this.userService.register(user).subscribe({
             next: (result: IQueryResult<IUser>) => {
                 if (!result || !result.success) {
@@ -64,26 +64,5 @@ export class RegisterComponent implements OnInit {
                 this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             },
         });
-    }
-
-    isValidForm(): boolean {
-        if (!this.form.valid) {
-            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-            this.highlightRequiredInput();
-            return false;
-        }
-        return true;
-    }
-
-    highlightRequiredInput(): void {
-        this.form.markAllAsTouched();
-        for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input)?.valid) {
-                const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
-                (invalidControl as HTMLInputElement).focus();
-                break;
-            }
-        }
-        this.changeDetector.detectChanges();
     }
 }

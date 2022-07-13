@@ -11,6 +11,7 @@ import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
+import { UtilService } from '@app/scripts/services/util.service';
 
 @Component({
     selector: 'app-log-in',
@@ -28,8 +29,9 @@ export class LogInComponent implements OnInit {
         private titleService: Title,
         private snackBar: MatSnackBar,
         private router: Router,
-        private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
+        private utilService: UtilService,
+        private changeDetector: ChangeDetectorRef,
     ) {
         this.form = this.formBuilder.group({
             username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
@@ -38,11 +40,12 @@ export class LogInComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     login(): void {
-        if (!this.isValidForm()) return;
+        if (!this.utilService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
         this.userService.authenticate(user.username, user.password).subscribe({
@@ -73,26 +76,5 @@ export class LogInComponent implements OnInit {
                 this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             },
         });
-    }
-
-    isValidForm(): boolean {
-        if (!this.form.valid) {
-            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-            this.highlightRequiredInput();
-            return false;
-        }
-        return true;
-    }
-
-    highlightRequiredInput(): void {
-        this.form.markAllAsTouched();
-        for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input)?.valid) {
-                const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
-                (invalidControl as HTMLInputElement).focus();
-                break;
-            }
-        }
-        this.changeDetector.detectChanges();
     }
 }

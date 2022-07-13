@@ -17,6 +17,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { UtilService } from '@app/scripts/services/util.service';
 
 @Component({
     template: '',
@@ -70,6 +71,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private router: Router,
         private titleService: Title,
         private translateService: TranslateService,
+        private utilService: UtilService,
         @Inject(MAT_BOTTOM_SHEET_DATA) public id: string,
     ) {
         this.form = this.formBuilder.group({
@@ -81,6 +83,8 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+
         this.categoriesService.listCategories().subscribe((result: IQueryResult<ICategory>) => {
             this.categories = result.data;
             this.setAutoCompletes();
@@ -123,7 +127,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     save(): void {
-        if (!this.isValidForm()) return;
+        if (!this.utilService.isValidForm(this.form)) return;
 
         const task = { ...this.form.value, userId: this.authService.getUserId() } as ITask;
         if (!this.id) {
@@ -162,26 +166,5 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             startWith(''),
             map((value) => this._filterCategories(value)),
         );
-    }
-
-    isValidForm(): boolean {
-        if (!this.form.valid) {
-            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-            this.highlightRequiredInput();
-            return false;
-        }
-        return true;
-    }
-
-    highlightRequiredInput(): void {
-        this.form.markAllAsTouched();
-        for (const input of Object.keys(this.form.controls)) {
-            if (!this.form.get(input)?.valid) {
-                const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
-                (invalidControl as HTMLInputElement).focus();
-                break;
-            }
-        }
-        this.changeDetector.detectChanges();
     }
 }

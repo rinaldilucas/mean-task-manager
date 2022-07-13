@@ -1,14 +1,21 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { FormGroup } from '@angular/forms';
 
 import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
+    inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    constructor(private translateService: TranslateService, private snackBar: MatSnackBar) {}
+
     setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
         const dataSource = new TableVirtualScrollDataSource(list);
         if (sort) dataSource.sort = sort;
@@ -36,5 +43,26 @@ export class UtilService {
         }
 
         return throwError(errorObject);
+    }
+
+    isValidForm(form: FormGroup<any>): boolean {
+        if (!form.valid) {
+            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+            this.highlightRequiredInput(form);
+            return false;
+        }
+        return true;
+    }
+
+    highlightRequiredInput(form: FormGroup<any>): void {
+        form.markAllAsTouched();
+        for (const input of Object.keys(form.controls)) {
+            if (!form.get(input)?.valid) {
+                const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
+                (invalidControl as HTMLInputElement).focus();
+                break;
+            }
+        }
+        this.inputErrorListener.emit(true);
     }
 }
