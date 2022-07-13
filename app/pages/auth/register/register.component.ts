@@ -50,19 +50,18 @@ export class RegisterComponent implements OnInit {
         this.userService.register(user).subscribe({
             next: (result: IQueryResult<IUser>) => {
                 if (!result || !result.success) {
-                    this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open('Error creating user.', undefined, { duration: 8000 }));
+                    this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                 }
 
-                this.translateService.get('register.create-success').subscribe((text: string) => this.snackBar.open('User created with success.', undefined, { duration: 5000 }));
+                this.translateService.get('register.create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.router.navigate([`${this.router.url.split(/\/(register)\/?/gi)[0]}/login`]);
             },
             error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorConflict) {
-                    this.translateService.get('register.username-error').subscribe((text: string) => this.snackBar.open('Username already taken.', undefined, { duration: 8000 }));
+                    this.translateService.get('register.username-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
-
-                this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open('Error creating user.', undefined, { duration: 8000 }));
+                this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             },
         });
     }

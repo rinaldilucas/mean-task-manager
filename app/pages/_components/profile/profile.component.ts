@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
@@ -29,38 +30,33 @@ export class ProfileComponent implements OnInit {
         private formBuilder: FormBuilder,
         private translateService: TranslateService,
         private changeDetector: ChangeDetectorRef,
+        private router: Router,
     ) {
         this.form = this.formBuilder.group({
-            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }
 
     ngOnInit(): void {
         this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.refresh();
-    }
-
-    refresh(): void {
-        this.userService.getUser(this.authService.getUserId()).subscribe((result: IQueryResult<IUser>) => {
-            this.user = result.data[0];
-            this.form.controls['username'].patchValue(this.user.username);
-            this.isLoading = false;
-        });
     }
 
     save(): void {
         if (!this.isValidForm()) return;
 
-        const user = { ...this.form.value, _id: this.authService.getUserId() };
-        user.username = this.form.controls['username'].value ? this.form.controls['username'].value : user.username;
-        user.password = this.form.controls['password'].value ? this.form.controls['password'].value : user.password;
+        this.userService.getUser(this.authService.getUserId()).subscribe({
+            next: (result: IQueryResult<IUser>) => {
+                const user = result.data[0];
+                user.password = this.form.controls['password'].value;
 
-        this.userService.updateUser(user).subscribe({
-            next: () => {
-                this.form.reset();
-                this.translateService.get('profile.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
-                this.refresh();
+                this.userService.changePassword(user).subscribe({
+                    next: () => {
+                        this.translateService.get('profile.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                        this.form.reset();
+                        this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
+                    },
+                    error: () => this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+                });
             },
             error: () => this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
         });

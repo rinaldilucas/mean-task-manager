@@ -26,4 +26,7 @@ module.exports = function (app) {
 
     // LOGOUT
     app.post('/api/users/logout', users.logout);
+
+    // CHANGE PASSWORD
+    app.post('/api/users/changePassword', users.changePassword);
 };

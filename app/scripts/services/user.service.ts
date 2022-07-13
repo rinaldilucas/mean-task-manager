@@ -64,4 +64,10 @@ export class UserService {
 
         return this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.utilService.errorHandler));
     }
+
+    changePassword(user: IUser): Observable<IQueryResult<IUser>> {
+        const url = `${this.url}/changePassword`;
+
+        return this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.utilService.errorHandler));
+    }
 }

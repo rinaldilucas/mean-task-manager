@@ -154,3 +154,31 @@ exports.logout = async (request, response) => {
         else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao deslogar. Erro: ${error.message}.`);
     }
 };
+
+exports.changePassword = async (request, response) => {
+    const language = request.headers.language;
+
+    try {
+        const salt = await bcrypt.genSalt(+process.env.SALT_RONDS);
+        const hashedPassword = await bcrypt.hash(request.body.password, salt);
+
+        let newBody = request.body;
+        newBody.password = hashedPassword;
+
+        User.findByIdAndUpdate(request.body._id, newBody, { new: true })
+            .then((result) => {
+                if (!result) {
+                    if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+                    else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
+                }
+                httpHandler.success(response, result);
+            })
+            .catch((error) => {
+                if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
+                else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
+            });
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar usuário. Erro: ${error.message}.`);
+    }
+};
