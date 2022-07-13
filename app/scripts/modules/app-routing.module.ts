@@ -7,16 +7,12 @@ import { AuthGuard } from '@app/scripts/guards/auth.guard';
 import { RoleGuard } from '@app/scripts/guards/role.guard';
 
 // PAGES
+import { EmptyPageComponent } from '@app/pages/_components/empty-page.component';
 import { LogInComponent } from '@app/pages/auth/login/login.component';
 import { RegisterComponent } from '@app/pages/auth/register/register.component';
-import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
-import { EmptyPageComponent } from '@app/pages/_components/empty-page.component';
 import { HomepageComponent } from '@app/pages/home/home.component';
 import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
-
-// MODALS
-import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
 
 // ENUM
 import { ERole } from '@app/scripts/models/enum/role.enum';
@@ -27,16 +23,10 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     {
         path: 'tasks',
-        component: TaskListComponent,
-        canActivate: [AuthGuard],
-        children: [
-            { path: 'add', component: TaskFormEntryComponent, canActivate: [AuthGuard] },
-            { path: 'edit/:id', component: TaskFormEntryComponent, canActivate: [AuthGuard] },
-        ],
+        loadChildren: () => import('@app/pages/tasks/tasks.module').then((module) => module.TaskModule),
     },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
-    { path: 'callback', component: EmptyPageComponent, canActivate: [AuthGuard] },
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', component: EmptyPageComponent },
 ];
