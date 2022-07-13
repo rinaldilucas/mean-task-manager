@@ -42,9 +42,7 @@ export class LogInComponent implements OnInit {
     }
 
     login(): void {
-        if (!this.isValidForm()) {
-            return;
-        }
+        if (!this.isValidForm()) return;
 
         const user = { ...this.form.value } as IUser;
         this.userService.authenticate(user.username, user.password).subscribe({

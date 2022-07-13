@@ -35,6 +35,23 @@ exports.findOne = (request, response) => {
         });
 };
 
+exports.findOneByUsername = (request, response) => {
+    const language = request.query.language === 'en' ? 'en' : 'pt';
+
+    User.findOne({ username: request.params.username })
+        .then((result) => {
+            if (!result) {
+                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with username ${request.params.username}.`);
+                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de nome ${request.params.username} não encontrado.`);
+            }
+            httpHandler.success(response, { userExists: true }, StatusCode.SuccessOK);
+        })
+        .catch((error) => {
+            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving user with username ${request.params.username}.`);
+            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuário com nome ${request.params.username}.`);
+        });
+};
+
 exports.update = (request, response) => {
     const language = request.query.language === 'en' ? 'en' : 'pt';
 

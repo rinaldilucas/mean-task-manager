@@ -7,13 +7,14 @@
         <form [formGroup]="form">
             <mat-card-content>
                 <mat-form-field class="full-width">
-                    <input formControlName="username" matInput placeholder="{{ 'auth.username' | translate }}" required />
+                    <input formControlName="username" matInput placeholder="{{ 'input.username' | translate }}" required />
                     <mat-error *ngIf="form.get('username')?.hasError('minlength')"> {{ "error.minlength" | translate: { value: 5 } }} </mat-error>
                     <mat-error *ngIf="form.get('username')?.hasError('maxlength')"> {{ "error.maxlength" | translate: { value: 150 } }} </mat-error>
+                    <mat-error *ngIf="form.get('username')?.hasError('userexists')"> {{ "error.user-exists" | translate }} </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
-                    <input type="password" formControlName="password" matInput placeholder="{{ 'auth.password' | translate }}" required (keyup.enter)="register()" />
+                    <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required (keyup.enter)="register()" />
                     <mat-error *ngIf="form.get('username')?.hasError('minlength')"> {{ "error.minlength" | translate: { value: 8 } }} </mat-error>
                     <mat-error *ngIf="form.get('username')?.hasError('maxlength')"> {{ "error.maxlength" | translate: { value: 150 } }} </mat-error>
                 </mat-form-field>

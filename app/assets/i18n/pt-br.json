@@ -10,7 +10,8 @@
     },
     "error": {
         "maxlength": "Você deve preencher um texto que não exceda {{value}} caracteres.",
-        "minlength": "Você deve preencher um texto que exceda {{value}} caracteres."
+        "minlength": "Você deve preencher um texto que exceda {{value}} caracteres.",
+        "user-exists": "O nome de usuário já existe."
     },
     "input": {
         "category": "Categoria",

@@ -9,6 +9,9 @@ module.exports = function (app) {
     // GET BY ID
     app.get('/api/users/:_id', verifyAuthToken.bearer, users.findOne);
 
+    // GET BY USERNAME
+    app.get('/api/users/username/:username', users.findOneByUsername);
+
     // UPDATE
     app.put('/api/users', verifyAuthToken.bearer, users.update);
 

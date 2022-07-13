@@ -66,7 +66,6 @@ registerLocaleData(localePt, 'pt-BR');
         WeekEarningsComponent,
         InitialFundsComponent,
         ProfitOverFundsComponent,
-        ConvertDatePipe,
     ],
     entryComponents: [TaskFormBottomSheetComponent],
     imports: [

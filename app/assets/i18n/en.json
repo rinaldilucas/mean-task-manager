@@ -10,7 +10,8 @@
     },
     "error": {
         "maxlength": "You must fill in text that does not exceed {{value}} characters.",
-        "minlength": "You must fill in text that exceeds {{value}} characters."
+        "minlength": "You must fill in text that exceeds {{value}} characters.",
+        "user-exists": "The username already has been taken."
     },
     "input": {
         "category": "Category",

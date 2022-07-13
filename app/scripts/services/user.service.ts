@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { first, map, switchMap } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
 import { IUser } from '@app/scripts/models/user.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { UtilService } from '@app/scripts/services/util.service';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-
+import { AbstractControl } from '@angular/forms';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
@@ -25,6 +26,12 @@ export class UserService {
 
     getUser(id: string): Observable<IQueryResult<IUser>> {
         const url = `${this.url}/${id}?language=${this.translateService.currentLang}`;
+
+        return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
+    }
+
+    getUserByUsername(username: string): Observable<IQueryResult<IUser>> {
+        const url = `${this.url}/username/${username}?language=${this.translateService.currentLang}`;
 
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
     }
@@ -59,5 +66,15 @@ export class UserService {
         const url = `${this.url}/logout?language=${this.translateService.currentLang}`;
 
         return this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.utilService.errorHandler));
+    }
+
+    verifyUsernameTaken() {
+        return (control: AbstractControl) => {
+            return control.valueChanges.pipe(
+                switchMap((username: string) => this.getUserByUsername(username)),
+                map((response: IQueryResult<IUser>) => (response.count > 0 ? { userexists: true } : null)),
+                first(),
+            );
+        };
     }
 }

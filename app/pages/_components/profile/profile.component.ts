@@ -50,9 +50,7 @@ export class ProfileComponent implements OnInit {
     }
 
     save(): void {
-        if (!this.isValidForm()) {
-            return;
-        }
+        if (!this.isValidForm()) return;
 
         const user = { ...this.form.value, _id: this.authService.getUserId() };
         user.username = this.form.controls['username'].value ? this.form.controls['username'].value : user.username;

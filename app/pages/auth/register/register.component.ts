@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
         private translateService: TranslateService,
     ) {
         this.form = this.formBuilder.group({
-            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
+            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [this.userService.verifyUsernameTaken()]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }
