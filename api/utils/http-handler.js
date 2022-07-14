@@ -1,6 +1,4 @@
-const { isArray } = require('lodash');
 const { StatusCode } = require('status-code-enum');
-var util = require('util');
 
 const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
     response.status(statusCode);
