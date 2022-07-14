@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "node",
-            "request": "launch",
-            "name": "Debug API",
-            "skipFiles": ["<node_internals>/**"],
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "restart": true,
             "program": "${workspaceFolder}\\index.js"
         }
     ]

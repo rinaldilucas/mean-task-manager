@@ -12,5 +12,9 @@
     "git.ignoreLimitWarning": true,
     "[html]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.colorCustomizations": {
+        "statusBar.noFolderBackground": "#212121",
+        "statusBar.debuggingBackground": "#263238"
     }
 }
