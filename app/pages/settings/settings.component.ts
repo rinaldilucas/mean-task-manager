@@ -100,7 +100,6 @@ export class SettingsComponent implements OnInit {
                 this.changeDetector.markForCheck();
             },
             error: () => {
-                debugger;
                 this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';

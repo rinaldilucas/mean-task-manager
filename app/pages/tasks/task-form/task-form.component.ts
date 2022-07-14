@@ -133,7 +133,12 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         if (!this.id) {
             task.status = EStatus.toDo;
             this.taskService.createTask(task).subscribe({
-                next: () => {
+                next: (result: IQueryResult<ITask>) => {
+                    if (!result || !result.success) {
+                        this.translateService.get('task-form.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                        return;
+                    }
+
                     this.translateService.get('task-form.create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                     this.taskService.emitTask.emit(task);
                     this.form.reset();

@@ -49,6 +49,11 @@ export class ProfileComponent implements OnInit {
 
         this.userService.getUser(this.authService.getUserId()).subscribe({
             next: (result: IQueryResult<IUser>) => {
+                if (!result || !result.success) {
+                    this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    return;
+                }
+
                 const user = result.data[0];
                 user.password = this.form.controls['password'].value;
 
