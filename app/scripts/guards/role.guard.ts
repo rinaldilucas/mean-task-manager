@@ -16,7 +16,7 @@ export class RoleGuard implements CanActivate {
         if (currentUser.role === expectedRole) return true;
 
         this.translateService.get('messages.user-without-permission').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-        this.router.navigate(['/tasks']);
+        this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
         return false;
     }
 }

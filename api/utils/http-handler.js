@@ -41,7 +41,19 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
     });
 };
 
+const promiseParser = async (request, response, promise) => {
+    try {
+        const data = await promise;
+        return [data, null];
+    } catch (error) {
+        if (request.headers.language == 'en-US') responseError(response, error, StatusCode.ServerErrorInternal);
+        else responseError(response, error, StatusCode.ServerErrorInternal);
+        return [null, error];
+    }
+};
+
 module.exports = {
     success: responseSuccess,
     error: responseError,
+    parser: promiseParser,
 };
