@@ -46,7 +46,7 @@ export class TaskService {
         return this.http.post<IQueryResult<ITask>>(url, task).pipe(catchError(this.utilService.errorHandler));
     }
 
-    deleteTask(task: ITask | string): Observable<IQueryResult<ITask>> {
+    removeTask(task: ITask | string): Observable<IQueryResult<ITask>> {
         const id = typeof task === 'string' ? task : task._id;
         const url = `${this.url}/${id}`;
 

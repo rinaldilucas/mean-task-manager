@@ -104,8 +104,8 @@ export class TaskListComponent implements OnInit {
         });
     }
 
-    delete(task: ITask): void {
-        this.taskService.deleteTask(task._id).subscribe({
+    remove(task: ITask): void {
+        this.taskService.removeTask(task._id).subscribe({
             next: () => {
                 this.translateService.get('task-list.remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.taskService.emitTask.emit();

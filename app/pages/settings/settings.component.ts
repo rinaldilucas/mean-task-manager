@@ -89,13 +89,8 @@ export class SettingsComponent implements OnInit {
     }
 
     removeCategory(category: ICategory): void {
-        this.categoryService.deleteCategory(category._id).subscribe({
-            next: (result: IQueryResult<ICategory>) => {
-                if (!result || !result?.success) {
-                    this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-                    return;
-                }
-
+        this.categoryService.removeCategory(category._id).subscribe({
+            next: () => {
                 this.translateService.get('settings.category-remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
                 this.categoryService.emitCategory.emit(category);
                 this.categoryCtrl.setValue(null);
@@ -105,6 +100,7 @@ export class SettingsComponent implements OnInit {
                 this.changeDetector.markForCheck();
             },
             error: () => {
+                debugger;
                 this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';

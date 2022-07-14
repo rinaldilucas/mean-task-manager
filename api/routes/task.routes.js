@@ -17,8 +17,14 @@ module.exports = function (app) {
         check('title') //
             .isLength({ min: 2 })
             .withMessage('Must be at least 2 chars long')
+            .isLength({ max: 100 })
+            .withMessage('Must be lesser than 100 chars long')
             .not()
             .isEmpty()
+            .trim(),
+        check('description') //
+            .isLength({ max: 300 })
+            .withMessage('Must be lesser than 300 chars long')
             .trim(),
         validatorMiddleware.verifyValidations,
         passportMiddleware.applyBearerStrategy,

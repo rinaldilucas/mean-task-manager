@@ -1,4 +1,4 @@
-const Task = require('../models/task.model');
+const Model = require('../models/task.model');
 const httpHandler = require('../utils/http-handler');
 const { StatusCode } = require('status-code-enum');
 
@@ -10,16 +10,14 @@ exports.findAllByUser = async (request, response) => {
     const pageSize = +request.query.pageSize ?? 5;
     const hasSearchTerm = request.query.searchTerm;
 
-    var countQuery = (callback) => {
-        var findQuery = {
+    const countQuery = (callback) => {
+        let findQuery = {
             userId: request.params.userId,
         };
 
-        if (hasSearchTerm) {
-            findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
-        }
+        if (hasSearchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
-        Task.find(findQuery)
+        Model.find(findQuery)
             .find({ userId: request.params.userId })
             .sort({ date: -1 })
             .countDocuments({}, (error, count) => {
@@ -27,16 +25,15 @@ exports.findAllByUser = async (request, response) => {
                 else callback(null, count);
             });
     };
-    var retrieveQuery = (callback) => {
-        var findQuery = {
+
+    const retrieveQuery = (callback) => {
+        let findQuery = {
             userId: request.params.userId,
         };
 
-        if (hasSearchTerm) {
-            findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
-        }
+        if (hasSearchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
-        Task.find(findQuery)
+        Model.find(findQuery)
             .sort({ date: -1 })
             .skip(pageIndex * pageSize)
             .limit(pageSize)
@@ -47,80 +44,85 @@ exports.findAllByUser = async (request, response) => {
     };
 
     async.parallel([countQuery, retrieveQuery], function (error, results) {
-        if (error) {
-            if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding tasks. Error: ${error.message}.`);
-            else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefas. Erro: ${error.message}.`);
-        }
+        if (error)
+            if (language == 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
 
         httpHandler.success(response, results[1], StatusCode.SuccessOK, results[0]);
     });
 };
 
-exports.findOne = (request, response) => {
-    const language = request.headers.language;
-
-    Task.findOne({ _id: request.params._id })
-        .then((result) => {
-            if (!result) {
-                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving task with id ${request.params._id}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar tarefa com id ${request.params._id}.`);
-        });
-};
-
-exports.create = (request, response) => {
-    const language = request.headers.language;
-
-    const task = new Task(request.body);
-    task.save()
-        .then((result) => {
-            httpHandler.success(response, result, StatusCode.SuccessCreated);
-        })
-        .catch((error) => {
-            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating task. Error: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar tarefa. Erro: ${error.message}.`);
-        });
-};
-
-exports.update = async (request, response) => {
+exports.findOne = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const document = await Task.findOne({ _id: request.body._id });
+        const document = await Model.findOne({ _id: request.params._id });
         if (!document)
-            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-        const result = await Task.updateOne({ _id: request.body._id }, request.body, { new: true });
-        if (!result || result.n === 0)
-            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating task with id ${request.params._id}.`);
-            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar usuário de id ${request.params._id}.`);
-
-        httpHandler.success(response, result);
+        httpHandler.success(response, document, StatusCode.SuccessOK);
     } catch (error) {
         if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
         else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };
 
-exports.delete = (request, response) => {
+exports.create = async (request, response) => {
     const language = request.headers.language;
 
-    Task.findByIdAndRemove(request.params._id)
-        .then((result) => {
-            if (!result) {
-                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessAccepted);
-        })
-        .catch((error) => {
-            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing task with id ${request.params._id}. Error: ${error}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover tarefa de id ${request.params._id}. Erro: ${error}.`);
-        });
+    try {
+        const document = await new Model(request.body).save();
+        if (!document || document.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
+
+        httpHandler.success(response, document, StatusCode.SuccessCreated);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
+};
+
+exports.update = async (request, response) => {
+    const language = request.headers.language;
+
+    try {
+        const document = await Model.findOne({ _id: request.body._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+
+        const result = await Model.updateOne({ _id: request.body._id }, request.body, { new: true });
+        if (!result || result.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
+
+        httpHandler.success(response, result, StatusCode.SuccessNoContent);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
+};
+
+exports.delete = async (request, response) => {
+    const language = request.headers.language;
+
+    try {
+        const document = await Model.findOne({ _id: request.params._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+
+        const result = await Model.deleteOne({ _id: request.params._id }, request.body);
+        if (!result || result.n === 0)
+            if (language == 'en-US')
+                return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
+
+        httpHandler.success(response, result, StatusCode.SuccessNoContent);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };

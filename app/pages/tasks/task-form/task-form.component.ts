@@ -75,8 +75,8 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         @Inject(MAT_BOTTOM_SHEET_DATA) public id: string,
     ) {
         this.form = this.formBuilder.group({
-            title: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(150)]],
-            description: [null, [Validators.minLength(5), Validators.maxLength(300)]],
+            title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+            description: [null, [Validators.maxLength(300)]],
             date: [null, null],
             category: [null, null],
         });

@@ -33,7 +33,7 @@ export class CategoryService {
         return this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.utilService.errorHandler));
     }
 
-    deleteCategory(category: ICategory | string): Observable<IQueryResult<ICategory>> {
+    removeCategory(category: ICategory | string): Observable<IQueryResult<ICategory>> {
         const id = typeof category === 'string' ? category : category._id;
         const url = `${this.url}/${id}`;
 

@@ -1,75 +1,76 @@
-const User = require('../models/user.model');
+const Model = require('../models/user.model');
 const httpHandler = require('../utils/http-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const blacklistHandler = require('../redis/blacklist-handler');
 const { StatusCode } = require('status-code-enum');
 
-exports.findAll = (request, response) => {
+exports.findAll = async (request, response) => {
     const language = request.headers.language;
 
-    User.find()
-        .then((result) => {
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding users. Error: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}.`);
-        });
+    try {
+        const document = await Model.find();
+        if (document?.length === 0)
+            if (language == 'en-US') return httpHandler.success(response, document, StatusCode.SuccessOK);
+            else return httpHandler.success(response, document, StatusCode.SuccessOK);
+
+        httpHandler.success(response, document, StatusCode.SuccessOK);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
-exports.findOne = (request, response) => {
+exports.findOne = async (request, response) => {
     const language = request.headers.language;
 
-    User.findOne({ _id: request.params._id })
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving user with id ${request.params._id}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuário com id ${request.params._id}.`);
-        });
+    try {
+        const document = await Model.findOne({ _id: request.params._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+
+        httpHandler.success(response, document, StatusCode.SuccessOK);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
-exports.findOneByUsername = (request, response) => {
+exports.findOneByUsername = async (request, response) => {
     const language = request.headers.language;
 
-    User.findOne({ username: request.params.username })
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.SuccessNoContent, `User not found with username ${request.params.username}.`);
-                else return httpHandler.error(response, {}, StatusCode.SuccessNoContent, `Usuário de nome ${request.params.username} não encontrado.`);
-            }
-            httpHandler.success(response, { userExists: true }, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving user with username ${request.params.username}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuário com nome ${request.params.username}.`);
-        });
+    try {
+        const document = await Model.findOne({ username: request.params.username });
+        if (!document)
+            if (language == 'en-US') return httpHandler.success(response, document, StatusCode.SuccessNoContent);
+            else return httpHandler.success(response, document, StatusCode.SuccessNoContent);
+
+        httpHandler.success(response, { userExists: true }, StatusCode.SuccessOK);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
 exports.update = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const user = await User.findOne(request.params._id);
-        if (!user)
-            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
+        const document = await Model.findOne({ _id: request.body._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-        const result = await User.updateOne(request.body._id, request.body, { new: true });
-        if (!result)
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
+        const result = await Model.updateOne({ _id: request.body._id }, request.body, { new: true });
+        if (!result || result.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
 
-        httpHandler.success(response, result);
+        httpHandler.success(response, result, StatusCode.SuccessNoContent);
     } catch (error) {
-        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
-        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };
 
@@ -80,21 +81,27 @@ exports.register = async (request, response) => {
         const salt = await bcrypt.genSalt(+process.env.SALT_RONDS);
         const hashPash = await bcrypt.hash(request.body.password, salt);
 
-        const newUser = new User({
+        const newUser = new Model({
             username: request.body.username,
             role: request.body.role,
             password: hashPash,
         });
 
-        const document = await User.findOne({ username: request.body.username });
+        const document = await Model.findOne({ username: request.body.username });
         if (document)
             if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with username ${request.params.username}.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.username._id} já existe.`);
 
-        newUser.save().then((result) => httpHandler.success(response, result, StatusCode.SuccessCreated));
+        const result = await newUser.save();
+        if (!result || result.n === 0) {
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
+        }
+
+        httpHandler.success(response, result, StatusCode.SuccessCreated);
     } catch (error) {
-        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
-        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar usuário. Erro: ${error.message}.`);
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };
 
@@ -102,7 +109,7 @@ exports.authenticate = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const document = await User.findOne({ username: request.body.username });
+        const document = await Model.findOne({ username: request.body.username });
         if (!document)
             if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid username.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Usuário inválido.`);
@@ -121,8 +128,8 @@ exports.authenticate = async (request, response) => {
 
         httpHandler.success(response, jwtPayload, StatusCode.SuccessOK);
     } catch (error) {
-        if (language == 'en-US') httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Error authorizing token. Error: ${error.message}.`);
-        else httpHandler.error(response, {}, StatusCode.ServerErrorInternal, `Erro autorizando token. Erro: ${error.message}.`);
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };
 
@@ -134,8 +141,8 @@ exports.logout = async (request, response) => {
         await blacklistHandler.add(token);
         httpHandler.success(response, {}, StatusCode.SuccessOK);
     } catch (error) {
-        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error logging out. Error: ${error.message}.`);
-        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao deslogar. Erro: ${error.message}.`);
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };
 
@@ -145,24 +152,21 @@ exports.changePassword = async (request, response) => {
     try {
         const salt = await bcrypt.genSalt(+process.env.SALT_RONDS);
         const hashedPassword = await bcrypt.hash(request.body.password, salt);
+        const newBody = { ...request.body, password: hashedPassword };
 
-        let newBody = request.body;
-        newBody.password = hashedPassword;
+        const document = await Model.findOne({ _id: request.body._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-        User.findByIdAndUpdate(request.body._id, newBody, { new: true })
-            .then((result) => {
-                if (!result) {
-                    if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-                    else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
-                }
-                httpHandler.success(response, result);
-            })
-            .catch((error) => {
-                if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
-                else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
-            });
+        const result = await Model.updateOne({ _id: request.body._id }, newBody, { new: true });
+        if (!result || result.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
+
+        httpHandler.success(response, result, StatusCode.SuccessNoContent);
     } catch (error) {
-        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
-        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar usuário. Erro: ${error.message}.`);
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
     }
 };

@@ -17,17 +17,16 @@
         <form [formGroup]="form" class="form-modal__body-wrapper">
             <mat-card-content>
                 <mat-form-field class="full-width">
-                    <input type="text" #taskTitle maxlength="150" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" />
-                    <mat-hint align="end">{{ taskTitle.value?.length || 0 }}/150</mat-hint>
-                    <mat-error *ngIf="form.get('title')?.hasError('minlength')"> You must fill a text that exceeds 5 characters. </mat-error>
-                    <mat-error *ngIf="form.get('title')?.hasError('maxlength')"> You must fill a text that doesn't exceeds 150 characters. </mat-error>
+                    <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" />
+                    <mat-hint align="end">{{ taskTitle.value?.length || 0 }}/100</mat-hint>
+                    <mat-error *ngIf="form.get('title')?.hasError('minlength')"> {{ "error.minlength" | translate: { value: 2 } }} </mat-error>
+                    <mat-error *ngIf="form.get('title')?.hasError('maxlength')"> {{ "error.maxlength" | translate: { value: 100 } }} </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <textarea #taskDescription maxlength="300" formControlName="description" rows="2" matInput placeholder="{{ 'input.description' | translate }}"></textarea>
                     <mat-hint align="end">{{ taskDescription.value?.length || 0 }}/300</mat-hint>
-                    <mat-error *ngIf="form.get('description')?.hasError('minlength')"> You must fill a text that exceeds 5 characters. </mat-error>
-                    <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> You must fill a text that doesn't exceeds 300 characters. </mat-error>
+                    <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.maxlength" | translate: { value: 300 } }} </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="full-width">

@@ -1,65 +1,57 @@
-const Category = require('../models/category.model');
+const Model = require('../models/category.model');
 const httpHandler = require('../utils/http-handler');
 const { StatusCode } = require('status-code-enum');
 
-exports.findAll = (request, response) => {
+exports.findAll = async (request, response) => {
     const language = request.headers.language;
 
-    Category.find()
-        .then((result) => {
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding categories. Error: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar categorias. Erro: ${error.message}.`);
-        });
+    try {
+        const document = await Model.find();
+        if (document?.length === 0)
+            if (language == 'en-US') return httpHandler.success(response, document, StatusCode.SuccessOK);
+            else return httpHandler.success(response, document, StatusCode.SuccessOK);
+
+        httpHandler.success(response, document, StatusCode.SuccessOK);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
-exports.findOne = (request, response) => {
+exports.create = async (request, response) => {
     const language = request.headers.language;
 
-    Category.findById(request.params._id)
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Categoria de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessOK);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error retrieving category with id ${request.params._id}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar categoria com id ${request.params._id}.`);
-        });
+    try {
+        const document = await new Model(request.body).save();
+        if (!document || document.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating category.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar categoria.`);
+
+        httpHandler.success(response, document, StatusCode.SuccessCreated);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
-exports.create = (request, response) => {
+exports.delete = async (request, response) => {
     const language = request.headers.language;
 
-    const category = new Category(request.body);
-    category
-        .save()
-        .then((result) => {
-            httpHandler.success(response, result, StatusCode.SuccessCreated);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating category. Error: ${error.message}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar categoria. Erro: ${error.message}.`);
-        });
-};
+    try {
+        const document = await Model.findOne({ _id: request.params._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-exports.delete = (request, response) => {
-    const language = request.headers.language;
+        const result = await Model.deleteOne({ _id: request.params._id }, request.body);
+        if (!result || result.n === 0)
+            if (language == 'en-US')
+                return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
 
-    Category.findByIdAndRemove(request.params._id)
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Category not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Categoria de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessAccepted);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing category with id ${request.params._id}. Error: ${error}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover categoria de id ${request.params._id}. Erro: ${error}.`);
-        });
+        httpHandler.success(response, result, StatusCode.SuccessNoContent);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };

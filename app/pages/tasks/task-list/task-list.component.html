@@ -128,7 +128,7 @@
                                     >
                                         <mat-icon>check</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="delete(task); $event.stopPropagation()">
+                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="remove(task); $event.stopPropagation()">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -143,7 +143,7 @@
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <ng-template matMenuContent>
-                                            <button mat-menu-item (click)="delete(task); $event.stopPropagation()"><span>Remove</span></button>
+                                            <button mat-menu-item (click)="remove(task); $event.stopPropagation()"><span>Remove</span></button>
                                         </ng-template>
                                     </mat-menu>
                                 </mat-cell>

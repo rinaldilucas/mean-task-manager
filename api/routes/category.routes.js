@@ -8,9 +8,6 @@ module.exports = function (app) {
     // GET ALL
     app.get('/api/categories', passportMiddleware.applyBearerStrategy, categories.findAll);
 
-    // GET BY ID
-    app.get('/api/categories/:_id', passportMiddleware.applyBearerStrategy, categories.findOne);
-
     // CREATE
     app.post(
         '/api/categories', //

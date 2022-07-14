@@ -33,7 +33,7 @@ export class UserService {
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
-    deleteUser(user: IUser | string): Observable<IQueryResult<IUser>> {
+    removeUser(user: IUser | string): Observable<IQueryResult<IUser>> {
         const id = typeof user === 'string' ? user : user._id;
         const url = `${this.url}/${id}`;
 
