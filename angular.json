@@ -19,6 +19,7 @@
                             "vendorChunk": true
                         },
                         "production": {
+                            "aot": true,
                             "budgets": [
                                 {
                                     "maximumError": "6mb",

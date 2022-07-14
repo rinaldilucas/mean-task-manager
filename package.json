@@ -88,7 +88,7 @@
     },
     "scripts": {
         "build": "ng build",
-        "build-prod": "ng lint && ng build --prod=true",
+        "build-prod": "ng lint && ng build --prod",
         "debug": "nodemon --inspect index.js",
         "dev": "run-p serve debug",
         "lint": "ng lint",
