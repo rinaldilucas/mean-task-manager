@@ -87,21 +87,25 @@ exports.create = (request, response) => {
         });
 };
 
-exports.update = (request, response) => {
+exports.update = async (request, response) => {
     const language = request.headers.language;
 
-    Task.findByIdAndUpdate(request.body._id, request.body, { new: true })
-        .then((result) => {
-            if (!result) {
-                if (language == 'en') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result);
-        })
-        .catch((error) => {
-            if (language == 'en') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating task with id ${request.params._id}. Error: ${error}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar tarefa de id ${request.params._id}. Erro: ${error}.`);
-        });
+    try {
+        const document = await Task.findOne({ _id: request.body._id });
+        if (!document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Task not found with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Tarefa de id ${request.params._id} não encontrada.`);
+
+        const result = await Task.updateOne({ _id: request.body._id }, request.body, { new: true });
+        if (!result || result.n === 0)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating task with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar usuário de id ${request.params._id}.`);
+
+        httpHandler.success(response, result);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal);
+    }
 };
 
 exports.delete = (request, response) => {

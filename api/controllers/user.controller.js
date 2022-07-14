@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const blacklistHandler = require('../redis/blacklist-handler');
 const { StatusCode } = require('status-code-enum');
-const { body, validationResult } = require('express-validator');
 
 exports.findAll = (request, response) => {
     const language = request.headers.language;
@@ -53,38 +52,25 @@ exports.findOneByUsername = (request, response) => {
         });
 };
 
-exports.update = (request, response) => {
+exports.update = async (request, response) => {
     const language = request.headers.language;
 
-    User.findByIdAndUpdate(request.body._id, request.body, { new: true })
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result);
-        })
-        .catch((error) => {
+    try {
+        const user = await User.findOne(request.params._id);
+        if (!user)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
+
+        const result = await User.updateOne(request.body._id, request.body, { new: true });
+        if (!result)
             if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
             else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
-        });
-};
 
-exports.delete = (request, response) => {
-    const language = request.headers.language;
-
-    User.findByIdAndRemove(request.params._id)
-        .then((result) => {
-            if (!result) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `User not found with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Usuário de id ${request.params._id} não encontrada.`);
-            }
-            httpHandler.success(response, result, StatusCode.SuccessAccepted);
-        })
-        .catch((error) => {
-            if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error removing user with id ${request.params._id}. Error: ${error}.`);
-            else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao remover usuário de id ${request.params._id}. Erro: ${error}.`);
-        });
+        httpHandler.success(response, result);
+    } catch (error) {
+        if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error updating user with id ${request.params._id}. Error: ${error}.`);
+        else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao atualizar ususário de id ${request.params._id}. Erro: ${error}.`);
+    }
 };
 
 exports.register = async (request, response) => {
@@ -100,13 +86,12 @@ exports.register = async (request, response) => {
             password: hashPash,
         });
 
-        User.findOne({ username: request.body.username }).then((user) => {
-            if (user) {
-                if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with id ${request.params._id}.`);
-                else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de id ${request.params._id} já existe.`);
-            }
-            newUser.save().then((result) => httpHandler.success(response, result, StatusCode.SuccessCreated));
-        });
+        const document = await User.findOne({ username: request.body.username });
+        if (document)
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with username ${request.params.username}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.username._id} já existe.`);
+
+        newUser.save().then((result) => httpHandler.success(response, result, StatusCode.SuccessCreated));
     } catch (error) {
         if (language == 'en-US') httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error creating user. Error: ${error.message}.`);
         else httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao criar usuário. Erro: ${error.message}.`);
@@ -117,23 +102,21 @@ exports.authenticate = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const user = await User.findOne({ username: request.body.username });
-        if (!user) {
+        const document = await User.findOne({ username: request.body.username });
+        if (!document)
             if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid username.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Usuário inválido.`);
-        }
 
-        const validated = await bcrypt.compare(request.body.password, user.password);
-        if (!validated) {
+        const validated = await bcrypt.compare(request.body.password, document.password);
+        if (!validated)
             if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid password.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Senha inválida.`);
-        }
 
-        const token = jwt.sign({ username: user.username, userId: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ username: document.username, userId: document._id, role: document.role }, process.env.JWT_KEY, { expiresIn: '1h' });
         const jwtPayload = {
             token: token,
             expiresIn: 60 * 60,
-            userId: user._id,
+            userId: document._id,
         };
 
         httpHandler.success(response, jwtPayload, StatusCode.SuccessOK);

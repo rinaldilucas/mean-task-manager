@@ -17,9 +17,6 @@ module.exports = function (app) {
     // UPDATE
     app.put('/api/users', passportMiddleware.applyBearerStrategy, users.update);
 
-    // DELETE
-    app.delete('/api/users/:_id', passportMiddleware.applyBearerStrategy, users.delete);
-
     // REGISTER
     app.post(
         '/api/users/register', //

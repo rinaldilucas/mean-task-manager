@@ -21,12 +21,14 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
     response.status(error.httpCode || statusCode);
 
     if (message) {
-        console.log(message);
+        console.log(`[API]: ${message}`);
     } else if (Array.isArray(error)) {
-        console.log('Validation errors:');
+        console.log('[API]: Validation errors:');
         console.table(error);
     } else if (typeof error === 'string' || error instanceof String) {
-        console.log(error);
+        console.log(`[API]: ${error}`);
+    } else if (error?.message) {
+        console.log(`[API]: ${error.message}`);
     }
 
     let responseMessage = message || error.message || error.toString();
