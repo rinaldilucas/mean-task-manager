@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy,
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -26,14 +25,14 @@ export class TaskListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
 
-    columns = {
+    columnOptions = {
         lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
         mdColumns: ['date', 'title', 'description', 'status', 'actions'],
         smColumns: ['date', 'title', 'status', 'actions-mobile'],
         xsColumns: ['date', 'title', 'status', 'actions-mobile'],
     };
 
-    displayedColumns: string[] = this.columns.lgColumns;
+    displayedColumns: string[] = this.columnOptions.lgColumns;
 
     title = 'Tasks';
     search = '';
@@ -55,19 +54,19 @@ export class TaskListComponent implements OnInit {
         private utilService: UtilService,
         private router: Router,
         private snackBar: MatSnackBar,
-        private media: MediaObserver,
         private titleService: Title,
         private translateService: TranslateService,
     ) {}
 
     ngOnInit(): void {
         this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.verifyResolution();
+        this.utilService.setTableColumns(this.displayedColumns, this.columnOptions);
+        this.utilService.tableColumnListener.subscribe((columnOptions: any) => (this.displayedColumns = columnOptions));
         this.refresh();
         this.taskService.emitTask.subscribe(() => this.refresh());
     }
 
-    async refresh() {
+    async refresh(): Promise<void> {
         const result = await lastValueFrom(this.taskService.listTasksByUser(this.pageSize));
         if (result) {
             this.tasks = result.data;
@@ -76,16 +75,6 @@ export class TaskListComponent implements OnInit {
             this.isLoading = false;
             this.changeDetector.markForCheck();
         }
-    }
-
-    verifyResolution(): void {
-        this.media.asObservable().subscribe((change: MediaChange[]) => {
-            if (change[0].mqAlias === 'xs') this.displayedColumns = this.columns.xsColumns;
-            else if (change[0].mqAlias === 'sm') this.displayedColumns = this.columns.smColumns;
-            else if (change[0].mqAlias === 'md') this.displayedColumns = this.columns.mdColumns;
-            else this.displayedColumns = this.columns.lgColumns;
-            this.changeDetector.detectChanges();
-        });
     }
 
     add(): void {
@@ -138,17 +127,18 @@ export class TaskListComponent implements OnInit {
         }
     }
 
-    onPaginateChange(event: PageEvent): any {
+    async onPaginateChange(event: PageEvent): Promise<void> {
         const pageIndex = event.pageIndex;
         const searchTerm = this.searchInput.nativeElement.value ?? null;
         this.pageSize = event.pageSize;
 
-        this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex).subscribe((result: IQueryResult<ITask>) => {
+        const result = await lastValueFrom(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex));
+        if (result) {
             this.tasks = result.data;
             this.pageCount = result.count;
             this.tasksDataSource = this.utilService.setDataSource(this.tasks);
             this.isLoading = false;
             this.changeDetector.markForCheck();
-        });
+        }
     }
 }

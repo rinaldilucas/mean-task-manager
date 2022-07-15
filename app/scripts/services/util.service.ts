@@ -9,12 +9,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 
 import { ITask } from '@app/scripts/models/task.interface';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 @Injectable({ providedIn: 'root' })
 export class UtilService {
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
+    tableColumnListener: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(private translateService: TranslateService, private snackBar: MatSnackBar) {}
+    constructor(private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
 
     setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
         const dataSource = new TableVirtualScrollDataSource(list);
@@ -67,5 +69,16 @@ export class UtilService {
             }
         }
         this.inputErrorListener.emit(true);
+    }
+
+    setTableColumns(columnOptions: any, columns: any): void {
+        this.media.asObservable().subscribe((change: MediaChange[]) => {
+            if (change[0].mqAlias === 'xs') columnOptions = columns.xsColumns;
+            else if (change[0].mqAlias === 'sm') columnOptions = columns.smColumns;
+            else if (change[0].mqAlias === 'md') columnOptions = columns.mdColumns;
+            else columnOptions = columns.lgColumns;
+
+            this.tableColumnListener.emit(columnOptions);
+        });
     }
 }
