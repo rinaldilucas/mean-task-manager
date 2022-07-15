@@ -7,6 +7,7 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { lastValueFrom } from 'rxjs';
 
 import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
@@ -63,14 +64,15 @@ export class TaskListComponent implements OnInit {
         this.taskService.emitTask.subscribe(() => this.refresh());
     }
 
-    refresh(): void {
-        this.taskService.listTasksByUser(this.pageSize).subscribe((result: IQueryResult<ITask>) => {
+    async refresh() {
+        const result = await lastValueFrom(this.taskService.listTasksByUser(this.pageSize));
+        if (result) {
             this.tasks = result.data;
             this.pageCount = result.count;
             this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
             this.isLoading = false;
             this.changeDetector.markForCheck();
-        });
+        }
     }
 
     verifyResolution(): void {
