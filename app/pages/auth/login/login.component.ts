@@ -11,7 +11,7 @@ import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-log-in',
@@ -30,7 +30,7 @@ export class LogInComponent implements OnInit {
         private snackBar: MatSnackBar,
         private router: Router,
         private translateService: TranslateService,
-        private utilService: UtilService,
+        private sharedService: SharedService,
         private changeDetector: ChangeDetectorRef,
     ) {
         this.form = this.formBuilder.group({
@@ -40,12 +40,12 @@ export class LogInComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     login(): void {
-        if (!this.utilService.isValidForm(this.form)) return;
+        if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
         this.userService.authenticate(user.email, user.password).subscribe({

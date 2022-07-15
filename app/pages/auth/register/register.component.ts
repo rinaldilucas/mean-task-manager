@@ -11,7 +11,7 @@ import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { EmailValidator } from '@app/scripts/validators/email.validator';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-register',
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
         private router: Router,
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
-        private utilService: UtilService,
+        private sharedService: SharedService,
     ) {
         this.form = this.formBuilder.group({
             email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)], [EmailValidator.createValidator(this.userService)]],
@@ -39,12 +39,12 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     register(): void {
-        if (!this.utilService.isValidForm(this.form)) return;
+        if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
         this.userService.register(user).subscribe({

@@ -6,37 +6,37 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '@app/environments/environment';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
     emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
     private url: string = environment.baseUri + '/categories';
 
-    constructor(private http: HttpClient, private utilService: UtilService) {}
+    constructor(private http: HttpClient, private sharedService: SharedService) {}
 
     listCategories(): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}`;
 
-        return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.utilService.errorHandler));
+        return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
     getCategory(id: string): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}/${id}`;
 
-        return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.utilService.errorHandler));
+        return this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
     createCategory(category: ICategory): Observable<IQueryResult<ICategory>> {
         const url = `${this.url}`;
 
-        return this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.utilService.errorHandler));
+        return this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.sharedService.errorHandler));
     }
 
     removeCategory(category: ICategory | string): Observable<IQueryResult<ICategory>> {
         const id = typeof category === 'string' ? category : category._id;
         const url = `${this.url}/${id}`;
 
-        return this.http.delete<IQueryResult<ICategory>>(url).pipe(catchError(this.utilService.errorHandler));
+        return this.http.delete<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 }

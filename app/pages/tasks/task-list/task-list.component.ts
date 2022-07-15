@@ -11,7 +11,7 @@ import { lastValueFrom } from 'rxjs';
 import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { TaskService } from '@app/scripts/services/task.service';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
@@ -51,7 +51,7 @@ export class TaskListComponent implements OnInit {
     constructor(
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
-        private utilService: UtilService,
+        private sharedService: SharedService,
         private router: Router,
         private snackBar: MatSnackBar,
         private titleService: Title,
@@ -60,8 +60,8 @@ export class TaskListComponent implements OnInit {
 
     ngOnInit(): void {
         this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.utilService.setTableColumns(this.displayedColumns, this.columnOptions);
-        this.utilService.tableColumnListener.subscribe((columnOptions: any) => (this.displayedColumns = columnOptions));
+        this.sharedService.setTableColumns(this.displayedColumns, this.columnOptions);
+        this.sharedService.tableColumnListener.subscribe((columnOptions: any) => (this.displayedColumns = columnOptions));
         this.refresh();
         this.taskService.emitTask.subscribe(() => this.refresh());
     }
@@ -71,7 +71,7 @@ export class TaskListComponent implements OnInit {
         if (result) {
             this.tasks = result.data;
             this.pageCount = result.count;
-            this.tasksDataSource = this.utilService.setDataSource(this.tasks, this.sort, this.paginator);
+            this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
             this.isLoading = false;
             this.changeDetector.markForCheck();
         }
@@ -120,7 +120,7 @@ export class TaskListComponent implements OnInit {
             this.taskService.listTasksByUser(this.pageSize, searchTerm).subscribe((result: IQueryResult<ITask>) => {
                 this.tasks = result.data;
                 this.pageCount = result.count;
-                this.tasksDataSource = this.utilService.setDataSource(this.tasks);
+                this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
                 this.isLoading = false;
                 this.changeDetector.markForCheck();
             });
@@ -136,7 +136,7 @@ export class TaskListComponent implements OnInit {
         if (result) {
             this.tasks = result.data;
             this.pageCount = result.count;
-            this.tasksDataSource = this.utilService.setDataSource(this.tasks);
+            this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
             this.isLoading = false;
             this.changeDetector.markForCheck();
         }

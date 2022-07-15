@@ -17,7 +17,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     template: '',
@@ -69,7 +69,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private router: Router,
         private titleService: Title,
         private translateService: TranslateService,
-        private utilService: UtilService,
+        private sharedService: SharedService,
         @Inject(MAT_BOTTOM_SHEET_DATA) public id: string,
     ) {
         this.form = this.formBuilder.group({
@@ -81,7 +81,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
 
         this.categoriesService.listCategories().subscribe((result: IQueryResult<ICategory>) => {
             this.categories = result.data;
@@ -125,7 +125,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     save(): void {
-        if (!this.utilService.isValidForm(this.form)) return;
+        if (!this.sharedService.isValidForm(this.form)) return;
 
         const task = { ...this.form.value, userId: this.authService.getUserId() } as ITask;
         if (!this.id) {

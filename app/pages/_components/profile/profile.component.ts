@@ -9,7 +9,7 @@ import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-profile',
@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
         private formBuilder: FormBuilder,
         private translateService: TranslateService,
         private router: Router,
-        private utilService: UtilService,
+        private sharedService: SharedService,
         private changeDetector: ChangeDetectorRef,
     ) {
         this.form = this.formBuilder.group({
@@ -40,12 +40,12 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.utilService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     save(): void {
-        if (!this.utilService.isValidForm(this.form)) return;
+        if (!this.sharedService.isValidForm(this.form)) return;
 
         this.userService.getUser(this.authService.getUserId()).subscribe({
             next: (result: IQueryResult<IUser>) => {

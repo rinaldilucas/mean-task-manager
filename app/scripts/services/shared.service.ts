@@ -12,7 +12,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 @Injectable({ providedIn: 'root' })
-export class UtilService {
+export class SharedService {
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
     tableColumnListener: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -22,7 +22,7 @@ import { AppComponent } from '@app/pages/app.component';
 
 // SERVICES
 import { AuthService } from '@app/scripts/services/auth.service';
-import { UtilService } from '@app/scripts/services/util.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { TaskService } from '@app/scripts/services/task.service';
 
@@ -54,19 +54,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomepageComponent,
-        LogInComponent,
-        RegisterComponent,
-        ProfileComponent,
-        SettingsComponent,
-        MainNavComponent,
-        TasksDoneComponent,
-        WeekEarningsComponent,
-        InitialFundsComponent,
-        ProfitOverFundsComponent,
-    ],
+    declarations: [AppComponent, HomepageComponent, LogInComponent, RegisterComponent, ProfileComponent, SettingsComponent, MainNavComponent, TasksDoneComponent, WeekEarningsComponent, InitialFundsComponent, ProfitOverFundsComponent],
     entryComponents: [TaskFormBottomSheetComponent],
     imports: [
         AppRoutingModule,
@@ -90,7 +78,7 @@ registerLocaleData(localePt, 'pt-BR');
             },
         }),
     ],
-    providers: [AuthService, UtilService, TaskService, UserService],
+    providers: [AuthService, SharedService, TaskService, UserService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
