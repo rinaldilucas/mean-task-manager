@@ -26,11 +26,14 @@ export class TaskListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
 
-    lgColumns = ['date', 'title', 'description', 'status', 'category', 'actions'];
-    mdColumns = ['date', 'title', 'description', 'status', 'actions'];
-    smColumns = ['date', 'title', 'status', 'actions-mobile'];
-    xsColumns = ['date', 'title', 'status', 'actions-mobile'];
-    displayedColumns: string[] = this.lgColumns;
+    columns = {
+        lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
+        mdColumns: ['date', 'title', 'description', 'status', 'actions'],
+        smColumns: ['date', 'title', 'status', 'actions-mobile'],
+        xsColumns: ['date', 'title', 'status', 'actions-mobile'],
+    };
+
+    displayedColumns: string[] = this.columns.lgColumns;
 
     title = 'Tasks';
     search = '';
@@ -77,10 +80,10 @@ export class TaskListComponent implements OnInit {
 
     verifyResolution(): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
-            if (change[0].mqAlias === 'xs') this.displayedColumns = this.xsColumns;
-            else if (change[0].mqAlias === 'sm') this.displayedColumns = this.smColumns;
-            else if (change[0].mqAlias === 'md') this.displayedColumns = this.mdColumns;
-            else this.displayedColumns = this.lgColumns;
+            if (change[0].mqAlias === 'xs') this.displayedColumns = this.columns.xsColumns;
+            else if (change[0].mqAlias === 'sm') this.displayedColumns = this.columns.smColumns;
+            else if (change[0].mqAlias === 'md') this.displayedColumns = this.columns.mdColumns;
+            else this.displayedColumns = this.columns.lgColumns;
             this.changeDetector.detectChanges();
         });
     }
