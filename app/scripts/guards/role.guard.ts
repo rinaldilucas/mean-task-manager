@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '../services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class RoleGuard implements CanActivate {
-    constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar, private translateService: TranslateService) {}
+    constructor(
+        private authService: AuthService, //
+        private router: Router,
+        private sharedService: SharedService,
+    ) {}
 
     canActivate(route: ActivatedRouteSnapshot) {
         const currentUser = this.authService.getLoggedUser();
@@ -15,7 +18,7 @@ export class RoleGuard implements CanActivate {
 
         if (currentUser.role === expectedRole) return true;
 
-        this.translateService.get('messages.user-without-permission').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+        this.sharedService.handleSnackbarMessages('messages.user-without-permission', false);
         this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
         return false;
     }

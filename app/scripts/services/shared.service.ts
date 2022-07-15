@@ -81,4 +81,8 @@ export class SharedService {
             this.tableColumnListener.emit(columnOptions);
         });
     }
+
+    handleSnackbarMessages(translationKey: string, success = true): void {
+        this.translateService.get(translationKey).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
+    }
 }

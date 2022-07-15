@@ -65,9 +65,10 @@ export class UserService {
         return this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler));
     }
 
-    changePassword(user: IUser): Observable<IQueryResult<IUser>> {
+    changePassword(userId: string, password: string): Observable<IQueryResult<any>> {
         const url = `${this.url}/changePassword`;
+        const body = { _id: userId, password };
 
-        return this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler));
+        return this.http.post<IQueryResult<any>>(url, body).pipe(catchError(this.sharedService.errorHandler));
     }
 }

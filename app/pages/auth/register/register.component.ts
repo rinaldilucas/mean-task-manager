@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -26,7 +25,6 @@ export class RegisterComponent implements OnInit {
         private userService: UserService,
         private formBuilder: FormBuilder,
         private titleService: Title,
-        private snackBar: MatSnackBar,
         private router: Router,
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
@@ -50,18 +48,18 @@ export class RegisterComponent implements OnInit {
         this.userService.register(user).subscribe({
             next: (result: IQueryResult<IUser>) => {
                 if (!result || !result.success) {
-                    this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('register.create-error', false);
                 }
 
-                this.translateService.get('register.create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                this.sharedService.handleSnackbarMessages('register.create-success');
                 this.router.navigate([`${this.router.url.split(/\/(register)\/?/gi)[0]}/login`]);
             },
             error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorConflict) {
-                    this.translateService.get('register.email-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('register.email-error', false);
                     return;
                 }
-                this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                this.sharedService.handleSnackbarMessages('register.create-error', false);
             },
         });
     }

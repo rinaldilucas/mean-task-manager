@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +26,6 @@ export class LogInComponent implements OnInit {
         private authService: AuthService,
         private formBuilder: FormBuilder,
         private titleService: Title,
-        private snackBar: MatSnackBar,
         private router: Router,
         private translateService: TranslateService,
         private sharedService: SharedService,
@@ -51,29 +49,30 @@ export class LogInComponent implements OnInit {
         this.userService.authenticate(user.email, user.password).subscribe({
             next: (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
-                    this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('login.authentication-error', false);
                     return;
                 }
 
                 if (this.authService.authenticateToken(result.data[0])) {
-                    this.translateService.get('login.login-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('login.authentication-success');
                     this.router.navigate([`${this.router.url.split(/\/(login)\/?/gi)[0]}/tasks`]);
                 }
             },
             error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorNotFound) {
-                    this.translateService.get('login.user-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('login.user-error', false);
                     return;
                 }
                 if (error.status === StatusCode.ClientErrorForbidden) {
-                    this.translateService.get('input.password-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('login.password-error', false);
                     return;
                 }
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
-                    this.translateService.get('login.credentials-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('login.credentials-error', false);
                     return;
                 }
-                this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+
+                this.sharedService.handleSnackbarMessages('login.authentication-error', false);
             },
         });
     }

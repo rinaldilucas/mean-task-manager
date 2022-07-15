@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject, AfterViewInit, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatBottomSheetRef, MatBottomSheet, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
@@ -64,7 +63,6 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private categoriesService: CategoryService,
         private authService: AuthService,
         private formBuilder: FormBuilder,
-        private snackBar: MatSnackBar,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
         private router: Router,
         private titleService: Title,
@@ -133,27 +131,27 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             this.taskService.createTask(task).subscribe({
                 next: (result: IQueryResult<ITask>) => {
                     if (!result || !result.success) {
-                        this.translateService.get('task-form.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                        this.sharedService.handleSnackbarMessages('task-form.create-error', false);
                         return;
                     }
 
-                    this.translateService.get('task-form.create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                    this.sharedService.handleSnackbarMessages('task-form.create-success');
                     this.taskService.emitTask.emit(task);
                     this.form.reset();
                     this.close();
                 },
-                error: () => this.translateService.get('task-form.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+                error: () => this.sharedService.handleSnackbarMessages('task-form.create-error', false),
             });
         } else {
             task._id = this.id;
             this.taskService.updateTask(task).subscribe({
                 next: () => {
-                    this.translateService.get('task-form.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                    this.sharedService.handleSnackbarMessages('task-form.edit-success');
                     this.form.reset();
                     this.taskService.emitTask.emit();
                     this.close();
                 },
-                error: () => this.translateService.get('task-form.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+                error: () => this.sharedService.handleSnackbarMessages('task-form.edit-error', false),
             });
         }
     }

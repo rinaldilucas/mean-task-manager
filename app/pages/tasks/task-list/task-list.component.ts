@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -49,11 +48,10 @@ export class TaskListComponent implements OnInit {
     pageSizeOptions = [5, 10, 20];
 
     constructor(
-        private changeDetector: ChangeDetectorRef,
+        private changeDetector: ChangeDetectorRef, //
         private taskService: TaskService,
         private sharedService: SharedService,
         private router: Router,
-        private snackBar: MatSnackBar,
         private titleService: Title,
         private translateService: TranslateService,
     ) {}
@@ -90,26 +88,26 @@ export class TaskListComponent implements OnInit {
 
         this.taskService.updateTask(task).subscribe({
             next: () => {
-                this.translateService.get('task-list.status-change').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                this.sharedService.handleSnackbarMessages('task-list.status-change');
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            error: () => this.translateService.get('task-list.status-change-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+            error: () => this.sharedService.handleSnackbarMessages('task-list.status-change-error', false),
         });
     }
 
     remove(task: ITask): void {
         this.taskService.removeTask(task._id).subscribe({
             next: () => {
-                this.translateService.get('task-list.remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                this.sharedService.handleSnackbarMessages('task-list.remove-success');
                 this.taskService.emitTask.emit();
                 this.changeDetector.markForCheck();
             },
-            error: () => this.translateService.get('task-list.remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+            error: () => this.sharedService.handleSnackbarMessages('task-list.remove-error', false),
         });
     }
 
-    filterTasks(text: string) {
+    filterTasks(text: string): void {
         if (text === '') {
             this.searchInput.nativeElement.value = '';
             this.isSearching = false;

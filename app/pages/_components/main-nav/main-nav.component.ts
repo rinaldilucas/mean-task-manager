@@ -3,13 +3,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 import { AuthService } from '@app/scripts/services/auth.service';
 import { TaskService } from '@app/scripts/services/task.service';
 import { UserService } from '@app/scripts/services/user.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-main-nav',
@@ -32,11 +32,11 @@ export class MainNavComponent implements OnInit {
         private translateService: TranslateService,
         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
-        private snackBar: MatSnackBar,
         public taskService: TaskService,
         public userService: UserService,
         public changeDetector: ChangeDetectorRef,
         public router: Router,
+        private sharedService: SharedService,
     ) {}
 
     ngOnInit(): void {
@@ -64,12 +64,12 @@ export class MainNavComponent implements OnInit {
 
     logout(): void {
         this.authService.logout();
-        this.translateService.get('messages.user-logout').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+        this.sharedService.handleSnackbarMessages('messages.user-logout');
     }
 
     changeLanguage(language: string): void {
         this.translateService.use(language);
         localStorage.setItem('language', language);
-        this.translateService.get('messages.language-changed').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+        this.sharedService.handleSnackbarMessages('messages.language-changed');
     }
 }

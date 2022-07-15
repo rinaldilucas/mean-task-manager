@@ -26,7 +26,7 @@
         "authentication-error": "Authentication error.",
         "credentials-error": "Password or email doesn't match.",
         "email": "Email",
-        "login-success": "Logged with success.",
+        "authentication-success": "Logged with success.",
         "password": "Password",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",

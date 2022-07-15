@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -8,7 +7,6 @@ import { Router } from '@angular/router';
 import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
@@ -27,7 +25,6 @@ export class ProfileComponent implements OnInit {
         private userService: UserService,
         private authService: AuthService,
         private titleService: Title,
-        private snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         private translateService: TranslateService,
         private router: Router,
@@ -47,26 +44,15 @@ export class ProfileComponent implements OnInit {
     save(): void {
         if (!this.sharedService.isValidForm(this.form)) return;
 
-        this.userService.getUser(this.authService.getUserId()).subscribe({
-            next: (result: IQueryResult<IUser>) => {
-                if (!result || !result.success) {
-                    this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-                    return;
-                }
+        const password = this.form.controls['password'].value;
+        this.userService.changePassword(this.authService.getUserId(), password).subscribe({
+            next: () => {
+                this.sharedService.handleSnackbarMessages('profile.edit-success');
 
-                const user = result.data[0];
-                user.password = this.form.controls['password'].value;
-
-                this.userService.changePassword(user).subscribe({
-                    next: () => {
-                        this.translateService.get('profile.edit-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
-                        this.form.reset();
-                        this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
-                    },
-                    error: () => this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
-                });
+                this.form.reset();
+                this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
             },
-            error: () => this.translateService.get('profile.edit-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 })),
+            error: () => this.sharedService.handleSnackbarMessages('profile.edit-error', false),
         });
     }
 }

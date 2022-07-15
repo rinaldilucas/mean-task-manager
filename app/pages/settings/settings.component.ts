@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
@@ -12,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-settings',
@@ -33,11 +33,11 @@ export class SettingsComponent implements OnInit {
     categories: ICategory[] = [];
 
     constructor(
-        private changeDetector: ChangeDetectorRef,
+        private changeDetector: ChangeDetectorRef, //
         private categoryService: CategoryService,
         private translateService: TranslateService,
-        private snackBar: MatSnackBar,
         private titleService: Title,
+        private sharedService: SharedService,
     ) {}
 
     ngOnInit(): void {
@@ -70,18 +70,18 @@ export class SettingsComponent implements OnInit {
         this.categoryService.createCategory(category).subscribe({
             next: (result: IQueryResult<ICategory>) => {
                 if (!result || !result.success) {
-                    this.translateService.get('settings.category-create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
                     return;
                 }
 
-                this.translateService.get('settings.category-create-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                this.sharedService.handleSnackbarMessages('settings.category-create-success');
                 this.categoryService.emitCategory.emit(result.data[0]);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
                 this.categories.push(result.data[0]);
             },
             error: () => {
-                this.translateService.get('settings.category-create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
@@ -91,7 +91,7 @@ export class SettingsComponent implements OnInit {
     removeCategory(category: ICategory): void {
         this.categoryService.removeCategory(category._id).subscribe({
             next: () => {
-                this.translateService.get('settings.category-remove-success').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 5000 }));
+                this.sharedService.handleSnackbarMessages('settings.category-remove-success');
                 this.categoryService.emitCategory.emit(category);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
@@ -100,7 +100,7 @@ export class SettingsComponent implements OnInit {
                 this.changeDetector.markForCheck();
             },
             error: () => {
-                this.translateService.get('settings.category-remove-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);
                 this.categoryCtrl.setValue(null);
                 this.categoryInput.nativeElement.value = '';
             },
