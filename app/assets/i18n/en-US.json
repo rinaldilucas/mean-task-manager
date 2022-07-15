@@ -9,9 +9,10 @@
         "signin": "Login"
     },
     "error": {
-        "maxlength": "You must fill in text that does not exceed {{value}} characters.",
-        "minlength": "You must fill in text that exceeds {{value}} characters.",
-        "email-exists": "E-mail already registered."
+        "max-length": "You must fill in text that does not exceed {{value}} characters.",
+        "min-length": "You must fill in text that exceeds {{value}} characters.",
+        "email-exists": "E-mail already registered.",
+        "email-invalid": "Invalid e-mail."
     },
     "input": {
         "category": "Category",

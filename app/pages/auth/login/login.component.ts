@@ -34,7 +34,7 @@ export class LogInComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
     ) {
         this.form = this.formBuilder.group({
-            email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
+            email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }

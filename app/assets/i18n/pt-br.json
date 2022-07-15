@@ -9,9 +9,10 @@
         "signin": "Entrar"
     },
     "error": {
-        "maxlength": "Você deve preencher um texto que não exceda {{value}} caracteres.",
-        "minlength": "Você deve preencher um texto que exceda {{value}} caracteres.",
-        "email-exists": "E-mail já cadastrado."
+        "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
+        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres.",
+        "email-exists": "E-mail já cadastrado.",
+        "email-invalid": "E-mail inválido."
     },
     "input": {
         "category": "Categoria",

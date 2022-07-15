@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
         private utilService: UtilService,
     ) {
         this.form = this.formBuilder.group({
-            email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [EmailValidator.createValidator(this.userService)]],
+            email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)], [EmailValidator.createValidator(this.userService)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }
