@@ -27,8 +27,8 @@ export class UserService {
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
     }
 
-    checkIfUsernameExists(username: string): Observable<IQueryResult<IUser>> {
-        const url = `${this.url}/username/${username}`;
+    checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
+        const url = `${this.url}/email/${email}`;
 
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.utilService.errorHandler));
     }
@@ -46,8 +46,8 @@ export class UserService {
         return this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.utilService.errorHandler));
     }
 
-    authenticate(username: string, password: string): Observable<IQueryResult<IJwtPayload>> {
-        const credentials = { username, password };
+    authenticate(email: string, password: string): Observable<IQueryResult<IJwtPayload>> {
+        const credentials = { email, password };
         const url = `${this.url}/authenticate`;
 
         return this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.utilService.errorHandler));

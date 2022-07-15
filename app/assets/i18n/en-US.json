@@ -11,7 +11,7 @@
     "error": {
         "maxlength": "You must fill in text that does not exceed {{value}} characters.",
         "minlength": "You must fill in text that exceeds {{value}} characters.",
-        "user-exists": "The username already has been taken."
+        "email-exists": "E-mail already registered."
     },
     "input": {
         "category": "Category",
@@ -19,17 +19,17 @@
         "description": "Description",
         "password": "Password",
         "title": "Title",
-        "username": "Username"
+        "email": "Email"
     },
     "login": {
         "authentication-error": "Authentication error.",
         "login-success": "Logged with success.",
         "password": "Password",
-        "credentials-error": "Password or username doesn't match.",
+        "credentials-error": "Password or email doesn't match.",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",
-        "user-error": "Username don't exists.",
-        "username": "Username"
+        "user-error": "Account not found.",
+        "email": "Email"
     },
     "messages": {
         "language-changed": "Language changed.",
@@ -50,9 +50,9 @@
         "edit-success": "Profile edited with success."
     },
     "register": {
-        "create-error": "Error creating user.",
-        "create-success": "User created with success.",
-        "username-error": "Username already taken."
+        "create-error": "Error creating account.",
+        "create-success": "Account created with success.",
+        "email-error": "E-mail already registered."
     },
     "settings": {
         "categories-names": "Categories names",
@@ -61,7 +61,7 @@
         "category-remove-error": "Error removing the category.",
         "category-remove-success": "Category removed with success.",
         "category-selection": "Category selection",
-        "new-category": "New category..."
+        "category-label": "New category..."
     },
     "table": {
         "actions": {

@@ -37,11 +37,11 @@ exports.findOne = async (request, response) => {
     }
 };
 
-exports.findOneByUsername = async (request, response) => {
+exports.findOneByEmail = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const document = await Model.findOne({ username: request.params.username });
+        const document = await Model.findOne({ email: request.params.email });
         if (!document)
             if (language == 'en-US') return httpHandler.success(response, document, StatusCode.SuccessNoContent);
             else return httpHandler.success(response, document, StatusCode.SuccessNoContent);
@@ -82,15 +82,15 @@ exports.register = async (request, response) => {
         const hashPash = await bcrypt.hash(request.body.password, salt);
 
         const newUser = new Model({
-            username: request.body.username,
+            email: request.body.email,
             role: request.body.role,
             password: hashPash,
         });
 
-        const document = await Model.findOne({ username: request.body.username });
+        const document = await Model.findOne({ email: request.body.email });
         if (document)
-            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with username ${request.params.username}.`);
-            else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.username._id} já existe.`);
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.params.email}.`);
+            else return httpHandler.error(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.params.email} já existe.`);
 
         const result = await newUser.save();
         if (!result || result.n === 0) {
@@ -109,9 +109,9 @@ exports.authenticate = async (request, response) => {
     const language = request.headers.language;
 
     try {
-        const document = await Model.findOne({ username: request.body.username });
+        const document = await Model.findOne({ email: request.body.email });
         if (!document)
-            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid username.`);
+            if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid email.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Usuário inválido.`);
 
         const validated = await bcrypt.compare(request.body.password, document.password);
@@ -119,7 +119,7 @@ exports.authenticate = async (request, response) => {
             if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Missmatch credential: Invalid password.`);
             else return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Erro de credencial: Senha inválida.`);
 
-        const token = jwt.sign({ username: document.username, userId: document._id, role: document.role }, process.env.JWT_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ email: document.email, userId: document._id, role: document.role }, process.env.JWT_KEY, { expiresIn: '1h' });
         const jwtPayload = {
             token: token,
             expiresIn: 60 * 60,

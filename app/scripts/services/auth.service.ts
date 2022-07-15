@@ -140,7 +140,7 @@ export class AuthService {
 
         this.loggedUser = {
             role: this.decodedToken.role as ERole,
-            username: this.decodedToken.username,
+            email: this.decodedToken.email,
             userId: this.decodedToken.userId,
         };
     }

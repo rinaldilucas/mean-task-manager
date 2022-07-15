@@ -10,7 +10,7 @@ import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
-import { UsernameValidator } from '@app/scripts/validators/username.validator';
+import { EmailValidator } from '@app/scripts/validators/email.validator';
 import { UtilService } from '@app/scripts/services/util.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
         private utilService: UtilService,
     ) {
         this.form = this.formBuilder.group({
-            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [UsernameValidator.createValidator(this.userService)]],
+            email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)], [EmailValidator.createValidator(this.userService)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
             },
             error: (error: IQueryResult<IUser>) => {
                 if (error.status === StatusCode.ClientErrorConflict) {
-                    this.translateService.get('register.username-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+                    this.translateService.get('register.email-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
                     return;
                 }
                 this.translateService.get('register.create-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));

@@ -22,7 +22,7 @@ module.exports = {
             }
 
             request.userData = {
-                username: payload.username,
+                email: payload.email,
                 _id: payload._id,
             };
 

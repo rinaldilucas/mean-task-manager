@@ -11,8 +11,8 @@ module.exports = function (app) {
     // GET BY ID
     app.get('/api/users/:_id', passportMiddleware.applyBearerStrategy, users.findOne);
 
-    // GET BY USERNAME
-    app.get('/api/users/username/:username', users.findOneByUsername);
+    // GET BY EMAIL
+    app.get('/api/users/email/:email', users.findOneByEmail);
 
     // UPDATE
     app.put('/api/users', passportMiddleware.applyBearerStrategy, users.update);
@@ -20,13 +20,16 @@ module.exports = function (app) {
     // REGISTER
     app.post(
         '/api/users/register', //
-        check('username', 'Must be at least 5 and lesser than 150 chars long') //
+        check('email', 'Must be at least 5 and lesser than 150 chars long') //
+            .isEmail()
+            .withMessage('Must be a valid email address')
             .isLength({ min: 5 })
             .withMessage('Must be at least 5 chars long')
             .isLength({ max: 150 })
             .withMessage('Must be lesser than 150 chars long')
             .not()
             .isEmpty()
+            .normalizeEmail()
             .trim(),
         check('password', 'Must be at least 8 and lesser than 150 chars long') //
             .isLength({ min: 8 })
@@ -43,13 +46,16 @@ module.exports = function (app) {
     // AUTHENTICATE
     app.post(
         '/api/users/authenticate', //
-        check('username', 'Must be at least 5 and lesser than 150 chars long') //
+        check('email', 'Must be at least 5 and lesser than 150 chars long') //
+            .isEmail()
+            .withMessage('Must be a valid email address')
             .isLength({ min: 5 })
             .withMessage('Must be at least 5 chars long')
             .isLength({ max: 150 })
             .withMessage('Must be lesser than 150 chars long')
             .not()
             .isEmpty()
+            .normalizeEmail()
             .trim(),
         check('password', 'Must be at least 8 and lesser than 150 chars long') //
             .isLength({ min: 8 })
@@ -62,9 +68,6 @@ module.exports = function (app) {
         validatorMiddleware.verifyValidations,
         users.authenticate,
     );
-
-    // LOGOUT
-    app.post('/api/users/logout', users.logout);
 
     // CHANGE PASSWORD
     app.post(
@@ -80,4 +83,7 @@ module.exports = function (app) {
         validatorMiddleware.verifyValidations,
         users.changePassword,
     );
+
+    // LOGOUT
+    app.post('/api/users/logout', users.logout);
 };

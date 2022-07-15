@@ -11,7 +11,7 @@
     "error": {
         "maxlength": "Você deve preencher um texto que não exceda {{value}} caracteres.",
         "minlength": "Você deve preencher um texto que exceda {{value}} caracteres.",
-        "user-exists": "O nome de usuário já existe."
+        "email-exists": "E-mail já cadastrado."
     },
     "input": {
         "category": "Categoria",
@@ -19,7 +19,7 @@
         "description": "Descrição",
         "password": "Senha",
         "title": "Título",
-        "username": "Usuário"
+        "email": "E-mail"
     },
     "login": {
         "authentication-error": "Erro de autenticação.",
@@ -28,8 +28,8 @@
         "credentials-error": "Senha ou usuário não conferem.",
         "password-error": "Senhas não conferem.",
         "remember-me": "Manter logado",
-        "user-error": "Usuário não existe.",
-        "username": "Usuário"
+        "user-error": "Conta não encontrada.",
+        "email": "E-mail"
     },
     "messages": {
         "language-changed": "Linguagem alterada.",
@@ -50,9 +50,9 @@
         "edit-success": "Perfil editado com sucesso."
     },
     "register": {
-        "create-error": "Erro ao criar usuário.",
-        "create-success": "Usuário criado com sucesso.",
-        "username-error": "Nome de usuário já utilizado."
+        "create-error": "Erro ao criar conta.",
+        "create-success": "Conta criada com sucesso.",
+        "email-error": "E-mail já cadastrado."
     },
     "settings": {
         "categories-names": "Nomes de categorias",

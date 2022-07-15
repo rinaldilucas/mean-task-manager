@@ -34,7 +34,7 @@ export class LogInComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
     ) {
         this.form = this.formBuilder.group({
-            username: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
+            email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
             password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
         });
     }
@@ -48,7 +48,7 @@ export class LogInComponent implements OnInit {
         if (!this.utilService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
-        this.userService.authenticate(user.username, user.password).subscribe({
+        this.userService.authenticate(user.email, user.password).subscribe({
             next: (result: IQueryResult<IJwtPayload>) => {
                 if (!result || !result.success) {
                     this.translateService.get('login.authentication-error').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
