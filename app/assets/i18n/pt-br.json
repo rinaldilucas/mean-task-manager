@@ -9,28 +9,28 @@
         "signin": "Entrar"
     },
     "error": {
-        "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
-        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres.",
         "email-exists": "E-mail já cadastrado.",
-        "email-invalid": "E-mail inválido."
+        "email-invalid": "E-mail inválido.",
+        "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
+        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres."
     },
     "input": {
         "category": "Categoria",
         "choose-due-date": "Escolhar data limite",
         "description": "Descrição",
+        "email": "E-mail",
         "password": "Senha",
-        "title": "Título",
-        "email": "E-mail"
+        "title": "Título"
     },
     "login": {
         "authentication-error": "Erro de autenticação.",
+        "credentials-error": "Senha ou usuário não conferem.",
+        "email": "E-mail",
         "login-success": "Logado com sucesso.",
         "password": "Senha",
-        "credentials-error": "Senha ou usuário não conferem.",
         "password-error": "Senhas não conferem.",
         "remember-me": "Manter logado",
-        "user-error": "Conta não encontrada.",
-        "email": "E-mail"
+        "user-error": "Conta não encontrada."
     },
     "messages": {
         "language-changed": "Linguagem alterada.",
@@ -59,10 +59,10 @@
         "categories-names": "Nomes de categorias",
         "category-create-error": "Erro ao criar categoria.",
         "category-create-success": "Categoria criada com sucesso.",
+        "category-label": "Nova categoria...",
         "category-remove-error": "Erro ao remover categoria.",
         "category-remove-success": "Categoria removida com sucesso.",
-        "category-selection": "Selecionar categoria",
-        "new-category": "Nova categoria..."
+        "category-selection": "Selecionar categoria"
     },
     "table": {
         "actions": {
