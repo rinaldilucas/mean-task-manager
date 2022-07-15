@@ -3,13 +3,9 @@ const httpHandler = require('../utils/http-handler');
 const { StatusCode } = require('status-code-enum');
 
 exports.findAll = async (request, response) => {
-    const language = request.headers.language;
-
     const [data, error] = await httpHandler.parser(request, response, Model.find());
     if (!!error) return;
-    if (data?.length === 0)
-        if (language == 'en-US') return httpHandler.success(response, data, StatusCode.SuccessOK);
-        else return httpHandler.success(response, data, StatusCode.SuccessOK);
+    if (data?.length === 0) return httpHandler.success(response, data, StatusCode.SuccessOK);
 
     httpHandler.success(response, data, StatusCode.SuccessOK);
 };
@@ -20,8 +16,8 @@ exports.create = async (request, response) => {
     const [data, error] = await httpHandler.parser(request, response, new Model(request.body).save());
     if (!!error) return;
     if (!data || data.n === 0)
-        if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating category.`);
-        else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar categoria.`);
+        if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
+        else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
 
     httpHandler.success(response, data, StatusCode.SuccessCreated);
 };

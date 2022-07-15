@@ -36,9 +36,7 @@ export class TaskFormEntryComponent {
             const config: MatBottomSheetConfig = { data: id };
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
             sheetRef.afterDismissed().subscribe(() => {
-                this.translateService.get('title.tasks').subscribe((text: string) => {
-                    this.titleService.setTitle(`${text} — Mean Stack Template`);
-                });
+                this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
                 this.router.navigate(['/tasks']);
             });
         });

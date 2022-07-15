@@ -70,8 +70,8 @@ exports.create = async (request, response) => {
     const [data, error] = await httpHandler.parser(request, response, new Model(request.body).save());
     if (!!error) return;
     if (!data || data.n === 0)
-        if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating category.`);
-        else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar categoria.`);
+        if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
+        else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
 
     httpHandler.success(response, data, StatusCode.SuccessCreated);
 };
