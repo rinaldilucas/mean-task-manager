@@ -42,21 +42,25 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit(): void {
         this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.refresh();
+        this.refreshAsync();
     }
 
-    refresh(): void {
-        this.categoryService.listCategories().subscribe((result: IQueryResult<ICategory>) => {
-            this.categories = result.data.map((category: ICategory) => {
-                return {
-                    _id: category._id,
-                    title: category.title,
-                } as ICategory;
-            });
+    async refreshAsync(): Promise<void> {
+        const [result, error] = await this.sharedService.handlePromises(this.categoryService.listCategories());
+        if (!!error || !result || !result.success) {
+            this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+            return;
+        }
 
-            this.isLoading = false;
-            this.changeDetector.markForCheck();
+        this.categories = result.data.map((category: ICategory) => {
+            return {
+                _id: category._id,
+                title: category.title,
+            } as ICategory;
         });
+
+        this.isLoading = false;
+        this.changeDetector.markForCheck();
     }
 
     saveCategory(event: MatChipInputEvent): void {

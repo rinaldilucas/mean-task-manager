@@ -15,7 +15,6 @@ import { CategoryService } from '@app/scripts/services/category.service';
 import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ICategory } from '@app/scripts/models/category.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
@@ -60,7 +59,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     constructor(
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
-        private categoriesService: CategoryService,
+        private categoryService: CategoryService,
         private authService: AuthService,
         private formBuilder: FormBuilder,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
@@ -78,29 +77,38 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        const isEdit = !!this.id;
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
 
-        this.categoriesService.listCategories().subscribe((result: IQueryResult<ICategory>) => {
-            this.categories = result.data;
-            this.setAutoCompletes();
-        });
-
-        if (this.id) {
-            this.taskService.getTask(this.id).subscribe((result: IQueryResult<ITask>) => {
-                this.form.patchValue(result.data[0]);
-                this.changeDetector.markForCheck();
-                this.translateService.get('title.edit-task').subscribe((text: string) => {
-                    this.title = text;
-                    this.titleService.setTitle(`${this.title} — Mean Stack Template`);
-                });
-            });
-        } else {
+        if (!isEdit) {
             this.translateService.get('title.add-task').subscribe((text: string) => {
                 this.title = text;
                 this.titleService.setTitle(`${this.title} — Mean Stack Template`);
             });
+        } else {
+            this.translateService.get('title.edit-task').subscribe((text: string) => {
+                this.title = text;
+                this.titleService.setTitle(`${this.title} — Mean Stack Template`);
+            });
+
+            const [result, error] = await this.sharedService.handlePromises(this.taskService.getTask(this.id));
+            if (!!error || !result || !result.success) {
+                this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+                return;
+            }
+
+            this.form.patchValue(result.data[0]);
+            this.changeDetector.markForCheck();
         }
+
+        const [categories, categoriesError] = await this.sharedService.handlePromises(this.categoryService.listCategories());
+        if (!!categoriesError || !categories || !categories.success) {
+            this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+            return;
+        }
+        this.categories = categories.data;
+        this.setAutoCompletes();
     }
 
     ngAfterViewInit(): void {
@@ -122,38 +130,27 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         this.bottomSheetRef.dismiss();
     }
 
-    save(): void {
+    async save(): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
-        const task = { ...this.form.value, userId: this.authService.getUserId() } as ITask;
-        if (!this.id) {
-            task.status = EStatus.toDo;
-            this.taskService.createTask(task).subscribe({
-                next: (result: IQueryResult<ITask>) => {
-                    if (!result || !result.success) {
-                        this.sharedService.handleSnackbarMessages('task-form.create-error', false);
-                        return;
-                    }
+        const isEdit = !!this.id;
+        const task = {
+            ...this.form.value, //
+            userId: this.authService.getUserId(),
+            _id: isEdit ? this.id : null,
+        } as ITask;
+        task.status = EStatus.toDo;
 
-                    this.sharedService.handleSnackbarMessages('task-form.create-success');
-                    this.taskService.emitTask.emit(task);
-                    this.form.reset();
-                    this.close();
-                },
-                error: () => this.sharedService.handleSnackbarMessages('task-form.create-error', false),
-            });
-        } else {
-            task._id = this.id;
-            this.taskService.updateTask(task).subscribe({
-                next: () => {
-                    this.sharedService.handleSnackbarMessages('task-form.edit-success');
-                    this.form.reset();
-                    this.taskService.emitTask.emit();
-                    this.close();
-                },
-                error: () => this.sharedService.handleSnackbarMessages('task-form.edit-error', false),
-            });
+        const [, error] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
+        if (!!error) {
+            this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.create-error' : 'task-form.edit-error', false);
+            return;
         }
+
+        this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.create-success' : 'task-form-edit-success');
+        this.taskService.emitTask.emit(task);
+        this.form.reset();
+        this.close();
     }
 
     close(): void {

@@ -83,7 +83,8 @@
         "create-error": "Error adding the task.",
         "create-success": "Task created with success.",
         "edit-error": "Error updating the task.",
-        "edit-success": "Task edited with success."
+        "edit-success": "Task edited with success.",
+        "get-error": "Error retrieving task."
     },
     "task-list": {
         "empty": "No tasks.",

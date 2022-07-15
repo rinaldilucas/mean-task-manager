@@ -19,10 +19,6 @@
 
     <div class="list" fxLayoutAlign="center center">
         <div class="list__wrapper mat-elevation-z1">
-            <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
-                <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
-            </div>
-
             <div class="list__header">
                 <div class="list__header-title">
                     <span class="header-title">{{ "title.tasks" | translate }}</span>
@@ -34,16 +30,20 @@
 
                 <div class="list__header-search">
                     <mat-form-field>
-                        <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput (keyup.enter)="filterTasks(searchInput.value)" [value]="search" />
+                        <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput (keyup.enter)="filterTasksAsync(searchInput.value)" [value]="search" />
                     </mat-form-field>
 
                     <button mat-icon-button>
-                        <mat-icon matTooltip="{{ 'task-list.search' | translate }}" (click)="filterTasks(searchInput.value)">done</mat-icon>
+                        <mat-icon matTooltip="{{ 'task-list.search' | translate }}" (click)="filterTasksAsync(searchInput.value)">done</mat-icon>
                     </button>
                 </div>
             </div>
 
             <div class="list__body">
+                <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
+                    <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+                </div>
+
                 <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
                     <div>
                         <mat-icon class="icon icon--big">sms</mat-icon>
@@ -116,7 +116,7 @@
                                         mat-icon-button
                                         matTooltip="{{ 'table.actions.progress' | translate }}"
                                         class="list__body-actions"
-                                        (click)="changeStatus(task, status.progress); $event.stopPropagation()"
+                                        (click)="changeStatusAsync(task, status.progress); $event.stopPropagation()"
                                     >
                                         <mat-icon>360 icon</mat-icon>
                                     </button>
@@ -124,11 +124,11 @@
                                         mat-icon-button
                                         matTooltip="{{ 'table.actions.done' | translate }}"
                                         class="list__body-actions"
-                                        (click)="changeStatus(task, status.done); $event.stopPropagation()"
+                                        (click)="changeStatusAsync(task, status.done); $event.stopPropagation()"
                                     >
                                         <mat-icon>check</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="remove(task); $event.stopPropagation()">
+                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="removeAsync(task); $event.stopPropagation()">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -143,7 +143,7 @@
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <ng-template matMenuContent>
-                                            <button mat-menu-item (click)="remove(task); $event.stopPropagation()"><span>Remove</span></button>
+                                            <button mat-menu-item (click)="removeAsync(task); $event.stopPropagation()"><span>Remove</span></button>
                                         </ng-template>
                                     </mat-menu>
                                 </mat-cell>
@@ -157,7 +157,7 @@
                 </div>
 
                 <div [hidden]="isLoading || (tasks && tasks.length === 0)">
-                    <mat-paginator [length]="pageCount" [pageSizeOptions]="pageSizeOptions" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [length]="pageCount" [pageSizeOptions]="pageSizeOptions" (page)="onPaginateChangeAsync($event)" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
         </div>

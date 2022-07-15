@@ -83,7 +83,8 @@
         "create-error": "Erro ao adicionar tarefa.",
         "create-success": "Tarefa criada com sucesso.",
         "edit-error": "Erro ao editar tarefa.",
-        "edit-success": "Tarefa editada com sucesso."
+        "edit-success": "Tarefa editada com sucesso.",
+        "get-error": "Erro ao buscar tarefa."
     },
     "task-list": {
         "empty": "Sem tarefas.",

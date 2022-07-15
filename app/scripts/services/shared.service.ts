@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Observable, throwError } from 'rxjs';
+import { lastValueFrom, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -84,5 +84,14 @@ export class SharedService {
 
     handleSnackbarMessages(translationKey: string, success = true): void {
         this.translateService.get(translationKey).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
+    }
+
+    async handlePromises(promise: Promise<any>): Promise<any> {
+        try {
+            const data = await promise;
+            return [data, null];
+        } catch (error) {
+            return [null, error];
+        }
     }
 }
