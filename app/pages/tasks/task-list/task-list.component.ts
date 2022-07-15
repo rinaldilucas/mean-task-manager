@@ -65,14 +65,15 @@ export class TaskListComponent implements OnInit {
     }
 
     async refresh(): Promise<void> {
-        const result = await lastValueFrom(this.taskService.listTasksByUser(this.pageSize));
+        const result = await lastValueFrom(this.taskService.listTasksByUser(this.pageSize)).catch(() => this.sharedService.handleSnackbarMessages('task-list.refresh-error', false));
+
         if (result) {
             this.tasks = result.data;
             this.pageCount = result.count;
             this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
-            this.isLoading = false;
-            this.changeDetector.markForCheck();
         }
+        this.isLoading = false;
+        this.changeDetector.markForCheck();
     }
 
     add(): void {

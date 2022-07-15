@@ -89,6 +89,7 @@
         "empty": "Sem tarefas.",
         "empty-search": "Sem tarefas encontradas em sua pesquisa.",
         "refresh": "Atualizar",
+        "refresh-error": "Erro ao buscar tarefas.",
         "remove-error": "Erro ao remover tarefa.",
         "remove-success": "Tarefa removida com sucesso.",
         "search": "Buscar",

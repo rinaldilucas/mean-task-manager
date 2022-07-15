@@ -89,6 +89,7 @@
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",
+        "refresh-error": "Error retrieving tasks.",
         "remove": "Task removed.",
         "remove-error": "Error removing task.",
         "search": "Search",
