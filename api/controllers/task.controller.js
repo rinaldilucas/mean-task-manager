@@ -91,7 +91,7 @@ exports.update = async (request, response) => {
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
 
-    httpHandler.success(response, data, StatusCode.SuccessNoContent);
+    httpHandler.success(response, data, StatusCode.SuccessOk);
 };
 
 exports.delete = async (request, response) => {
@@ -109,5 +109,5 @@ exports.delete = async (request, response) => {
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
 
-    httpHandler.success(response, data, StatusCode.SuccessNoContent);
+    httpHandler.success(response, data, StatusCode.SuccessOk);
 };

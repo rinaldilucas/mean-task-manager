@@ -4,7 +4,6 @@ import { Colors } from 'ng2-charts';
 
 import { TaskService } from '@app/scripts/services/task.service';
 import { ITask } from '@app/scripts/models/task.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-tasks-done',

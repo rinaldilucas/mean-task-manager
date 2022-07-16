@@ -28,7 +28,7 @@ exports.findOne = async (request, response) => {
 exports.findOneByEmail = async (request, response) => {
     const [data, error] = await httpHandler.handlePromises(request, response, Model.findOne({ email: request.params.email }));
     if (!!error) return;
-    if (!data) return httpHandler.success(response, {}, StatusCode.SuccessNoContent);
+    if (!data) return httpHandler.success(response, {}, StatusCode.SuccessOk);
 
     httpHandler.success(response, { userExists: true }, StatusCode.SuccessOK);
 };
@@ -48,7 +48,7 @@ exports.update = async (request, response) => {
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
 
-    httpHandler.success(response, data, StatusCode.SuccessNoContent);
+    httpHandler.success(response, data, StatusCode.SuccessOk);
 };
 
 exports.register = async (request, response) => {
@@ -130,5 +130,5 @@ exports.changePassword = async (request, response) => {
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
 
-    httpHandler.success(response, data, StatusCode.SuccessNoContent);
+    httpHandler.success(response, data, StatusCode.SuccessOk);
 };

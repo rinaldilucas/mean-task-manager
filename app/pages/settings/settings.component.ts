@@ -10,7 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ICategory } from '@app/scripts/models/category.interface';
 import { CategoryService } from '@app/scripts/services/category.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({

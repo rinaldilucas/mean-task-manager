@@ -10,7 +10,6 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { TaskService } from '@app/scripts/services/task.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-task-list',

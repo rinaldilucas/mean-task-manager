@@ -7,7 +7,6 @@ import { StatusCode } from 'status-code-enum';
 
 import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { EmailValidator } from '@app/scripts/validators/email.validator';
 import { SharedService } from '@app/scripts/services/shared.service';

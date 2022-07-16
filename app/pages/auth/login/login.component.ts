@@ -8,8 +8,6 @@ import { StatusCode } from 'status-code-enum';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
