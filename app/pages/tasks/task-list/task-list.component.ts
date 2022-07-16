@@ -78,11 +78,11 @@ export class TaskListComponent implements OnInit {
     }
 
     add(): void {
-        this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/add`]);
+        this.router.navigate(['tasks/add']);
     }
 
     edit(id: string): void {
-        this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/edit`, id]);
+        this.router.navigate(['tasks/edit', id]);
     }
 
     async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {

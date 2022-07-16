@@ -12,7 +12,7 @@
                         <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
 
                         <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">
-                            <mat-chip *ngFor="let category of categories" (removed)="removeCategory(category)">
+                            <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
                                 {{ category.title }}
                                 <button matChipRemove>
                                     <mat-icon>cancel</mat-icon>
@@ -24,7 +24,7 @@
                                 [formControl]="categoryCtrl"
                                 [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                (matChipInputTokenEnd)="saveCategory($event)"
+                                (matChipInputTokenEnd)="saveCategoryAsync($event)"
                             />
                         </mat-chip-list>
                     </mat-form-field>

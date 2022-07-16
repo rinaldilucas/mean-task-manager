@@ -41,18 +41,15 @@ export class ProfileComponent implements OnInit {
         this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    save(): void {
+    async saveAsync(): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const password = this.form.controls['password'].value;
-        this.userService.changePassword(this.authService.getUserId(), password).subscribe({
-            next: () => {
-                this.sharedService.handleSnackbarMessages('profile.edit-success');
+        const [, error] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
+        if (!!error) this.sharedService.handleSnackbarMessages('profile.edit-error', false);
 
-                this.form.reset();
-                this.router.navigate([`${this.router.url.split(/\/(profile)\/?/gi)[0]}/tasks`]);
-            },
-            error: () => this.sharedService.handleSnackbarMessages('profile.edit-error', false),
-        });
+        this.sharedService.handleSnackbarMessages('profile.edit-success');
+        this.form.reset();
+        this.router.navigate(['tasks']);
     }
 }

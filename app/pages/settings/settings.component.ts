@@ -52,62 +52,46 @@ export class SettingsComponent implements OnInit {
             return;
         }
 
-        this.categories = result.data.map((category: ICategory) => {
-            return {
-                _id: category._id,
-                title: category.title,
-            } as ICategory;
-        });
-
+        this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title }));
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }
 
-    saveCategory(event: MatChipInputEvent): void {
+    async saveCategoryAsync(event: MatChipInputEvent): Promise<void> {
         const value = (event.value || '').trim();
         const category = { title: value } as ICategory;
 
-        if (!value) {
+        if (!value) return;
+
+        const [result, error] = await this.sharedService.handlePromises(this.categoryService.createCategory(category));
+        if (!!error || !result || !result.success) {
+            this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
+            this.categoryCtrl.setValue(null);
+            this.categoryInput.nativeElement.value = '';
             return;
         }
 
-        this.categoryService.createCategory(category).subscribe({
-            next: (result: IQueryResult<ICategory>) => {
-                if (!result || !result.success) {
-                    this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
-                    return;
-                }
-
-                this.sharedService.handleSnackbarMessages('settings.category-create-success');
-                this.categoryService.emitCategory.emit(result.data[0]);
-                this.categoryCtrl.setValue(null);
-                this.categoryInput.nativeElement.value = '';
-                this.categories.push(result.data[0]);
-            },
-            error: () => {
-                this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
-                this.categoryCtrl.setValue(null);
-                this.categoryInput.nativeElement.value = '';
-            },
-        });
+        this.sharedService.handleSnackbarMessages('settings.category-create-success');
+        this.categoryService.emitCategory.emit(result.data[0]);
+        this.categoryCtrl.setValue(null);
+        this.categoryInput.nativeElement.value = '';
+        this.categories.push(result.data[0]);
     }
 
-    removeCategory(category: ICategory): void {
-        this.categoryService.removeCategory(category._id).subscribe({
-            next: () => {
-                this.sharedService.handleSnackbarMessages('settings.category-remove-success');
-                this.categoryService.emitCategory.emit(category);
-                this.categoryCtrl.setValue(null);
-                this.categoryInput.nativeElement.value = '';
-                const index = this.categories.indexOf(category);
-                this.categories.splice(index, 1);
-                this.changeDetector.markForCheck();
-            },
-            error: () => {
-                this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);
-                this.categoryCtrl.setValue(null);
-                this.categoryInput.nativeElement.value = '';
-            },
-        });
+    async removeCategoryAsync(category: ICategory): Promise<void> {
+        const [result, error] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
+        if (!!error || !result || !result.success) {
+            this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);
+            this.categoryCtrl.setValue(null);
+            this.categoryInput.nativeElement.value = '';
+        }
+
+        this.sharedService.handleSnackbarMessages('settings.category-remove-success');
+        this.categoryService.emitCategory.emit(category);
+        this.categoryCtrl.setValue(null);
+        this.categoryInput.nativeElement.value = '';
+        const index = this.categories.indexOf(category);
+        this.categories.splice(index, 1);
+        this.changeDetector.markForCheck();
     }
 }

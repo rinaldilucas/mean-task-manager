@@ -8,6 +8,7 @@ import { UserService } from '@app/scripts/services/user.service';
 import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { IAuthData } from '@app/scripts/models/authData.interface';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -20,7 +21,11 @@ export class AuthService {
     private loggedUser!: IAuthData;
     private authStatusListener = new Subject<boolean>();
 
-    constructor(private router: Router, public userService: UserService) {}
+    constructor(
+        private router: Router, //
+        public userService: UserService,
+        private sharedService: SharedService,
+    ) {}
 
     getToken(): string {
         return this.rawToken;
@@ -46,14 +51,20 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    logout(): void {
-        this.userService.logout(this.getToken()).subscribe();
+    async logoutAsync(): Promise<void> {
+        const [result, error] = await this.sharedService.handlePromises(this.userService.logout(this.getToken()));
+        if (!!error || !result || !result.success) {
+            this.sharedService.handleSnackbarMessages('login.logout-error', false);
+            return;
+        }
+
+        this.sharedService.handleSnackbarMessages('login.logout-success');
         this.rawToken = '';
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
         this.emitMenu.emit(false);
     }
 
@@ -131,7 +142,7 @@ export class AuthService {
     }
 
     private setAuthTimer(duration: number): void {
-        this.tokenTimer = setTimeout(() => this.logout(), duration * 1000);
+        this.tokenTimer = setTimeout(() => this.logoutAsync(), duration * 1000);
     }
 
     private decodeJwtToken(token: string): void {

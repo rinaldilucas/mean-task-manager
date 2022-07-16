@@ -35,7 +35,7 @@ export class TaskFormEntryComponent {
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
             sheetRef.afterDismissed().subscribe(() => {
                 this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-                this.router.navigate(['/tasks']);
+                this.router.navigate(['tasks']);
             });
         });
     }
@@ -130,7 +130,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         this.bottomSheetRef.dismiss();
     }
 
-    async save(): Promise<void> {
+    async saveAsync(): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const isEdit = !!this.id;
@@ -156,7 +156,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     close(): void {
         this.bottomSheetRef.dismiss();
         this.form.reset();
-        this.router.navigate([`${this.router.url.split(/\/(add|edit)\/?/gi)[0]}/`]);
+        this.router.navigate(['tasks']);
     }
 
     setAutoCompletes(): void {

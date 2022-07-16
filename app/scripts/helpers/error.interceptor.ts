@@ -15,10 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             catchError((error) => {
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
                     const isUserPreviouslyLogged = !!localStorage.getItem('token');
-
-                    if (isUserPreviouslyLogged) {
-                        this.authService.logout();
-                    }
+                    if (isUserPreviouslyLogged) this.authService.logoutAsync();
                 }
                 return throwError(error);
             }),

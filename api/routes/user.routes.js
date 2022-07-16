@@ -70,7 +70,7 @@ module.exports = function (app) {
     );
 
     // CHANGE PASSWORD
-    app.post(
+    app.put(
         '/api/users/changePassword', //
         check('password', 'Must be at least 8 and lesser than 150 chars long') //
             .isLength({ min: 8 })

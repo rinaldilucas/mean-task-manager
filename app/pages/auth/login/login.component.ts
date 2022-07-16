@@ -42,38 +42,36 @@ export class LogInComponent implements OnInit {
         this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    login(): void {
+    async loginAsync(): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
-        this.userService.authenticate(user.email, user.password).subscribe({
-            next: (result: IQueryResult<IJwtPayload>) => {
-                if (!result || !result.success) {
-                    this.sharedService.handleSnackbarMessages('login.authentication-error', false);
-                    return;
-                }
+        const [result, error] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password));
+        if (!!error || !result || !result.success) {
+            if (error.status === StatusCode.ClientErrorNotFound) {
+                this.sharedService.handleSnackbarMessages('login.user-error', false);
+                return;
+            }
+            if (error.status === StatusCode.ClientErrorForbidden) {
+                this.sharedService.handleSnackbarMessages('login.password-error', false);
+                return;
+            }
+            if (error.status === StatusCode.ClientErrorUnauthorized) {
+                this.sharedService.handleSnackbarMessages('login.credentials-error', false);
+                return;
+            }
 
-                if (this.authService.authenticateToken(result.data[0])) {
-                    this.sharedService.handleSnackbarMessages('login.authentication-success');
-                    this.router.navigate([`${this.router.url.split(/\/(login)\/?/gi)[0]}/tasks`]);
-                }
-            },
-            error: (error: IQueryResult<IUser>) => {
-                if (error.status === StatusCode.ClientErrorNotFound) {
-                    this.sharedService.handleSnackbarMessages('login.user-error', false);
-                    return;
-                }
-                if (error.status === StatusCode.ClientErrorForbidden) {
-                    this.sharedService.handleSnackbarMessages('login.password-error', false);
-                    return;
-                }
-                if (error.status === StatusCode.ClientErrorUnauthorized) {
-                    this.sharedService.handleSnackbarMessages('login.credentials-error', false);
-                    return;
-                }
+            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
+        }
 
-                this.sharedService.handleSnackbarMessages('login.authentication-error', false);
-            },
-        });
+        if (!result || !result.success) {
+            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
+            return;
+        }
+
+        if (this.authService.authenticateToken(result.data[0])) {
+            this.sharedService.handleSnackbarMessages('login.authentication-success');
+            this.router.navigate(['tasks']);
+        }
     }
 }

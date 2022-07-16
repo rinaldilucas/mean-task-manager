@@ -30,12 +30,13 @@
         "password": "Senha",
         "password-error": "Senhas não conferem.",
         "remember-me": "Manter logado",
-        "user-error": "Conta não encontrada."
+        "user-error": "Conta não encontrada.",
+        "logout-success": "Logout com sucesso.",
+        "logout-error": "Erro ao sair."
     },
     "messages": {
         "language-changed": "Linguagem alterada.",
         "mandatory-fields": "Você deve preencher os campos obrigatórios.",
-        "user-logout": "Deslogado com sucesso.",
         "user-without-permission": "Usuário sem permissão necessária."
     },
     "navigation": {

@@ -63,8 +63,7 @@ export class MainNavComponent implements OnInit {
     }
 
     logout(): void {
-        this.authService.logout();
-        this.sharedService.handleSnackbarMessages('messages.user-logout');
+        this.authService.logoutAsync();
     }
 
     changeLanguage(language: string): void {

@@ -6,7 +6,7 @@
             </button>
             <h2 class="form-modal__header-title">{{ title }}</h2>
             <div class="form-header">
-                <button mat-fab color="primary" (click)="save()">
+                <button mat-fab color="primary" (click)="saveAsync()">
                     <mat-icon>check</mat-icon>
                 </button>
             </div>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-modal__body">
-        <form [formGroup]="form" class="form-modal__body-wrapper">
+        <form [formGroup]="form" (submit)="saveAsync()" class="form-modal__body-wrapper">
             <mat-card-content>
                 <mat-form-field class="full-width">
                     <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" />

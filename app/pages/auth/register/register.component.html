@@ -4,7 +4,7 @@
             <mat-card-title class="form__title">{{ "title.register" | translate }}</mat-card-title>
         </mat-card-header>
 
-        <form [formGroup]="form">
+        <form [formGroup]="form" (submit)="registerAsync()">
             <mat-card-content>
                 <mat-form-field class="full-width">
                     <input formControlName="email" type="email" matInput placeholder="{{ 'input.email' | translate }}" required />
@@ -15,13 +15,13 @@
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
-                    <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required (keyup.enter)="register()" />
-                    <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.minlength" | translate: { value: 8 } }} </mat-error>
-                    <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.maxlength" | translate: { value: 150 } }} </mat-error>
+                    <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required />
+                    <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
+                    <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
                 </mat-form-field>
             </mat-card-content>
 
-            <button mat-raised-button color="primary" class="form__button" (click)="register()">{{ "button.register" | translate }}</button>
+            <button mat-raised-button color="primary" class="form__button" (click)="registerAsync()">{{ "button.register" | translate }}</button>
         </form>
     </mat-card>
 </div>

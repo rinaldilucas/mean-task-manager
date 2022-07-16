@@ -41,26 +41,21 @@ export class RegisterComponent implements OnInit {
         this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    register(): void {
+    async registerAsync(): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
-        this.userService.register(user).subscribe({
-            next: (result: IQueryResult<IUser>) => {
-                if (!result || !result.success) {
-                    this.sharedService.handleSnackbarMessages('register.create-error', false);
-                }
+        const [result, error] = await this.sharedService.handlePromises(this.userService.register(user));
+        if (!!error || !result || !result.success) {
+            if (error?.status === StatusCode.ClientErrorConflict) {
+                this.sharedService.handleSnackbarMessages('register.email-error', false);
+                return;
+            }
+            this.sharedService.handleSnackbarMessages('register.create-error', false);
+            return;
+        }
 
-                this.sharedService.handleSnackbarMessages('register.create-success');
-                this.router.navigate([`${this.router.url.split(/\/(register)\/?/gi)[0]}/login`]);
-            },
-            error: (error: IQueryResult<IUser>) => {
-                if (error.status === StatusCode.ClientErrorConflict) {
-                    this.sharedService.handleSnackbarMessages('register.email-error', false);
-                    return;
-                }
-                this.sharedService.handleSnackbarMessages('register.create-error', false);
-            },
-        });
+        this.sharedService.handleSnackbarMessages('register.create-success');
+        this.router.navigate(['login']);
     }
 }

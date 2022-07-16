@@ -1,6 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
@@ -56,7 +55,6 @@ export class TaskService {
     updateTask(task: ITask): Promise<IQueryResult<ITask> | undefined> {
         const url = `${this.url}`;
 
-        debugger;
         return this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)).toPromise();
     }
 }

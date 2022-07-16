@@ -1,5 +1,12 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav mat-elevation-z1" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
+    <mat-sidenav
+        #drawer
+        class="sidenav mat-elevation-z1"
+        fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="!(isHandset$ | async) && isLogged ? true : false"
+    >
         <mat-nav-list class="nav-list">
             <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
