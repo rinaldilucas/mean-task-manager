@@ -7,6 +7,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -15,7 +16,7 @@ export class TaskService {
 
     constructor(private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    listTasksByUser(pageSize: number, searchTerm?: string, pageIndex?: number): Promise<IQueryResult<ITask> | undefined> {
+    listTasksByUser(pageSize: number, searchTerm?: string, pageIndex?: number): Promise<IQueryResult<ITask>> {
         const id = this.authService.getUserId();
         let url = `${this.url}/user/${id}?`;
 
@@ -23,38 +24,38 @@ export class TaskService {
         if (!!pageIndex) url += `pageIndex=${pageIndex}&`;
         if (!!searchTerm) url += `searchTerm=${searchTerm}`;
 
-        return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    filterTasksByUser(searchTerm: string): Promise<IQueryResult<ITask> | undefined> {
+    filterTasksByUser(searchTerm: string): Promise<IQueryResult<ITask>> {
         const id = this.authService.getUserId();
         const url = `${this.url}/user/${id}?searchTerm=${searchTerm}`;
 
-        return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getTask(id: string): Promise<IQueryResult<ITask> | undefined> {
+    getTask(id: string): Promise<IQueryResult<ITask>> {
         const url = `${this.url}/${id}`;
 
-        return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    createTask(task: ITask): Promise<IQueryResult<ITask> | undefined> {
+    createTask(task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
 
-        return this.http.post<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.post<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    removeTask(task: ITask | string): Promise<IQueryResult<ITask> | undefined> {
+    removeTask(task: ITask | string): Promise<IQueryResult<ITask>> {
         const id = typeof task === 'string' ? task : task._id;
         const url = `${this.url}/${id}`;
 
-        return this.http.delete<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.delete<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    updateTask(task: ITask): Promise<IQueryResult<ITask> | undefined> {
+    updateTask(task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
 
-        return this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)).toPromise();
+        return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

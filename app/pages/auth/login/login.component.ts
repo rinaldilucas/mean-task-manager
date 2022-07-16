@@ -47,7 +47,7 @@ export class LogInComponent implements OnInit {
 
         const user = { ...this.form.value } as IUser;
         const [result, error] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password));
-        if (!!error || !result || !result.success) {
+        if (!!error || !result || !result?.success) {
             if (error.status === StatusCode.ClientErrorNotFound) {
                 this.sharedService.handleSnackbarMessages('login.user-error', false);
                 return;
@@ -64,14 +64,11 @@ export class LogInComponent implements OnInit {
             this.sharedService.handleSnackbarMessages('login.authentication-error', false);
         }
 
-        if (!result || !result.success) {
-            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
-            return;
-        }
-
         if (this.authService.authenticateToken(result.data[0])) {
             this.sharedService.handleSnackbarMessages('login.authentication-success');
             this.router.navigate(['tasks']);
+        } else {
+            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
         }
     }
 }

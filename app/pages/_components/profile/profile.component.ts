@@ -45,8 +45,8 @@ export class ProfileComponent implements OnInit {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const password = this.form.controls['password'].value;
-        const [, error] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
-        if (!!error) this.sharedService.handleSnackbarMessages('profile.edit-error', false);
+        const [result, error] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('profile.edit-error', false);
 
         this.sharedService.handleSnackbarMessages('profile.edit-success');
         this.form.reset();

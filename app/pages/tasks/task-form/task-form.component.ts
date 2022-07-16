@@ -93,20 +93,15 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             });
 
             const [result, error] = await this.sharedService.handlePromises(this.taskService.getTask(this.id));
-            if (!!error || !result || !result.success) {
-                this.sharedService.handleSnackbarMessages('task-form.get-error', false);
-                return;
-            }
+            if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
 
             this.form.patchValue(result.data[0]);
             this.changeDetector.markForCheck();
         }
 
         const [categories, categoriesError] = await this.sharedService.handlePromises(this.categoryService.listCategories());
-        if (!!categoriesError || !categories || !categories.success) {
-            this.sharedService.handleSnackbarMessages('task-form.get-error', false);
-            return;
-        }
+        if (!!categoriesError || !categories || !categories?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+
         this.categories = categories.data;
         this.setAutoCompletes();
     }
@@ -135,19 +130,16 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
         const isEdit = !!this.id;
         const task = {
-            ...this.form.value, //
+            ...this.form.value,
             userId: this.authService.getUserId(),
             _id: isEdit ? this.id : null,
         } as ITask;
         task.status = EStatus.toDo;
 
-        const [, error] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
-        if (!!error) {
-            this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.create-error' : 'task-form.edit-error', false);
-            return;
-        }
+        const [result, error] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-error' : 'task-form.create-error', false);
 
-        this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.create-success' : 'task-form-edit-success');
+        this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-success' : 'task-form.create-success');
         this.taskService.emitTask.emit(task);
         this.form.reset();
         this.close();

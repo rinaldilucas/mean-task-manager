@@ -53,10 +53,7 @@ export class AuthService {
 
     async logoutAsync(): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.userService.logout(this.getToken()));
-        if (!!error || !result || !result.success) {
-            this.sharedService.handleSnackbarMessages('login.logout-error', false);
-            return;
-        }
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('login.logout-error', false);
 
         this.sharedService.handleSnackbarMessages('login.logout-success');
         this.rawToken = '';

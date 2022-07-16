@@ -55,7 +55,7 @@ exports.findAllByUser = async (request, response) => {
 exports.findOne = async (request, response) => {
     const language = request.headers.language;
 
-    const [data, error] = await httpHandler.parser(request, response, Model.findOne({ _id: request.params._id }));
+    const [data, error] = await httpHandler.handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (!!error) return;
     if (!data)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
@@ -67,7 +67,7 @@ exports.findOne = async (request, response) => {
 exports.create = async (request, response) => {
     const language = request.headers.language;
 
-    const [data, error] = await httpHandler.parser(request, response, new Model(request.body).save());
+    const [data, error] = await httpHandler.handlePromises(request, response, new Model(request.body).save());
     if (!!error) return;
     if (!data || data.n === 0)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
@@ -79,13 +79,13 @@ exports.create = async (request, response) => {
 exports.update = async (request, response) => {
     const language = request.headers.language;
 
-    const [document, documentError] = await httpHandler.parser(request, response, Model.findOne({ _id: request.body._id }));
+    const [document, documentError] = await httpHandler.handlePromises(request, response, Model.findOne({ _id: request.body._id }));
     if (!!documentError) return;
     if (!document)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.body._id}. Document name: {${Model.modelName}}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.body._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-    const [data, error] = await httpHandler.parser(request, response, Model.updateOne({ _id: request.body._id }, request.body, { new: true }));
+    const [data, error] = await httpHandler.handlePromises(request, response, Model.updateOne({ _id: request.body._id }, request.body, { new: true }));
     if (!!error) return;
     if (!data || data.n === 0)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
@@ -97,13 +97,13 @@ exports.update = async (request, response) => {
 exports.delete = async (request, response) => {
     const language = request.headers.language;
 
-    const [document, documentError] = await httpHandler.parser(request, response, Model.findOne({ _id: request.params._id }));
+    const [document, documentError] = await httpHandler.handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (!!documentError) return;
     if (!document)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
         else return httpHandler.error(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
 
-    const [data, error] = await httpHandler.parser(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
+    const [data, error] = await httpHandler.handlePromises(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
     if (!!error) return;
     if (!data || data.n === 0)
         if (language == 'en-US') return httpHandler.error(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);

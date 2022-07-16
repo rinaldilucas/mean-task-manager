@@ -88,7 +88,8 @@ export class SharedService {
 
     async handlePromises(promise: Promise<any>): Promise<any> {
         try {
-            const data = await promise;
+            let data = await promise;
+            if (!data) data = { success: true };
             return [data, null];
         } catch (error) {
             return [null, error];

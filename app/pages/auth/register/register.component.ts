@@ -46,13 +46,9 @@ export class RegisterComponent implements OnInit {
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
         const [result, error] = await this.sharedService.handlePromises(this.userService.register(user));
-        if (!!error || !result || !result.success) {
-            if (error?.status === StatusCode.ClientErrorConflict) {
-                this.sharedService.handleSnackbarMessages('register.email-error', false);
-                return;
-            }
-            this.sharedService.handleSnackbarMessages('register.create-error', false);
-            return;
+        if (!!error || !result || !result?.success) {
+            if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages('register.email-error', false);
+            else return this.sharedService.handleSnackbarMessages('register.create-error', false);
         }
 
         this.sharedService.handleSnackbarMessages('register.create-success');

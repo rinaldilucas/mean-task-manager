@@ -47,10 +47,7 @@ export class SettingsComponent implements OnInit {
 
     async refreshAsync(): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.categoryService.listCategories());
-        if (!!error || !result || !result.success) {
-            this.sharedService.handleSnackbarMessages('task-form.get-error', false);
-            return;
-        }
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
 
         this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title }));
         this.isLoading = false;
@@ -64,7 +61,7 @@ export class SettingsComponent implements OnInit {
         if (!value) return;
 
         const [result, error] = await this.sharedService.handlePromises(this.categoryService.createCategory(category));
-        if (!!error || !result || !result.success) {
+        if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
             this.categoryCtrl.setValue(null);
             this.categoryInput.nativeElement.value = '';
@@ -80,7 +77,7 @@ export class SettingsComponent implements OnInit {
 
     async removeCategoryAsync(category: ICategory): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
-        if (!!error || !result || !result.success) {
+        if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);
             this.categoryCtrl.setValue(null);
             this.categoryInput.nativeElement.value = '';

@@ -65,14 +65,11 @@ export class TaskListComponent implements OnInit {
 
     async refreshAsync(): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize));
-        if (!!error) this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
-        if (result?.success) {
-            this.tasks = result.data;
-            this.pageCount = result.count;
-            this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
-        }
-
+        this.tasks = result.data;
+        this.pageCount = result.count;
+        this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }
@@ -88,23 +85,21 @@ export class TaskListComponent implements OnInit {
     async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {
         task.status = status;
 
-        const [, error] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
-        if (!!error) this.sharedService.handleSnackbarMessages('task-list.status-change-error', false);
-        else {
-            this.sharedService.handleSnackbarMessages('task-list.status-change');
-            this.taskService.emitTask.emit();
-            this.changeDetector.markForCheck();
-        }
+        const [result, error] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.status-change-error', false);
+
+        this.sharedService.handleSnackbarMessages('task-list.status-change');
+        this.taskService.emitTask.emit();
+        this.changeDetector.markForCheck();
     }
 
     async removeAsync(task: ITask): Promise<void> {
-        const [, error] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
-        if (!!error) this.sharedService.handleSnackbarMessages('task-list.remove-error', false);
-        else {
-            this.sharedService.handleSnackbarMessages('task-list.remove-success');
-            this.taskService.emitTask.emit();
-            this.changeDetector.markForCheck();
-        }
+        const [result, error] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.remove-error', false);
+
+        this.sharedService.handleSnackbarMessages('task-list.remove-success');
+        this.taskService.emitTask.emit();
+        this.changeDetector.markForCheck();
     }
 
     async onPaginateChangeAsync(event: PageEvent): Promise<void> {
@@ -114,15 +109,13 @@ export class TaskListComponent implements OnInit {
         this.pageSize = event.pageSize;
 
         const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex));
-        if (!!error) this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
-        if (result?.success) {
-            this.tasks = result.data;
-            this.pageCount = result.count;
-            this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
-            this.changeDetector.markForCheck();
-        }
+        this.tasks = result.data;
+        this.pageCount = result.count;
+        this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
         this.isLoading = false;
+        this.changeDetector.markForCheck();
     }
 
     async filterTasksAsync(text: string): Promise<void> {
@@ -134,16 +127,15 @@ export class TaskListComponent implements OnInit {
             this.isLoading = true;
             const searchTerm = text.trim().toLowerCase();
 
-            const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm));
-            if (!!error) this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
+            const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0));
+            if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
-            if (result?.success) {
-                this.tasks = result.data;
-                this.pageCount = result.count;
-                this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
-                this.changeDetector.markForCheck();
-            }
+            this.paginator.pageIndex = 0;
+            this.tasks = result.data;
+            this.pageCount = result.count;
+            this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
             this.isLoading = false;
+            this.changeDetector.markForCheck();
         }
     }
 }

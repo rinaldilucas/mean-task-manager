@@ -41,7 +41,7 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
     });
 };
 
-const promiseParser = async (request, response, promise) => {
+const handlePromises = async (request, response, promise) => {
     try {
         const data = await promise;
         return [data, null];
@@ -55,5 +55,5 @@ const promiseParser = async (request, response, promise) => {
 module.exports = {
     success: responseSuccess,
     error: responseError,
-    parser: promiseParser,
+    handlePromises: handlePromises,
 };
