@@ -20,51 +20,17 @@ module.exports = function (app) {
     // REGISTER
     app.post(
         '/api/users/register', //
-        check('email', 'Must be at least 5 and lesser than 150 chars long') //
-            .isEmail()
-            .withMessage('Must be a valid email address')
-            .isLength({ min: 5 })
-            .withMessage('Must be at least 5 chars long')
-            .isLength({ max: 150 })
-            .withMessage('Must be lesser than 150 chars long')
-            .not()
-            .isEmpty()
-            .normalizeEmail()
-            .trim(),
-        check('password', 'Must be at least 8 and lesser than 150 chars long') //
-            .isLength({ min: 8 })
-            .withMessage('Must be at least 8 chars long')
-            .isLength({ max: 150 })
-            .withMessage('Must be lesser than 150 chars long')
-            .not()
-            .isEmpty()
-            .trim(),
+        check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
         validatorMiddleware.verifyValidations,
         users.register,
     );
 
     // AUTHENTICATE
     app.post(
-        '/api/users/authenticate', //
-        check('email', 'Must be at least 5 and lesser than 150 chars long') //
-            .isEmail()
-            .withMessage('Must be a valid email address')
-            .isLength({ min: 5 })
-            .withMessage('Must be at least 5 chars long')
-            .isLength({ max: 150 })
-            .withMessage('Must be lesser than 150 chars long')
-            .not()
-            .isEmpty()
-            .normalizeEmail()
-            .trim(),
-        check('password', 'Must be at least 8 and lesser than 150 chars long') //
-            .isLength({ min: 8 })
-            .withMessage('Must be at least 8 chars long')
-            .isLength({ max: 150 })
-            .withMessage('Must be lesser than 150 chars long')
-            .not()
-            .isEmpty()
-            .trim(),
+        '/api/users/authenticate',
+        check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
         validatorMiddleware.verifyValidations,
         users.authenticate,
     );
@@ -72,14 +38,7 @@ module.exports = function (app) {
     // CHANGE PASSWORD
     app.put(
         '/api/users/changePassword', //
-        check('password', 'Must be at least 8 and lesser than 150 chars long') //
-            .isLength({ min: 8 })
-            .withMessage('Must be at least 8 chars long')
-            .isLength({ max: 150 })
-            .withMessage('Must be lesser than 150 chars long')
-            .not()
-            .isEmpty()
-            .trim(),
+        check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
         validatorMiddleware.verifyValidations,
         users.changePassword,
     );

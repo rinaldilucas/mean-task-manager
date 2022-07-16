@@ -10,12 +10,10 @@ module.exports = function (app) {
 
     // CREATE
     app.post(
-        '/api/categories', //
+        '/api/categories',
         check('title', 'Must be at least 2 and lesser than 50 chars long') //
             .isLength({ min: 2 })
-            .withMessage('Must be at least 2 chars long')
             .isLength({ max: 50 })
-            .withMessage('Must be lesser than 50 chars long')
             .not()
             .isEmpty()
             .trim(),

@@ -13,19 +13,9 @@ module.exports = function (app) {
 
     // CREATE
     app.post(
-        '/api/tasks', //
-        check('title') //
-            .isLength({ min: 2 })
-            .withMessage('Must be at least 2 chars long')
-            .isLength({ max: 100 })
-            .withMessage('Must be lesser than 100 chars long')
-            .not()
-            .isEmpty()
-            .trim(),
-        check('description') //
-            .isLength({ max: 300 })
-            .withMessage('Must be lesser than 300 chars long')
-            .trim(),
+        '/api/tasks',
+        check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
+        check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
         validatorMiddleware.verifyValidations,
         passportMiddleware.applyBearerStrategy,
         tasks.create,
