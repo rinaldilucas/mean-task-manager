@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const cors = require('cors');
 
-const app = express();
+    const app = express();
 
 // Configures the database
 require('dotenv').config();
-const dbConfig = require('./api/config/mongodb.config');
+const dbConfig = require('./config/mongodb.config');
 const args = process.argv;
 let database;
 
@@ -33,7 +33,7 @@ mongoose
     .then(() => {
         console.log('Successfully connected to MongoDB.');
     })
-    .catch((error) => {
+    .catch((error: any) => {
         console.log('Could not connect to MongoDB. Error: ' + error);
         process.exit();
     });
@@ -44,11 +44,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // Load routes
-require('./api/routes/task.routes')(app);
-require('./api/routes/user.routes')(app);
-require('./api/routes/category.routes')(app);
+require('./routes/task.routes')(app);
+require('./routes/user.routes')(app);
+require('./routes/category.routes')(app);
 
-require('./api/utils/auth-strategy');
+require('./utils/auth-strategy');
 
 // Creates server
 const server = app.listen(3000, function () {
@@ -63,11 +63,11 @@ if (args.includes('--prod=true')) {
 }
 
 // 404 Handler
-app.use((request, response, next) => next(createError(404, "This route don't exist.", { expose: false })));
+app.use((request: any, response: any, next: any) => next(createError(404, "This route don't exist.", { expose: false })));
 
 // Error handler
-app.use(function (error, request, response, next) {
+app.use(function (error: any, request: any, response: any, next: any) {
     console.error(error.message);
-    if (!error.statusCode) error.statusCode = 500;
-    response.status(error.statusCode).send(error.message);
+     if (!error.statusCode) error.statusCode = 500;
+            response.status(error.statusCode).send(error.message);
 });

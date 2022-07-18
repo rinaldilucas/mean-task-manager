@@ -53,7 +53,17 @@
         "@types/jasmine": "~4.0.0",
         "@types/jest": "^26.0.3",
         "@types/sha.js": "^2.4.0",
+        "@typescript-eslint/eslint-plugin": "^5.30.7",
+        "@typescript-eslint/parser": "^5.30.7",
         "e2e": "0.0.8",
+        "eslint": "^8.20.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-standard": "^17.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-standard": "^5.0.0",
         "include-media": "^1.4.10",
         "jasmine-core": "~4.1.0",
         "karma": "~6.3.0",
@@ -64,11 +74,13 @@
         "nodemon": "^2.0.4",
         "normalize-scss": "^7.0.1",
         "npm-run-all": "^4.1.5",
+        "prettier": "^2.7.1",
         "protractor": "^7.0.0",
         "run-parallel": "^1.2.0",
         "sha.js": "^2.4.11",
+        "sucrase": "^3.24.0",
         "tslint": "^5.18.0",
-        "typescript": "~4.7.2"
+        "typescript": "^4.7.4"
     },
     "homepage": "https://github.com/rinaldilucas/mean-stack-template#readme",
     "keywords": [
@@ -78,20 +90,19 @@
     "license": "MIT",
     "main": "index.js",
     "name": "mean-stack-template",
-    "private": true,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/rinaldilucas/mean-stack-template.git"
     },
     "scripts": {
-        "build": "ng build",
-        "build-prod": "ng lint && ng build --prod",
-        "debug": "nodemon --inspect index.js",
-        "dev": "run-p serve debug",
-        "lint": "ng lint",
-        "serve": "ng serve --o",
-        "start": "npm install && node index.js",
-        "test": "ng test"
+        "api-build": "sucrase ./api -d ./dist --transforms typescript,imports",
+        "api-debug": "nodemon ./api/server.ts --inspect",
+        "client-build": "ng build --prod",
+        "client-lint": "ng lint",
+        "client-serve": "ng serve --o",
+        "client-test": "ng test",
+        "dev": "run-p client-serve api-debug",
+        "start": "npm install && node ./api/server.ts"
     },
     "version": "1.0.0"
 }

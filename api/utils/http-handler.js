@@ -2,6 +2,7 @@ const { StatusCode } = require('status-code-enum');
 
 const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
     response.status(statusCode);
+    let result;
 
     if (data && data.length == undefined) {
         result = data;
