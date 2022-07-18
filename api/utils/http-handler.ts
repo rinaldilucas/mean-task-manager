@@ -13,8 +13,8 @@ const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, tota
     return response.json({
         success: true,
         status: statusCode,
-        data: data,
-        count: totalCount ? totalCount : 1,
+        data,
+        count: totalCount || 1
     });
 };
 
@@ -32,13 +32,13 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
         console.log(`[API]: ${error.message}`);
     }
 
-    let responseMessage = message || error.message || error.toString();
+    const responseMessage = message || error.message || error.toString();
 
     return response.json({
         success: false,
         status: statusCode,
         message: !Array.isArray(error) ? responseMessage : null,
-        validationErrors: Array.isArray(error) ? error : [],
+        validationErrors: Array.isArray(error) ? error : []
     });
 };
 
@@ -56,5 +56,5 @@ const handlePromises = async (request, response, promise) => {
 module.exports = {
     success: responseSuccess,
     error: responseError,
-    handlePromises: handlePromises,
+    handlePromises
 };

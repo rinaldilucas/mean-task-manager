@@ -50,8 +50,11 @@
         "@angular/cli": "~14.0.5",
         "@angular/compiler-cli": "^14.0.0",
         "@angular/language-service": "^14.0.0",
+        "@types/cors": "^2.8.12",
+        "@types/express": "^4.17.13",
         "@types/jasmine": "~4.0.0",
         "@types/jest": "^26.0.3",
+        "@types/mongoose": "^5.11.97",
         "@types/sha.js": "^2.4.0",
         "@typescript-eslint/eslint-plugin": "^5.30.7",
         "@typescript-eslint/parser": "^5.30.7",
@@ -60,6 +63,7 @@
         "eslint-config-prettier": "^8.5.0",
         "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-n": "^15.2.4",
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-promise": "^6.0.0",
@@ -96,13 +100,15 @@
     },
     "scripts": {
         "api-build": "sucrase ./api -d ./dist --transforms typescript,imports",
-        "api-debug": "nodemon ./api/server.ts --inspect",
+        "api-debug": "nodemon ./api/index.ts --inspect",
         "client-build": "ng build --prod",
         "client-lint": "ng lint",
         "client-serve": "ng serve --o",
         "client-test": "ng test",
+
+        
         "dev": "run-p client-serve api-debug",
-        "start": "npm install && node ./api/server.ts"
+        "start": "npm install && node ./api/index.ts"
     },
     "version": "1.0.0"
 }

@@ -10,7 +10,7 @@ module.exports = {
             }
 
             if (error && error.name === 'TokenExpiredError') {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Token expired.`);
+                return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, 'Token expired.');
             }
 
             if (error) {
@@ -18,15 +18,15 @@ module.exports = {
             }
 
             if (!payload) {
-                return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, `Not authorized.`);
+                return httpHandler.error(response, {}, StatusCode.ClientErrorUnauthorized, 'Not authorized.');
             }
 
             request.userData = {
                 email: payload.email,
-                _id: payload._id,
+                _id: payload._id
             };
 
             next();
         })(request, response, next);
-    },
+    }
 };

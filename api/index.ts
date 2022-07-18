@@ -1,15 +1,15 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const createError = require('http-errors');
-const cors = require('cors');
-
-    const app = express();
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import createError from 'http-errors';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import dbConfig from './config/mongodb.config';
+const app = express();
 
 // Configures the database
-require('dotenv').config();
-const dbConfig = require('./config/mongodb.config');
+dotenv.config();
 const args = process.argv;
 let database;
 
@@ -28,7 +28,7 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
-        useCreateIndex: true,
+        useCreateIndex: true
     })
     .then(() => {
         console.log('Successfully connected to MongoDB.');
@@ -52,8 +52,8 @@ require('./utils/auth-strategy');
 
 // Creates server
 const server = app.listen(3000, function () {
-    let host = server.address().address;
-    let port = server.address().port;
+    const host = server.address().address;
+    const port = server.address().port;
     console.log('App listening at http://%s:%s', host, port);
 });
 
@@ -68,6 +68,6 @@ app.use((request: any, response: any, next: any) => next(createError(404, "This 
 // Error handler
 app.use(function (error: any, request: any, response: any, next: any) {
     console.error(error.message);
-     if (!error.statusCode) error.statusCode = 500;
-            response.status(error.statusCode).send(error.message);
+    if (!error.statusCode) error.statusCode = 500;
+    response.status(error.statusCode).send(error.message);
 });
