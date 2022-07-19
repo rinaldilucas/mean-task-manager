@@ -5,10 +5,10 @@ import mongoose from 'mongoose';
 import createError from 'http-errors';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import dbConfig from './config/mongodb.config';
+import { url, urlProd } from './config/mongodb.config';
 import './utils/auth-strategy';
 
-// Routes
+// Import routes
 import categoryRoutes from './routes/category.routes';
 import taskRoutes from './routes/task.routes';
 import userRoutes from './routes/user.routes';
@@ -26,10 +26,10 @@ const args = process.argv;
 let database;
 
 if (args.includes('--prod=true')) {
-    database = dbConfig.urlProd;
+    database = urlProd;
     console.log('Using production connection string.');
 } else {
-    database = dbConfig.url;
+    database = url;
     console.log('Using local connection string.');
 }
 
@@ -45,7 +45,7 @@ mongoose
     .then(() => {
         console.log('Successfully connected to MongoDB.');
     })
-    .catch((error: any) => {
+    .catch((error) => {
         console.log('Could not connect to MongoDB. Error: ' + error);
         process.exit();
     });
@@ -68,10 +68,10 @@ if (args.includes('--prod=true')) {
 }
 
 // 404 Handler
-app.use((request: any, response: any, next: any) => next(createError(404, "This route don't exist.", { expose: false })));
+app.use((request, response, next) => next(createError(404, "This route don't exist.", { expose: false })));
 
 // Error handler
-app.use(function (error: any, request: any, response: any, next: any) {
+app.use(function (error, request, response, next) {
     console.error(error.message);
     if (!error.statusCode) error.statusCode = 500;
     response.status(error.statusCode).send(error.message);

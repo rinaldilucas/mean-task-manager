@@ -1,7 +1,7 @@
 import StatusCode from 'status-code-enum';
 import Model from '../models/category.model';
 import httpHandler from '../utils/http-handler';
-import async from 'async';
+import parallel from 'async/parallel';
 
 export const findAllByUser = async (request, response) => {
     const language = request.headers.language;
@@ -42,7 +42,7 @@ export const findAllByUser = async (request, response) => {
             });
     };
 
-    async.parallel([countQuery, retrieveQuery], function (error, results) {
+    parallel.parallel([countQuery, retrieveQuery], function (error, results) {
         if (error) {
             if (language === 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
             else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);

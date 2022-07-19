@@ -1,12 +1,12 @@
-import passportMiddleware from '../middleware/passport.middleware';
-import validatorMiddleware from '../middleware/validator.middleware';
+import { applyBearerStrategy } from '../middleware/passport.middleware';
+import { verifyValidations } from '../middleware/validator.middleware';
 import { check } from 'express-validator';
 
 import { findAll, create, remove } from '../controllers/category.controller';
 
 export default (app) => {
     // GET ALL
-    app.get('/api/categories', passportMiddleware.applyBearerStrategy, findAll);
+    app.get('/api/categories', applyBearerStrategy, findAll);
 
     // CREATE
     app.post(
@@ -17,11 +17,11 @@ export default (app) => {
             .not()
             .isEmpty()
             .trim(),
-        validatorMiddleware.verifyValidations,
-        passportMiddleware.applyBearerStrategy,
+        verifyValidations,
+        applyBearerStrategy,
         create
     );
 
     // DELETE
-    app.delete('/api/categories/:_id', passportMiddleware.applyBearerStrategy, remove);
+    app.delete('/api/categories/:_id', applyBearerStrategy, remove);
 };

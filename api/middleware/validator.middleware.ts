@@ -1,12 +1,10 @@
-const httpHandler = require('../utils/http-handler');
-const { StatusCode } = require('status-code-enum');
-const { validationResult } = require('express-validator');
+import httpHandler from '../utils/http-handler';
+import { StatusCode } from 'status-code-enum';
+import { validationResult } from 'express-validator';
 
-module.exports = {
-    verifyValidations: (request, response, next) => {
-        const errors = validationResult(request);
+export const verifyValidations = (request, response, next) => {
+    const errors = validationResult(request);
 
-        if (!errors.isEmpty()) return httpHandler.error(response, errors.array(), StatusCode.ClientErrorBadRequest);
-        else next();
-    },
+    if (!errors.isEmpty()) return httpHandler.error(response, errors.array(), StatusCode.ClientErrorBadRequest);
+    else next();
 };

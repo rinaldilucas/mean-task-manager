@@ -100,13 +100,13 @@
     },
     "scripts": {
         "api-build": "sucrase ./api -d ./dist --transforms typescript,imports",
-        "api-debug": "nodemon ./api/index.ts --inspect",
+        "api-debug": "nodemon --inspect ./api/index.ts",
         "client-build": "ng build --prod",
         "client-lint": "ng lint",
         "client-serve": "ng serve --o",
         "client-test": "ng test",
 
-        
+
         "dev": "run-p client-serve api-debug",
         "start": "npm install && node ./api/index.ts"
     },

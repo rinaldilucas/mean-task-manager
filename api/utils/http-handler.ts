@@ -1,10 +1,10 @@
-const { StatusCode } = require('status-code-enum');
+import StatusCode from 'status-code-enum';
 
 const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
     response.status(statusCode);
     let result;
 
-    if (data && data.length == undefined) {
+    if (data && data.length === undefined) {
         result = data;
         data = [];
         data.push(result);
@@ -47,7 +47,7 @@ const handlePromises = async (request, response, promise) => {
         const data = await promise;
         return [data, null];
     } catch (error) {
-        if (request.headers.language == 'en-US') responseError(response, error, StatusCode.ServerErrorInternal);
+        if (request.headers.language === 'en-US') responseError(response, error, StatusCode.ServerErrorInternal);
         else responseError(response, error, StatusCode.ServerErrorInternal);
         return [null, error];
     }
