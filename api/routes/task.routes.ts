@@ -1,15 +1,15 @@
-module.exports = function (app) {
-    const passportMiddleware = require('../middleware/passport.middleware');
-    const validatorMiddleware = require('../middleware/validator.middleware');
-    const { check } = require('express-validator');
+import passportMiddleware from '../middleware/passport.middleware';
+import validatorMiddleware from '../middleware/validator.middleware';
+import { check } from 'express-validator';
 
-    const tasks = require('../controllers/task.controller');
+import { findAllByUser, findOne, create, update, remove } from '../controllers/task.controller';
 
+export default (app) => {
     // GET ALL TASKS BY USER
-    app.get('/api/tasks/user/:userId', passportMiddleware.applyBearerStrategy, tasks.findAllByUser);
+    app.get('/api/tasks/user/:userId', passportMiddleware.applyBearerStrategy, findAllByUser);
 
     // GET BY ID
-    app.get('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, tasks.findOne);
+    app.get('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, findOne);
 
     // CREATE
     app.post(
@@ -18,12 +18,12 @@ module.exports = function (app) {
         check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
         validatorMiddleware.verifyValidations,
         passportMiddleware.applyBearerStrategy,
-        tasks.create,
+        create
     );
 
     // UPDATE
-    app.put('/api/tasks', passportMiddleware.applyBearerStrategy, tasks.update);
+    app.put('/api/tasks', passportMiddleware.applyBearerStrategy, update);
 
     // DELETE
-    app.delete('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, tasks.delete);
+    app.delete('/api/tasks/:_id', passportMiddleware.applyBearerStrategy, remove);
 };

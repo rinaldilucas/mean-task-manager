@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const taskSchema = mongoose.Schema(
     {
@@ -9,12 +9,12 @@ const taskSchema = mongoose.Schema(
             type: String,
             enum: ['toDo', 'inProgress', 'done'],
             default: 'toDo',
-            required: true,
+            required: true
         },
         category: { type: String },
-        userId: { type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: true },
+        userId: { type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: true }
     },
-    { timestamps: true },
+    { timestamps: true }
 );
 
 module.exports = mongoose.model('Task', taskSchema);

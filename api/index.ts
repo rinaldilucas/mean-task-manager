@@ -6,7 +6,19 @@ import createError from 'http-errors';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import dbConfig from './config/mongodb.config';
+import './utils/auth-strategy';
+
+// Routes
+import categoryRoutes from './routes/category.routes';
+import taskRoutes from './routes/task.routes';
+import userRoutes from './routes/user.routes';
+
 const app = express();
+
+// Load routes
+categoryRoutes(app);
+taskRoutes(app);
+userRoutes(app);
 
 // Configures the database
 dotenv.config();
@@ -42,13 +54,6 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-
-// Load routes
-require('./routes/task.routes')(app);
-require('./routes/user.routes')(app);
-require('./routes/category.routes')(app);
-
-require('./utils/auth-strategy');
 
 // Creates server
 const server = app.listen(3000, function () {

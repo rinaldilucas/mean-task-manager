@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var validateEmail = function (email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validateEmail = function (email) {
+    const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };
 
@@ -16,17 +16,17 @@ const userSchema = mongoose.Schema(
             minLength: 5,
             maxLength: 150,
             validate: [validateEmail, 'Must be a valid email address'],
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         },
         password: { type: String, required: true, minLength: 8, maxLength: 150 },
         role: {
             type: String,
             enum: ['user', 'admin'],
             default: 'user',
-            required: true,
-        },
+            required: true
+        }
     },
-    { timestamps: true },
+    { timestamps: true }
 );
 
 module.exports = mongoose.model('User', userSchema);

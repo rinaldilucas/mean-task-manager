@@ -13,27 +13,27 @@ export class CategoryService {
     emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
     private url: string = environment.baseUri + '/categories';
 
-    constructor(private http: HttpClient, private sharedService: SharedService) {}
+    constructor (private http: HttpClient, private sharedService: SharedService) {}
 
-    listCategories(): Promise<IQueryResult<ICategory>> {
+    listCategories (): Promise<IQueryResult<ICategory>> {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getCategory(id: string): Promise<IQueryResult<ICategory>> {
+    getCategory (id: string): Promise<IQueryResult<ICategory>> {
         const url = `${this.url}/${id}`;
 
         return lastValueFrom(this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    createCategory(category: ICategory): Promise<IQueryResult<ICategory>> {
+    createCategory (category: ICategory): Promise<IQueryResult<ICategory>> {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    removeCategory(category: ICategory | string): Promise<IQueryResult<ICategory>> {
+    removeCategory (category: ICategory | string): Promise<IQueryResult<ICategory>> {
         const id = typeof category === 'string' ? category : category._id;
         const url = `${this.url}/${id}`;
 

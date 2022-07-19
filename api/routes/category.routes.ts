@@ -1,12 +1,12 @@
-module.exports = function (app) {
-    const passportMiddleware = require('../middleware/passport.middleware');
-    const validatorMiddleware = require('../middleware/validator.middleware');
-    const { check } = require('express-validator');
+import passportMiddleware from '../middleware/passport.middleware';
+import validatorMiddleware from '../middleware/validator.middleware';
+import { check } from 'express-validator';
 
-    const categories = require('../controllers/category.controller');
+import { findAll, create, remove } from '../controllers/category.controller';
 
+export default (app) => {
     // GET ALL
-    app.get('/api/categories', passportMiddleware.applyBearerStrategy, categories.findAll);
+    app.get('/api/categories', passportMiddleware.applyBearerStrategy, findAll);
 
     // CREATE
     app.post(
@@ -19,9 +19,9 @@ module.exports = function (app) {
             .trim(),
         validatorMiddleware.verifyValidations,
         passportMiddleware.applyBearerStrategy,
-        categories.create,
+        create
     );
 
     // DELETE
-    app.delete('/api/categories/:_id', passportMiddleware.applyBearerStrategy, categories.delete);
+    app.delete('/api/categories/:_id', passportMiddleware.applyBearerStrategy, remove);
 };
