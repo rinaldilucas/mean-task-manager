@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
+import { Schema, Model, model, SchemaTypes } from 'mongoose';
+import { TaskInterface as Interface } from '../interfaces/task';
 
-const taskSchema = mongoose.Schema(
-    {
-        title: { type: String, required: true, minLength: 2, maxLength: 100 },
-        description: { type: String, maxLength: 300 },
-        date: { type: Date },
-        status: {
-            type: String,
-            enum: ['toDo', 'inProgress', 'done'],
-            default: 'toDo',
-            required: true
-        },
-        category: { type: String },
-        userId: { type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: true }
+const SchemaModel = new Schema({
+    title: { type: String, required: true, minLength: 2, maxLength: 100 },
+    description: { type: String, maxLength: 300 },
+    date: { type: Date },
+    status: {
+        type: String,
+        enum: ['toDo', 'inProgress', 'done'],
+        default: 'toDo',
+        required: true
     },
-    { timestamps: true }
+    category: { type: String },
+    userId: { type: SchemaTypes.ObjectId, ref: 'User', required: true }
+},
+{ timestamps: true }
 );
 
-module.exports = mongoose.model('Task', taskSchema);
+export const Task: Model<Interface> = model<Interface>('Task', SchemaModel);

@@ -20,7 +20,8 @@ module.exports = {
             },
             rules: {
                 indent: ['error', 4],
-                semi: [2, 'always']
+                semi: [2, 'always'],
+                'dot-notation': 0
             }
         }
     ]

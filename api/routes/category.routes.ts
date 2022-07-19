@@ -1,27 +1,30 @@
+import { Router } from 'express';
 import { applyBearerStrategy } from '../middleware/passport.middleware';
 import { verifyValidations } from '../middleware/validator.middleware';
 import { check } from 'express-validator';
 
-import { findAll, create, remove } from '../controllers/category.controller';
+import Controller from '../controllers/category.controller';
 
-export default (app) => {
-    // GET ALL
-    app.get('/api/categories', applyBearerStrategy, findAll);
+const routes = Router();
 
-    // CREATE
-    app.post(
-        '/api/categories',
-        check('title', 'Must be at least 2 and lesser than 50 chars long') //
-            .isLength({ min: 2 })
-            .isLength({ max: 50 })
-            .not()
-            .isEmpty()
-            .trim(),
-        verifyValidations,
-        applyBearerStrategy,
-        create
-    );
+// GET ALL
+routes.get('/api/categories', applyBearerStrategy, Controller.findAll);
 
-    // DELETE
-    app.delete('/api/categories/:_id', applyBearerStrategy, remove);
-};
+// CREATE
+routes.post(
+    '/api/categories',
+    check('title', 'Must be at least 2 and lesser than 50 chars long') //
+        .isLength({ min: 2 })
+        .isLength({ max: 50 })
+        .not()
+        .isEmpty()
+        .trim(),
+    verifyValidations,
+    applyBearerStrategy,
+    Controller.create
+);
+
+// DELETE
+routes.delete('/api/categories/:_id', applyBearerStrategy, Controller.remove);
+
+export default routes;

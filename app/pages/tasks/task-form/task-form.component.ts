@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheetRef, MatBottomSheet, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
+import { MatBottomSheetRef, MatBottomSheet, MatBottomSheetConfig, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,16 +19,16 @@ import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormEntryComponent {
     title!: string;
 
-    constructor(private bottomSheet: MatBottomSheet, private router: Router, private route: ActivatedRoute, private titleService: Title, private translateService: TranslateService) {
+    constructor (private bottomSheet: MatBottomSheet, private router: Router, private route: ActivatedRoute, private titleService: Title, private translateService: TranslateService) {
         this.open();
     }
 
-    open(): void {
+    open (): void {
         this.route.params.subscribe((params: Params) => {
             const id = params['id'] ? params['id'] : null;
             const config: MatBottomSheetConfig = { data: id };
@@ -44,7 +44,7 @@ export class TaskFormEntryComponent {
     selector: 'app-task-form',
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
@@ -56,7 +56,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     categories!: ICategory[];
     categoriesFilteredOptions!: Observable<ICategory[]>;
 
-    constructor(
+    constructor (
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private categoryService: CategoryService,
@@ -67,17 +67,17 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private titleService: Title,
         private translateService: TranslateService,
         private sharedService: SharedService,
-        @Inject(MAT_BOTTOM_SHEET_DATA) public id: string,
+        @Inject(MAT_BOTTOM_SHEET_DATA) public id: string
     ) {
         this.form = this.formBuilder.group({
             title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
             description: [null, [Validators.maxLength(300)]],
             date: [null, null],
-            category: [null, null],
+            category: [null, null]
         });
     }
 
-    async ngOnInit(): Promise<void> {
+    async ngOnInit (): Promise<void> {
         const isEdit = !!this.id;
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
 
@@ -106,7 +106,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         this.setAutoCompletes();
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.categoryTrigger.panelClosingActions.subscribe(() => {
             if (this.categoryTrigger.activeOption) {
                 console.log(this.categoryTrigger.activeOption.value);
@@ -115,24 +115,24 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private _filterCategories(value: string): ICategory[] {
+    private _filterCategories (value: string): ICategory[] {
         const filterValue = value?.toString().toLowerCase();
         return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue));
     }
 
-    refresh(): void {
+    refresh (): void {
         this.changeDetector.detectChanges();
         this.bottomSheetRef.dismiss();
     }
 
-    async saveAsync(): Promise<void> {
+    async saveAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const isEdit = !!this.id;
         const task = {
             ...this.form.value,
             userId: this.authService.getUserId(),
-            _id: isEdit ? this.id : null,
+            _id: isEdit ? this.id : null
         } as ITask;
         task.status = EStatus.toDo;
 
@@ -145,16 +145,16 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         this.close();
     }
 
-    close(): void {
+    close (): void {
         this.bottomSheetRef.dismiss();
         this.form.reset();
         this.router.navigate(['tasks']);
     }
 
-    setAutoCompletes(): void {
+    setAutoCompletes (): void {
         this.categoriesFilteredOptions = this.form.controls['category'].valueChanges.pipe(
             startWith(''),
-            map((value) => this._filterCategories(value)),
+            map((value) => this._filterCategories(value))
         );
     }
 }

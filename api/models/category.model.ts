@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
 
-const categorySchema = mongoose.Schema(
-    {
-        title: { type: String, required: true, unique: true, minLength: 2 }
-    },
-    { timestamps: true }
+import { Schema, Model, model } from 'mongoose';
+import { CategoryInterface as Interface } from '../interfaces/category';
+
+const SchemaModel = new Schema({
+    title: { type: String, required: true, unique: true, minLength: 2 }
+},
+{ timestamps: true }
 );
 
-module.exports = mongoose.model('Category', categorySchema);
+export const Category: Model<Interface> = model<Interface>('Category', SchemaModel);

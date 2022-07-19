@@ -1,29 +1,32 @@
+import { Router } from 'express';
 import { applyBearerStrategy } from '../middleware/passport.middleware';
 import { verifyValidations } from '../middleware/validator.middleware';
 import { check } from 'express-validator';
 
-import { findAllByUser, findOne, create, update, remove } from '../controllers/task.controller';
+import Controller from '../controllers/task.controller';
 
-export default (app) => {
-    // GET ALL TASKS BY USER
-    app.get('/api/tasks/user/:userId', applyBearerStrategy, findAllByUser);
+const routes = Router();
 
-    // GET BY ID
-    app.get('/api/tasks/:_id', applyBearerStrategy, findOne);
+// GET ALL TASKS BY USER
+routes.get('/api/tasks/user/:userId', applyBearerStrategy, Controller.findAllByUser);
 
-    // CREATE
-    app.post(
-        '/api/tasks',
-        check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
-        check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
-        verifyValidations,
-        applyBearerStrategy,
-        create
-    );
+// GET BY ID
+routes.get('/api/tasks/:_id', applyBearerStrategy, Controller.findOne);
 
-    // UPDATE
-    app.put('/api/tasks', applyBearerStrategy, update);
+// CREATE
+routes.post(
+    '/api/tasks',
+    check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
+    check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
+    verifyValidations,
+    applyBearerStrategy,
+    Controller.create
+);
 
-    // DELETE
-    app.delete('/api/tasks/:_id', applyBearerStrategy, remove);
-};
+// UPDATE
+routes.put('/api/tasks', applyBearerStrategy, Controller.update);
+
+// DELETE
+routes.delete('/api/tasks/:_id', applyBearerStrategy, Controller.remove);
+
+export default routes;
