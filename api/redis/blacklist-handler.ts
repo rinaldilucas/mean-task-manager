@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken';
 const existsAsync = promisify(blacklist.exists).bind(blacklist);
 const setAsync = promisify(blacklist.set).bind(blacklist);
 
-const generateTokenHash = (token) => {
-    return createHash('sha256').update(token).digest('hex');
-};
+const generateTokenHash = (token) => createHash('sha256').update(token).digest('hex');
 
 export const add = async (token) => {
     if (token) {

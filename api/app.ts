@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import path from 'path';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import { url, urlProd } from './config/mongodb.config';
+import DatabaseConfig from './config/mongodb.config';
+
 import './utils/auth-strategy';
 
 // Import routes
@@ -42,10 +43,10 @@ class App {
         let database;
 
         if (args.includes('--prod=true')) {
-            database = urlProd;
+            database = DatabaseConfig.urlProd;
             console.log('Using production connection string.');
         } else {
-            database = url;
+            database = DatabaseConfig.url;
             console.log('Using local connection string.');
         }
 

@@ -1,6 +1,6 @@
-import StatusCode from 'status-code-enum';
+import { StatusCode } from 'status-code-enum';
 
-const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
+export const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
     response.status(statusCode);
     let result;
 
@@ -18,7 +18,7 @@ const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, tota
     });
 };
 
-const responseError = (response, error, statusCode = StatusCode.ServerErrorInternal, message) => {
+export const responseError = (response, error, statusCode = StatusCode.ServerErrorInternal, message) => {
     response.status(error.httpCode || statusCode);
 
     if (message) {
@@ -42,7 +42,7 @@ const responseError = (response, error, statusCode = StatusCode.ServerErrorInter
     });
 };
 
-const handlePromises = async (request, response, promise) => {
+export const handlePromises = async (request, response, promise) => {
     try {
         const data = await promise;
         return [data, null];
@@ -51,10 +51,4 @@ const handlePromises = async (request, response, promise) => {
         else responseError(response, error, StatusCode.ServerErrorInternal);
         return [null, error];
     }
-};
-
-module.exports = {
-    success: responseSuccess,
-    error: responseError,
-    handlePromises
 };
