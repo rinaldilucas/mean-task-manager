@@ -1,14 +1,14 @@
 import { Schema, Model, model } from 'mongoose';
 import { UserInterface as Interface } from '../interfaces/user';
 
-const validateEmail = function (email) {
+const validateEmail = (email) => {
     const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };
 
 const SchemaModel = new Schema({
     email: {
-        type: String, //
+        type: String,
         required: true,
         unique: true,
         trim: true,

@@ -1,17 +1,10 @@
-const passport = require('passport');
-const BearerStrategy = require('passport-http-bearer').Strategy;
-const jwt = require('jsonwebtoken');
-const blacklist = require('../redis/blacklist-handler');
-
-async function verifyBlacklistForToken (token) {
-    const isTokenBlacklisted = await blacklist.hasToken(token);
-    if (isTokenBlacklisted) {
-        throw new jwt.JsonWebTokenError('Token invalidated by logout.');
-    }
-}
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
+import { Strategy } from 'passport-http-bearer';
+import { verifyBlacklistForToken } from '../redis/blacklist-handler';
 
 passport.use(
-    new BearerStrategy(async (token, done) => {
+    new Strategy(async (token, done) => {
         try {
             await verifyBlacklistForToken(token);
             const payload = jwt.verify(token, process.env.JWT_KEY);

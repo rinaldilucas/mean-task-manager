@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Task as Model } from '../models/task.model';
 import StatusCode from 'status-code-enum';
 import httpHandler from '../utils/http-handler';
-import * as Async from 'async';
+import Async from 'async';
 
 class TaskController {
     public async findAllByUser (request: Request, response: Response): Promise<Response> {
@@ -45,7 +45,7 @@ class TaskController {
                 });
         };
 
-        Async.parallel([countQuery, retrieveQuery], function (error, results) {
+        Async.parallel([countQuery, retrieveQuery], (error, results) => {
             if (error) {
                 if (language === 'en') return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
                 else return httpHandler.error(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);

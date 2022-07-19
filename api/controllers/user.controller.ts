@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { User as Model } from '../models/user.model';
+import { add as AddToBlacklist } from '../redis/blacklist-handler';
 import StatusCode from 'status-code-enum';
 import httpHandler from '../utils/http-handler';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import blacklistHandler from '../redis/blacklist-handler';
 
 class UserController {
     public async findAll (request: Request, response: Response): Promise<Response> {
@@ -114,7 +114,7 @@ class UserController {
 
     public async logout (request: Request, response: Response): Promise<Response> {
         const token = request.body.token;
-        const [, addToBlacklistError] = await httpHandler.handlePromises(request, response, blacklistHandler.add(token));
+        const [, addToBlacklistError] = await httpHandler.handlePromises(request, response, AddToBlacklist(token));
         if (addToBlacklistError) return;
 
         httpHandler.success(response, {}, StatusCode.SuccessOK);

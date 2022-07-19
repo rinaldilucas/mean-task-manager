@@ -25,7 +25,6 @@ class App {
     }
 
     private middlewares (): void {
-        // Load express
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
         this.express.use(cors());
@@ -39,7 +38,6 @@ class App {
     }
 
     private database (): void {
-        // Configures the database
         const args = process.argv;
         let database;
 
@@ -51,8 +49,6 @@ class App {
             console.log('Using local connection string.');
         }
 
-        // Connects to the database
-        mongoose.Promise = global.Promise;
         mongoose
             .connect(database, {
                 useNewUrlParser: true,
@@ -62,7 +58,7 @@ class App {
             })
             .then(() => console.log('Successfully connected to MongoDB.'))
             .catch((error) => {
-                console.log('Could not connect to MongoDB. Error: ' + error);
+                console.log(`Could not connect to MongoDB. Error: ${error}`);
                 process.exit();
             });
     }
