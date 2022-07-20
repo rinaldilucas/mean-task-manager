@@ -35,19 +35,17 @@ import { InitialFundsComponent } from '@app/pages/_components/charts/initial-fun
 import { ProfitOverFundsComponent } from '@app/pages/_components/charts/profit-over-funds/profit-over-funds.component';
 
 // PAGES
-import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
 import { RegisterComponent } from '@app/pages/auth/register/register.component';
 import { LogInComponent } from '@app/pages/auth/login/login.component';
 import { HomepageComponent } from '@app/pages/home/home.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
 
 // MODALS
-import { TaskFormBottomSheetComponent, TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
+import { TaskFormBottomSheetComponent } from '@app/pages/tasks/task-form/task-form.component';
 
 // PIPES
-import { ConvertDatePipe } from '@app/scripts/pipes/convertDate.pipe';
 
-export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+export function createTranslateLoader (http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
@@ -74,12 +72,12 @@ registerLocaleData(localePt, 'pt-BR');
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
-                deps: [HttpClient],
-            },
-        }),
+                deps: [HttpClient]
+            }
+        })
     ],
     providers: [AuthService, SharedService, TaskService, UserService],
     bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

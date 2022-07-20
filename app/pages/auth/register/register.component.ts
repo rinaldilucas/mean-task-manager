@@ -15,32 +15,32 @@ import { SharedService } from '@app/scripts/services/shared.service';
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
     form: FormGroup;
 
-    constructor(
+    constructor (
         private userService: UserService,
         private formBuilder: FormBuilder,
         private titleService: Title,
         private router: Router,
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
-        private sharedService: SharedService,
+        private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
             email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)], [EmailValidator.createValidator(this.userService)]],
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]]
         });
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    async registerAsync(): Promise<void> {
+    async registerAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value, role: ERole.user } as IUser;

@@ -21,37 +21,37 @@ export class AuthService {
     private loggedUser!: IAuthData;
     private authStatusListener = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private router: Router, //
         public userService: UserService,
-        private sharedService: SharedService,
+        private sharedService: SharedService
     ) {}
 
-    getToken(): string {
+    getToken (): string {
         return this.rawToken;
     }
 
-    getIsAuth(): boolean {
+    getIsAuth (): boolean {
         return this.isAuthenticated;
     }
 
-    getUserId(): string {
+    getUserId (): string {
         return this.loggedUser.userId;
     }
 
-    getUserRole(): ERole {
+    getUserRole (): ERole {
         return this.loggedUser.role;
     }
 
-    getLoggedUser(): IAuthData {
+    getLoggedUser (): IAuthData {
         return this.loggedUser;
     }
 
-    getAuthStatusListener(): Observable<boolean> {
+    getAuthStatusListener (): Observable<boolean> {
         return this.authStatusListener.asObservable();
     }
 
-    async logoutAsync(): Promise<void> {
+    async logoutAsync (): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.userService.logout(this.getToken()));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('login.logout-error', false);
 
@@ -65,7 +65,7 @@ export class AuthService {
         this.emitMenu.emit(false);
     }
 
-    authenticateToken(result: IJwtPayload): boolean {
+    authenticateToken (result: IJwtPayload): boolean {
         const token = result.token;
         this.rawToken = token;
 
@@ -85,7 +85,7 @@ export class AuthService {
         }
     }
 
-    verifyAuthorization(): boolean {
+    verifyAuthorization (): boolean {
         const authInformation = this.getAuthData();
 
         if (!authInformation) {
@@ -107,7 +107,7 @@ export class AuthService {
         return false;
     }
 
-    getAuthData(): IJwtPayload | false {
+    getAuthData (): IJwtPayload | false {
         const token = localStorage.getItem('token') as string;
         const expirationDate = localStorage.getItem('expiration') as string;
         const userId = localStorage.getItem('userId') as string;
@@ -122,34 +122,34 @@ export class AuthService {
             expirationDate: new Date(expirationDate),
             userId,
             userRole,
-            expiresIn: 0,
+            expiresIn: 0
         };
     }
 
-    private saveAuthData(token: string, expirationDate: Date, userId: string): void {
+    private saveAuthData (token: string, expirationDate: Date, userId: string): void {
         localStorage.setItem('token', token);
         localStorage.setItem('expiration', expirationDate.toISOString());
         localStorage.setItem('userId', userId);
     }
 
-    private clearAuthData(): void {
+    private clearAuthData (): void {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
     }
 
-    private setAuthTimer(duration: number): void {
+    private setAuthTimer (duration: number): void {
         this.tokenTimer = setTimeout(() => this.logoutAsync(), duration * 1000);
     }
 
-    private decodeJwtToken(token: string): void {
+    private decodeJwtToken (token: string): void {
         const helper = new JwtHelperService();
         this.decodedToken = helper.decodeToken(token) as IJwtToken;
 
         this.loggedUser = {
             role: this.decodedToken.role as ERole,
             email: this.decodedToken.email,
-            userId: this.decodedToken.userId,
+            userId: this.decodedToken.userId
         };
     }
 }

@@ -16,7 +16,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
     selector: 'app-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
     @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
@@ -31,20 +31,20 @@ export class SettingsComponent implements OnInit {
     filteredCategories!: Observable<string[]>;
     categories: ICategory[] = [];
 
-    constructor(
+    constructor (
         private changeDetector: ChangeDetectorRef, //
         private categoryService: CategoryService,
         private translateService: TranslateService,
         private titleService: Title,
-        private sharedService: SharedService,
+        private sharedService: SharedService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.refreshAsync();
     }
 
-    async refreshAsync(): Promise<void> {
+    async refreshAsync (): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.categoryService.listCategories());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
 
@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
         this.changeDetector.markForCheck();
     }
 
-    async saveCategoryAsync(event: MatChipInputEvent): Promise<void> {
+    async saveCategoryAsync (event: MatChipInputEvent): Promise<void> {
         const value = (event.value || '').trim();
         const category = { title: value } as ICategory;
 
@@ -74,7 +74,7 @@ export class SettingsComponent implements OnInit {
         this.categories.push(result.data[0]);
     }
 
-    async removeCategoryAsync(category: ICategory): Promise<void> {
+    async removeCategoryAsync (category: ICategory): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);

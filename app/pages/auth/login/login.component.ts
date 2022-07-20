@@ -14,12 +14,12 @@ import { SharedService } from '@app/scripts/services/shared.service';
     selector: 'app-log-in',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogInComponent implements OnInit {
     form: FormGroup;
 
-    constructor(
+    constructor (
         private userService: UserService,
         private authService: AuthService,
         private formBuilder: FormBuilder,
@@ -27,20 +27,20 @@ export class LogInComponent implements OnInit {
         private router: Router,
         private translateService: TranslateService,
         private sharedService: SharedService,
-        private changeDetector: ChangeDetectorRef,
+        private changeDetector: ChangeDetectorRef
     ) {
         this.form = this.formBuilder.group({
             email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)]],
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]]
         });
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    async loginAsync(): Promise<void> {
+    async loginAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;

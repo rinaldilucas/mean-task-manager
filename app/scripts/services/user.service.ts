@@ -14,59 +14,59 @@ export class UserService {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
     private url: string = environment.baseUri + '/users';
 
-    constructor(private http: HttpClient, private sharedService: SharedService) {}
+    constructor (private http: HttpClient, private sharedService: SharedService) {}
 
-    listUsers(): Promise<IQueryResult<IUser>[]> {
+    listUsers (): Promise<IQueryResult<IUser>[]> {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.get<IQueryResult<IUser>[]>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getUser(id: string): Promise<IQueryResult<IUser>> {
+    getUser (id: string): Promise<IQueryResult<IUser>> {
         const url = `${this.url}/${id}`;
 
         return lastValueFrom(this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
+    checkIfEmailExists (email: string): Observable<IQueryResult<IUser>> {
         const url = `${this.url}/email/${email}`;
 
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
-    removeUser(user: IUser | string): Promise<IQueryResult<IUser>> {
+    removeUser (user: IUser | string): Promise<IQueryResult<IUser>> {
         const id = typeof user === 'string' ? user : user._id;
         const url = `${this.url}/${id}`;
 
         return lastValueFrom(this.http.delete<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    updateUser(user: IUser): Promise<IQueryResult<IUser>> {
+    updateUser (user: IUser): Promise<IQueryResult<IUser>> {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    authenticate(email: string, password: string): Promise<IQueryResult<IJwtPayload>> {
+    authenticate (email: string, password: string): Promise<IQueryResult<IJwtPayload>> {
         const credentials = { email, password };
         const url = `${this.url}/authenticate`;
 
         return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    register(user: IUser): Promise<IQueryResult<IUser>> {
+    register (user: IUser): Promise<IQueryResult<IUser>> {
         const url = `${this.url}/register`;
 
         return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    logout(token: string): Promise<IQueryResult<IUser>> {
+    logout (token: string): Promise<IQueryResult<IUser>> {
         const url = `${this.url}/logout`;
 
         return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    changePassword(userId: string, password: string): Promise<IQueryResult<any>> {
+    changePassword (userId: string, password: string): Promise<IQueryResult<any>> {
         const url = `${this.url}/changePassword`;
         const body = { _id: userId, password };
 

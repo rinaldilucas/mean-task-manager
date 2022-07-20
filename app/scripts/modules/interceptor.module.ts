@@ -9,7 +9,7 @@ import { LanguageInterceptor } from '@app/scripts/helpers/language.interceptor';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
-    ],
+        { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true }
+    ]
 })
 export class InterceptorModule {}

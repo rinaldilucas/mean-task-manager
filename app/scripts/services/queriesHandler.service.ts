@@ -7,9 +7,9 @@ import { IQuery } from '@app/scripts/models/query.interface';
 
 @Injectable({ providedIn: 'root' })
 export class QueriesHandlerService {
-    constructor(public http: HttpClient) {}
+    constructor (public http: HttpClient) {}
 
-    handle<T>(query: IQuery<T>): Observable<IQueryResult<T> | T> {
+    handle<T> (query: IQuery<T>): Observable<IQueryResult<T> | T> {
         if (!query.isValid()) return throwError(() => ({} as IQueryResult<T>));
 
         return query.execute(this);

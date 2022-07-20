@@ -10,7 +10,8 @@ module.exports = {
     },
     env: {
         es6: true,
-        node: true
+        node: true,
+        browser: true
     },
     overrides: [
         {
@@ -30,5 +31,5 @@ module.exports = {
             }
         }
     ],
-    ignorePatterns: ['node_modules/', 'docs/', 'dist/', '*.d.ts']
+    ignorePatterns: ['node_modules/', 'docs/', 'dist/', '*.d.ts', '*.enum.ts']
 };

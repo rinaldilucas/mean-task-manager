@@ -8,9 +8,9 @@ import { AuthService } from '@app/scripts/services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) {}
+    constructor (private authService: AuthService) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             catchError((error) => {
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     if (isUserPreviouslyLogged) this.authService.logoutAsync();
                 }
                 return throwError(error);
-            }),
+            })
         );
     }
 }

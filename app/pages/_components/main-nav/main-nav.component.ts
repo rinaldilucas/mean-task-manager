@@ -15,7 +15,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
     selector: 'app-main-nav',
     templateUrl: './main-nav.component.html',
     styleUrls: ['./main-nav.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainNavComponent implements OnInit {
     time = new Date();
@@ -25,10 +25,10 @@ export class MainNavComponent implements OnInit {
 
     isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
         map((result) => result.matches),
-        shareReplay(),
+        shareReplay()
     );
 
-    constructor(
+    constructor (
         private translateService: TranslateService,
         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
@@ -36,10 +36,10 @@ export class MainNavComponent implements OnInit {
         public userService: UserService,
         public changeDetector: ChangeDetectorRef,
         public router: Router,
-        private sharedService: SharedService,
+        private sharedService: SharedService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         setInterval(() => (this.time = new Date()), 1000);
         this.isLogged = this.authService.getIsAuth();
         this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
@@ -62,11 +62,11 @@ export class MainNavComponent implements OnInit {
         });
     }
 
-    logout(): void {
+    logout (): void {
         this.authService.logoutAsync();
     }
 
-    changeLanguage(language: string): void {
+    changeLanguage (language: string): void {
         this.translateService.use(language);
         localStorage.setItem('language', language);
         this.sharedService.handleSnackbarMessages('messages.language-changed');

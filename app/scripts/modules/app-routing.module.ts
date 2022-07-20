@@ -23,16 +23,16 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     {
         path: 'tasks',
-        loadChildren: () => import('@app/pages/tasks/tasks.module').then((module) => module.TaskModule),
+        loadChildren: () => import('@app/pages/tasks/tasks.module').then((module) => module.TaskModule)
     },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
     { path: '', pathMatch: 'full', redirectTo: 'home' },
-    { path: '**', pathMatch: 'full', component: EmptyPageComponent },
+    { path: '**', pathMatch: 'full', component: EmptyPageComponent }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, { useHash: true })],
-    exports: [RouterModule],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}
