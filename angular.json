@@ -1,9 +1,13 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "cli": {
-        "analytics": false
-    },
     "newProjectRoot": "projects",
+    "cli": {
+        "packageManager": "yarn",
+        "analytics": false,
+        "cache": {
+            "enabled": true
+        }
+    },
     "projects": {
         "meanstacktemplate": {
             "architect": {
@@ -109,7 +113,7 @@
                         "karmaConfig": "app/scripts/configs/karma.conf.js",
                         "main": "app/scripts/config/test.ts",
                         "polyfills": "app/polyfills.ts",
-                        "scripts": ["node_modules/chart.js/dist/Chart.bundle.min.js"],
+                        "scripts": [],
                         "styles": ["app/styles/main.scss"],
                         "tsConfig": "tsconfig.spec.json"
                     }

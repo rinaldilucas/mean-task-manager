@@ -27,5 +27,6 @@ module.exports = {
                 'dot-notation': OFF
             }
         }
-    ]
+    ],
+    ignorePatterns: ['node_modules/', 'docs/', 'dist/', '*.d.ts']
 };
