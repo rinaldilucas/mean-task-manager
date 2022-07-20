@@ -3,6 +3,6 @@ export interface IQueryResult<T> {
     message: string;
     data: T[];
     status: number;
-    count: number;
+    totalCount: number;
     validationErrors: any[];
 }

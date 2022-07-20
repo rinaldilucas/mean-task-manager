@@ -14,7 +14,7 @@ export const responseSuccess = (response, data, statusCode = StatusCode.SuccessO
         success: true,
         status: statusCode,
         data,
-        count: totalCount || 1
+        totalCount: totalCount || 1
     });
 };
 

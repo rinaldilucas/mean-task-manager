@@ -24,7 +24,9 @@ module.exports = {
             rules: {
                 indent: [ERROR, 4],
                 semi: [ERROR, 'always'],
-                'dot-notation': OFF
+                'dot-notation': OFF,
+                'no-useless-constructor': OFF,
+                'no-debugger': OFF
             }
         }
     ],

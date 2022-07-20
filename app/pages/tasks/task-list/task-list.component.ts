@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
     selector: 'app-task-list',
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListComponent implements OnInit {
     @ViewChild(MatSort) sort!: MatSort;
@@ -26,7 +26,7 @@ export class TaskListComponent implements OnInit {
         lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
         mdColumns: ['date', 'title', 'description', 'status', 'actions'],
         smColumns: ['date', 'title', 'status', 'actions-mobile'],
-        xsColumns: ['date', 'title', 'status', 'actions-mobile'],
+        xsColumns: ['date', 'title', 'status', 'actions-mobile']
     };
 
     displayedColumns: string[] = this.columnOptions.lgColumns;
@@ -44,44 +44,46 @@ export class TaskListComponent implements OnInit {
     pageSize = 5;
     pageCount = 1;
     pageSizeOptions = [5, 10, 20];
+    columnFilter = '';
+    columnDirection = '';
 
-    constructor(
+    constructor (
         private changeDetector: ChangeDetectorRef, //
         private taskService: TaskService,
         private sharedService: SharedService,
         private router: Router,
         private titleService: Title,
-        private translateService: TranslateService,
+        private translateService: TranslateService
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.sharedService.setTableColumns(this.displayedColumns, this.columnOptions);
-        this.sharedService.tableColumnListener.subscribe((columnOptions: any) => (this.displayedColumns = columnOptions));
+        this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
         this.refreshAsync();
         this.taskService.emitTask.subscribe(() => this.refreshAsync());
     }
 
-    async refreshAsync(): Promise<void> {
+    add (): void {
+        this.router.navigate(['tasks/add']);
+    }
+
+    edit (id: string): void {
+        this.router.navigate(['tasks/edit', id]);
+    }
+
+    async refreshAsync (): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.tasks = result.data;
-        this.pageCount = result.count;
+        this.pageCount = result.totalCount;
         this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }
 
-    add(): void {
-        this.router.navigate(['tasks/add']);
-    }
-
-    edit(id: string): void {
-        this.router.navigate(['tasks/edit', id]);
-    }
-
-    async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {
+    async changeStatusAsync (task: ITask, status: EStatus): Promise<void> {
         task.status = status;
 
         const [result, error] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
@@ -92,7 +94,7 @@ export class TaskListComponent implements OnInit {
         this.changeDetector.markForCheck();
     }
 
-    async removeAsync(task: ITask): Promise<void> {
+    async removeAsync (task: ITask): Promise<void> {
         const [result, error] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.remove-error', false);
 
@@ -101,23 +103,40 @@ export class TaskListComponent implements OnInit {
         this.changeDetector.markForCheck();
     }
 
-    async onPaginateChangeAsync(event: PageEvent): Promise<void> {
+    async onPaginateChangeAsync (event: PageEvent): Promise<void> {
         this.isLoading = true;
         const pageIndex = event.pageIndex;
         const searchTerm = this.searchInput.nativeElement.value ?? null;
         this.pageSize = event.pageSize;
 
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex));
+        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex, this.columnFilter, this.columnDirection));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.tasks = result.data;
-        this.pageCount = result.count;
+        this.pageCount = result.totalCount;
         this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }
 
-    async filterTasksAsync(text: string): Promise<void> {
+    async sortDataAsync (event: Sort): Promise<void> {
+        this.isLoading = true;
+        const searchTerm = this.searchInput.nativeElement.value ?? null;
+        this.columnFilter = event.active;
+        this.columnDirection = event.direction;
+
+        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
+
+        this.paginator.pageIndex = 0;
+        this.tasks = result.data;
+        this.pageCount = result.totalCount;
+        this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
+        this.isLoading = false;
+        this.changeDetector.markForCheck();
+    }
+
+    async filterTasksAsync (text: string): Promise<void> {
         if (text === '') {
             this.searchInput.nativeElement.value = '';
             this.isSearching = false;
@@ -126,12 +145,12 @@ export class TaskListComponent implements OnInit {
             this.isLoading = true;
             const searchTerm = text.trim().toLowerCase();
 
-            const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0));
+            const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
             if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
             this.paginator.pageIndex = 0;
             this.tasks = result.data;
-            this.pageCount = result.count;
+            this.pageCount = result.totalCount;
             this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
             this.isLoading = false;
             this.changeDetector.markForCheck();

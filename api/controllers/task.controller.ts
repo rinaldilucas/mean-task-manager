@@ -10,18 +10,17 @@ class TaskController {
         const language = request.headers.language;
         const pageIndex = +request.query.pageIndex ?? 1;
         const pageSize = +request.query.pageSize ?? 5;
-        const hasSearchTerm = request.query.searchTerm;
+        const searchTerm = request.query.searchTerm;
 
         const countQuery = (callback) => {
-            const findQuery = {
-                userId: request.params.userId
-            };
+            const findQuery = { userId: request.params.userId };
+            const sortQuery = {};
 
-            if (hasSearchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+            if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
             Model.find(findQuery)
                 .find({ userId: request.params.userId })
-                .sort({ date: -1 })
+                .sort(sortQuery)
                 .countDocuments({}, (error, count) => {
                     if (error) callback(error, null);
                     else callback(null, count);
@@ -29,14 +28,23 @@ class TaskController {
         };
 
         const retrieveQuery = (callback) => {
-            const findQuery = {
-                userId: request.params.userId
-            };
+            const findQuery = { userId: request.params.userId };
+            if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
-            if (hasSearchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+            const sortQuery = {};
+            const sortDirection = request.query.sortDirection;
+            const sortFilter = request.query.sortFilter;
+
+            if (sortFilter && sortDirection !== '') {
+                if (request.query.sortDirection === 'asc') {
+                    sortQuery[sortFilter] = 1;
+                } else {
+                    sortQuery[sortFilter] = -1;
+                }
+            } else { sortQuery['date'] = -1; }
 
             Model.find(findQuery)
-                .sort({ date: -1 })
+                .sort(sortQuery)
                 .skip(pageIndex * pageSize)
                 .limit(pageSize)
                 .exec((error, documents) => {
@@ -47,7 +55,7 @@ class TaskController {
 
         Async.parallel([countQuery, retrieveQuery], (error, results) => {
             if (error) {
-                if (language === 'en') return responseError(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
+                if (language === 'en-US') return responseError(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
                 else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
             }
 
