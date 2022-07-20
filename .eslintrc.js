@@ -1,3 +1,6 @@
+const OFF = 0,
+    ERROR = 2;
+
 module.exports = {
     root: true,
     extends: ['eslint:recommended'],
@@ -19,9 +22,9 @@ module.exports = {
                 SharedArrayBuffer: 'readonly'
             },
             rules: {
-                indent: ['error', 4],
-                semi: [2, 'always'],
-                'dot-notation': 0
+                indent: [ERROR, 4],
+                semi: [ERROR, 'always'],
+                'dot-notation': OFF
             }
         }
     ]
