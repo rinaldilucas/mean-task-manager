@@ -9,7 +9,8 @@ import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 @Component({
     selector: 'app-log-in',
     templateUrl: './login.component.html',
@@ -44,7 +45,7 @@ export class LogInComponent implements OnInit {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
-        const [result, error] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password));
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password));
         if (!!error || !result || !result?.success) {
             if (error.status === StatusCode.ClientErrorNotFound) {
                 this.sharedService.handleSnackbarMessages('login.user-error', false);

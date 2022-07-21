@@ -9,6 +9,8 @@ import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
 import { IAuthData } from '@app/scripts/models/authData.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { IUser } from '@app/scripts/models/user.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -52,7 +54,7 @@ export class AuthService {
     }
 
     async logoutAsync (): Promise<void> {
-        const [result, error] = await this.sharedService.handlePromises(this.userService.logout(this.getToken()));
+        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.logout(this.getToken()));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('login.logout-error', false);
 
         this.sharedService.handleSnackbarMessages('login.logout-success');
@@ -88,9 +90,7 @@ export class AuthService {
     verifyAuthorization (): boolean {
         const authInformation = this.getAuthData();
 
-        if (!authInformation) {
-            return false;
-        }
+        if (!authInformation) { return false; }
 
         const now = new Date();
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();

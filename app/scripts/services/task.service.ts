@@ -16,7 +16,7 @@ export class TaskService {
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    listTasksByUser (pageSize: number, searchTerm?: string, pageIndex = 0, sortFilter?: string, sortDirection?: string): Promise<IQueryResult<ITask>> {
+    listTasksByUser (pageSize: number, searchTerm?: string, pageIndex = 0, sortFilter?: string, sortDirection?: string): Promise<IQueryResult<ITask[]>> {
         const id = this.authService.getUserId();
         let url = `${this.url}/user/${id}?`;
 
@@ -25,14 +25,14 @@ export class TaskService {
         if (pageIndex) url += `pageIndex=${pageIndex}&`;
         if (searchTerm) url += `searchTerm=${searchTerm}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    filterTasksByUser (searchTerm: string): Promise<IQueryResult<ITask>> {
+    filterTasksByUser (searchTerm: string): Promise<IQueryResult<ITask[]>> {
         const id = this.authService.getUserId();
         const url = `${this.url}/user/${id}?searchTerm=${searchTerm}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     getTask (id: string): Promise<IQueryResult<ITask>> {

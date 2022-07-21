@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-settings',
@@ -45,7 +46,7 @@ export class SettingsComponent implements OnInit {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error] = await this.sharedService.handlePromises(this.categoryService.listCategories());
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.listCategories());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
 
         this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title }));
@@ -59,7 +60,7 @@ export class SettingsComponent implements OnInit {
 
         if (!value) return;
 
-        const [result, error] = await this.sharedService.handlePromises(this.categoryService.createCategory(category));
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.createCategory(category));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages('settings.category-create-error', false);
             this.categoryCtrl.setValue(null);
@@ -75,7 +76,7 @@ export class SettingsComponent implements OnInit {
     }
 
     async removeCategoryAsync (category: ICategory): Promise<void> {
-        const [result, error] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages('settings.category-remove-error', false);
             this.categoryCtrl.setValue(null);

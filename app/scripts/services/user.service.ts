@@ -16,10 +16,10 @@ export class UserService {
 
     constructor (private http: HttpClient, private sharedService: SharedService) {}
 
-    listUsers (): Promise<IQueryResult<IUser>[]> {
+    listUsers (): Promise<IQueryResult<IUser[]>> {
         const url = `${this.url}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<IUser>[]>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<IUser[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     getUser (id: string): Promise<IQueryResult<IUser>> {

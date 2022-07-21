@@ -15,10 +15,10 @@ export class CategoryService {
 
     constructor (private http: HttpClient, private sharedService: SharedService) {}
 
-    listCategories (): Promise<IQueryResult<ICategory>> {
+    listCategories (): Promise<IQueryResult<ICategory[]>> {
         const url = `${this.url}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ICategory>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<ICategory[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     getCategory (id: string): Promise<IQueryResult<ICategory>> {

@@ -16,6 +16,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     template: '',
@@ -92,7 +93,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
                 this.titleService.setTitle(`${this.title} — Mean Stack Template`);
             });
 
-            const [result, error] = await this.sharedService.handlePromises(this.taskService.getTask(this.id));
+            const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTask(this.id));
             if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
 
             this.form.patchValue(result.data[0]);
@@ -136,7 +137,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         } as ITask;
         task.status = EStatus.toDo;
 
-        const [result, error] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-error' : 'task-form.create-error', false);
 
         this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-success' : 'task-form.create-success');

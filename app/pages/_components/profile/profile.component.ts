@@ -8,12 +8,13 @@ import { IUser } from '@app/scripts/models/user.interface';
 import { UserService } from '@app/scripts/services/user.service';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit {
     form: FormGroup;
@@ -21,7 +22,7 @@ export class ProfileComponent implements OnInit {
     isLoading = true;
     user!: IUser;
 
-    constructor(
+    constructor (
         private userService: UserService,
         private authService: AuthService,
         private titleService: Title,
@@ -29,23 +30,23 @@ export class ProfileComponent implements OnInit {
         private translateService: TranslateService,
         private router: Router,
         private sharedService: SharedService,
-        private changeDetector: ChangeDetectorRef,
+        private changeDetector: ChangeDetectorRef
     ) {
         this.form = this.formBuilder.group({
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]]
         });
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
-    async saveAsync(): Promise<void> {
+    async saveAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const password = this.form.controls['password'].value;
-        const [result, error] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
+        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('profile.edit-error', false);
 
         this.sharedService.handleSnackbarMessages('profile.edit-success');

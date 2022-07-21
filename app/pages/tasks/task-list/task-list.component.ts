@@ -10,6 +10,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { TaskService } from '@app/scripts/services/task.service';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-task-list',
@@ -73,7 +74,7 @@ export class TaskListComponent implements OnInit {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.tasks = result.data;
@@ -86,7 +87,7 @@ export class TaskListComponent implements OnInit {
     async changeStatusAsync (task: ITask, status: EStatus): Promise<void> {
         task.status = status;
 
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.status-change-error', false);
 
         this.sharedService.handleSnackbarMessages('task-list.status-change');
@@ -95,7 +96,7 @@ export class TaskListComponent implements OnInit {
     }
 
     async removeAsync (task: ITask): Promise<void> {
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.remove-error', false);
 
         this.sharedService.handleSnackbarMessages('task-list.remove-success');
@@ -109,7 +110,7 @@ export class TaskListComponent implements OnInit {
         const searchTerm = this.searchInput.nativeElement.value ?? null;
         this.pageSize = event.pageSize;
 
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex, this.columnFilter, this.columnDirection));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, pageIndex, this.columnFilter, this.columnDirection));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.tasks = result.data;
@@ -125,7 +126,7 @@ export class TaskListComponent implements OnInit {
         this.columnFilter = event.active;
         this.columnDirection = event.direction;
 
-        const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.paginator.pageIndex = 0;
@@ -145,7 +146,7 @@ export class TaskListComponent implements OnInit {
             this.isLoading = true;
             const searchTerm = text.trim().toLowerCase();
 
-            const [result, error] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
+            const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize, searchTerm, 0, this.columnFilter, this.columnDirection));
             if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
             this.paginator.pageIndex = 0;
