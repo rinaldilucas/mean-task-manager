@@ -1,6 +1,6 @@
 import { StatusCode } from 'status-code-enum';
 
-export const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount) => {
+export const responseSuccess = (response, data, statusCode = StatusCode.SuccessOK, totalCount = 1) => {
     response.status(statusCode);
     let result;
 
@@ -14,7 +14,7 @@ export const responseSuccess = (response, data, statusCode = StatusCode.SuccessO
         success: true,
         status: statusCode,
         data,
-        totalCount: totalCount || 1
+        totalCount
     });
 };
 
