@@ -228,4 +228,4 @@ It helps me a lot to continue developing open source codes.
 [license-url]: https://github.com/rinaldilucas/mean-stack-template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rinaldilucas/
-[project-screenshot]: ./app/assets/images/_readme/screenshot.png
+[project-screenshot]: ./app/assets/images/_readme/screenshot.gif
