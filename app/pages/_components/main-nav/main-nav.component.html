@@ -8,11 +8,11 @@
         [opened]="!(isHandset$ | async) && isLogged ? true : false"
     >
         <mat-nav-list class="header__left">
-            <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['tasks/']" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
             </a>
-            <a mat-list-item [routerLink]="['settings/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['settings/']" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tools">settings</mat-icon>
                 {{ "navigation.settings" | translate }}
             </a>
@@ -23,16 +23,14 @@
         <mat-toolbar color="primary" *ngIf="isLogged">
             <div>
                 <button type="button" mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
-                <button type="button" mat-icon-button (click)="changeLanguage('pt-BR')">BR</button>
-                <button type="button" mat-icon-button (click)="changeLanguage('en-US')">EN</button>
             </div>
 
-            <div>{{ this.time | date: "HH:mm" }}</div>
+            <div class="only-desktop">{{ this.time | date: "HH:mm" }}</div>
 
             <div class="header__top-right">
                 <div class="header__darkmode-wrapper">
                     <mat-icon class="darkmode-icon">dark_mode</mat-icon>
-                    <mat-slide-toggle [formControl]="toggleTheme" color="warning"> </mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="toggleTheme"> </mat-slide-toggle>
                 </div>
                 <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
                     <mat-icon>account_circle</mat-icon>
@@ -43,7 +41,7 @@
                         <a mat-list-item [routerLink]="['/profile/']"> {{ "navigation.profile" | translate }} </a>
                     </mat-nav-list>
 
-                    <mat-nav-list class="user-menu">
+                    <mat-nav-list>
                         <a mat-list-item (click)="logout()"> {{ "navigation.logout" | translate }} </a>
                     </mat-nav-list>
                 </mat-menu>
@@ -57,7 +55,7 @@
 
             <div>
                 <a mat-button routerLink="register" routerLinkActive="active">{{ "navigation.register" | translate }}</a>
-                <a mat-button routerLink="login" routerLinkActive="active">{{ "navigation.login" | translate }}</a>
+                <a mat-raised-button routerLink="login" routerLinkActive="active">{{ "navigation.login" | translate }}</a>
             </div>
         </mat-toolbar>
 

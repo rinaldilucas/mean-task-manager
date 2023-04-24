@@ -1,0 +1,21 @@
+// Chromium
+.scrollbar {
+    ::-webkit-scrollbar {
+        width: vw(10);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: mat-color($primary, 500);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: mat-color($primary, 600);
+        border-radius: 99px;
+    }
+}
+
+// Firefox
+.scrollbar {
+    scrollbar-color: mat-color($primary, 500) !important;
+    scrollbar-width: vw(6) !important;
+}

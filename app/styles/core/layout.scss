@@ -11,7 +11,7 @@
 
 $custom-typography: mat-typography-config(
     $font-family: $font-main,
-    $headline: define-typography-level(0.48rem, 1.1rem, 400),
+    $headline: define-typography-level(0.48rem, 0.6rem, 500),
     $title: define-typography-level(0.26rem, 0.3rem, 500),
     $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
     $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
@@ -21,6 +21,22 @@ $custom-typography: mat-typography-config(
     $button: define-typography-level(0.16rem, 0.28rem, 500),
     $input: define-typography-level(inherit, 1.125, 400)
 );
+
+@include media(">=desktop") {
+    $custom-typography: mat-typography-config(
+        $font-family: $font-main,
+        $headline: define-typography-level(0.48rem, 1.1rem, 500),
+        $title: define-typography-level(0.26rem, 0.3rem, 500),
+        $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
+        $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
+        $body-1: define-typography-level(0.14rem, 0.2rem, 400),
+        $body-2: define-typography-level(0.14rem, 0.2rem, 400),
+        $caption: define-typography-level(0.14rem, 0.2rem, 400),
+        $button: define-typography-level(0.16rem, 0.28rem, 500),
+        $input: define-typography-level(inherit, 1.125, 400)
+    );
+}
+
 @include mat-core($custom-typography);
 
 /* ============================================== */
@@ -28,41 +44,24 @@ $custom-typography: mat-typography-config(
 /* ============================================== */
 
 html {
-    font-size: mobile-vw($pixel-base, true);
-
-    @include media(">=desktop") {
-        font-size: desktop-vw($pixel-base, true);
-    }
-
-    @include media(">common-desktop") {
-        font-size: desktop-fixed($pixel-base, $size-common-desktop);
-    }
-
     overflow-x: hidden;
     max-width: 100vw;
     height: 100%;
+    font-size: mobile-vw($pixel-base + $mobile-factor, true);
+    @extend .scrollbar;
+
+    @include media(">=desktop") {
+        font-size: fixed-vw($pixel-base);
+    }
 }
 
 body {
     height: auto;
-    font-size: vw(12);
+    font-size: vw(18);
     font-family: $font-main;
     width: 100%;
     max-width: 100vw;
     height: 100%;
-}
-
-::-webkit-scrollbar {
-    width: vw(10);
-}
-
-::-webkit-scrollbar-thumb {
-    background: mat-color($primary, 500);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: mat-color($primary, 600);
-    border-radius: 99px;
 }
 
 a {
@@ -72,7 +71,7 @@ a {
 
 .page {
     &-container {
-        min-height: calc(100vh - #{$headerSize});
+        height: calc(100vh - #{$headerSize});
         display: flex;
         flex-direction: column;
         justify-content: flex-start;

@@ -1,7 +1,7 @@
 {
     "app": {
         "description": "Mean Stack Template",
-        "title": "My Notes WebApp"
+        "title": "Angular WebApp"
     },
     "button": {
         "register": "Register",
@@ -56,6 +56,9 @@
         "email-error": "E-mail already registered."
     },
     "settings": {
+        "language": "Language",
+        "portuguese": "Portuguese",
+        "english": "English",
         "categories-names": "Categories names",
         "category-create-error": "Error adding the category.",
         "category-create-success": "Category added successfully.",

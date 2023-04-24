@@ -63,7 +63,7 @@ I built this project to make a cool template for those who wants to learn the ME
 
 -   Multilingual features on the client-side and API responses
 -   Virtual scrolling on tables
--   Dynamic search, minimizing requests
+-   Search and ordering via database, minimizing requests
 -   AJAX requests for pagination
 -   JWT and roles authentication
 -   Password encryption
@@ -72,6 +72,8 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Minimalist error handlers on the client-side and API to improve readability and correctly throw HTTP errors
 -   Dark mode
 -   An SCSS method which uses REMs to maintain size scales
+-   SCSS written using BEM methodology
+-   Improved SCSS sctructures to help reusability
 -   Improved readability on media queries through some functions
 -   Example with mat-chips, mat-autocomplete and more
 -   Validation on the client-side, API, and database

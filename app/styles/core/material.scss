@@ -63,6 +63,35 @@ mat-row {
     height: $headerSize !important;
 }
 
+.mat-cell {
+    padding-right: vw(8);
+
+    @include media("<=desktop") {
+        &:last-of-type {
+            flex: 0.5;
+            padding-right: 0 !important;
+        }
+    }
+}
+
+.mat-paginator-page-size {
+    @include media("<=desktop") {
+        display: none !important;
+    }
+}
+
+.mat-simple-snackbar {
+    font-size: vw(18);
+
+    @include media(">=desktop") {
+        font-size: vw(16);
+    }
+}
+
+.mat-card-title {
+    line-height: vw(34);
+}
+
 .cdk-virtual-scroll-viewport {
     background-color: mat-color($app-background, 50);
 

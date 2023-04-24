@@ -9,28 +9,42 @@
         max-width: vw(1000);
         height: 100%;
         width: 100%;
+
+        @include media(">=desktop") {
+            margin: vw(40);
+        }
     }
 
     &__header {
         display: flex;
         height: auto;
         box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
-        padding: vw(15) 0 vw(15);
+        padding: vw(25) 0 vw(15);
         margin: 0 0 vw(2) 0;
         font-size: vw(22);
         margin-left: 0;
         flex-direction: column;
+        align-items: center;
 
         @include media(">=desktop") {
             flex-direction: row;
+            padding: vw(15) 0 vw(15);
+        }
+
+        .darkMode & {
+            background-color: mat-contrast($app-background, 100) !important;
         }
 
         &-title {
             align-items: center;
             display: flex;
-            flex: 1 1 0%;
-            margin-left: vw(48);
             font-size: vw(34);
+            justify-self: center;
+
+            @include media(">=desktop") {
+                flex: 1 1 0%;
+                margin-left: vw(48);
+            }
         }
 
         &-button {
@@ -45,11 +59,40 @@
             box-sizing: border-box;
             display: flex;
             flex: 0 0 auto;
+            border-radius: 20px !important;
+            background-color: mat-color($app-background, 100);
+            padding: 0 vw(10) 0 vw(20);
+            margin-top: vw(22);
+            width: 90%;
+
+            @include media(">=desktop") {
+                width: unset;
+                margin-top: unset;
+                margin-right: vw(20);
+            }
+
+            .darkMode & {
+                background-color: mat-contrast($app-background, 50) !important;
+            }
+
+            .mat-form-field {
+                width: 100% !important;
+            }
+
+            .mat-form-field-wrapper {
+                padding-bottom: 0 !important;
+            }
+
+            .mat-form-field-underline {
+                bottom: vw(8) !important;
+            }
         }
     }
 
     &__body {
-        height: vw(557);
+        @include media(">=desktop") {
+            height: vw(557);
+        }
 
         &-title {
             font-size: vw(18) !important;
@@ -62,6 +105,10 @@
 
         &-table {
             min-height: vw(500);
+
+            @include media("<=desktop") {
+                min-height: vw(400);
+            }
 
             table {
                 width: 100%;

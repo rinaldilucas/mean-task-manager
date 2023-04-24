@@ -1,15 +1,24 @@
+@import "@angular/material/theming";
+
 .page {
-    height: calc(6.3rem + #{$headerSize});
+    height: 100%;
     position: relative;
+    display: flex;
 
     @include media(">=desktop") {
+        height: calc(6.3rem + #{$headerSize});
         margin: vw(80) 0 0 0 !important;
+        justify-content: center;
     }
 
     &__wrapper {
         max-width: vw(1000);
-        height: 100%;
         width: 100%;
+        margin: vw(40);
+
+        @include media(">=desktop") {
+            height: 100%;
+        }
     }
 
     &__content {
@@ -17,8 +26,40 @@
 
         &-wrapper {
             box-sizing: border-box;
-            padding: vw(70) vw(50);
+            padding: vw(50) vw(40);
             height: 100%;
+            background-color: mat-color($app-background, 100);
+
+            .darkMode & {
+                background-color: mat-contrast($app-background, 100) !important;
+            }
+
+            @include media(">=desktop") {
+                padding: vw(70) vw(50);
+            }
+        }
+    }
+
+    section {
+        margin-bottom: vw(38);
+        padding-bottom: vw(24);
+        border-bottom: 1px solid mat-color($app-primary, 200);
+
+        .darkMode & {
+            border-bottom: 1px solid mat-contrast($app-primary, 200);
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+            border-bottom: 0;
+        }
+
+        button {
+            margin-right: vw(18);
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }

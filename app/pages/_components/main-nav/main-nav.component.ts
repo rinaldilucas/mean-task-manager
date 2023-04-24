@@ -65,12 +65,4 @@ export class MainNavComponent implements OnInit {
     logout (): void {
         this.authService.logoutAsync();
     }
-
-    changeLanguage (language: string): void {
-        this.translateService.use(language);
-        localStorage.setItem('language', language);
-        this.sharedService.handleSnackbarMessages('messages.language-changed');
-        this.changeDetector.markForCheck();
-        this.sharedService.emitTitle.emit();
-    }
 }

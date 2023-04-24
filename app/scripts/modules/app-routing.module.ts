@@ -1,6 +1,6 @@
 // CORE
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 // GUARD
 import { AuthGuard } from '@app/scripts/guards/auth.guard';
@@ -8,10 +8,10 @@ import { RoleGuard } from '@app/scripts/guards/role.guard';
 
 // PAGES
 import { EmptyPageComponent } from '@app/pages/_components/empty-page.component';
+import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
 import { LogInComponent } from '@app/pages/auth/login/login.component';
 import { RegisterComponent } from '@app/pages/auth/register/register.component';
 import { HomepageComponent } from '@app/pages/home/home.component';
-import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
 
 // ENUM
