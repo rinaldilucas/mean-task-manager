@@ -2,10 +2,18 @@
     "compileOnSave": false,
     "compilerOptions": {
         "paths": {
-            "@app/*": ["app/*"],
-            "@assets/*": ["app/assets/*"],
-            "@env/*": ["app/environments/*"],
-            "@styles/*": ["app/styles/*"]
+            "@app/*": [
+                "app/*"
+            ],
+            "@assets/*": [
+                "app/assets/*"
+            ],
+            "@env/*": [
+                "app/environments/*"
+            ],
+            "@styles/*": [
+                "app/styles/*"
+            ]
         },
         "baseUrl": "./",
         "outDir": "./docs/out-tsc",
@@ -13,7 +21,7 @@
         "strict": true,
         "noImplicitOverride": true,
         "noPropertyAccessFromIndexSignature": false,
-        "noImplicitReturns": true,
+        "noImplicitReturns": false,
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "experimentalDecorators": true,
@@ -23,10 +31,13 @@
         "importHelpers": true,
         "target": "es2018",
         "module": "es2020",
-        "lib": ["es2018", "dom"],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
         "allowSyntheticDefaultImports": true,
         "strictNullChecks": true,
-        "noImplicitAny": true
+        "noImplicitAny": false,
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

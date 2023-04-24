@@ -1,7 +1,7 @@
-import { Schema, Model, model } from 'mongoose';
-import { UserInterface as Interface } from '../interfaces/user';
+import { Model, Schema, model } from 'mongoose';
+import { UserInterface as Interface } from '../interfaces/User.interface';
 
-const validateEmail = (email) => {
+const validateEmail = (email: string) => {
     const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };

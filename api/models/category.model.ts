@@ -1,6 +1,6 @@
 
-import { Schema, Model, model } from 'mongoose';
-import { CategoryInterface as Interface } from '../interfaces/category';
+import { Model, Schema, model } from 'mongoose';
+import { CategoryInterface as Interface } from '../interfaces/Category.interface';
 
 const SchemaModel = new Schema({
     title: { type: String, required: true, unique: true, minLength: 2 }

@@ -1,19 +1,18 @@
-
-import { Request, Response } from 'express';
-import { Task as Model } from '../models/task.model';
-import { StatusCode } from 'status-code-enum';
-import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 import Async from 'async';
+import { Request, Response } from 'express';
+import { StatusCode } from 'status-code-enum';
+import { Task as Model } from '../models/task.model';
+import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 
 class TaskController {
-    public async findAllByUser (request: Request, response: Response): Promise<Response> {
+    public async findAllByUser (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
-        const pageIndex = +request.query.pageIndex ?? 1;
-        const pageSize = +request.query.pageSize ?? 5;
+        const pageIndex = Number(request.query.pageIndex) ?? 1;
+        const pageSize = Number(request.query.pageSize) ?? 5;
         const searchTerm = request.query.searchTerm;
 
-        const countQuery = (callback) => {
-            const findQuery = { userId: request.params.userId };
+        const countQuery = (callback: any) => {
+            const findQuery = { userId: request.params.userI, title: {} };
             const sortQuery = {};
 
             if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
@@ -27,13 +26,13 @@ class TaskController {
                 });
         };
 
-        const retrieveQuery = (callback) => {
-            const findQuery = { userId: request.params.userId };
+        const retrieveQuery = (callback: any) => {
+            const findQuery = { userId: request.params.userI, title: {} };
             if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
-            const sortQuery = {};
+            const sortQuery = {} as any;
             const sortDirection = request.query.sortDirection;
-            const sortFilter = request.query.sortFilter;
+            const sortFilter = request.query.sortFilter as string;
 
             if (sortFilter && sortDirection !== '') {
                 if (request.query.sortDirection === 'asc') {
@@ -53,7 +52,7 @@ class TaskController {
                 });
         };
 
-        Async.parallel([countQuery, retrieveQuery], (error, results) => {
+        Async.parallel([countQuery, retrieveQuery], (error: any, results: any) => {
             if (error) {
                 if (language === 'en-US') return responseError(response, error, StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${Model.modelName}}.`);
                 else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
@@ -63,7 +62,7 @@ class TaskController {
         });
     }
 
-    public async findOne (request: Request, response: Response): Promise<Response> {
+    public async findOne (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
@@ -76,7 +75,7 @@ class TaskController {
         responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async create (request: Request, response: Response): Promise<Response> {
+    public async create (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, new Model(request.body).save());
@@ -89,7 +88,7 @@ class TaskController {
         responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async update (request: Request, response: Response): Promise<Response> {
+    public async update (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.body._id }));
@@ -106,10 +105,10 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOk);
+        responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async remove (request: Request, response: Response): Promise<Response> {
+    public async remove (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
@@ -126,7 +125,7 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOk);
+        responseSuccess(response, data, StatusCode.SuccessOK);
     }
 }
 

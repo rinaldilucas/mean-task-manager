@@ -20,8 +20,6 @@
     <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rinaldilucas.github.io/mean-stack-template/">View Demo</a>
-    ·
     <a href="#donations">Donate</a>       
   </p>
 </div>
@@ -58,6 +56,7 @@
 <div align="center">
 
 [![Project Screenshot][project-screenshot]](https://rinaldilucas.github.io/mean-stack-template/)
+
 </div>
 
 I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!
@@ -95,15 +94,15 @@ You need to have the following requirements:
     ```
 -   angular cli
     ```sh
-	npm install -g @angular/cli@^9.1.0
+    npm install -g @angular/cli@^9.1.0
     ```
 -   nodemon
     ```sh
-	npm install -g nodemon
+    npm install -g nodemon
     ```
 -   npm run all
     ```sh
-	npm install -g npm-run-all
+    npm install -g npm-run-all
     ```
 
 ### Installation
@@ -114,25 +113,17 @@ _Below is an example of how you can run the project._
     ```sh
     git clone https://github.com/rinaldilucas/mean-stack-template.git
     ```
-2. Install NPM packages via npm
+2. Install NPM packages via yarn
     ```sh
-    npm install
+    yarn install
     ```
-4. Serve the angular project only
+3. Run angular, express and mongoDB as development mode
     ```js
-    ng serve --open
+    yarn dev
     ```
-4. Serve the project on host using index.js as an entry point
+4. Build the dist folders
     ```js
-    npm run start
-    ```
-5. Run angular, express and mongoDB
-    ```js
-    npm run parallel
-    ```
-6. Build the dist folder
-    ```js
-    npm run build
+    yarn build
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -141,7 +132,7 @@ _Below is an example of how you can run the project._
 
 ## Usage
 
-If needed, you can serve express individually using `npm run nodemon` or mongoDB using `npm run mongod`.
+If needed, you can debug express using `yarn api-debug`. More builds scripts at `./package.json`.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -175,8 +166,7 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 ## Contact
 
 [![Website](https://img.shields.io/badge/-Website-0078D4?style=flat-square&logo=html5&logoColor=white&link=https://lucasreinaldi.com.br)](https://rinaldilucas.com)
-[![Github](https://img.shields.io/badge/-Github-967bb5?style=flat-square&labelColor=967bb5&logo=github&logoColor=white&link=https://github.com/rinaldilucas
-)](https://github.com/rinaldilucas)
+[![Github](https://img.shields.io/badge/-Github-967bb5?style=flat-square&labelColor=967bb5&logo=github&logoColor=white&link=https://github.com/rinaldilucas)](https://github.com/rinaldilucas)
 [![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:lucasreinaldi@gmail.com)](mailto:lucasreinaldi@gmail.com)
 [![Hotmail Badge](https://img.shields.io/badge/-Hotmail-0078D4?style=flat-square&logo=microsoft-outlook&logoColor=white&link=mailto:lucasreinaldi@hotmail.com)](mailto:lucasreinaldi@hotmail.com)
 [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rinaldilucas/)](https://www.linkedin.com/in/rinaldilucas/)

@@ -1,22 +1,22 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject, AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheetRef, MatBottomSheet, MatBottomSheetConfig, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
-import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AuthService } from '@app/scripts/services/auth.service';
-import { TaskService } from '@app/scripts/services/task.service';
-import { CategoryService } from '@app/scripts/services/category.service';
-import { ITask } from '@app/scripts/models/task.interface';
-import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ICategory } from '@app/scripts/models/category.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
+import { AuthService } from '@app/scripts/services/auth.service';
+import { CategoryService } from '@app/scripts/services/category.service';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
     template: '',
@@ -110,7 +110,6 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     ngAfterViewInit (): void {
         this.categoryTrigger.panelClosingActions.subscribe(() => {
             if (this.categoryTrigger.activeOption) {
-                console.log(this.categoryTrigger.activeOption.value);
                 this.form.controls['category'].setValue(this.categoryTrigger.activeOption.value);
             }
         });

@@ -1,13 +1,13 @@
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import { StatusCode } from 'status-code-enum';
 import { User as Model } from '../models/user.model';
 import { add as AddToBlacklist } from '../redis/blacklist-handler';
-import { StatusCode } from 'status-code-enum';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 class UserController {
-    public async findAll (request: Request, response: Response): Promise<Response> {
+    public async findAll (request: Request, response: Response): Promise<Response | undefined> {
         const [data, error] = await handlePromises(request, response, Model.find());
         if (error) return;
         if (data?.length === 0) return responseSuccess(response, data, StatusCode.SuccessOK);
@@ -15,7 +15,7 @@ class UserController {
         responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async findOne (request: Request, response: Response): Promise<Response> {
+    public async findOne (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
@@ -28,15 +28,15 @@ class UserController {
         responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async findOneByEmail (request: Request, response: Response): Promise<Response> {
+    public async findOneByEmail (request: Request, response: Response): Promise<Response | undefined> {
         const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
         if (error) return;
-        if (!data) return responseSuccess(response, {}, StatusCode.SuccessOk, 0);
+        if (!data) return responseSuccess(response, {}, StatusCode.SuccessOK, 0);
 
         responseSuccess(response, { userExists: true }, StatusCode.SuccessOK);
     }
 
-    public async update (request: Request, response: Response): Promise<Response> {
+    public async update (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.body._id }));
@@ -53,13 +53,13 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOk);
+        responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async register (request: Request, response: Response): Promise<Response> {
+    public async register (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
-        const [salt] = await handlePromises(request, response, bcrypt.genSalt(+process.env.SALT_RONDS));
+        const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_RONDS) || 12));
         const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
 
         const newUser = new Model({
@@ -85,7 +85,7 @@ class UserController {
         responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async authenticate (request: Request, response: Response): Promise<Response> {
+    public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
@@ -102,7 +102,7 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial: Senha inválida.');
         }
 
-        const token = jwt.sign({ email: document.email, userId: document._id, role: document.role }, process.env.JWT_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ email: document.email, userId: document._id, role: document.role }, String(process.env.JWT_KEY), { expiresIn: '1h' });
         const jwtPayload = {
             token,
             expiresIn: 60 * 60,
@@ -112,7 +112,7 @@ class UserController {
         responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
-    public async logout (request: Request, response: Response): Promise<Response> {
+    public async logout (request: Request, response: Response): Promise<Response | undefined> {
         const token = request.body.token;
         const [, addToBlacklistError] = await handlePromises(request, response, AddToBlacklist(token));
         if (addToBlacklistError) return;
@@ -120,10 +120,10 @@ class UserController {
         responseSuccess(response, {}, StatusCode.SuccessOK);
     }
 
-    public async changePassword (request: Request, response: Response): Promise<Response> {
+    public async changePassword (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
-        const [salt] = await handlePromises(request, response, bcrypt.genSalt(+process.env.SALT_RONDS));
+        const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process.env.SALT_RONDS)));
         const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
         const newBody = { ...request.body, password: hashPass };
 
@@ -141,7 +141,7 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOk);
+        responseSuccess(response, data, StatusCode.SuccessOK);
     }
 }
 

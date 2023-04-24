@@ -19,6 +19,12 @@
         "@auth0/angular-jwt": "^5.0.2",
         "@ngx-translate/core": "~11.0.1",
         "@ngx-translate/http-loader": "~4.0.0",
+        "@types/async": "^3.2.19",
+        "@types/bcrypt": "^5.0.0",
+        "@types/http-errors": "^2.0.1",
+        "@types/jsonwebtoken": "^9.0.1",
+        "@types/passport": "^1.0.12",
+        "@types/passport-http-bearer": "^1.0.37",
         "async": "^3.2.4",
         "bcrypt": "^5.0.1",
         "body-parser": "^1.19.0",
@@ -107,7 +113,8 @@
         "client-serve": "ng serve --o",
         "client-test": "ng test",
         "dev": "run-p client-serve api-debug",
-        "start": "npm install && node ./api/server.ts"
+        "start": "npm install && node ./api/server.ts",
+        "build": "yarn api-prebuild && yarn api-build && yarn client-build"
     },
     "version": "1.0.0"
 }

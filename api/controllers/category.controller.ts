@@ -1,11 +1,10 @@
-
 import { Request, Response } from 'express';
-import { Category as Model } from '../models/category.model';
 import { StatusCode } from 'status-code-enum';
+import { Category as Model } from '../models/category.model';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 
 class CategoryController {
-    public async findAll (request: Request, response: Response): Promise<Response> {
+    public async findAll (request: Request, response: Response): Promise<Response | undefined> {
         const [data, error] = await handlePromises(request, response, Model.find());
         if (error) return;
         if (data?.length === 0) return responseSuccess(response, data, StatusCode.SuccessOK);
@@ -13,7 +12,7 @@ class CategoryController {
         responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async create (request: Request, response: Response): Promise<Response> {
+    public async create (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, new Model(request.body).save());
@@ -26,7 +25,7 @@ class CategoryController {
         responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async remove (request: Request, response: Response): Promise<Response> {
+    public async remove (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
@@ -43,7 +42,7 @@ class CategoryController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOk);
+        responseSuccess(response, data, StatusCode.SuccessOK);
     }
 }
 
