@@ -17,8 +17,6 @@
                     <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
                     <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
                 </mat-form-field>
-
-                <mat-checkbox color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>
             </mat-card-content>
 
             <button mat-raised-button color="primary" class="form__button" (click)="loginAsync()">{{ "button.signin" | translate }}</button>

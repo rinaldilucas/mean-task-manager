@@ -29,7 +29,6 @@
         "authentication-success": "Logged with success.",
         "password": "Password",
         "password-error": "Password doesn't match.",
-        "remember-me": "Remember me",
         "user-error": "Account not found.",
         "logout-success": "Succesfully logged out.",
         "logout-error": "Error logging out."

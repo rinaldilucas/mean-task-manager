@@ -1,9 +1,8 @@
 .page {
-    min-height: calc(100vh - #{$headerSize});
+    height: calc(6.3rem + #{$headerSize});
 
     @include media(">=desktop") {
         margin: vw(80) 0 0 0 !important;
-        min-height: vw(750);
     }
 
     &__wrapper {
@@ -13,13 +12,10 @@
     }
 
     &__content {
-        min-height: calc(100vh - #{$headerSize});
-
-        @include media(">=desktop") {
-            min-height: vw(750);
-        }
+        height: 100%;
 
         &-wrapper {
+            box-sizing: border-box;
             padding: vw(70) vw(50);
             height: 100%;
         }

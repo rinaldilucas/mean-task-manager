@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav__container">
     <mat-sidenav
         #drawer
         class="sidenav mat-elevation-z1"
@@ -7,7 +7,7 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="!(isHandset$ | async) && isLogged ? true : false"
     >
-        <mat-nav-list class="nav-list">
+        <mat-nav-list class="sidenav__bar">
             <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
@@ -21,7 +21,7 @@
 
     <mat-sidenav-content>
         <mat-toolbar color="primary" *ngIf="isLogged">
-            <div>
+            <div fxLayoutAlign="center center">
                 <button type="button" mat-icon-button (click)="drawer.toggle()">
                     <mat-icon>menu</mat-icon>
                 </button>
@@ -29,19 +29,21 @@
                 <button type="button" mat-icon-button (click)="changeLanguage('pt-BR')">BR</button>
 
                 <button type="button" mat-icon-button (click)="changeLanguage('en-US')">EN</button>
-
-                <mat-slide-toggle [formControl]="toggleTheme"> </mat-slide-toggle>
             </div>
 
             <div>{{ this.time | date: "HH:mm" }}</div>
 
-            <div>
+            <div fxLayoutAlign="center center">
+                <div fxLayoutAlign="center center" class="sidenav__darkmode-wrapper">
+                    <mat-icon class="darkmode-icon">dark_mode</mat-icon>
+                    <mat-slide-toggle [formControl]="toggleTheme" color="warning"> </mat-slide-toggle>
+                </div>
                 <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
                     <mat-icon>account_circle</mat-icon>
                 </button>
 
                 <mat-menu #userMenu="matMenu">
-                    <mat-nav-list class="user-menu">
+                    <mat-nav-list>
                         <a mat-list-item [routerLink]="['/profile/']"> {{ "navigation.profile" | translate }} </a>
                     </mat-nav-list>
 

@@ -1,18 +1,19 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { TranslateService } from '@ngx-translate/core';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { Observable, throwError } from 'rxjs';
 
-import { ITask } from '@app/scripts/models/task.interface';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
+    emitTitle: EventEmitter<any> = new EventEmitter<any>();
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
     tableColumnListener: EventEmitter<boolean> = new EventEmitter<boolean>();
 

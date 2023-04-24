@@ -1,17 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Title } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Observable } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { ICategory } from '@app/scripts/models/category.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Component({
     selector: 'app-settings',
@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
     ) {}
 
     ngOnInit (): void {
-        this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.updateTitle();
         this.refreshAsync();
     }
 
@@ -90,5 +90,10 @@ export class SettingsComponent implements OnInit {
         const index = this.categories.indexOf(category);
         this.categories.splice(index, 1);
         this.changeDetector.markForCheck();
+    }
+
+    updateTitle (): void {
+        this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.sharedService.emitTitle.subscribe(() => this.updateTitle());
     }
 }

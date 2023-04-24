@@ -16,9 +16,36 @@ $custom-typography: mat-typography-config(
     $body-2: define-typography-level(0.14rem, 0.2rem, 400),
     $caption: define-typography-level(0.14rem, 0.2rem, 400),
     $button: define-typography-level(0.16rem, 0.28rem, 500),
-    $input: define-typography-level(inherit, 1.125, 400),
+    $input: define-typography-level(inherit, 1.125, 400)
 );
 @include mat-core($custom-typography);
+
+/* ============================================== */
+/* ==================== nav ===================== */
+/* ============================================== */
+
+@mixin nav-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
+    $background-color: mat-color($background, card);
+
+    .tile {
+        @include mat-elevation(2);
+        background-color: mat-color($accent);
+        border: 1rem solid $background-color;
+        padding: 2rem;
+        min-height: 200px;
+        min-width: 200px;
+
+        p {
+            color: $background-color;
+            font-family: "Pacifico";
+            line-height: 2.4rem;
+            font-size: 2rem;
+        }
+    }
+}
 
 /* ============================================== */
 /* =================== layout =================== */

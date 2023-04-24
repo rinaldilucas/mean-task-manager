@@ -4,7 +4,7 @@
             <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
                 <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
             </div>
-            <div class="page__content">
+            <div class="page__content" *ngIf="!isLoading">
                 <div class="page__content-wrapper">
                     <h2>{{ "title.categories" | translate }}</h2>
 

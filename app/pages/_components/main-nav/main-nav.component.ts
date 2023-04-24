@@ -1,15 +1,15 @@
-import { Component, ChangeDetectorRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
 
 import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
 import { UserService } from '@app/scripts/services/user.service';
-import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
     selector: 'app-main-nav',
@@ -70,5 +70,7 @@ export class MainNavComponent implements OnInit {
         this.translateService.use(language);
         localStorage.setItem('language', language);
         this.sharedService.handleSnackbarMessages('messages.language-changed');
+        this.changeDetector.markForCheck();
+        this.sharedService.emitTitle.emit();
     }
 }

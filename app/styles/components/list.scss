@@ -49,11 +49,7 @@
     }
 
     &__body {
-        min-height: calc(100vh - #{$tableHeaderSize});
-
-        @include media(">=desktop") {
-            min-height: calc(100% - #{$tableHeaderSize});
-        }
+        height: vw(557);
 
         &-title {
             font-size: vw(18) !important;
@@ -66,7 +62,6 @@
 
         &-table {
             min-height: vw(500);
-            background-color: white;
 
             table {
                 width: 100%;

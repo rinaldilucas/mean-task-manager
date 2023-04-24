@@ -1,0 +1,56 @@
+@import "~include-media/dist/_include-media";
+@import "@angular/material/theming";
+
+@mixin nav-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
+    $background-color: mat-color($background, card);
+
+    .tile {
+        @include mat-elevation(2);
+        background-color: mat-color($accent);
+        border: 1rem solid $background-color;
+        padding: 2rem;
+        min-height: 200px;
+        min-width: 200px;
+
+        p {
+            color: $background-color;
+            font-family: "Pacifico";
+            line-height: 2.4rem;
+            font-size: 2rem;
+        }
+    }
+}
+
+.sidenav {
+    width: vw(155);
+
+    &__container {
+        height: 100%;
+    }
+
+    &__bar {
+        a {
+            letter-spacing: 0px;
+
+            &:last-child {
+                bottom: 0px !important;
+                position: absolute !important;
+            }
+
+            mat-icon {
+                padding-right: vw(10) !important;
+            }
+        }
+    }
+
+    &__darkmode-wrapper {
+        margin-right: vw(16);
+
+        mat-icon {
+            margin-right: vw(8);
+        }
+    }
+}

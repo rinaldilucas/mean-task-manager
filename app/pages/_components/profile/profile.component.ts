@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IUser } from '@app/scripts/models/user.interface';
-import { UserService } from '@app/scripts/services/user.service';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { UserService } from '@app/scripts/services/user.service';
 
 @Component({
     selector: 'app-profile',
@@ -38,8 +38,8 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit (): void {
+        this.updateTitle();
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
-        this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     async saveAsync (): Promise<void> {
@@ -52,5 +52,10 @@ export class ProfileComponent implements OnInit {
         this.sharedService.handleSnackbarMessages('profile.edit-success');
         this.form.reset();
         this.router.navigate(['tasks']);
+    }
+
+    updateTitle (): void {
+        this.translateService.get('title.profile').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.sharedService.emitTitle.subscribe(() => this.updateTitle());
     }
 }

@@ -62,3 +62,11 @@ mat-row {
     min-height: $headerSize !important;
     height: $headerSize !important;
 }
+
+.cdk-virtual-scroll-viewport {
+    background-color: mat-color($app-background, 50);
+
+    .darkMode & {
+        background-color: mat-contrast($app-background, 50);
+    }
+}

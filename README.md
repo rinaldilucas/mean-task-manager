@@ -59,7 +59,26 @@
 
 </div>
 
-I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!
+I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
+
+-   Multilingual features on the client-side and API responses
+-   Virtual scrolling on tables
+-   Dynamic search, minimizing requests
+-   AJAX requests for pagination
+-   JWT and roles authentication
+-   Password encryption
+-   Redis blacklist feature
+-   Node.js API written with TypeScript
+-   Minimalist error handlers on the client-side and API to improve readability and correctly throw HTTP errors
+-   Dark mode
+-   An SCSS method which uses REMs to maintain size scales
+-   Improved readability on media queries through some functions
+-   Example with mat-chips, mat-autocomplete and more
+-   Validation on the client-side, API, and database
+-   Custom TSLint rules that work on the client-side and API
+-   Some middleware examples
+-   Input validators with multilingual features
+-   Prettier rules to improve code readability
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

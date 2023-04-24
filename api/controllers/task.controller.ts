@@ -11,8 +11,8 @@ class TaskController {
         const pageSize = Number(request.query.pageSize) ?? 5;
         const searchTerm = request.query.searchTerm;
 
-        const countQuery = (callback: any) => {
-            const findQuery = { userId: request.params.userI, title: {} };
+        const countQuery = (callback) => {
+            const findQuery = { userId: request.params.userId } as any;
             const sortQuery = {};
 
             if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
@@ -27,10 +27,10 @@ class TaskController {
         };
 
         const retrieveQuery = (callback: any) => {
-            const findQuery = { userId: request.params.userI, title: {} };
+            const findQuery = { userId: request.params.userId } as any;
             if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
 
-            const sortQuery = {} as any;
+            const sortQuery = {};
             const sortDirection = request.query.sortDirection;
             const sortFilter = request.query.sortFilter as string;
 

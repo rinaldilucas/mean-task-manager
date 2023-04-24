@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 
-import { ITask } from '@app/scripts/models/task.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
-import { TaskService } from '@app/scripts/services/task.service';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
     selector: 'app-task-list',
@@ -58,7 +58,7 @@ export class TaskListComponent implements OnInit {
     ) {}
 
     ngOnInit (): void {
-        this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.updateTitle();
         this.sharedService.setTableColumns(this.displayedColumns, this.columnOptions);
         this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
         this.refreshAsync();
@@ -156,5 +156,10 @@ export class TaskListComponent implements OnInit {
             this.isLoading = false;
             this.changeDetector.markForCheck();
         }
+    }
+
+    updateTitle (): void {
+        this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.sharedService.emitTitle.subscribe(() => this.updateTitle());
     }
 }

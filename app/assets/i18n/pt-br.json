@@ -29,7 +29,6 @@
         "authentication-success": "Logado com sucesso.",
         "password": "Senha",
         "password-error": "Senhas não conferem.",
-        "remember-me": "Manter logado",
         "user-error": "Conta não encontrada.",
         "logout-success": "Logout com sucesso.",
         "logout-error": "Erro ao sair."
