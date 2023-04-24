@@ -1,4 +1,4 @@
-@import "../components/nav.scss";
+@import "../core/nav-theme.scss";
 
 @mixin component-themes($theme) {
     @include nav-theme($theme);

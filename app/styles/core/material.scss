@@ -3,19 +3,19 @@
 /* ============================================== */
 
 .mat-paginator-outer-container {
-    height: 60px !important;
+    height: vw(60) !important;
 }
 
 mat-card {
     border-radius: 0px !important;
-    width: 300px;
+    width: vw(300);
     margin-bottom: unset;
-    margin: 10px;
-    min-width: 250px;
+    margin: vw(10);
+    min-width: vw(250);
 }
 
 mat-form-field {
-    padding: 3px;
+    padding: vw(3);
 }
 
 mat-toolbar {
@@ -40,7 +40,7 @@ mat-row {
 }
 
 .mat-form-field-label-wrapper {
-    font-size: 17px;
+    font-size: vw(16);
     overflow: hidden;
     pointer-events: none;
 }

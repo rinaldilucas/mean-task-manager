@@ -1,18 +1,18 @@
-<mat-sidenav-container class="sidenav__container">
+<mat-sidenav-container class="header">
     <mat-sidenav
         #drawer
-        class="sidenav mat-elevation-z1"
+        class="mat-elevation-z1"
         fixedInViewport
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="!(isHandset$ | async) && isLogged ? true : false"
     >
-        <mat-nav-list class="sidenav__bar">
+        <mat-nav-list class="header__left">
             <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
             </a>
-            <a class="sidenav-bottom" mat-list-item [routerLink]="['settings/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['settings/']" routerLinkActive="active">
                 <mat-icon matTooltip="Tools">settings</mat-icon>
                 {{ "navigation.settings" | translate }}
             </a>
@@ -21,20 +21,16 @@
 
     <mat-sidenav-content>
         <mat-toolbar color="primary" *ngIf="isLogged">
-            <div fxLayoutAlign="center center">
-                <button type="button" mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-
+            <div>
+                <button type="button" mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
                 <button type="button" mat-icon-button (click)="changeLanguage('pt-BR')">BR</button>
-
                 <button type="button" mat-icon-button (click)="changeLanguage('en-US')">EN</button>
             </div>
 
             <div>{{ this.time | date: "HH:mm" }}</div>
 
-            <div fxLayoutAlign="center center">
-                <div fxLayoutAlign="center center" class="sidenav__darkmode-wrapper">
+            <div class="header__top-right">
+                <div class="header__darkmode-wrapper">
                     <mat-icon class="darkmode-icon">dark_mode</mat-icon>
                     <mat-slide-toggle [formControl]="toggleTheme" color="warning"> </mat-slide-toggle>
                 </div>

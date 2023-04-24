@@ -1,3 +1,6 @@
+@import "~include-media/dist/_include-media";
+@import "@angular/material/theming";
+
 /* ============================================== */
 /* ========== material layout overrides ========= */
 /* ============================================== */
@@ -21,33 +24,6 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 /* ============================================== */
-/* ==================== nav ===================== */
-/* ============================================== */
-
-@mixin nav-theme($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $background: map-get($theme, background);
-    $background-color: mat-color($background, card);
-
-    .tile {
-        @include mat-elevation(2);
-        background-color: mat-color($accent);
-        border: 1rem solid $background-color;
-        padding: 2rem;
-        min-height: 200px;
-        min-width: 200px;
-
-        p {
-            color: $background-color;
-            font-family: "Pacifico";
-            line-height: 2.4rem;
-            font-size: 2rem;
-        }
-    }
-}
-
-/* ============================================== */
 /* =================== layout =================== */
 /* ============================================== */
 
@@ -62,8 +38,8 @@ html {
         font-size: desktop-fixed($pixel-base, $size-common-desktop);
     }
 
-    max-width: 100vw;
     overflow-x: hidden;
+    max-width: 100vw;
     height: 100%;
 }
 

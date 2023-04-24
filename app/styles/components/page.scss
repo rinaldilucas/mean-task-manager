@@ -1,5 +1,6 @@
 .page {
     height: calc(6.3rem + #{$headerSize});
+    position: relative;
 
     @include media(">=desktop") {
         margin: vw(80) 0 0 0 !important;

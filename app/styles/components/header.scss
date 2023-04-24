@@ -1,0 +1,45 @@
+.header {
+    height: 100%;
+
+    &__left {
+        width: vw(155);
+
+        a {
+            letter-spacing: 0px;
+
+            &:last-child {
+                bottom: 0px !important;
+                position: absolute !important;
+            }
+
+            mat-icon {
+                padding-right: vw(10) !important;
+            }
+
+            &.active {
+                background-color: mat-color($primary, 200);
+
+                .darkMode & {
+                    background-color: mat-color($primary, 600);
+                }
+            }
+        }
+    }
+
+    &__top {
+        &-right {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__darkmode-wrapper {
+        display: flex;
+        align-content: center;
+        margin-right: vw(16);
+
+        mat-icon {
+            margin-right: vw(8);
+        }
+    }
+}

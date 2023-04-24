@@ -15,9 +15,9 @@
         display: flex;
         height: auto;
         box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
-        padding: 1.5em 0 1.5em;
+        padding: vw(15) 0 vw(15);
         margin: 0 0 vw(2) 0;
-        font-size: 1.5em;
+        font-size: vw(22);
         margin-left: 0;
         flex-direction: column;
 
@@ -29,8 +29,8 @@
             align-items: center;
             display: flex;
             flex: 1 1 0%;
-            margin-left: 1.5em;
-            font-size: 1.6em;
+            margin-left: vw(48);
+            font-size: vw(34);
         }
 
         &-button {
@@ -38,7 +38,7 @@
         }
 
         &-search {
-            padding-right: 4vh;
+            padding-right: vw(20);
             place-content: center flex-end;
             align-items: center;
             flex-direction: row;
