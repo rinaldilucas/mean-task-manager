@@ -24,5 +24,5 @@ export const hasToken = async (token: any) => {
 
 export const verifyBlacklistForToken = async (token: any) => {
     const isTokenBlacklisted = await hasToken(token);
-    if (isTokenBlacklisted) throw new jwt.JsonWebTokenError('Token invalidated by logout.');
+    if (isTokenBlacklisted) throw new jwt.JsonWebTokenError('Token invalidated by logout');
 };

@@ -76,7 +76,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Improved SCSS sctructures to help reusability
 -   Improved readability on media queries through some functions
 -   Example with mat-chips, mat-autocomplete and more
--   Validation on the client-side, API, and database
+-   Validation on the client-side, API, routes and models of database
 -   Custom TSLint rules that work on the client-side and API
 -   Some middleware examples
 -   Input validators with multilingual features
@@ -138,11 +138,13 @@ _Below is an example of how you can run the project._
     ```sh
     yarn install
     ```
-3. Run angular, express and mongoDB as development mode
+3. Create a database named `meantemplatedb`
+4. Create collections named users, tasks, categories (or import from `./db/collections`)
+5. Run angular, express and mongoDB as development mode
     ```js
     yarn dev
     ```
-4. Build the dist folders
+6. Build the dist folders
     ```js
     yarn build
     ```
@@ -153,7 +155,43 @@ _Below is an example of how you can run the project._
 
 ## Usage
 
-If needed, you can debug express using `yarn api-debug`. More builds scripts at `./package.json`.
+You can import the Insomnia routes via file `./db/routes-collection.json` and import the mongodb collections via file `./db/colletions`. And below are the implemented routes. You also can consult them inside `./api/routes` folder.
+
+```js
+-------------------------------
+-------- [USER ROUTES] --------
+-------------------------------
+[GET] localhost:3000/api/users -> 'findAll'
+[GET] localhost:3000/api/users/:_id -> 'findOne'
+[GET] localhost:3000/api/users/email/:email -> 'findOneByEmail'
+[PUT] localhost:3000/api/users -> 'update'
+[POST] localhost:3000/api/users/register -> 'register'
+[POST] localhost:3000/api/users/authenticate -> 'authenticate'
+[PUT] localhost:3000/api/users/changePassword -> 'changePassword'
+[POST] localhost:3000/api/users/logout -> 'logout'
+```
+
+```js
+-------------------------------
+-------- [TASK ROUTES] --------
+-------------------------------
+[GET] localhost:3000/api/tasks/user/:userId -> 'findAllByUser'
+[GET] localhost:3000/api/tasks/:_id -> 'findOne'
+[POST] localhost:3000/api/tasks -> 'create'
+[PUT] localhost:3000/api/tasks -> 'update'
+[DELETE] localhost:3000/api/tasks/:_id -> 'remove'
+```
+
+```js
+-------------------------------
+------ [CATEGORY ROUTES] ------
+-------------------------------
+[GET] localhost:3000/api/categories -> 'findAll'
+[POST] localhost:3000/api/categories -> 'create'
+[DELETE] localhost:3000/api/categories/:_id -> 'remove'
+```
+
+If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -1,0 +1,163 @@
+[{
+  "_id": {
+    "$oid": "6446bac5976c045d102717ca"
+  },
+  "status": "toDo",
+  "title": "Finish API studies",
+  "description": "Finish development of node api with TS",
+  "date": {
+    "$date": {
+      "$numberLong": "1682650800000"
+    }
+  },
+  "category": "Studies",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682356933090"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682356933090"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6446bada976c045d102717d2"
+  },
+  "status": "toDo",
+  "title": "Buy groceries",
+  "description": "Go to supermarket and don't forget to buy beans.",
+  "date": {
+    "$date": {
+      "$numberLong": "1682305200000"
+    }
+  },
+  "category": "Personal",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682356954094"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682356954094"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6446bb27976c045d102717da"
+  },
+  "status": "toDo",
+  "title": "Invest on S&P 500",
+  "description": "Begin to invest monthly in S&P 500.",
+  "date": {
+    "$date": {
+      "$numberLong": "1682650800000"
+    }
+  },
+  "category": "Financial",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682357031041"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682361386328"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6446bb34976c045d102717e2"
+  },
+  "status": "progress",
+  "title": "Finish Berserk Manga",
+  "description": "",
+  "date": {
+    "$date": {
+      "$numberLong": "1683082800000"
+    }
+  },
+  "category": "Personal",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682357044272"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682357060903"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6446cbfd38f4af53f8256fc2"
+  },
+  "status": "toDo",
+  "title": "Complete studies checklist",
+  "description": "",
+  "date": {
+    "$date": {
+      "$numberLong": "1683774000000"
+    }
+  },
+  "category": "Studies",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682361341471"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682395821934"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6446cc1538f4af53f8256fca"
+  },
+  "status": "toDo",
+  "title": "Begin to respond job interviews",
+  "description": "",
+  "date": {
+    "$date": {
+      "$numberLong": "1683687600000"
+    }
+  },
+  "category": "Personal",
+  "userId": {
+    "$oid": "62e5c194c972aa0ed83917a3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1682361365324"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1682361365324"
+    }
+  },
+  "__v": 0
+}]

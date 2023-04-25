@@ -1,3 +1,4 @@
+import Async from 'async';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -8,11 +9,32 @@ import { handlePromises, responseError, responseSuccess } from '../utils/http-ha
 
 class UserController {
     public async findAll (request: Request, response: Response): Promise<Response | undefined> {
-        const [data, error] = await handlePromises(request, response, Model.find());
-        if (error) return;
-        if (data?.length === 0) return responseSuccess(response, data, StatusCode.SuccessOK);
+        const language = request.headers.language;
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        const countQuery = (callback) => {
+            Model.find()
+                .countDocuments({}, (error, count) => {
+                    if (error) callback(error, null);
+                    else callback(null, count);
+                });
+        };
+
+        const retrieveQuery = (callback: any) => {
+            Model.find()
+                .exec((error, documents) => {
+                    if (error) callback(error, null);
+                    else callback(null, documents);
+                });
+        };
+
+        Async.parallel([countQuery, retrieveQuery], (error: any, results: any) => {
+            if (error) {
+                if (language === 'en-US') return responseError(response, error, StatusCode.ServerErrorInternal, `Error finding users. Error: ${error.message}. Document name: {${Model.modelName}}.`);
+                else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
+            }
+
+            responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
+        });
     }
 
     public async findOne (request: Request, response: Response): Promise<Response | undefined> {

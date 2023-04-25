@@ -1,7 +1,7 @@
 import { Router } from 'express';
+import { check } from 'express-validator';
 import { applyBearerStrategy } from '../middleware/passport.middleware';
 import { verifyValidations } from '../middleware/validator.middleware';
-import { check } from 'express-validator';
 
 import Controller from '../controllers/user.controller';
 
