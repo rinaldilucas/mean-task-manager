@@ -12,13 +12,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'add', component: TaskFormEntryComponent, canActivate: [AuthGuard] },
-            { path: 'edit/:id', component: TaskFormEntryComponent, canActivate: [AuthGuard] },
-        ],
-    },
+            { path: 'edit/:id', component: TaskFormEntryComponent, canActivate: [AuthGuard] }
+        ]
+    }
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
+    exports: [RouterModule]
 })
 export class TaskRoutingModule {}

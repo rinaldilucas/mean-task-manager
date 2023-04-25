@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { QueriesHandlerService } from '@app/scripts/services/querieshandler.service';
+import { QueriesHandlerService } from '@app/scripts/services/queriesHandler.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 export interface IQuery<T> {

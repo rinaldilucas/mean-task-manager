@@ -40,7 +40,7 @@ class TaskController {
                 } else {
                     sortQuery[sortFilter] = -1;
                 }
-            } else { sortQuery['date'] = -1; }
+            } else { sortQuery['date'] = 1; }
 
             Model.find(findQuery)
                 .sort(sortQuery)

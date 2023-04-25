@@ -61,26 +61,36 @@
 
 I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
 
--   Multilingual features on the client-side and API responses
--   Virtual scrolling on tables
--   Search and ordering via database, minimizing requests
--   AJAX requests for pagination
--   JWT and roles authentication
--   Password encryption
--   Redis blacklist feature
+-   Multilingual features implemented in both the client-side and API responses
+-   Task module with Lazy Loading feature built-in
+-   Virtual scrolling feature implemented on tables
+-   Search and ordering features via the database to minimize requests
+-   AJAX requests used for pagination
+-   JWT implementation with passport
+-   Authentication and role guard features added
+-   Validation implemented on the client-side, API, routes, and database models, making it easy to reuse on other applications, whether using only the frontend, backend, or database
+-   API error handling improved to enhance error readability using third-party software
+-   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages where possible
+-   Async validation via pipe to determine whether the user is already registered or not
+-   Custom pipes used to convert date to a selected language
+-   Interceptor modules added to verify bearer token, errors, and headers language
+-   Password encryption feature implemented
+-   Redis blacklist feature added
 -   Node.js API written with TypeScript
--   Minimalist error handlers on the client-side and API to improve readability and correctly throw HTTP errors
--   Dark mode
--   An SCSS method which uses REMs to maintain size scales
+-   Dark mode feature added
+-   An SCSS method used that utilizes REMs to maintain size scales
 -   SCSS written using BEM methodology
--   Improved SCSS sctructures to help reusability
+-   Improved SCSS structure to improve reusability
+-   Material components rewritten to support REM and improve mobile and table compatibility with minimum code
 -   Improved readability on media queries through some functions
--   Example with mat-chips, mat-autocomplete and more
--   Validation on the client-side, API, routes and models of database
--   Custom TSLint rules that work on the client-side and API
--   Some middleware examples
--   Input validators with multilingual features
--   Prettier rules to improve code readability
+-   Examples added with mat-chips, mat-autocomplete, and more
+-   Interfaces added for queries results to improve code reusability
+-   Custom TSLint rules implemented that work on both the client-side and API
+-   Middleware examples added
+-   Routed bottom sheet example implemented using only one component
+-   Input validators with multilingual features added
+-   Prettier rules implemented to improve code readability
+-   Insomnia routes exported with automatic generation of bearer token to easily use the routes
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
