@@ -3,9 +3,9 @@
         #drawer
         class="mat-elevation-z1"
         fixedInViewport
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="!(isHandset$ | async) && isLogged ? true : false"
+        [attr.role]="!(isDesktop$ | async) ? 'dialog' : 'navigation'"
+        [mode]="!(isDesktop$ | async) ? 'over' : 'side'"
+        [opened]="(isDesktop$ | async) && isLogged ? true : false"
     >
         <mat-nav-list class="header__left">
             <a mat-list-item [routerLink]="['tasks/']" (click)="drawer.close()" routerLinkActive="active">

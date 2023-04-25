@@ -16,6 +16,7 @@ export class SharedService {
     emitTitle: EventEmitter<any> = new EventEmitter<any>();
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
     tableColumnListener: EventEmitter<boolean> = new EventEmitter<boolean>();
+    pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
 
     constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
 
@@ -70,14 +71,28 @@ export class SharedService {
         this.inputErrorListener.emit(true);
     }
 
-    setTableColumns (columnOptions: any, columns: any): void {
+    setTableColumnsAndPagesize (columnOptions: any, columns: any, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
-            if (change[0].mqAlias === 'xs') columnOptions = columns.xsColumns;
-            else if (change[0].mqAlias === 'sm') columnOptions = columns.smColumns;
-            else if (change[0].mqAlias === 'md') columnOptions = columns.mdColumns;
-            else columnOptions = columns.lgColumns;
+            if (change[0].mqAlias === 'xs') {
+                columnOptions = columns.xsColumns;
+                pageSize = 20;
+                pageSizeOptions = [20];
+            } else if (change[0].mqAlias === 'sm') {
+                columnOptions = columns.smColumns;
+                pageSize = 20;
+                pageSizeOptions = [20];
+            } else if (change[0].mqAlias === 'md') {
+                columnOptions = columns.mdColumns;
+                pageSize = 10;
+                pageSizeOptions = [10, 20, 30];
+            } else {
+                columnOptions = columns.lgColumns;
+                pageSize = 10;
+                pageSizeOptions = [10, 20, 30];
+            }
 
             this.tableColumnListener.emit(columnOptions);
+            this.pageSizeListener.emit({ pageSize, pageSizeOptions });
         });
     }
 

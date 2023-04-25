@@ -23,7 +23,7 @@ export class MainNavComponent implements OnInit {
     isLogged = false;
     toggleTheme = new FormControl(false);
 
-    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
         map((result) => result.matches),
         shareReplay()
     );

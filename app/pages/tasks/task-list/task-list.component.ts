@@ -42,9 +42,9 @@ export class TaskListComponent implements OnInit {
     tasks: ITask[] = [];
     status = EStatus;
 
-    pageSize = 5;
+    pageSize = 10;
     pageCount = 1;
-    pageSizeOptions = [5, 10, 20];
+    pageSizeOptions = [10, 20, 30];
     columnFilter = '';
     columnDirection = '';
 
@@ -59,8 +59,13 @@ export class TaskListComponent implements OnInit {
 
     ngOnInit (): void {
         this.updateTitle();
-        this.sharedService.setTableColumns(this.displayedColumns, this.columnOptions);
+        this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
         this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
+        this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[]}) => {
+            this.paginator.pageSize = options.pageSize;
+            this.paginator.pageSizeOptions = options.pageSizeOptions;
+        });
+
         this.refreshAsync();
         this.taskService.emitTask.subscribe(() => this.refreshAsync());
     }

@@ -64,7 +64,7 @@ mat-row {
 }
 
 .mat-cell {
-    padding-right: vw(8);
+    padding-right: vw(16);
 
     @include media("<=desktop") {
         &:last-of-type {
@@ -90,6 +90,104 @@ mat-row {
 
 .mat-card-title {
     line-height: vw(34);
+}
+
+.mat-icon-button {
+    width: vw(40) !important;
+    height: vw(40) !important;
+}
+
+.mat-icon {
+    width: vw(24) !important;
+    height: vw(24) !important;
+}
+
+.material-icons {
+    font-size: vw(24) !important;
+}
+
+.mat-fab {
+    width: vw(56) !important;
+    height: vw(56) !important;
+}
+
+mat-icon-button i,
+.mat-icon-button .mat-icon {
+    line-height: vw(24) !important;
+}
+
+.mat-slide-toggle {
+    display: inline-block;
+    height: vw(24) !important;
+}
+
+.mat-slide-toggle {
+    height: vw(24) !important;
+    line-height: vw(24) !important;
+}
+
+.mat-slide-toggle-thumb {
+    height: vw(20) !important;
+    width: vw(20) !important;
+}
+
+.mat-slide-toggle-bar {
+    width: vw(36) !important;
+    height: vw(14) !important;
+    border-radius: vw(8) !important;
+}
+
+.mat-slide-toggle .mat-slide-toggle-ripple {
+    position: absolute;
+    top: calc(50% - vw(20)) !important;
+    left: calc(50% - vw(20)) !important;
+    height: vw(40) !important;
+    width: vw(40) !important;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+    transform: translate3d(vw(16), 0, 0) !important;
+}
+
+.mat-slide-toggle-thumb-container {
+    width: vw(20) !important;
+    height: vw(20) !important;
+    top: vw(-3) !important;
+}
+
+mat-header-row {
+    min-height: vw(56) !important;
+}
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+    height: vw(48) !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+    padding: 0 vw(16) !important;
+}
+
+.mat-chip.mat-standard-chip {
+    .darkMode & {
+        background-color: mat-contrast($app-background, 50);
+    }
+}
+
+.mat-standard-chip .mat-chip-remove,
+.mat-standard-chip .mat-chip-trailing-icon {
+    width: vw(18) !important;
+    height: vw(18) !important;
+}
+
+.mat-standard-chip .mat-chip-remove.mat-icon,
+.mat-standard-chip .mat-chip-remove .mat-icon {
+    width: vw(18) !important;
+    height: vw(18) !important;
+    font-size: vw(18) !important;
 }
 
 .cdk-virtual-scroll-viewport {

@@ -20,11 +20,12 @@
                 padding-right: vw(10) !important;
             }
 
-            &.active {
-                background-color: mat-color($primary, 100);
+            &.active,
+            &:hover {
+                background-color: mat-color($primary, 100) !important;
 
                 .darkMode & {
-                    background-color: mat-color($primary, 600);
+                    background-color: mat-color($primary, 600) !important;
                 }
             }
         }

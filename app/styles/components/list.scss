@@ -25,10 +25,14 @@
         margin-left: 0;
         flex-direction: column;
         align-items: center;
+        height: vw(190);
+        justify-content: space-between;
 
         @include media(">=desktop") {
             flex-direction: row;
             padding: vw(15) 0 vw(15);
+            height: auto;
+            justify-content: unset;
         }
 
         .darkMode & {
@@ -40,6 +44,7 @@
             display: flex;
             font-size: vw(34);
             justify-self: center;
+            margin-top: vw(20);
 
             @include media(">=desktop") {
                 flex: 1 1 0%;
@@ -62,7 +67,7 @@
             border-radius: 20px !important;
             background-color: mat-color($app-background, 100);
             padding: 0 vw(10) 0 vw(20);
-            margin-top: vw(22);
+            margin-bottom: vw(8);
             width: 90%;
 
             @include media(">=desktop") {
@@ -90,6 +95,10 @@
     }
 
     &__body {
+        @include media("<=desktop") {
+            height: calc(100vh - (0.6rem + 0.6rem + 1.92rem + 0.4rem));
+        }
+
         @include media(">=desktop") {
             height: vw(557);
         }
@@ -103,11 +112,15 @@
             height: vw(45);
         }
 
-        &-table {
-            min-height: vw(500);
+        .table {
+            height: 100%;
+        }
 
-            @include media("<=desktop") {
-                min-height: vw(400);
+        &-table {
+            height: 100%;
+
+            @include media(">=desktop") {
+                height: vw(557);
             }
 
             table {
@@ -133,6 +146,10 @@
         .mat-column-actions,
         th.mat-column-actions {
             flex: 0 0 12%;
+        }
+
+        mat-paginator {
+            height: vw(60);
         }
     }
 }
