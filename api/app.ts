@@ -5,6 +5,8 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import DatabaseConfig from './config/mongodb.config';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocs from './swagger.json';
 
 import './utils/auth-strategy';
 
@@ -29,6 +31,7 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
         this.express.use(cors());
+        this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
         const args = process.argv;
 

@@ -38,6 +38,7 @@
         "allowSyntheticDefaultImports": true,
         "strictNullChecks": true,
         "noImplicitAny": false,
+        "resolveJsonModule": true
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
