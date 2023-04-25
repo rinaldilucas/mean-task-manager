@@ -36,6 +36,39 @@ $app-primary: (
     )
 );
 
+$app-primary-dark: (
+    50: #eef5fb,
+    100: #d4e5f5,
+    200: #b7d4ee,
+    300: #9ac2e7,
+    400: #85b5e1,
+    500: #6fa8dc,
+    600: #67a0d8,
+    700: #3f51b5,
+    800: #528dce,
+    900: #407dc5,
+    A100: #ffffff,
+    A200: #e3efff,
+    A400: #b0d3ff,
+    A700: #96c4ff,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #ffffff,
+        A700: #ffffff
+    )
+);
+
 $app-accent: (
     50: #e4f1ff,
     100: #baddff,
@@ -144,7 +177,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include component-themes($theme);
 
 .darkMode {
-    $dark-primary: mat-palette($app-primary);
+    $dark-primary: mat-palette($app-primary-dark);
     $dark-accent: mat-palette($app-accent);
     $dark-warn: mat-palette($app-danger);
     $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);

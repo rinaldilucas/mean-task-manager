@@ -1,6 +1,10 @@
 .header {
     height: 100%;
 
+    mat-toolbar {
+        background-color: mat-color($app-primary-dark, 700) !important;
+    }
+
     &__left {
         width: vw(155);
 
@@ -17,7 +21,7 @@
             }
 
             &.active {
-                background-color: mat-color($primary, 200);
+                background-color: mat-color($primary, 100);
 
                 .darkMode & {
                     background-color: mat-color($primary, 600);
