@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ConvertDatePipe implements PipeTransform {
     constructor (private translateService: TranslateService) {}
 
-    transform (value: any, pattern = 'mediumDate'): any {
+    transform (value: string, pattern = 'mediumDate'): string | null {
         const datePipe: DatePipe = new DatePipe(this.translateService.currentLang);
         return datePipe.transform(value, pattern);
     }

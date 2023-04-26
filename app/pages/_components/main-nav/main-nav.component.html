@@ -3,8 +3,8 @@
         #drawer
         class="mat-elevation-z1"
         fixedInViewport
-        [attr.role]="!(isDesktop$ | async) ? 'dialog' : 'navigation'"
-        [mode]="!(isDesktop$ | async) ? 'over' : 'side'"
+        [attr.role]="(isDesktop$ | async) ? 'navigation' : 'dialog'"
+        [mode]="(isDesktop$ | async) ? 'side' : 'over'"
         [opened]="(isDesktop$ | async) && isLogged ? true : false"
     >
         <mat-nav-list class="header__left">

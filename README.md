@@ -61,38 +61,36 @@
 
 I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
 
--   Multilingual features have been implemented on both the client-side and API responses.
--   Authentication and role guard features have been included.
--   JWT implementation with passport has been added.
--   Front-end validation has been added to requests and inputs.
--   Backend validation is being performed using express-validator.
--   Database and model validation is being done using mongoose.
--   API error handling has been improved with third-party software to enhance error readability.
--   Minimalist error handlers have been implemented throughout the project to improve readability and correctly throw HTTP errors and messages where possible.
--   Password encryption feature has been implemented.
--   Redis blacklist feature has been added.
--   The Node.js API has been written with TypeScript.
--   A task module with a built-in lazy loading feature has been developed.
--   Virtual scrolling has been implemented on tables.
--   Search and ordering features have been added to the database to minimize requests.
--   AJAX requests have been utilized for pagination.
--   Custom pipes have been created for converting dates and verifying already registered users.
--   Interceptor modules have been added to verify bearer token, errors, and headers language.
--   Dark mode feature has been added.
--   SCSS method has been utilized that utilizes REMs to maintain size scales.
--   SCSS has been written using the BEM methodology.
--   SCSS structure has been improved to improve reusability.
--   Material components have been rewritten to support REM and improve mobile and table compatibility with minimum code.
--   Readability on media queries has been improved through some functions.
--   Examples have been added with mat-chips, mat-autocomplete, and more.
--   Interfaces have been added for query results to improve code reusability.
--   Custom TSLint rules have been implemented that work on both the client-side and API.
--   Middleware examples have been added.
--   Routed bottom sheet example has been implemented using only one component.
--   Input validators with multilingual features have been added.
--   Prettier rules have been implemented to improve code readability.
--   Insomnia routes have been exported with automatic generation of bearer tokens to easily use the routes.
--   Charts have been developed using chart.js.
+-   Node.js API written with TypeScript
+-   Multilingual features implemented in both the client-side and API responses
+-   Virtual scrolling feature implemented on tables
+-   Search and ordering features via the database to minimize requests
+-   AJAX requests used for pagination
+-   JWT implementation with passport
+-   Authentication and role guard features added
+-   Password encryption feature implemented
+-   Redis blacklist feature added
+-   Front-end validation on requests and inputs
+-   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
+-   Database and model validation using mongoose
+-   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easy to reuse on other applications, whether using only the frontend, backend or database
+-   Async validation via pipe to determine whether the user is already registered or not
+-   Custom pipes used to convert date to a selected language
+-   Interceptor modules added to verify bearer token, errors, and headers language
+-   Dark mode feature added
+-   An SCSS method used that utilizes REMs to maintain size scales
+-   SCSS written using BEM methodology
+-   Custom SCSS structure to improve reusability
+-   Material components rewritten to support REM and improve mobile and table compatibility with minimum code
+-   Improved readability on media queries through some functions
+-   Examples added with mat-chips, mat-autocomplete, and more
+-   Interfaces added for queries results to improve code reusability
+-   Custom TSLint rules implemented that work on both the client-side and API
+-   Middleware examples added
+-   Routed bottom sheet example implemented using only one component
+-   Input validators with multilingual features added
+-   Prettier rules implemented to improve code readability
+-   Charts have been developed using chart.js
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -119,15 +117,27 @@ After cloning the project, you need to do a few things to be able to run it.
 You need to have the following requirements:
 
 -   mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
--   node 10 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+-   node 18 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
 
 -   npm
+
     ```sh
     npm install -g npm
     ```
+
+-   yarn
+
+    ```sh
+    npm install -g yarn
+    ```
+
 -   angular cli
     ```sh
-    npm install -g @angular/cli@^9.1.0
+    npm install -g @angular/cli@14.0.6
+    ```
+-   angular schematics
+    ```sh
+    ng add @angular-eslint/schematics@14
     ```
 -   nodemon
     ```sh

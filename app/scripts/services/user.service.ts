@@ -66,10 +66,10 @@ export class UserService {
         return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    changePassword (userId: string, password: string): Promise<IQueryResult<any>> {
+    changePassword (userId: string, password: string): Promise<IQueryResult<IUser>> {
         const url = `${this.url}/changePassword`;
         const body = { _id: userId, password };
 
-        return lastValueFrom(this.http.put<IQueryResult<any>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

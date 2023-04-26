@@ -11,6 +11,7 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
+import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 
 @Component({
     selector: 'app-task-list',
@@ -23,7 +24,7 @@ export class TaskListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
 
-    columnOptions = {
+    columnOptions: IColumnsOptions = {
         lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
         mdColumns: ['date', 'title', 'description', 'status', 'actions'],
         smColumns: ['date', 'title', 'status', 'actions-mobile'],

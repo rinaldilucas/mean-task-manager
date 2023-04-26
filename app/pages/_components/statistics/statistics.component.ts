@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { UserService } from '@app/scripts/services/user.service';
     styleUrls: ['./statistics.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent {
     isSaving = false;
     isLoading = true;
     user!: IUser;
@@ -30,7 +30,4 @@ export class StatisticsComponent implements OnInit {
         private sharedService: SharedService,
         private changeDetector: ChangeDetectorRef
     ) {}
-
-    ngOnInit (): void {
-    }
 }

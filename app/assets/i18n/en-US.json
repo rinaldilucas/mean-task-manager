@@ -24,14 +24,15 @@
     },
     "login": {
         "authentication-error": "Authentication error.",
+        "authentication-success": "Logged with success.",
         "credentials-error": "Password or email doesn't match.",
         "email": "Email",
-        "authentication-success": "Logged with success.",
+        "logout-error": "Error logging out.",
+        "logout-success": "Succesfully logged out.",
         "password": "Password",
         "password-error": "Password doesn't match.",
-        "user-error": "Account not found.",
-        "logout-success": "Succesfully logged out.",
-        "logout-error": "Error logging out."
+        "remember-me": "Remember me",
+        "user-error": "Account not found."
     },
     "messages": {
         "language-changed": "Language changed.",
@@ -44,8 +45,8 @@
         "profile": "Profile",
         "register": "Register",
         "settings": "Settings",
-        "tasks": "Tasks",
-        "statistics": "Statistics"
+        "statistics": "Statistics",
+        "tasks": "Tasks"
     },
     "profile": {
         "edit-error": "Error editing profile.",
@@ -57,16 +58,16 @@
         "email-error": "E-mail already registered."
     },
     "settings": {
-        "language": "Language",
-        "portuguese": "Portuguese",
-        "english": "English",
         "categories-names": "Categories names",
         "category-create-error": "Error adding the category.",
         "category-create-success": "Category added successfully.",
         "category-label": "New category...",
         "category-remove-error": "Error removing the category.",
         "category-remove-success": "Category removed with success.",
-        "category-selection": "Category selection"
+        "category-selection": "Category selection",
+        "english": "English",
+        "language": "Language",
+        "portuguese": "Portuguese"
     },
     "table": {
         "actions": {

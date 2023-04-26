@@ -40,7 +40,7 @@ export class TasksDoneComponent implements OnInit {
         this.taskService.emitTask.subscribe(() => this.getDailyEarnings());
     }
 
-    async getDailyEarnings (): Promise<any> {
+    async getDailyEarnings (): Promise<ITask | void> {
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(99));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 

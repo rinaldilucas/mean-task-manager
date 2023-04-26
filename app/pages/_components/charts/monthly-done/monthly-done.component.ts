@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { MultiDataSet, Label, Colors } from 'ng2-charts';
 
@@ -8,7 +8,7 @@ import { MultiDataSet, Label, Colors } from 'ng2-charts';
     styleUrls: ['./monthly-done.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MonthlyDoneComponent implements OnInit {
+export class MonthlyDoneComponent {
     lineChartType: ChartType = 'line';
     lineChartLabels: Label[] = ['FEB', 'MAR', 'APR', 'MAY'];
     lineChartData: MultiDataSet = [[6, 12, 14, 18, 15]];
@@ -25,8 +25,4 @@ export class MonthlyDoneComponent implements OnInit {
             text: 'Monhtly Tasks Done'
         }
     };
-
-    ngOnInit (): void {
-        // this.lineChartOptions.title?.text = 'Monhtly Tasks Donex';
-    }
 }

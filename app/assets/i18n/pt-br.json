@@ -24,14 +24,15 @@
     },
     "login": {
         "authentication-error": "Erro de autenticação.",
+        "authentication-success": "Logado com sucesso.",
         "credentials-error": "Senha ou usuário não conferem.",
         "email": "E-mail",
-        "authentication-success": "Logado com sucesso.",
+        "logout-error": "Erro ao sair.",
+        "logout-success": "Logout com sucesso.",
         "password": "Senha",
         "password-error": "Senhas não conferem.",
-        "user-error": "Conta não encontrada.",
-        "logout-success": "Logout com sucesso.",
-        "logout-error": "Erro ao sair."
+        "remember-me": "Remember me",
+        "user-error": "Conta não encontrada."
     },
     "messages": {
         "language-changed": "Linguagem alterada.",
@@ -44,8 +45,8 @@
         "profile": "Perfil",
         "register": "Registrar",
         "settings": "Config.",
-        "tasks": "Tarefas",
-        "statistics": "Estatísticas"
+        "statistics": "Estatísticas",
+        "tasks": "Tarefas"
     },
     "profile": {
         "edit-error": "Erro ao editar perfil.",
@@ -57,16 +58,16 @@
         "email-error": "E-mail já cadastrado."
     },
     "settings": {
-        "language": "Linguagem",
-        "portuguese": "Português",
-        "english": "Inglês",
         "categories-names": "Nomes de categorias",
         "category-create-error": "Erro ao criar categoria.",
         "category-create-success": "Categoria criada com sucesso.",
         "category-label": "Nova categoria...",
         "category-remove-error": "Erro ao remover categoria.",
         "category-remove-success": "Categoria removida com sucesso.",
-        "category-selection": "Selecionar categoria"
+        "category-selection": "Selecionar categoria",
+        "english": "Inglês",
+        "language": "Linguagem",
+        "portuguese": "Português"
     },
     "table": {
         "actions": {

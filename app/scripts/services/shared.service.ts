@@ -10,12 +10,13 @@ import { Observable, throwError } from 'rxjs';
 
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { ITask } from '@app/scripts/models/task.interface';
+import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
-    emitTitle: EventEmitter<any> = new EventEmitter<any>();
+    emitTitle: EventEmitter<string> = new EventEmitter<string>();
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
-    tableColumnListener: EventEmitter<boolean> = new EventEmitter<boolean>();
+    tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
     pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
 
     constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
@@ -71,7 +72,7 @@ export class SharedService {
         this.inputErrorListener.emit(true);
     }
 
-    setTableColumnsAndPagesize (columnOptions: any, columns: any, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
+    setTableColumnsAndPagesize (columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'xs') {
                 columnOptions = columns.xsColumns;

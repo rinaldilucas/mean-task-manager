@@ -6,32 +6,31 @@ import { Label, Colors } from 'ng2-charts';
     selector: 'app-week-earnings',
     templateUrl: './week-earnings.component.html',
     styleUrls: ['./week-earnings.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeekEarningsComponent {
-    barChartLabels: Label[] = [' FEB', ' MAR', ' APR', ' MAY'];
+    barChartLabels: Label[] = ['FEB', 'MAR', 'APR', 'MAY'];
     barChartType = 'bar' as ChartType;
     barChartLegend = true;
-    barChartData = [{ data: [1000, 1224, 1445, 1880, 2300], label: ' Matches' }];
+    barChartData = [{ data: [7, 9, 7, 8], label: 'Matches' }];
     barChartColors: Colors[] = [{ backgroundColor: ['#4caf50', '#4caf50', '#4caf50', '#4caf50'] }];
-    barChartOptions: ChartOptions | any = {
-        scaleShowVerticalLines: false,
+    barChartOptions: ChartOptions = {
         responsive: true,
         legend: {
-            display: false,
+            display: false
         },
         scales: {
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: true,
-                    },
-                },
-            ],
+                        beginAtZero: true
+                    }
+                }
+            ]
         },
         title: {
             display: true,
-            text: 'Week Earnings',
-        },
+            text: 'Weekly Tasks'
+        }
     };
 }

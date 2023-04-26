@@ -1,0 +1,73 @@
+{
+    "ignorePatterns": [],
+    "overrides": [
+        {
+            "extends": [
+                "plugin:@angular-eslint/recommended",
+                "plugin:@angular-eslint/template/process-inline-templates",
+                "plugin:@typescript-eslint/recommended",
+                "standard"
+            ],
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "createDefaultProgram": true,
+                "project": [
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
+                ]
+            },
+            "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "prefix": "app",
+                        "style": "kebab-case",
+                        "type": "element"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "prefix": "app",
+                        "style": "camelCase",
+                        "type": "attribute"
+                    }
+                ],
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-this-alias": "off",
+                "@typescript-eslint/no-unused-vars": "warn",
+                "@typescript-eslint/no-var-requires": "off",
+                "dot-notation": "off",
+                "indent": [
+                    2,
+                    4
+                ],
+                "n/handle-callback-err": "off",
+                "new-cap": "off",
+                "no-debugger": "warn",
+                "no-new": "off",
+                "no-undef": "off",
+                "no-unused-vars": "warn",
+                "prefer-rest-params": "off",
+                "prefer-spread": "off",
+                "semi": [
+                    "error",
+                    "always"
+                ],
+                "no-useless-constructor": "off"
+            }
+        },
+        {
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "files": [
+                "*.html"
+            ],
+            "rules": {}
+        }
+    ],
+    "root": true
+}
