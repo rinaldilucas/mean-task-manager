@@ -13,6 +13,7 @@ import { LogInComponent } from '@app/pages/auth/login/login.component';
 import { RegisterComponent } from '@app/pages/auth/register/register.component';
 import { HomepageComponent } from '@app/pages/home/home.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
+import { StatisticsComponent } from '@app/pages/_components/statistics/statistics.component';
 
 // ENUM
 import { ERole } from '@app/scripts/models/enum/role.enum';
@@ -25,6 +26,7 @@ const routes: Routes = [
         path: 'tasks',
         loadChildren: () => import('@app/pages/tasks/tasks.module').then((module) => module.TaskModule)
     },
+    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
     { path: '', pathMatch: 'full', redirectTo: 'home' },

@@ -27,12 +27,13 @@ import { TaskService } from '@app/scripts/services/task.service';
 import { UserService } from '@app/scripts/services/user.service';
 
 // COMPONENTS
-import { InitialFundsComponent } from '@app/pages/_components/charts/initial-funds/initial-funds.component';
+import { MonthlyDoneComponent } from '@app/pages/_components/charts/monthly-done/monthly-done.component';
 import { ProfitOverFundsComponent } from '@app/pages/_components/charts/profit-over-funds/profit-over-funds.component';
 import { TasksDoneComponent } from '@app/pages/_components/charts/tasks-done/tasks-done.component';
 import { WeekEarningsComponent } from '@app/pages/_components/charts/week-earnings/week-earnings.component';
 import { MainNavComponent } from '@app/pages/_components/main-nav/main-nav.component';
 import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
+import { StatisticsComponent } from '@app/pages/_components/statistics/statistics.component';
 
 // PAGES
 import { LogInComponent } from '@app/pages/auth/login/login.component';
@@ -52,7 +53,20 @@ export function createTranslateLoader (http: HttpClient): TranslateHttpLoader {
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-    declarations: [AppComponent, HomepageComponent, LogInComponent, RegisterComponent, ProfileComponent, SettingsComponent, MainNavComponent, TasksDoneComponent, WeekEarningsComponent, InitialFundsComponent, ProfitOverFundsComponent],
+    declarations: [
+        AppComponent, //
+        HomepageComponent,
+        LogInComponent,
+        RegisterComponent,
+        ProfileComponent,
+        SettingsComponent,
+        MainNavComponent,
+        TasksDoneComponent,
+        WeekEarningsComponent,
+        MonthlyDoneComponent,
+        ProfitOverFundsComponent,
+        StatisticsComponent
+    ],
     entryComponents: [TaskFormBottomSheetComponent],
     imports: [
         AppRoutingModule,

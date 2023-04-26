@@ -14,7 +14,7 @@
     &__wrapper {
         max-width: vw(1000);
         width: 100%;
-        margin: vw(40);
+        margin: vw(40) vw(20);
 
         @include media(">=desktop") {
             height: 100%;

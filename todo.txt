@@ -1,1 +1,0 @@
-criar token coringa jwt

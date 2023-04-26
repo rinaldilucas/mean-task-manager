@@ -71,10 +71,13 @@ a {
 
 .page {
     &-container {
-        height: calc(100vh - #{$headerSize});
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+
+        &--table {
+            height: calc(100vh - #{$headerSize});
+        }
     }
 
     &-wrapper {

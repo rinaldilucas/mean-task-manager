@@ -12,6 +12,8 @@ mat-card {
     margin-bottom: unset;
     margin: vw(10);
     min-width: vw(250);
+    padding: vw(16) vw(8) !important;
+    border-radius: vw(4) !important;
 }
 
 mat-form-field {
@@ -98,12 +100,21 @@ mat-row {
 }
 
 .mat-icon {
-    width: vw(24) !important;
-    height: vw(24) !important;
+    width: vw(34) !important;
+    height: vw(34) !important;
+
+    @include media(">=desktop") {
+        width: vw(24) !important;
+        height: vw(24) !important;
+    }
 }
 
 .material-icons {
-    font-size: vw(24) !important;
+    font-size: vw(34) !important;
+
+    @include media(">=desktop") {
+        font-size: vw(24) !important;
+    }
 }
 
 .mat-fab {
@@ -111,19 +122,32 @@ mat-row {
     height: vw(56) !important;
 }
 
+.mat-fab .mat-button-wrapper {
+    padding: vw(6) 0 !important;
+    line-height: vw(24) !important;
+}
+
 mat-icon-button i,
 .mat-icon-button .mat-icon {
-    line-height: vw(24) !important;
+    line-height: vw(34) !important;
+
+    @include media(">=desktop") {
+        font-size: vw(24) !important;
+    }
+}
+
+.mat-icon-button {
+    line-height: vw(40) !important;
 }
 
 .mat-slide-toggle {
-    display: inline-block;
-    height: vw(24) !important;
-}
+    height: vw(34) !important;
+    line-height: vw(34) !important;
 
-.mat-slide-toggle {
-    height: vw(24) !important;
-    line-height: vw(24) !important;
+    @include media(">=desktop") {
+        height: vw(24) !important;
+        line-height: vw(24) !important;
+    }
 }
 
 .mat-slide-toggle-thumb {

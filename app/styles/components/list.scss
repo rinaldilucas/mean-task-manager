@@ -125,6 +125,11 @@
 
             table {
                 width: 100%;
+
+                @include media("<=desktop") {
+                    padding-left: vw(15);
+                    padding-right: vw(15);
+                }
             }
         }
 

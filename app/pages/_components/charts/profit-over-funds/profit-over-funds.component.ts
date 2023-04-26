@@ -6,7 +6,7 @@ import { MultiDataSet, Label, Colors } from 'ng2-charts';
     selector: 'app-profit-over-funds',
     templateUrl: './profit-over-funds.component.html',
     styleUrls: ['./profit-over-funds.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfitOverFundsComponent {
     donutChartType: ChartType = 'doughnut';
@@ -18,11 +18,11 @@ export class ProfitOverFundsComponent {
         maintainAspectRatio: false,
         tooltips: { enabled: true },
         legend: {
-            position: 'right',
+            position: 'right'
         },
         title: {
             display: true,
-            text: 'Profit Over Funds',
-        },
+            text: 'Profit Over Funds'
+        }
     };
 }

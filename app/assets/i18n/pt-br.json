@@ -44,7 +44,8 @@
         "profile": "Perfil",
         "register": "Registrar",
         "settings": "Config.",
-        "tasks": "Tarefas"
+        "tasks": "Tarefas",
+        "statistics": "Estatísticas"
     },
     "profile": {
         "edit-error": "Erro ao editar perfil.",

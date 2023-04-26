@@ -12,6 +12,10 @@
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
             </a>
+            <a mat-list-item [routerLink]="['statistics/']" (click)="drawer.close()" routerLinkActive="active">
+                <mat-icon matTooltip="Statistics">create</mat-icon>
+                {{ "navigation.statistics" | translate }}
+            </a>
             <a mat-list-item [routerLink]="['settings/']" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tools">settings</mat-icon>
                 {{ "navigation.settings" | translate }}

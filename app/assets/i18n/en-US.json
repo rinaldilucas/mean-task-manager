@@ -44,7 +44,8 @@
         "profile": "Profile",
         "register": "Register",
         "settings": "Settings",
-        "tasks": "Tasks"
+        "tasks": "Tasks",
+        "statistics": "Statistics"
     },
     "profile": {
         "edit-error": "Error editing profile.",
