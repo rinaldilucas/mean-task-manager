@@ -5,7 +5,7 @@
                 <div class="list__header-title">
                     <span class="header-title">{{ "title.tasks" | translate }}</span>
 
-                    <button class="list__header-button" color="primary" mat-fab (click)="add()">
+                    <button type="button" class="list__header-button" color="primary" mat-fab (click)="add()">
                         <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}">add</mat-icon>
                     </button>
                 </div>
@@ -15,7 +15,7 @@
                         <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput (keyup.enter)="filterTasksAsync(searchInput.value)" [value]="search" />
                     </mat-form-field>
 
-                    <button mat-icon-button>
+                    <button type="button" mat-icon-button>
                         <mat-icon matTooltip="{{ 'task-list.search' | translate }}" (click)="filterTasksAsync(searchInput.value)">done</mat-icon>
                     </button>
                 </div>
@@ -95,6 +95,7 @@
 
                                 <mat-cell mat-cell *matCellDef="let task">
                                     <button
+                                        type="button"
                                         mat-icon-button
                                         matTooltip="{{ 'table.actions.progress' | translate }}"
                                         class="list__body-actions"
@@ -103,6 +104,7 @@
                                         <mat-icon>360 icon</mat-icon>
                                     </button>
                                     <button
+                                        type="button"
                                         mat-icon-button
                                         matTooltip="{{ 'table.actions.done' | translate }}"
                                         class="list__body-actions"
@@ -110,7 +112,13 @@
                                     >
                                         <mat-icon>check</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="removeAsync(task); $event.stopPropagation()">
+                                    <button
+                                        type="button"
+                                        mat-icon-button
+                                        matTooltip="{{ 'table.actions.remove' | translate }}"
+                                        class="list__body-actions"
+                                        (click)="removeAsync(task); $event.stopPropagation()"
+                                    >
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </mat-cell>
@@ -120,12 +128,12 @@
                                 <mat-cell mat-header-cell *matHeaderCellDef></mat-cell>
 
                                 <mat-cell mat-cell *matCellDef="let task">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation(); $event.preventDefault()">
+                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation(); $event.preventDefault()">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <ng-template matMenuContent>
-                                            <button mat-menu-item (click)="removeAsync(task); $event.stopPropagation()"><span>Remove</span></button>
+                                            <button type="button" mat-menu-item (click)="removeAsync(task); $event.stopPropagation()"><span>Remove</span></button>
                                         </ng-template>
                                     </mat-menu>
                                 </mat-cell>

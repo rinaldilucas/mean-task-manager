@@ -1,12 +1,12 @@
 <div class="form-modal">
     <div class="form-modal__header">
         <div class="form-modal__header-wrapper">
-            <button mat-fab color="primary" (click)="close()">
+            <button type="button" mat-fab color="primary" (click)="close()">
                 <mat-icon>close</mat-icon>
             </button>
             <h2 class="form-modal__header-title">{{ title }}</h2>
             <div class="form-header">
-                <button mat-fab color="primary" (click)="saveAsync()">
+                <button type="submit" mat-fab color="primary" (click)="saveAsync()">
                     <mat-icon>check</mat-icon>
                 </button>
             </div>

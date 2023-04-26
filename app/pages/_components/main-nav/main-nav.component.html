@@ -8,15 +8,15 @@
         [opened]="(isDesktop$ | async) && isLogged ? true : false"
     >
         <mat-nav-list class="header__left">
-            <a mat-list-item [routerLink]="['tasks/']" (click)="drawer.close()" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['tasks/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
             </a>
-            <a mat-list-item [routerLink]="['statistics/']" (click)="drawer.close()" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['statistics/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Statistics">create</mat-icon>
                 {{ "navigation.statistics" | translate }}
             </a>
-            <a mat-list-item [routerLink]="['settings/']" (click)="drawer.close()" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['settings/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tools">settings</mat-icon>
                 {{ "navigation.settings" | translate }}
             </a>
@@ -26,7 +26,7 @@
     <mat-sidenav-content>
         <mat-toolbar color="primary" *ngIf="isLogged">
             <div>
-                <button type="button" mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+                <button type="button" mat-icon-button (keypress)="drawer.toggle()" (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
             </div>
 
             <div class="only-desktop">{{ this.time | date: "HH:mm" }}</div>
@@ -46,7 +46,7 @@
                     </mat-nav-list>
 
                     <mat-nav-list>
-                        <a mat-list-item (click)="logout()"> {{ "navigation.logout" | translate }} </a>
+                        <a mat-list-item tabindex="0" (keypress)="logout()" (click)="logout()"> {{ "navigation.logout" | translate }} </a>
                     </mat-nav-list>
                 </mat-menu>
             </div>

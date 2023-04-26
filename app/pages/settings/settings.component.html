@@ -21,7 +21,7 @@
                             <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">
                                 <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
                                     {{ category.title }}
-                                    <button matChipRemove>
+                                    <button type="button" matChipRemove>
                                         <mat-icon>cancel</mat-icon>
                                     </button>
                                 </mat-chip>
