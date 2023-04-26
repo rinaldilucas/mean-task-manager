@@ -18,6 +18,14 @@ mat-card {
 
 mat-form-field {
     padding: vw(3);
+
+    mat-error {
+        display: none !important;
+
+        &:first-child {
+            display: block !important;
+        }
+    }
 }
 
 mat-toolbar {

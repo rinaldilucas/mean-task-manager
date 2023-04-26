@@ -85,11 +85,12 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Improved readability on media queries through some functions
 -   Examples added with mat-chips, mat-autocomplete, and more
 -   Interfaces added for queries results to improve code reusability
--   Custom TSLint rules implemented that work on both the client-side and API
+-   Custom ESLint rules implemented that work on both the client-side and API
+-   Assure keyboard accessibility, ARIA and Accessible HTML Content via ESLint rules
+-   Prettier rules implemented to improve code readability
 -   Middleware examples added
 -   Routed bottom sheet example implemented using only one component
 -   Input validators with multilingual features added
--   Prettier rules implemented to improve code readability
 -   Charts have been developed using chart.js
 
 <p align="right">(<a href="#top">back to top</a>)</p>

@@ -3,6 +3,7 @@ var OFF = 0,
     ERROR = 2;
 
 module.exports = {
+    root: true,
     ignorePatterns: [],
     overrides: [
         {
@@ -54,8 +55,21 @@ module.exports = {
         },
         {
             extends: ['plugin:@angular-eslint/template/recommended'],
-            files: ['*.html']
+            files: ['*.html'],
+            rules: {
+                '@angular-eslint/template/no-autofocus': WARN,
+                '@angular-eslint/template/mouse-events-have-key-events': WARN,
+                '@angular-eslint/template/click-events-have-key-events': WARN,
+                '@angular-eslint/template/accessibility-interactive-supports-focus': WARN,
+                '@angular-eslint/template/accessibility-valid-aria': WARN,
+                '@angular-eslint/template/accessibility-role-has-required-aria': WARN,
+                '@angular-eslint/template/button-has-type': WARN,
+                '@angular-eslint/template/accessibility-elements-content': WARN,
+                '@angular-eslint/template/accessibility-label-has-associated-control': WARN,
+                '@angular-eslint/template/accessibility-table-scope': WARN,
+                '@angular-eslint/template/no-distracting-elements': WARN,
+                '@angular-eslint/template/button-has-type': WARN
+            }
         }
-    ],
-    root: true
+    ]
 };
