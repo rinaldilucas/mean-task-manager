@@ -8,7 +8,7 @@ import { add as AddToBlacklist } from '../redis/blacklist-handler';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 
 class UserController {
-    public async findAll (request: Request, response: Response): Promise<Response | undefined> {
+    public async findAll (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
 
         const countQuery = (callback) => {
