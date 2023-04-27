@@ -1,3 +1,4 @@
+// sass-lint:disable clean-import-paths
 @import "~include-media/dist/_include-media";
 @import "@angular/material/theming";
 
@@ -44,11 +45,11 @@ $custom-typography: mat-typography-config(
 /* ============================================== */
 
 html {
-    overflow-x: hidden;
+    @extend .scrollbar;
     max-width: 100vw;
     height: 100%;
     font-size: mobile-vw($pixel-base + $mobile-factor, true);
-    @extend .scrollbar;
+    overflow-x: hidden;
 
     @include media(">=desktop") {
         font-size: fixed-vw($pixel-base);
@@ -56,12 +57,11 @@ html {
 }
 
 body {
-    height: auto;
-    font-size: vw(18);
-    font-family: $font-main;
     width: 100%;
     max-width: 100vw;
     height: 100%;
+    font-family: $font-main;
+    font-size: vw(18);
 }
 
 a {
@@ -76,7 +76,11 @@ a {
         justify-content: flex-start;
 
         &--table {
-            height: calc(100vh - #{$headerSize});
+            height: calc(100vh - #{$header-size});
+
+            @include media("<=desktop") {
+                overflow: hidden;
+            }
         }
     }
 

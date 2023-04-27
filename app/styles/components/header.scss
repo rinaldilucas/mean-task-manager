@@ -9,11 +9,11 @@
         width: vw(180);
 
         a {
-            letter-spacing: 0px;
+            letter-spacing: 0;
 
             &:last-child {
-                bottom: 0px !important;
                 position: absolute !important;
+                bottom: 0 !important;
             }
 
             mat-icon {
@@ -24,7 +24,7 @@
             &:hover {
                 background-color: mat-color($primary, 100) !important;
 
-                .darkMode & {
+                .dark-mode & {
                     background-color: mat-color($primary, 600) !important;
                 }
             }

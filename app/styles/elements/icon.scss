@@ -1,12 +1,12 @@
 .icon {
-    font-size: vw(80);
     opacity: 0.15;
+    font-size: vw(80);
 
     &--big {
-        width: vw(85) !important;
-        height: vw(85) !important;
         display: flex !important;
         align-items: center;
         justify-content: center;
+        width: vw(85) !important;
+        height: vw(85) !important;
     }
 }

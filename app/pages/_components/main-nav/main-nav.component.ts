@@ -44,7 +44,7 @@ export class MainNavComponent implements OnInit {
         this.isLogged = this.authService.getIsAuth();
         this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
 
-        const darkClassName = 'darkMode';
+        const darkClassName = 'dark-mode';
         const previousTheme = localStorage.getItem('theme') as string;
         if (previousTheme) {
             document.body.classList.add(darkClassName);

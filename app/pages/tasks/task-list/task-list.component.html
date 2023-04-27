@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="list__body">
+            <div class="list__body mat-elevation-z1">
                 <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
                     <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
                 </div>
@@ -146,7 +146,7 @@
                     </cdk-virtual-scroll-viewport>
                 </div>
 
-                <div class="mat-elevation-z1" [hidden]="isLoading || (tasks && tasks.length === 0)">
+                <div [hidden]="isLoading || (tasks && tasks.length === 0)">
                     <mat-paginator [length]="pageCount" [pageSizeOptions]="pageSizeOptions" (page)="onPaginateChangeAsync($event)" showFirstLastButtons></mat-paginator>
                 </div>
             </div>

@@ -4,63 +4,59 @@
     margin-top: vw(45);
 
     @include media(">=desktop") {
-        margin-top: 0;
-        height: calc(100vh - #{$headerSize});
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        margin-top: 0;
+        height: calc(100vh - #{$header-size});
     }
 
     mat-card-header {
-        text-align: center;
-        width: 100%;
         display: block;
-        font-weight: 700;
         margin: vw(20) 0;
+        width: 100%;
+        text-align: center;
+        font-weight: 700;
     }
 
     &__box {
         position: relative;
         top: 0;
-        opacity: 1;
         float: left;
-        width: 100%;
-        border-radius: vw(10);
         transform: scale(1);
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
+        opacity: 1;
         z-index: 5;
+        border-radius: vw(10);
+        padding: vw(40) vw(35) vw(30) !important;
+        width: 100%;
         max-width: vw(260);
-        padding: vw(40) vw(35) vw(30) vw(35) !important;
 
         @include media(">=desktop") {
-            padding: vw(60) vw(50) vw(40) vw(50) !important;
+            padding: vw(60) vw(50) vw(40) !important;
             max-width: vw(330);
         }
 
-        &:before {
-            content: "";
-            width: 100%;
-            height: vw(30);
-            border-radius: vw(10);
+        &::before {
             position: absolute;
             top: vw(-10);
             left: 0;
             transform: scale(0.95);
-            -webkit-transform: scale(0.95);
-            -ms-transform: scale(0.95);
             z-index: -1;
+            border-radius: vw(10);
             background-color: mat-color($app-background, 50);
+            width: 100%;
+            height: vw(30);
+            content: "";
 
-            .darkMode & {
+            .dark-mode & {
                 background-color: mat-contrast($app-background, 50);
             }
         }
     }
 
     form {
+        width: 100%;
         min-width: 100%;
         max-width: vw(300);
-        width: 100%;
         height: 100%;
 
         .mat-card {

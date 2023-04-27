@@ -12,10 +12,10 @@
                         <button type="button" color="primary" mat-raised-button (click)="changeLanguage('pt-BR')">{{ "settings.portuguese" | translate }}</button>
                     </section>
 
-                    <section>
+                    <section fxLayout="column">
                         <h2>{{ "title.categories" | translate }}</h2>
 
-                        <mat-form-field class="component__chip" appearance="fill">
+                        <mat-form-field class="component__chip" appearance="fill" fxFlex="100">
                             <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
 
                             <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">

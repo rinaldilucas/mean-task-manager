@@ -1,9 +1,10 @@
-a:focus,
-button:focus,
-button[tabindex]:focus {
-    outline: vw(4) dashed mat-color($primary, A100) !important;
-
-    &.contrast {
+a,
+button {
+    &:focus {
         outline: vw(4) dashed mat-color($primary, A100) !important;
+
+        &.contrast {
+            outline: vw(4) dashed mat-color($primary, A100) !important;
+        }
     }
 }

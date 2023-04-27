@@ -2,12 +2,13 @@
 /* ================== libs ====================== */
 /* ============================================== */
 @import "~normalize-scss/sass/normalize/import-now";
+// sass-lint:disable clean-import-paths
 @import "~include-media/dist/_include-media";
 
 /* ============================================== */
 /* ================== core  ===================== */
 /* ============================================== */
-@import "./app/styles/core/constants.scss";
+@import "./app/styles/core/constants";
 @import "./app/styles/core/theme";
 @import "./app/styles/core/config";
 @import "./app/styles/core/functions";
@@ -25,7 +26,6 @@
 @import "./app/styles/components/form";
 @import "./app/styles/components/form-modal";
 @import "./app/styles/components/list";
-@import "./app/styles/components/component";
 @import "./app/styles/components/page";
 
 /* ============================================== */

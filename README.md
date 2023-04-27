@@ -87,6 +87,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Interfaces added for queries results to improve code reusability
 -   Custom ESLint rules implemented that work on both the client-side and API
 -   Assure keyboard accessibility, ARIA and Accessible HTML Content via ESLint rules
+-   Implementation of sass-lint that guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 -   Prettier rules implemented to improve code readability
 -   Middleware examples added
 -   Routed bottom sheet example implemented using only one component

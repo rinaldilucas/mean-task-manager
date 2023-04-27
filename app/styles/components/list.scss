@@ -2,49 +2,51 @@
     height: 100%;
 
     @include media(">=desktop") {
-        margin: vw(80) 0 0 0 !important;
+        align-items: start !important;
+        margin: vw(20) 0 0 !important;
     }
 
     &__wrapper {
+        width: 100%;
         max-width: vw(1000);
         height: 100%;
-        width: 100%;
 
         @include media(">=desktop") {
             margin: vw(40);
+            height: unset;
         }
     }
 
     &__header {
         display: flex;
-        height: auto;
-        box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
-        padding: vw(25) 0 vw(15);
-        margin: 0 0 vw(2) 0;
-        font-size: vw(22);
-        margin-left: 0;
         flex-direction: column;
         align-items: center;
-        height: vw(190);
         justify-content: space-between;
+        margin: 0 0 vw(2);
+        margin-left: 0;
+        box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
+        background-color: mat-color($app-background, 100);
+        padding: vw(25) 0 vw(15);
+        height: vw(190);
+        font-size: vw(22);
 
         @include media(">=desktop") {
             flex-direction: row;
-            padding: vw(15) 0 vw(15);
-            height: auto;
             justify-content: unset;
+            padding: vw(15) 0;
+            height: auto;
         }
 
-        .darkMode & {
+        .dark-mode & {
             background-color: mat-contrast($app-background, 100) !important;
         }
 
         &-title {
-            align-items: center;
             display: flex;
+            align-items: center;
+            margin-top: vw(20);
             font-size: vw(34);
             justify-self: center;
-            margin-top: vw(20);
 
             @include media(">=desktop") {
                 flex: 1 1 0%;
@@ -57,26 +59,26 @@
         }
 
         &-search {
-            padding-right: vw(20);
-            place-content: center flex-end;
-            align-items: center;
-            flex-direction: row;
-            box-sizing: border-box;
             display: flex;
             flex: 0 0 auto;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: vw(8);
             border-radius: 20px !important;
             background-color: mat-color($app-background, 100);
             padding: 0 vw(10) 0 vw(20);
-            margin-bottom: vw(8);
+            padding-right: vw(20);
             width: 90%;
+            box-sizing: border-box;
+            place-content: center flex-end;
 
             @include media(">=desktop") {
-                width: unset;
                 margin-top: unset;
                 margin-right: vw(20);
+                width: unset;
             }
 
-            .darkMode & {
+            .dark-mode & {
                 background-color: mat-contrast($app-background, 50) !important;
             }
 
@@ -99,13 +101,9 @@
             height: calc(100vh - (0.6rem + 0.6rem + 1.92rem + 0.4rem));
         }
 
-        @include media(">=desktop") {
-            height: vw(557);
-        }
-
         &-title {
-            font-size: vw(18) !important;
             margin: 0 !important;
+            font-size: vw(18) !important;
         }
 
         &-actions {
@@ -127,29 +125,28 @@
                 width: 100%;
 
                 @include media("<=desktop") {
-                    padding-left: vw(15);
                     padding-right: vw(15);
+                    padding-left: vw(15);
                 }
             }
         }
 
         h2 {
-            font-size: vw(18);
-            line-height: vw(22);
             margin: 0;
+            line-height: vw(22);
+            font-size: vw(18);
         }
 
         p {
-            font-size: vw(12);
             margin: 0;
+            font-size: vw(12);
         }
 
         &--empty {
             height: calc(5rem + 0.6rem);
         }
 
-        .mat-column-actions,
-        th.mat-column-actions {
+        .mat-column-actions {
             flex: 0 0 12%;
         }
 
