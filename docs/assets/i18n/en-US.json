@@ -1,7 +1,7 @@
 {
     "app": {
         "description": "Mean Stack Template",
-        "title": "My Notes WebApp"
+        "title": "Angular WebApp"
     },
     "button": {
         "register": "Register",
@@ -9,32 +9,34 @@
         "signin": "Login"
     },
     "error": {
-        "maxlength": "You must fill in text that does not exceed {{value}} characters.",
-        "minlength": "You must fill in text that exceeds {{value}} characters.",
-        "user-exists": "The username already has been taken."
+        "email-exists": "E-mail already registered.",
+        "email-invalid": "Invalid e-mail.",
+        "max-length": "You must fill in text that does not exceed {{value}} characters.",
+        "min-length": "You must fill in text that exceeds {{value}} characters."
     },
     "input": {
         "category": "Category",
         "choose-due-date": "Choose a due date",
         "description": "Description",
+        "email": "Email",
         "password": "Password",
-        "title": "Title",
-        "username": "Username"
+        "title": "Title"
     },
     "login": {
         "authentication-error": "Authentication error.",
-        "login-success": "Logged with success.",
+        "authentication-success": "Logged with success.",
+        "credentials-error": "Password or email doesn't match.",
+        "email": "Email",
+        "logout-error": "Error logging out.",
+        "logout-success": "Succesfully logged out.",
         "password": "Password",
-        "credentials-error": "Password or username doesn't match.",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",
-        "user-error": "Username don't exists.",
-        "username": "Username"
+        "user-error": "Account not found."
     },
     "messages": {
         "language-changed": "Language changed.",
         "mandatory-fields": "You must fill the mandatory fields.",
-        "user-logout": "User successfully logout.",
         "user-without-permission": "User without the required permission."
     },
     "navigation": {
@@ -43,6 +45,7 @@
         "profile": "Profile",
         "register": "Register",
         "settings": "Settings",
+        "statistics": "Statistics",
         "tasks": "Tasks"
     },
     "profile": {
@@ -50,18 +53,21 @@
         "edit-success": "Profile edited with success."
     },
     "register": {
-        "create-error": "Error creating user.",
-        "create-success": "User created with success.",
-        "username-error": "Username already taken."
+        "create-error": "Error creating account.",
+        "create-success": "Account created with success.",
+        "email-error": "E-mail already registered."
     },
     "settings": {
         "categories-names": "Categories names",
         "category-create-error": "Error adding the category.",
         "category-create-success": "Category added successfully.",
+        "category-label": "New category...",
         "category-remove-error": "Error removing the category.",
         "category-remove-success": "Category removed with success.",
         "category-selection": "Category selection",
-        "new-category": "New category..."
+        "english": "English",
+        "language": "Language",
+        "portuguese": "Portuguese"
     },
     "table": {
         "actions": {
@@ -82,12 +88,14 @@
         "create-error": "Error adding the task.",
         "create-success": "Task created with success.",
         "edit-error": "Error updating the task.",
-        "edit-success": "Task edited with success."
+        "edit-success": "Task edited with success.",
+        "get-error": "Error retrieving task."
     },
     "task-list": {
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",
+        "refresh-error": "Error retrieving tasks.",
         "remove": "Task removed.",
         "remove-error": "Error removing task.",
         "search": "Search",
