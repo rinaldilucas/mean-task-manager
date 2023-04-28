@@ -1,0 +1,7 @@
+{
+    "baseUrl": "localhost:3000/api/",
+    "userId": "62e5c194c972aa0ed83917a3",
+    "email": "user@gmail.com",
+    "password": "password",
+    "token": "{% response 'body', 'req_a99093fefe35488ea86ea5f7b1f521c7', 'b64::JC5kYXRhWzoxXS50b2tlbg==::46b', 'always', 60 %}"
+}

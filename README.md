@@ -122,11 +122,9 @@ You need to have the following requirements:
 -   node 18 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
 
 -   npm
-
     ```sh
     npm install -g npm
     ```
-
 -   yarn
 
     ```sh
@@ -136,18 +134,6 @@ You need to have the following requirements:
 -   angular cli
     ```sh
     npm install -g @angular/cli@14.0.6
-    ```
--   angular schematics
-    ```sh
-    ng add @angular-eslint/schematics@14
-    ```
--   nodemon
-    ```sh
-    npm install -g nodemon
-    ```
--   npm run all
-    ```sh
-    npm install -g npm-run-all
     ```
 
 ### Installation
