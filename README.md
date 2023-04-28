@@ -77,7 +77,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Async validation via pipe to determine whether the user is already registered or not
 -   Custom pipes used to convert date to a selected language
 -   Interceptor modules added to verify bearer token, errors, and headers language
--   Dark mode feature added
+-   Dark mode persistent trought browser local storage
 -   An SCSS method used that utilizes REMs to maintain size scales
 -   SCSS written using BEM methodology
 -   Custom SCSS structure to improve reusability
@@ -119,12 +119,9 @@ After cloning the project, you need to do a few things to be able to run it.
 You need to have the following requirements:
 
 -   mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
--   node 18 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+-   node 16.10.0 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+-   redis <a target="_blank" href="https://redis.io/download/">(download here for linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
 
--   npm
-    ```sh
-    npm install -g npm
-    ```
 -   yarn
 
     ```sh
@@ -150,11 +147,15 @@ _Below is an example of how you can run the project._
     ```
 3. Create a database named `meantemplatedb`
 4. Create collections named users, tasks, categories (or import from `./db/collections`)
-5. Run angular, express and mongoDB as development mode
+5. If running for the first time, run the following command to answer angular cli questions
+    ```js
+    ng serve
+    ```
+6. Run angular, express and mongoDB as development mode
     ```js
     yarn dev
     ```
-6. Build the dist folders
+7. Build the dist folders
     ```js
     yarn build
     ```
