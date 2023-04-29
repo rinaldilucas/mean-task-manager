@@ -1,0 +1,117 @@
+{
+    "app": {
+        "description": "Mean Stack Template",
+        "title": "Angular WebApp"
+    },
+    "button": {
+        "register": "Registrar",
+        "save": "Salvar",
+        "signin": "Entrar"
+    },
+    "error": {
+        "email-exists": "E-mail já cadastrado.",
+        "email-invalid": "E-mail inválido.",
+        "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
+        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres."
+    },
+    "input": {
+        "category": "Categoria",
+        "choose-due-date": "Escolhar data limite",
+        "description": "Descrição",
+        "email": "E-mail",
+        "password": "Senha",
+        "title": "Título"
+    },
+    "login": {
+        "authentication-error": "Erro de autenticação.",
+        "authentication-success": "Logado com sucesso.",
+        "credentials-error": "Senha ou usuário não conferem.",
+        "email": "E-mail",
+        "logout-error": "Erro ao sair.",
+        "logout-success": "Logout com sucesso.",
+        "password": "Senha",
+        "password-error": "Senhas não conferem.",
+        "remember-me": "Remember me",
+        "user-error": "Conta não encontrada."
+    },
+    "messages": {
+        "language-changed": "Linguagem alterada.",
+        "mandatory-fields": "Você deve preencher os campos obrigatórios.",
+        "user-without-permission": "Usuário sem permissão necessária."
+    },
+    "navigation": {
+        "login": "Entrar",
+        "logout": "Sair",
+        "profile": "Perfil",
+        "register": "Registrar",
+        "settings": "Config.",
+        "statistics": "Estatísticas",
+        "tasks": "Tarefas"
+    },
+    "profile": {
+        "edit-error": "Erro ao editar perfil.",
+        "edit-success": "Perfil editado com sucesso."
+    },
+    "register": {
+        "create-error": "Erro ao criar conta.",
+        "create-success": "Conta criada com sucesso.",
+        "email-error": "E-mail já cadastrado."
+    },
+    "settings": {
+        "categories-names": "Nomes de categorias",
+        "category-create-error": "Erro ao criar categoria.",
+        "category-create-success": "Categoria criada com sucesso.",
+        "category-label": "Nova categoria...",
+        "category-remove-error": "Erro ao remover categoria.",
+        "category-remove-success": "Categoria removida com sucesso.",
+        "category-selection": "Selecionar categoria",
+        "english": "Inglês",
+        "language": "Linguagem",
+        "portuguese": "Português"
+    },
+    "table": {
+        "actions": {
+            "done": "Finalizar",
+            "progress": "Marcar como em progresso",
+            "remove": "Remover"
+        },
+        "category": "Categoria",
+        "date": "Data",
+        "description": "Descrição",
+        "done": "Feito",
+        "in-progress": "Em progresso",
+        "status": "Status",
+        "title": "Título",
+        "to-do": "A fazer"
+    },
+    "task-form": {
+        "create-error": "Erro ao adicionar tarefa.",
+        "create-success": "Tarefa criada com sucesso.",
+        "edit-error": "Erro ao editar tarefa.",
+        "edit-success": "Tarefa editada com sucesso.",
+        "get-error": "Erro ao buscar tarefa."
+    },
+    "task-list": {
+        "empty": "Sem tarefas.",
+        "empty-search": "Sem tarefas encontradas em sua pesquisa.",
+        "refresh": "Atualizar",
+        "refresh-error": "Erro ao buscar tarefas.",
+        "remove-error": "Erro ao remover tarefa.",
+        "remove-success": "Tarefa removida com sucesso.",
+        "search": "Buscar",
+        "status-change": "Status da tarefa alterada.",
+        "status-change-error": "Erro ao alterar status da tarefa.",
+        "title-tooltip": "Adicionar tarefa"
+    },
+    "title": {
+        "add-task": "Adicionar Tarefa",
+        "categories": "Categorias",
+        "edit-task": "Editar Tarefa",
+        "home": "Início",
+        "login": "Login",
+        "profile": "Configurações do Perfil",
+        "register": "Registrar",
+        "settings": "Configurações",
+        "tasks": "Tarefas"
+    }
+}
