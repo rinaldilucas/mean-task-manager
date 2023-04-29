@@ -15,6 +15,6 @@ export class AppComponent {
         const language = localStorage.getItem('language') as string;
 
         if (language) this.translateService.use(language);
-        else this.translateService.use(browserLang.match(/en/i) ? browserLang : 'pt-BR');
+        else this.translateService.use(browserLang.match(/en-US/i) ? browserLang : 'pt-BR');
     }
 }
