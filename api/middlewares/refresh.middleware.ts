@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
-import { ServerError } from '../errors/server.error';
 import redisService from '../services/redis.service';
+import { responseError } from '../utils/http-handler';
+import StatusCode from 'status-code-enum';
 
-export default async (req, res, next) => {
-    if (req.body.refresh) {
-        const token = req.body.refresh;
+export default async (request, response, next: any) => {
+    if (request.body.refresh) {
+        const token = request.body.refresh;
         try {
             const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
             if (
@@ -12,18 +13,19 @@ export default async (req, res, next) => {
                 decoded.aud !== process.env.JWT_AUDIENCE ||
                 decoded.iss !== process.env.JWT_ISSUER
             ) {
-                next(new ServerError(401, 'Invalid token type'));
+                next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type'));
             }
+
             const value = await redisService.get(token);
-            if (value) {
-                next(new ServerError(401, 'Refresh token was already used'));
-            }
-            req.email = decoded.sub;
-            req.name = decoded.name;
+            if (value) { next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used')); }
+
+            request.email = decoded.sub;
+            request.name = decoded.name;
             return next();
-        } catch (err) {
-            next(new ServerError(401, 'Invalid jwt token'));
+        } catch (error) {
+            next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token'));
         }
     }
-    next(new ServerError(400, 'Refresh token is not present'));
+
+    next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token is not present'));
 };

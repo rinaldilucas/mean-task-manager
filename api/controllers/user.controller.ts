@@ -1,7 +1,6 @@
 import Async from 'async';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 import { User as Model } from '../models/user.model';
 import { add as AddToBlacklist } from '../redis/blacklist-handler';
@@ -125,12 +124,16 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial: Senha inválida.');
         }
 
-        const { access, refresh } = jwtService.generate(request.body.email);
+        const { access, refresh } = jwtService.generate(document.email, document._id, document.role);
 
-        responseSuccess({
+        const jwtPayload = {
             access,
-            refresh
-        }, {}, StatusCode.SuccessOK);
+            refresh,
+            expiresIn: process.env.JWT_ACCESS_TIME,
+            userId: document._id
+        };
+
+        responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
     public async logout (request: Request, response: Response): Promise<Response | undefined> {
@@ -163,6 +166,31 @@ class UserController {
         }
 
         responseSuccess(response, data, StatusCode.SuccessOK);
+    }
+
+    public async refreshToken (request: Request, response: Response) {
+        const language = request.headers.language;
+
+        const { access, refresh } = await jwtService.refresh({
+            email: request.body.email,
+            userId: request.body._id,
+            role: request.body.role,
+            token: request.body.refresh
+        });
+
+        if (!access || !refresh) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Error refreshing token.');
+            else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro ao atualizar token.');
+        }
+
+        const jwtPayload = {
+            access,
+            refresh,
+            expiresIn: process.env.JWT_ACCESS_TIME,
+            userId: request.body._id
+        };
+
+        responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 }
 

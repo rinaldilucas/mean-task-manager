@@ -1,10 +1,11 @@
+import { responseError } from '../utils/http-handler';
 import jwt from 'jsonwebtoken';
-import { ServerError } from '../errors/server.error';
+import StatusCode from 'status-code-enum';
 
-export default async (req, res, next) => {
-    if (req.headers.authorization) {
-        const [bearerToken, token] = req.headers.authorization.split(' ');
-        console.log(bearerToken);
+export default async (request, response, next) => {
+    if (request.headers.authorization) {
+        const [bearerToken, token] = request.headers.authorization.split(' ');
+
         if (bearerToken === 'Bearer') {
             try {
                 const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
@@ -13,16 +14,16 @@ export default async (req, res, next) => {
                     decoded.aud !== process.env.JWT_AUDIENCE ||
                     decoded.iss !== process.env.JWT_ISSUER
                 ) {
-                    next(new ServerError(401, 'Invalid token type'));
+                    next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type'));
                 }
-                req.email = decoded.sub;
-                req.name = String(decoded.name);
+                request.email = decoded.sub;
                 return next();
-            } catch (err) {
-                next(new ServerError(401, 'Invalid jwt token'));
+            } catch (error) {
+                next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token'));
             }
         }
-        next(new ServerError(401, 'Invalid bearer token'));
+
+        next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid bearer token'));
     }
-    next(new ServerError(400, 'Authorization header is not present'));
+    next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Authorization header is not present'));
 };

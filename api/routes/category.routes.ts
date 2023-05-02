@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { applyBearerStrategy } from '../middlewares/passport.middleware';
 import { verifyValidations } from '../middlewares/validator.middleware';
+import authMiddleware from '../middlewares/auth.middleware';
 
 import Controller from '../controllers/category.controller';
 
 const routes = Router();
 
 // GET ALL
-routes.get('/api/categories', applyBearerStrategy, Controller.findAll);
+routes.get('/api/categories', authMiddleware, Controller.findAll);
 
 // CREATE
 routes.post(
@@ -20,11 +20,11 @@ routes.post(
         .isEmpty()
         .trim(),
     verifyValidations,
-    applyBearerStrategy,
+    authMiddleware,
     Controller.create
 );
 
 // DELETE
-routes.delete('/api/categories/:_id', applyBearerStrategy, Controller.remove);
+routes.delete('/api/categories/:_id', authMiddleware, Controller.remove);
 
 export default routes;

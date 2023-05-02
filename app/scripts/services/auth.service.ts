@@ -68,10 +68,11 @@ export class AuthService {
     }
 
     authenticateToken (result: IJwtPayload): boolean {
-        const token = result.token;
-        this.rawToken = token;
+        const access = result.access;
+        const refresh = result.refresh;
+        this.rawToken = access;
 
-        if (token) {
+        if (access) {
             const expiresInDuration = result.expiresIn;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
@@ -79,7 +80,7 @@ export class AuthService {
             this.authStatusListener.next(true);
             const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
 
-            this.saveAuthData(token, expirationDate, this.loggedUser.userId);
+            this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId);
             this.emitMenu.emit(true);
             return true;
         } else {
@@ -96,7 +97,7 @@ export class AuthService {
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
 
         if (expiresIn > 0) {
-            this.rawToken = authInformation.token;
+            this.rawToken = authInformation.access;
             this.decodeJwtToken(this.rawToken);
             this.isAuthenticated = true;
             this.setAuthTimer(expiresIn / 1000);
@@ -108,17 +109,19 @@ export class AuthService {
     }
 
     getAuthData (): IJwtPayload | false {
-        const token = localStorage.getItem('token') as string;
+        const access = localStorage.getItem('access') as string;
+        const refresh = localStorage.getItem('refresh') as string;
         const expirationDate = localStorage.getItem('expiration') as string;
         const userId = localStorage.getItem('userId') as string;
         const userRole = localStorage.getItem('userRole') as ERole;
 
-        if (!token || !expirationDate) {
+        if (!access || !expirationDate) {
             return false;
         }
 
         return {
-            token,
+            access,
+            refresh,
             expirationDate: new Date(expirationDate),
             userId,
             userRole,
@@ -126,14 +129,16 @@ export class AuthService {
         };
     }
 
-    private saveAuthData (token: string, expirationDate: Date, userId: string): void {
-        localStorage.setItem('token', token);
+    private saveAuthData (access: string, refresh: string, expirationDate: Date, userId: string): void {
+        localStorage.setItem('access', access);
+        localStorage.setItem('refresh', refresh);
         localStorage.setItem('expiration', expirationDate.toISOString());
         localStorage.setItem('userId', userId);
     }
 
     private clearAuthData (): void {
-        localStorage.removeItem('token');
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
     }

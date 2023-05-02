@@ -9,15 +9,10 @@ import DatabaseConfig from './config/mongodb.config';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from './swagger.json';
 
-import './utils/auth-strategy';
-
 // Import routes
 import taskRoutes from './routes/task.routes';
 import userRoutes from './routes/user.routes';
 import categoryRoutes from './routes/category.routes';
-
-import authRoutes from './routes/auth.routes';
-import errorMiddleware from './middlewares/error.middleware';
 
 class App {
     public express: express.Application;
@@ -76,8 +71,6 @@ class App {
         this.express.use(taskRoutes);
         this.express.use(userRoutes);
         this.express.use(categoryRoutes);
-        this.express.use(authRoutes);
-        this.express.use(errorMiddleware);
     }
 }
 

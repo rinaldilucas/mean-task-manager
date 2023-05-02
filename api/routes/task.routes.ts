@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import { applyBearerStrategy } from '../middlewares/passport.middleware';
 import { verifyValidations } from '../middlewares/validator.middleware';
 import { check } from 'express-validator';
+import authMiddleware from '../middlewares/auth.middleware';
 
 import Controller from '../controllers/task.controller';
 
 const routes = Router();
 
 // GET ALL TASKS BY USER
-routes.get('/api/tasks/user/:userId', applyBearerStrategy, Controller.findAllByUser);
+routes.get('/api/tasks/user/:userId', authMiddleware, Controller.findAllByUser);
 
 // GET BY ID
-routes.get('/api/tasks/:_id', applyBearerStrategy, Controller.findOne);
+routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
 
 // CREATE
 routes.post(
@@ -19,14 +19,14 @@ routes.post(
     check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
     check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
     verifyValidations,
-    applyBearerStrategy,
+    authMiddleware,
     Controller.create
 );
 
 // UPDATE
-routes.put('/api/tasks', applyBearerStrategy, Controller.update);
+routes.put('/api/tasks', authMiddleware, Controller.update);
 
 // DELETE
-routes.delete('/api/tasks/:_id', applyBearerStrategy, Controller.remove);
+routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
 
 export default routes;

@@ -1,9 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { applyBearerStrategy } from '../middlewares/passport.middleware';
 import { verifyValidations } from '../middlewares/validator.middleware';
-
-import helloController from '../controllers/hello.controller';
+import refreshMiddleware from '../middlewares/refresh.middleware';
 import authMiddleware from '../middlewares/auth.middleware';
 
 import Controller from '../controllers/user.controller';
@@ -14,13 +12,13 @@ const routes = Router();
 routes.get('/api/users', authMiddleware, Controller.findAll);
 
 // GET BY ID
-routes.get('/api/users/:_id', applyBearerStrategy, Controller.findOne);
+routes.get('/api/users/:_id', authMiddleware, Controller.findOne);
 
 // GET BY EMAIL
 routes.get('/api/users/email/:email', Controller.findOneByEmail);
 
 // UPDATE
-routes.put('/api/users', applyBearerStrategy, Controller.update);
+routes.put('/api/users', authMiddleware, Controller.update);
 
 // REGISTER
 routes.post(
@@ -50,5 +48,8 @@ routes.put(
 
 // LOGOUT
 routes.post('/api/users/logout', Controller.logout);
+
+// REFRESH
+routes.post('/api/users/refresh', refreshMiddleware, Controller.refreshToken);
 
 export default routes;

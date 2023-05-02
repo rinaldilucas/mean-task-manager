@@ -97,6 +97,13 @@
     }
 
     &__body {
+        height: vw(467);
+        background-color: mat-color($app-background, 100);
+
+        .dark-mode & {
+            background-color: mat-contrast($app-background, 50) !important;
+        }
+
         @include media("<=desktop") {
             height: calc(100vh - (0.6rem + 0.6rem + 1.92rem + 0.4rem));
         }
