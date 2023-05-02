@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
 class JwtService {
-    generate (email, name) {
+    generate (email) {
         const access = jwt.sign(
             {
-                name,
+                email,
                 type: process.env.JWT_ACCESS
             },
             String(process.env.JWT_KEY),
@@ -17,13 +17,13 @@ class JwtService {
         );
         const refresh = jwt.sign(
             {
-                name,
+                email,
                 type: process.env.JWT_REFRESH
             },
             String(process.env.JWT_KEY),
             {
                 subject: email,
-                expiresIn: parseInt(String(process.env.JWT_ACCESS_TIME), 10),
+                expiresIn: parseInt(String(process.env.JWT_REFRESH_TIME), 10),
                 audience: process.env.JWT_AUDIENCE,
                 issuer: process.env.JWT_ISSUER
             }

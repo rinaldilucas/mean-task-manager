@@ -6,6 +6,7 @@ import { StatusCode } from 'status-code-enum';
 import { User as Model } from '../models/user.model';
 import { add as AddToBlacklist } from '../redis/blacklist-handler';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
+import jwtService from '../services/jwt.service';
 
 class UserController {
     public async findAll (request: Request, response: Response): Promise<Response | any> {
@@ -124,14 +125,12 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial: Senha inválida.');
         }
 
-        const token = jwt.sign({ email: document.email, userId: document._id, role: document.role }, String(process.env.JWT_KEY), { expiresIn: '1h' });
-        const jwtPayload = {
-            token,
-            expiresIn: 60 * 60,
-            userId: document._id
-        };
+        const { access, refresh } = jwtService.generate(request.body.email);
 
-        responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+        responseSuccess({
+            access,
+            refresh
+        }, {}, StatusCode.SuccessOK);
     }
 
     public async logout (request: Request, response: Response): Promise<Response | undefined> {
