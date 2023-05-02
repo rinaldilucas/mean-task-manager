@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import mongoose from 'mongoose';
 import path from 'path';
 import bodyParser from 'body-parser';
@@ -14,6 +15,9 @@ import './utils/auth-strategy';
 import taskRoutes from './routes/task.routes';
 import userRoutes from './routes/user.routes';
 import categoryRoutes from './routes/category.routes';
+
+import authRoutes from './routes/auth.routes';
+import errorMiddleware from './middlewares/error.middleware';
 
 class App {
     public express: express.Application;
@@ -31,6 +35,7 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
         this.express.use(cors());
+        this.express.use(helmet());
         this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
         const args = process.argv;
@@ -71,6 +76,8 @@ class App {
         this.express.use(taskRoutes);
         this.express.use(userRoutes);
         this.express.use(categoryRoutes);
+        this.express.use(authRoutes);
+        this.express.use(errorMiddleware);
     }
 }
 

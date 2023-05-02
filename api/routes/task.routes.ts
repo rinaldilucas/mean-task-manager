@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { applyBearerStrategy } from '../middleware/passport.middleware';
-import { verifyValidations } from '../middleware/validator.middleware';
+import { applyBearerStrategy } from '../middlewares/passport.middleware';
+import { verifyValidations } from '../middlewares/validator.middleware';
 import { check } from 'express-validator';
 
 import Controller from '../controllers/task.controller';

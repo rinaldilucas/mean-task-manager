@@ -119,7 +119,7 @@ After cloning the project, you need to do a few things to be able to run it.
 You need to have the following requirements:
 
 -   mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
--   node 16.10.0 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+-   node 16 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
 -   redis <a target="_blank" href="https://redis.io/download/">(download here for linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
 
 -   yarn

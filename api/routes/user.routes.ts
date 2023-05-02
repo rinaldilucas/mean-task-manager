@@ -1,14 +1,17 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { applyBearerStrategy } from '../middleware/passport.middleware';
-import { verifyValidations } from '../middleware/validator.middleware';
+import { applyBearerStrategy } from '../middlewares/passport.middleware';
+import { verifyValidations } from '../middlewares/validator.middleware';
+
+import helloController from '../controllers/hello.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 import Controller from '../controllers/user.controller';
 
 const routes = Router();
 
 // GET ALL
-routes.get('/api/users', applyBearerStrategy, Controller.findAll);
+routes.get('/api/users', authMiddleware, Controller.findAll);
 
 // GET BY ID
 routes.get('/api/users/:_id', applyBearerStrategy, Controller.findOne);
