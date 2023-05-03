@@ -8,35 +8,6 @@ import redisService from '../services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 
 class AuthController {
-    public async register (request: Request, response: Response): Promise<Response | undefined> {
-        const language = request.headers.language;
-
-        const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_RONDS) || 12));
-        const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
-
-        const newUser = new Model({
-            email: request.body.email,
-            role: request.body.role,
-            password: hashPass
-        });
-
-        const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
-        if (documentError) return;
-        if (document) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.params.email}.`);
-            else return responseError(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.params.email} já existe.`);
-        }
-
-        const [data, error] = await handlePromises(request, response, newUser.save());
-        if (error) return;
-        if (!data) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
-            else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
-        }
-
-        responseSuccess(response, data, StatusCode.SuccessCreated);
-    }
-
     public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
@@ -67,12 +38,33 @@ class AuthController {
         responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
-    public async logout (request: Request, response: Response): Promise<Response | undefined> {
-        const token = request.body.token;
-        const [, addToBlacklistError] = await handlePromises(request, response, redisService.addToBlacklist(token));
-        if (addToBlacklistError) return;
+    public async register (request: Request, response: Response): Promise<Response | undefined> {
+        const language = request.headers.language;
 
-        responseSuccess(response, {}, StatusCode.SuccessOK);
+        const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_RONDS) || 12));
+        const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
+
+        const newUser = new Model({
+            email: request.body.email,
+            role: request.body.role,
+            password: hashPass
+        });
+
+        const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
+        if (documentError) return;
+        if (document) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.params.email}.`);
+            else return responseError(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.params.email} já existe.`);
+        }
+
+        const [data, error] = await handlePromises(request, response, newUser.save());
+        if (error) return;
+        if (!data) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${Model.modelName}}.`);
+            else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
+        }
+
+        responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
     public async changePassword (request: Request, response: Response): Promise<Response | undefined> {
@@ -122,6 +114,14 @@ class AuthController {
         };
 
         responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+    }
+
+    public async logout (request: Request, response: Response): Promise<Response | undefined> {
+        const token = request.body.token;
+        const [, addToBlacklistError] = await handlePromises(request, response, redisService.addToBlacklist(token));
+        if (addToBlacklistError) return;
+
+        responseSuccess(response, {}, StatusCode.SuccessOK);
     }
 }
 

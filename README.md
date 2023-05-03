@@ -172,10 +172,11 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 -------------------------------
 -------- [AUTH ROUTES] --------
 -------------------------------
-[POST] localhost:3000/api/users/register -> 'register'
-[POST] localhost:3000/api/users/authenticate -> 'authenticate'
-[PUT] localhost:3000/api/users/changePassword -> 'changePassword'
-[POST] localhost:3000/api/users/logout -> 'logout'
+[POST] localhost:3000/api/auth/authenticate -> 'authenticate'
+[POST] localhost:3000/api/auth/register -> 'register'
+[PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
+[POST] localhost:3000/api/auth/refresh -> 'refreshToken'
+[POST] localhost:3000/api/auth/logout -> 'logout'
 ```
 
 ```js
