@@ -5,7 +5,7 @@ import { StatusCode } from 'status-code-enum';
 import { User as Model } from '../models/user.model';
 import jwtService from '../services/jwt.service';
 import redisService from '../services/redis.service';
-import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
+import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';
 
 class AuthController {
     public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
