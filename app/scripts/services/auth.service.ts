@@ -36,7 +36,7 @@ export class AuthService {
         private http: HttpClient
     ) {}
 
-    getUserIsLogged (): boolean {
+    getUserIsLoggedIn (): boolean {
         return this.keepUserLoggedIn;
     }
 
@@ -187,7 +187,6 @@ export class AuthService {
         localStorage.removeItem('refresh');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
-        localStorage.removeItem('keepUserLogged');
     }
 
     private async startRefreshTokenTimer (jwtPayload: IJwtPayload): Promise<void> {
@@ -195,7 +194,7 @@ export class AuthService {
         const expires = new Date(jwtToken.expiresIn * 1000);
         const timeout = 1000 * 10;
 
-        if (this.getUserIsLogged()) {
+        if (this.getUserIsLoggedIn()) {
             this.refreshTokenTimeout = setTimeout(async () => {
                 const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.generateRefreshToken());
 

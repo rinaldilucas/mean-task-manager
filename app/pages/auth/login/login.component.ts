@@ -40,6 +40,7 @@ export class LogInComponent implements OnInit {
     ngOnInit (): void {
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
         this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.authService.getUserIsLoggedIn() ? this.form.controls.keepUserLogged.setValue(true) : this.form.controls.keepUserLogged.setValue(false);
     }
 
     async loginAsync (): Promise<void> {
