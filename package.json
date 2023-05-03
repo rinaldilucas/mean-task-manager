@@ -114,7 +114,7 @@
         "api-debug": "nodemon --inspect api/server.ts",
         "api-prebuild": "rimraf dist",
         "build": "yarn api-prebuild && yarn api-build && yarn client-build",
-        "client-build": "ng build --configuration production",
+        "client-build": "ng build --configuration production --base-href=/mean-stack-template/",
         "client-build-debug": "ng build --configuration development --watch",
         "client-serve": "ng serve --o",
         "client-test": "ng test",
