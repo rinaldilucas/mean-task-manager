@@ -5,13 +5,15 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import StatusCode from 'status-code-enum';
 
+import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ITask } from '@app/scripts/models/task.interface';
+import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
-import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 
 @Component({
     selector: 'app-task-list',
@@ -50,7 +52,8 @@ export class TaskListComponent implements OnInit {
     columnDirection = '';
 
     constructor (
-        private changeDetector: ChangeDetectorRef, //
+        private authService: AuthService, //
+        private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private sharedService: SharedService,
         private router: Router,
@@ -81,6 +84,12 @@ export class TaskListComponent implements OnInit {
 
     async refreshAsync (): Promise<void> {
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(this.pageSize));
+
+        if (!!error && error.status === StatusCode.ClientErrorUnauthorized) {
+            this.authService.logoutAsync();
+            return this.sharedService.handleSnackbarMessages('login.authentication-error', false);
+        }
+
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
 
         this.tasks = result.data;

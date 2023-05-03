@@ -66,7 +66,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Virtual scrolling feature implemented on tables
 -   Search and ordering features via the database to minimize requests
 -   AJAX requests used for pagination
--   JWT implementation with passport
+-   JWT implementation with refresh token on Redis
 -   Authentication and role guard features added
 -   Password encryption feature implemented
 -   Redis blacklist feature added
@@ -170,16 +170,21 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 
 ```js
 -------------------------------
+-------- [AUTH ROUTES] --------
+-------------------------------
+[POST] localhost:3000/api/users/register -> 'register'
+[POST] localhost:3000/api/users/authenticate -> 'authenticate'
+[PUT] localhost:3000/api/users/changePassword -> 'changePassword'
+[POST] localhost:3000/api/users/logout -> 'logout'
+```
+
+```js
+-------------------------------
 -------- [USER ROUTES] --------
 -------------------------------
 [GET] localhost:3000/api/users -> 'findAll'
 [GET] localhost:3000/api/users/:_id -> 'findOne'
 [GET] localhost:3000/api/users/email/:email -> 'findOneByEmail'
-[PUT] localhost:3000/api/users -> 'update'
-[POST] localhost:3000/api/users/register -> 'register'
-[POST] localhost:3000/api/users/authenticate -> 'authenticate'
-[PUT] localhost:3000/api/users/changePassword -> 'changePassword'
-[POST] localhost:3000/api/users/logout -> 'logout'
 ```
 
 ```js

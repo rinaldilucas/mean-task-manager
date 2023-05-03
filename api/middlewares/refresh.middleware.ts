@@ -1,9 +1,13 @@
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import redisService from '../services/redis.service';
-import { responseError } from '../utils/http-handler';
 import StatusCode from 'status-code-enum';
+import redisService from '../services/redis.service';
 
-export default async (request, response, next: any) => {
+import { responseError } from '../utils/http-handler';
+
+export default async (request: Request, response: Response, next: NextFunction) => {
+    const language = request.headers.language;
+
     if (request.body.refresh) {
         const token = request.body.refresh;
 
@@ -14,18 +18,24 @@ export default async (request, response, next: any) => {
                 decoded.aud !== process.env.JWT_AUDIENCE ||
                 decoded.iss !== process.env.JWT_ISSUER
             ) {
-                next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type'));
+                if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type.'));
+                else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
             }
 
             const value = await redisService.get(token);
-            if (value) { next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used')); }
+            if (value) {
+                if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used.'));
+                else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token já utilizado.'));
+            }
 
-            request.email = decoded.sub;
+            request.body.email = decoded.sub;
             return next();
         } catch (error) {
-            next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token'));
+            if (language === 'en-US') next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token.'));
+            else next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'JWT inválido.'));
         }
     }
 
-    next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token is not present'));
+    if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token is not present.'));
+    else next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token não está presente.'));
 };

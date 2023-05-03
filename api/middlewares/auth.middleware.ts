@@ -1,30 +1,48 @@
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import StatusCode from 'status-code-enum';
 
+import redisService from '../services/redis.service';
 import { responseError } from '../utils/http-handler';
 
-export default async (request, response, next) => {
+export default async (request: Request, response: Response, next: NextFunction) => {
+    const language = request.headers.language;
+
     if (request.headers.authorization) {
         const [bearerToken, token] = request.headers.authorization.split(' ');
 
         if (bearerToken === 'Bearer') {
             try {
+                const blacklistedToken = await redisService.verifyBlacklistForToken(token);
+
+                if (blacklistedToken) {
+                    if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Token invalidated by logout.'));
+                    else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Token invalidado por logout.'));
+                }
+
                 const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
+
                 if (
                     decoded.type !== process.env.JWT_ACCESS ||
                     decoded.aud !== process.env.JWT_AUDIENCE ||
                     decoded.iss !== process.env.JWT_ISSUER
                 ) {
-                    next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type'));
+                    if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type.'));
+                    else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
                 }
-                request.email = decoded.sub;
+
+                request.body.email = decoded.sub;
                 return next();
             } catch (error) {
-                next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token'));
+                if (language === 'en-US') next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token.'));
+                else next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'JWT inválido.'));
             }
         }
 
-        next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid bearer token'));
+        if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid bearer token.'));
+        else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Bearer token inválido.'));
     }
-    next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Authorization header is not present'));
+
+    if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Authorization header is not present.'));
+    else next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Cabeçalho de autorização não está presente.'));
 };

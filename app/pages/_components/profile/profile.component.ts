@@ -8,7 +8,6 @@ import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { UserService } from '@app/scripts/services/user.service';
 
 @Component({
     selector: 'app-profile',
@@ -23,7 +22,6 @@ export class ProfileComponent implements OnInit {
     user!: IUser;
 
     constructor (
-        private userService: UserService,
         private authService: AuthService,
         private titleService: Title,
         private formBuilder: FormBuilder,
@@ -46,7 +44,7 @@ export class ProfileComponent implements OnInit {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const password = this.form.controls['password'].value;
-        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.changePassword(this.authService.getUserId(), password));
+        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.changePassword(this.authService.getUserId(), password));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('profile.edit-error', false);
 
         this.sharedService.handleSnackbarMessages('profile.edit-success');

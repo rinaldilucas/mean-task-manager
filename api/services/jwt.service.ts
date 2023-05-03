@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import redisService from './redis.service';
 
 class JwtService {
-    generate (email, userId, role) {
+    generate (email, userId, role): { access: string, refresh: string} {
         const access = jwt.sign(
             {
                 email,
@@ -38,7 +38,7 @@ class JwtService {
         return { access, refresh };
     }
 
-    async refreshJwt ({ email, userId, role, token }) {
+    async refreshJwt ({ email, userId, role, token }): Promise<{ access: string, refresh: string}> {
         await redisService.set({
             key: token,
             value: '1',

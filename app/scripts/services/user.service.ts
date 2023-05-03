@@ -1,12 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { IUser } from '@app/scripts/models/user.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -44,12 +44,5 @@ export class UserService {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    changePassword (userId: string, password: string): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}/changePassword`;
-        const body = { _id: userId, password };
-
-        return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

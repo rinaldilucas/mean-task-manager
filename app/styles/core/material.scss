@@ -59,6 +59,10 @@ mat-row {
     font-size: vw(16) !important;
 }
 
+.mat-raised-button {
+    line-height: vw(36) !important;
+}
+
 .mat-toolbar {
     height: $header-size !important;
     min-height: $header-size !important;
@@ -88,6 +92,7 @@ mat-row {
 
 .mat-simple-snackbar {
     font-size: vw(18);
+    line-height: vw(20) !important;
 
     @include media(">=desktop") {
         font-size: vw(16);

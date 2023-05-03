@@ -1,6 +1,7 @@
 import Async from 'async';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
+
 import { Category as Model } from '../models/category.model';
 import { handlePromises, responseError, responseSuccess } from '../utils/http-handler';
 

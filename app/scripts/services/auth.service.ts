@@ -1,23 +1,23 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
-import { UserService } from '@app/scripts/services/user.service';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-import { ERole } from '@app/scripts/models/enum/role.enum';
-import { IAuthData } from '@app/scripts/models/authData.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { IUser } from '@app/scripts/models/user.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@app/environments/environment';
+import { IAuthData } from '@app/scripts/models/authData.interface';
+import { ERole } from '@app/scripts/models/enum/role.enum';
+import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
+import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { UserService } from '@app/scripts/services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private url: string = environment.baseUri + '/users';
+    private url: string = environment.baseUri + '/auth';
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private accessToken!: string;
@@ -99,6 +99,13 @@ export class AuthService {
         const url = `${this.url}/logout`;
 
         return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
+    }
+
+    changePassword (userId: string, password: string): Promise<IQueryResult<IUser>> {
+        const url = `${this.url}/changePassword`;
+        const body = { _id: userId, password };
+
+        return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     generateRefreshToken (): Promise<IQueryResult<IJwtPayload>> {
@@ -192,7 +199,7 @@ export class AuthService {
     private async startRefreshTokenTimer (jwtPayload: IJwtPayload): Promise<void> {
         const jwtToken = jwtPayload;
         const expires = new Date(jwtToken.expiresIn * 1000);
-        const timeout = 1000 * 10;
+        const timeout = expires.getTime() - Date.now() - (60 * 1000);
 
         if (this.getUserIsLoggedIn()) {
             this.refreshTokenTimeout = setTimeout(async () => {

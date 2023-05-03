@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
+import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { UserService } from '@app/scripts/services/user.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
+import { UserService } from '@app/scripts/services/user.service';
 @Component({
     selector: 'app-log-in',
     templateUrl: './login.component.html',
