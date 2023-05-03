@@ -75,10 +75,9 @@ a {
         justify-content: flex-start;
 
         &--table {
-            height: calc(100vh - #{$header-size});
-
             @include media("<=desktop") {
                 overflow: hidden;
+                height: calc(100vh - #{$header-size});
             }
         }
     }

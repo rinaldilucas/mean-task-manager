@@ -3,7 +3,11 @@
 
     @include media(">=desktop") {
         align-items: start !important;
-        margin: vw(20) 0 0 !important;
+        margin: 0 !important;
+    }
+
+    @include media(">=common-desktop") {
+        margin: vw(35) 0 0 !important;
     }
 
     &__wrapper {
@@ -97,7 +101,7 @@
     }
 
     &__body {
-        height: vw(467);
+        height: vw(557);
         background-color: mat-color($app-background, 100);
 
         .dark-mode & {
@@ -125,7 +129,7 @@
             height: 100%;
 
             @include media(">=desktop") {
-                height: vw(557);
+                height: vw(497);
             }
 
             table {
