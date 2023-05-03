@@ -10,7 +10,7 @@ export class EmailValidator {
         return (control: AbstractControl) => {
             return control.valueChanges.pipe(
                 switchMap((email: string) => userService.checkIfEmailExists(email)),
-                map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { emailexists: true } : null)),
+                map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { alreadyregistered: true } : null)),
                 first()
             );
         };

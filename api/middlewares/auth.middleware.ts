@@ -1,6 +1,7 @@
-import { responseError } from '../utils/http-handler';
 import jwt from 'jsonwebtoken';
 import StatusCode from 'status-code-enum';
+
+import { responseError } from '../utils/http-handler';
 
 export default async (request, response, next) => {
     if (request.headers.authorization) {

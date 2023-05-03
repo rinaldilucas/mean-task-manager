@@ -5,4 +5,4 @@ export interface IAuthData {
     email: string;
     role: ERole;
     expirationDate?: Date;
-}
+ }

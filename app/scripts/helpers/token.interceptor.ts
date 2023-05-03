@@ -12,7 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
         const isLogged = this.authService.verifyAuthorization();
 
         if (isLogged) {
-            const authToken = this.authService.getToken();
+            const authToken = this.authService.getAccessToken();
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${authToken}`

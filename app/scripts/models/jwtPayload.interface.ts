@@ -7,4 +7,5 @@ export interface IJwtPayload {
     expirationDate: Date;
     userId: string;
     userRole: ERole;
+    keepUserLoggedIn: boolean;
 }

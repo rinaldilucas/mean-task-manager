@@ -6,6 +6,7 @@ import StatusCode from 'status-code-enum';
 export default async (request, response, next: any) => {
     if (request.body.refresh) {
         const token = request.body.refresh;
+
         try {
             const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
             if (
@@ -20,7 +21,6 @@ export default async (request, response, next: any) => {
             if (value) { next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used')); }
 
             request.email = decoded.sub;
-            request.name = decoded.name;
             return next();
         } catch (error) {
             next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token'));

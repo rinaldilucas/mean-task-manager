@@ -38,7 +38,7 @@ class JwtService {
         return { access, refresh };
     }
 
-    async refresh ({ email, userId, role, token }) {
+    async refreshJwt ({ email, userId, role, token }) {
         await redisService.set({
             key: token,
             value: '1',

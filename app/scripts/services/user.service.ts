@@ -6,7 +6,6 @@ import { environment } from '@app/environments/environment';
 import { IUser } from '@app/scripts/models/user.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -45,25 +44,6 @@ export class UserService {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    authenticate (email: string, password: string): Promise<IQueryResult<IJwtPayload>> {
-        const credentials = { email, password };
-        const url = `${this.url}/authenticate`;
-
-        return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    register (user: IUser): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}/register`;
-
-        return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    logout (token: string): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}/logout`;
-
-        return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     changePassword (userId: string, password: string): Promise<IQueryResult<IUser>> {

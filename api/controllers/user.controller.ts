@@ -55,7 +55,7 @@ class UserController {
         if (error) return;
         if (!data) return responseSuccess(response, {}, StatusCode.SuccessOK, 0);
 
-        responseSuccess(response, { userExists: true }, StatusCode.SuccessOK);
+        responseSuccess(response, { alreadyRegistered: true }, StatusCode.SuccessOK);
     }
 
     public async update (request: Request, response: Response): Promise<Response | undefined> {
@@ -130,7 +130,8 @@ class UserController {
             access,
             refresh,
             expiresIn: process.env.JWT_ACCESS_TIME,
-            userId: document._id
+            userId: document._id,
+            keepUserLoggedIn: request.body.keepUserLoggedIn
         };
 
         responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
@@ -171,9 +172,9 @@ class UserController {
     public async refreshToken (request: Request, response: Response) {
         const language = request.headers.language;
 
-        const { access, refresh } = await jwtService.refresh({
+        const { access, refresh } = await jwtService.refreshJwt({
             email: request.body.email,
-            userId: request.body._id,
+            userId: request.body.userId,
             role: request.body.role,
             token: request.body.refresh
         });
@@ -187,7 +188,7 @@ class UserController {
             access,
             refresh,
             expiresIn: process.env.JWT_ACCESS_TIME,
-            userId: request.body._id
+            userId: request.body.userId
         };
 
         responseSuccess(response, jwtPayload, StatusCode.SuccessOK);

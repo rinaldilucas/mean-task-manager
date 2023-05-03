@@ -4,7 +4,7 @@
             <mat-card-title class="form__title">{{ "title.profile" | translate }}</mat-card-title>
         </mat-card-header>
 
-        <form [formGroup]="form" (submit)="saveAsync()">
+        <form [formGroup]="form">
             <mat-card-content>
                 <mat-form-field class="full-width">
                     <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required />

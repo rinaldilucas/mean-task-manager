@@ -32,7 +32,8 @@ export class LogInComponent implements OnInit {
     ) {
         this.form = this.formBuilder.group({
             email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.minLength(5), Validators.maxLength(150)]],
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]]
+            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+            keepUserLogged: [false]
         });
     }
 
@@ -45,7 +46,8 @@ export class LogInComponent implements OnInit {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value } as IUser;
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password));
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.authService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
+
         if (!!error || !result || !result?.success) {
             if (error.status === StatusCode.ClientErrorNotFound) {
                 this.sharedService.handleSnackbarMessages('login.user-error', false);

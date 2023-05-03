@@ -41,8 +41,11 @@ export class MainNavComponent implements OnInit {
 
     ngOnInit (): void {
         setInterval(() => (this.time = new Date()), 1000);
-        this.isLogged = this.authService.getIsAuth();
-        this.authService.emitMenu.subscribe((result: boolean) => (this.isLogged = result));
+        this.isLogged = this.authService.getIsAuthenticated();
+        this.authService.emitMenu.subscribe((result: boolean) => {
+            this.isLogged = result;
+            this.changeDetector.detectChanges();
+        });
 
         const darkClassName = 'dark-mode';
         const previousTheme = localStorage.getItem('theme') as string;

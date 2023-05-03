@@ -11,6 +11,7 @@ import { ERole } from '@app/scripts/models/enum/role.enum';
 import { EmailValidator } from '@app/scripts/validators/email.validator';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { AuthService } from '@app/scripts/services/auth.service';
 
 @Component({
     selector: 'app-register',
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
 
     constructor (
         private userService: UserService,
+        private authService: AuthService,
         private formBuilder: FormBuilder,
         private titleService: Title,
         private router: Router,
@@ -45,7 +47,7 @@ export class RegisterComponent implements OnInit {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const user = { ...this.form.value, role: ERole.user } as IUser;
-        const [result, error]:IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.register(user));
+        const [result, error]:IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.register(user));
         if (!!error || !result || !result?.success) {
             if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages('register.email-error', false);
             else return this.sharedService.handleSnackbarMessages('register.create-error', false);
