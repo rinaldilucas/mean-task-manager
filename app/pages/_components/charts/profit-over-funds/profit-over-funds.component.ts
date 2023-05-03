@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { MultiDataSet, Label, Colors } from 'ng2-charts';
+import { Colors, Label, MultiDataSet } from 'ng2-charts';
 
 @Component({
     selector: 'app-profit-over-funds',

@@ -1,4 +1,4 @@
-import { ERole } from './enum/role.enum';
+import { ERole } from '@app/scripts/models/enum/role.enum';
 
 export interface IUser {
     _id?: string;

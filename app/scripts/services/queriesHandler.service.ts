@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { IQuery } from '@app/scripts/models/query.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 
 @Injectable({ providedIn: 'root' })
 export class QueriesHandlerService {

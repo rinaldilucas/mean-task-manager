@@ -1,13 +1,13 @@
-import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { ITask } from '@app/scripts/models/task.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { lastValueFrom } from 'rxjs';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {

@@ -1,10 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { HttpClient } from '@angular/common/http';
 import { environment } from '@app/environments/environment';
 import { IAuthData } from '@app/scripts/models/authData.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';

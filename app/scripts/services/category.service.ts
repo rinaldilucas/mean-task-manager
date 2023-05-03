@@ -1,12 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {

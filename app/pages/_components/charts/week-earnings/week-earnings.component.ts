@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { Label, Colors } from 'ng2-charts';
+import { Colors, Label } from 'ng2-charts';
 
 @Component({
     selector: 'app-week-earnings',

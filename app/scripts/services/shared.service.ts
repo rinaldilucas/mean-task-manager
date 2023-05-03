@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, throwError } from 'rxjs';
 
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 

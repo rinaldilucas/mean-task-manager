@@ -1,13 +1,12 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
