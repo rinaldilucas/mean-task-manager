@@ -91,7 +91,7 @@ class AuthController {
         responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async refreshToken (request: Request, response: Response) {
+    public async refreshToken (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const { access, refresh } = await jwtService.refreshJwt({

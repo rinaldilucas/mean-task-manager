@@ -9,8 +9,8 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, throwError } from 'rxjs';
 
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { ITask } from '@app/scripts/models/task.interface';
 import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
+import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
@@ -51,7 +51,7 @@ export class SharedService {
         return throwError(() => errorResponse);
     }
 
-    isValidForm (form: FormGroup<any>): boolean {
+    isValidForm (form: FormGroup<string>): boolean {
         if (!form.valid) {
             this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput(form);
@@ -60,7 +60,7 @@ export class SharedService {
         return true;
     }
 
-    highlightRequiredInput (form: FormGroup<any>): void {
+    highlightRequiredInput (form: FormGroup<string>): void {
         form.markAllAsTouched();
         for (const input of Object.keys(form.controls)) {
             if (!form.get(input)?.valid) {
@@ -101,7 +101,7 @@ export class SharedService {
         this.translateService.get(translationKey).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
     }
 
-    async handlePromises (promise: Promise<any>): Promise<any> {
+    async handlePromises (promise: Promise<any>): Promise<Promise<any>> {
         try {
             const data = await promise;
             return [data, null];

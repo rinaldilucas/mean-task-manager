@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
+
 import refreshMiddleware from '../middlewares/refresh.middleware';
 import { verifyValidations } from '../middlewares/validator.middleware';
 

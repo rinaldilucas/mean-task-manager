@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { verifyValidations } from '../middlewares/validator.middleware';
 import { check } from 'express-validator';
+
 import authMiddleware from '../middlewares/auth.middleware';
+import { verifyValidations } from '../middlewares/validator.middleware';
 
 import Controller from '../controllers/task.controller';
 

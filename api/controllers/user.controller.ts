@@ -9,7 +9,7 @@ class UserController {
     public async findAll (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
 
-        const countQuery = (callback) => {
+        const countQuery = (callback): any => {
             Model.find()
                 .countDocuments({}, (error, count) => {
                     if (error) callback(error, null);
@@ -17,7 +17,7 @@ class UserController {
                 });
         };
 
-        const retrieveQuery = (callback: any) => {
+        const retrieveQuery = (callback): any => {
             Model.find()
                 .exec((error, documents) => {
                     if (error) callback(error, null);

@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { createClient } from 'redis';
 
-const generateTokenHash = (token: any) => createHash('sha256').update(token).digest('hex');
+const generateTokenHash = (token: any): string => createHash('sha256').update(token).digest('hex');
 
 class RedisService {
     client: any;
@@ -11,20 +11,20 @@ class RedisService {
         this.client = createClient();
     }
 
-    async set ({ key, value, timeType, time }) {
+    async set ({ key, value, timeType, time }): Promise<void> {
         await this.client.connect();
         await this.client.set(key, value, timeType, time);
         await this.client.disconnect();
     }
 
-    async get (key) {
+    async get (key) : Promise<any> {
         await this.client.connect();
         const result = await this.client.get(key);
         await this.client.disconnect();
         return result;
     }
 
-    async addToBlacklist (token: string) {
+    async addToBlacklist (token: string) : Promise<void> {
         if (token) {
             const expirationDate = (jwt.decode(token) as any).exp;
             const tokenHash = generateTokenHash(token);
@@ -32,12 +32,13 @@ class RedisService {
         }
     }
 
-    async verifyBlacklistForToken (token: any) {
+    async verifyBlacklistForToken (token: any) : Promise<boolean> {
         const isTokenBlacklisted = await this.hasToken(token);
         if (isTokenBlacklisted) return true;
+        else return false;
     }
 
-    async hasToken (token: any) {
+    async hasToken (token: string) : Promise<boolean> {
         const tokenHash = generateTokenHash(token);
         const result = await this.get(tokenHash);
         return result === '1';

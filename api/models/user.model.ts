@@ -1,7 +1,7 @@
 import { Model, Schema, model } from 'mongoose';
 import { UserInterface as Interface } from '../interfaces/User.interface';
 
-const validateEmail = (email: string) => {
+const validateEmail = (email: string): boolean => {
     const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };

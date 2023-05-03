@@ -4,7 +4,7 @@ import { StatusCode } from 'status-code-enum';
 
 import { responseError } from '../utils/http-handler';
 
-export const verifyValidations = (request: Request, response: Response, next: NextFunction) => {
+export const verifyValidations = (request: Request, response: Response, next: NextFunction): Response<any, Record<string, any>> | undefined => {
     const errors = validationResult(request);
 
     if (!errors.isEmpty()) return responseError(response, errors.array(), StatusCode.ClientErrorBadRequest);

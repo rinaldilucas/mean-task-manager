@@ -5,7 +5,7 @@ import StatusCode from 'status-code-enum';
 import redisService from '../services/redis.service';
 import { responseError } from '../utils/http-handler';
 
-export default async (request: Request, response: Response, next: NextFunction) => {
+export default async (request: Request, response: Response, next: NextFunction): Promise<NextFunction | undefined | void> => {
     const language = request.headers.language;
 
     if (request.headers.authorization) {
