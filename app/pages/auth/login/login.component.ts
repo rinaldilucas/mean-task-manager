@@ -51,26 +51,26 @@ export class LogInComponent implements OnInit {
 
         if (!!error || !result || !result?.success) {
             if (error.status === StatusCode.ClientErrorNotFound) {
-                this.sharedService.handleSnackbarMessages('login.user-error', false);
+                this.sharedService.handleSnackbarMessages({ translationKey: 'login.user-error', success: false });
                 return;
             }
             if (error.status === StatusCode.ClientErrorForbidden) {
-                this.sharedService.handleSnackbarMessages('login.password-error', false);
+                this.sharedService.handleSnackbarMessages({ translationKey: 'login.password-error', success: false });
                 return;
             }
             if (error.status === StatusCode.ClientErrorUnauthorized) {
-                this.sharedService.handleSnackbarMessages('login.credentials-error', false);
+                this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
                 return;
             }
 
-            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
+            this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
 
         if (this.authService.authenticateToken(result.data[0])) {
-            this.sharedService.handleSnackbarMessages('login.authentication-success');
+            this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-success' });
             this.router.navigate(['tasks']);
         } else {
-            this.sharedService.handleSnackbarMessages('login.authentication-error', false);
+            this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
     }
 }

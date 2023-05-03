@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ChartOptions, ChartType } from 'chart.js';
 import { Colors } from 'ng2-charts';
 
-import { TaskService } from '@app/scripts/services/task.service';
-import { ITask } from '@app/scripts/models/task.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
     selector: 'app-tasks-done',
@@ -42,7 +42,7 @@ export class TasksDoneComponent implements OnInit {
 
     async getDailyEarnings (): Promise<ITask | void> {
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser(99));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-list.refresh-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
         this.tasks = result.data;
         this.pieChartData = [];

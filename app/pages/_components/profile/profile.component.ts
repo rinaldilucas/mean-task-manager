@@ -45,9 +45,9 @@ export class ProfileComponent implements OnInit {
 
         const password = this.form.controls['password'].value;
         const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.changePassword(this.authService.getUserId(), password));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('profile.edit-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-error', success: false });
 
-        this.sharedService.handleSnackbarMessages('profile.edit-success');
+        this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-success' });
         this.form.reset();
         this.router.navigate(['tasks']);
     }

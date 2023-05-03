@@ -97,7 +97,7 @@ export class SharedService {
         });
     }
 
-    handleSnackbarMessages (translationKey: string, success = true): void {
+    handleSnackbarMessages ({ translationKey, success = true }): void {
         this.translateService.get(translationKey).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
     }
 

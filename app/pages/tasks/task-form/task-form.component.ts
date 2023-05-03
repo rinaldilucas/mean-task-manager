@@ -94,14 +94,14 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             });
 
             const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTask(this.id));
-            if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+            if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
 
             this.form.patchValue(result.data[0]);
             this.changeDetector.markForCheck();
         }
 
         const [categories, categoriesError] = await this.sharedService.handlePromises(this.categoryService.listCategories());
-        if (!!categoriesError || !categories || !categories?.success) return this.sharedService.handleSnackbarMessages('task-form.get-error', false);
+        if (!!categoriesError || !categories || !categories?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
 
         this.categories = categories.data;
         this.setAutoCompletes();
@@ -137,9 +137,9 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         task.status = EStatus.toDo;
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(isEdit ? this.taskService.updateTask(task) : this.taskService.createTask(task));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-error' : 'task-form.create-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(isEdit ? { translationKey: 'task-form.edit-error', success: false } : { translationKey: 'task-form.create-error', success: false });
 
-        this.sharedService.handleSnackbarMessages(isEdit ? 'task-form.edit-success' : 'task-form.create-success');
+        this.sharedService.handleSnackbarMessages(isEdit ? { translationKey: 'task-form.edit-success' } : { translationKey: 'task-form.create-success' });
         this.taskService.emitTask.emit(task);
         this.form.reset();
         this.close();

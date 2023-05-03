@@ -70,14 +70,14 @@ export class AuthService {
 
     async logoutAsync (): Promise<void> {
         const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages('login.logout-error', false);
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-error', success: false });
 
         this.stopRefreshTokenTimer();
         this.accessToken = '';
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         this.clearAuthData();
-        this.sharedService.handleSnackbarMessages('login.logout-success');
+        this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
         this.router.navigate(['']);
         this.emitMenu.emit(false);
     }

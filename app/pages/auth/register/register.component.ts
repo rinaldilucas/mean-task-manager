@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IUser } from '@app/scripts/models/user.interface';
-import { UserService } from '@app/scripts/services/user.service';
 import { ERole } from '@app/scripts/models/enum/role.enum';
-import { EmailValidator } from '@app/scripts/validators/email.validator';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { UserService } from '@app/scripts/services/user.service';
+import { EmailValidator } from '@app/scripts/validators/email.validator';
 
 @Component({
     selector: 'app-register',
@@ -49,11 +49,11 @@ export class RegisterComponent implements OnInit {
         const user = { ...this.form.value, role: ERole.user } as IUser;
         const [result, error]:IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.register(user));
         if (!!error || !result || !result?.success) {
-            if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages('register.email-error', false);
-            else return this.sharedService.handleSnackbarMessages('register.create-error', false);
+            if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages({ translationKey: 'register.email-error', success: false });
+            else return this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-error', success: false });
         }
 
-        this.sharedService.handleSnackbarMessages('register.create-success');
+        this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-success' });
         this.router.navigate(['login']);
     }
 }

@@ -18,7 +18,7 @@ export class RoleGuard {
 
         if (currentUser.role === expectedRole) return true;
 
-        this.sharedService.handleSnackbarMessages('messages.user-without-permission', false);
+        this.sharedService.handleSnackbarMessages({ translationKey: 'messages.user-without-permission', success: false });
         this.router.navigate(['tasks']);
         return false;
     }
