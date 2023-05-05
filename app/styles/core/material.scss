@@ -91,8 +91,8 @@ mat-row {
 }
 
 .mat-simple-snackbar {
-    font-size: vw(18);
     line-height: vw(20) !important;
+    font-size: vw(18);
 
     @include media(">=desktop") {
         font-size: vw(16);
