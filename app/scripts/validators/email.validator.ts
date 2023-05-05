@@ -1,9 +1,9 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { first, map, switchMap } from 'rxjs/operators';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IUser } from '@app/scripts/models/user.interface';
-import { UserService } from '@app/scripts/services/user.service';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { IUser } from '@scripts/models/user.interface';
+import { UserService } from '@scripts/services/user.service';
 
 export class EmailValidator {
     static createValidator (userService: UserService): AsyncValidatorFn {

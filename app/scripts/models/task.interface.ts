@@ -1,4 +1,4 @@
-import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { EStatus } from '@scripts/models/enum/status.enum';
 
 export interface ITask {
     _id: string;

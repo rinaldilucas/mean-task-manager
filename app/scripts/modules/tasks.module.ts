@@ -7,12 +7,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 
 // MODULES
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
-import { TaskRoutingModule } from '@app/scripts/modules/tasks-routing.module';
+import { AngularMaterialModule } from '@scripts/modules/angular-material.module';
+import { TaskRoutingModule } from '@scripts/modules/tasks-routing.module';
 
 import { TaskFormBottomSheetComponent } from '@app/pages/tasks/task-form/task-form.component';
 import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
-import { ConvertDatePipe } from '@app/scripts/pipes/convertDate.pipe';
+import { ConvertDatePipe } from '@scripts/pipes/convertDate.pipe';
 
 @NgModule({
     declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],

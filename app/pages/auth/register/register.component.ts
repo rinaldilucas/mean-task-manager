@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { ERole } from '@app/scripts/models/enum/role.enum';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IUser } from '@app/scripts/models/user.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { UserService } from '@app/scripts/services/user.service';
-import { EmailValidator } from '@app/scripts/validators/email.validator';
+import { ERole } from '@scripts/models/enum/role.enum';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { IUser } from '@scripts/models/user.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { UserService } from '@scripts/services/user.service';
+import { EmailValidator } from '@scripts/validators/email.validator';
 
 @Component({
     selector: 'app-register',

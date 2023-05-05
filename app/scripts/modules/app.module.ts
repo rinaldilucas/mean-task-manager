@@ -16,15 +16,15 @@ import { ChartsModule } from 'ng2-charts';
 
 // MODULES
 import { AppComponent } from '@app/pages/app.component';
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
-import { AppRoutingModule } from '@app/scripts/modules/app-routing.module';
-import { InterceptorModule } from '@app/scripts/modules/interceptor.module';
+import { AngularMaterialModule } from '@scripts/modules/angular-material.module';
+import { AppRoutingModule } from '@scripts/modules/app-routing.module';
+import { InterceptorModule } from '@scripts/modules/interceptor.module';
 
 // SERVICES
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
-import { UserService } from '@app/scripts/services/user.service';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { TaskService } from '@scripts/services/task.service';
+import { UserService } from '@scripts/services/user.service';
 
 // COMPONENTS
 import { MonthlyDoneComponent } from '@app/pages/_components/charts/monthly-done/monthly-done.component';

@@ -6,14 +6,14 @@ import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { IAuthData } from '@app/scripts/models/authData.interface';
-import { ERole } from '@app/scripts/models/enum/role.enum';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IUser } from '@app/scripts/models/user.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { UserService } from '@app/scripts/services/user.service';
+import { IAuthData } from '@scripts/models/authData.interface';
+import { ERole } from '@scripts/models/enum/role.enum';
+import { IJwtPayload } from '@scripts/models/jwtPayload.interface';
+import { IJwtToken } from '@scripts/models/jwtToken.interface';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { IUser } from '@scripts/models/user.interface';
+import { SharedService } from '@scripts/services/shared.service';
+import { UserService } from '@scripts/services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

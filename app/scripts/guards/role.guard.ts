@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class RoleGuard {

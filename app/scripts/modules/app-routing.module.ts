@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // GUARD
-import { AuthGuard } from '@app/scripts/guards/auth.guard';
-import { LoggedInAuthGuard } from '@app/scripts/guards/loggedIn.guard';
-import { RoleGuard } from '@app/scripts/guards/role.guard';
+import { AuthGuard } from '@scripts/guards/auth.guard';
+import { LoggedInAuthGuard } from '@scripts/guards/loggedIn.guard';
+import { RoleGuard } from '@scripts/guards/role.guard';
 
 // PAGES
 import { EmptyPageComponent } from '@app/pages/_components/empty-page.component';
@@ -17,7 +17,7 @@ import { HomepageComponent } from '@app/pages/home/home.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
 
 // ENUM
-import { ERole } from '@app/scripts/models/enum/role.enum';
+import { ERole } from '@scripts/models/enum/role.enum';
 
 const routes: Routes = [
     { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard] },
@@ -25,7 +25,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard] },
     {
         path: 'tasks',
-        loadChildren: () => import('@app/scripts/modules/tasks.module').then((module) => module.TaskModule)
+        loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule)
     },
     { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

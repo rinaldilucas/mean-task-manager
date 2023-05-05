@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IUser } from '@app/scripts/models/user.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { UserService } from '@app/scripts/services/user.service';
+import { IJwtPayload } from '@scripts/models/jwtPayload.interface';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { IUser } from '@scripts/models/user.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { UserService } from '@scripts/services/user.service';
 @Component({
     selector: 'app-log-in',
     templateUrl: './login.component.html',

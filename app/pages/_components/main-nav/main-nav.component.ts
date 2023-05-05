@@ -6,10 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
-import { UserService } from '@app/scripts/services/user.service';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { TaskService } from '@scripts/services/task.service';
+import { UserService } from '@scripts/services/user.service';
 
 @Component({
     selector: 'app-main-nav',

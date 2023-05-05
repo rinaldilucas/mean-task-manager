@@ -39,6 +39,9 @@
             ],
             "@styles/*": [
                 "app/styles/*"
+            ],
+            "@scripts/*": [
+                "app/scripts/*"
             ]
         },
         "resolveJsonModule": true,

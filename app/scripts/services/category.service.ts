@@ -4,9 +4,9 @@ import { lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { ICategory } from '@app/scripts/models/category.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { ICategory } from '@scripts/models/category.interface';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { SharedService } from '@scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {

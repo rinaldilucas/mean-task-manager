@@ -8,14 +8,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { ICategory } from '@app/scripts/models/category.interface';
-import { EStatus } from '@app/scripts/models/enum/status.enum';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { ITask } from '@app/scripts/models/task.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { CategoryService } from '@app/scripts/services/category.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
+import { ICategory } from '@scripts/models/category.interface';
+import { EStatus } from '@scripts/models/enum/status.enum';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { ITask } from '@scripts/models/task.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { CategoryService } from '@scripts/services/category.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { TaskService } from '@scripts/services/task.service';
 
 @Component({
     template: '',

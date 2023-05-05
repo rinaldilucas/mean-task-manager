@@ -4,10 +4,10 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { IUser } from '@app/scripts/models/user.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { UserService } from '@app/scripts/services/user.service';
+import { IUser } from '@scripts/models/user.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
+import { UserService } from '@scripts/services/user.service';
 
 @Component({
     selector: 'app-statistics',

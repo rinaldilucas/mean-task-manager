@@ -4,10 +4,10 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { IUser } from '@app/scripts/models/user.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { IUser } from '@scripts/models/user.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
 
 @Component({
     selector: 'app-profile',

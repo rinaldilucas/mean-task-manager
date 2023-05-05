@@ -4,10 +4,10 @@ import { lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { ITask } from '@app/scripts/models/task.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { ITask } from '@scripts/models/task.interface';
+import { AuthService } from '@scripts/services/auth.service';
+import { SharedService } from '@scripts/services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
