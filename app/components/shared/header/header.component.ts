@@ -2,22 +2,20 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
 import { TaskService } from '@scripts/services/task.service';
 import { UserService } from '@scripts/services/user.service';
 
 @Component({
-    selector: 'app-main-nav',
-    templateUrl: './main-nav.component.html',
-    styleUrls: ['./main-nav.component.scss'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainNavComponent implements OnInit {
+export class HeaderComponent implements OnInit {
     time = new Date();
     opened!: boolean;
     isLogged = false;
@@ -29,14 +27,12 @@ export class MainNavComponent implements OnInit {
     );
 
     constructor (
-        private translateService: TranslateService,
-        private authService: AuthService,
+         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
         public taskService: TaskService,
         public userService: UserService,
         public changeDetector: ChangeDetectorRef,
-        public router: Router,
-        private sharedService: SharedService
+        public router: Router
     ) {}
 
     ngOnInit (): void {

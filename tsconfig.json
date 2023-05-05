@@ -31,6 +31,9 @@
             "@app/*": [
                 "app/*"
             ],
+            "@components/*": [
+                "app/components/*"
+            ],
             "@assets/*": [
                 "app/assets/*"
             ],

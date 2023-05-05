@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
-import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
+import { TaskFormEntryComponent } from '@app/components/pages/tasks/task-form/task-form.component';
+import { TaskListComponent } from '@app/components/pages/tasks/task-list/task-list.component';
 import { AuthGuard } from '@scripts/guards/auth.guard';
 
 const routes: Routes = [

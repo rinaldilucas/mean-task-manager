@@ -7,14 +7,16 @@ import { AuthGuard } from '@scripts/guards/auth.guard';
 import { LoggedInAuthGuard } from '@scripts/guards/loggedIn.guard';
 import { RoleGuard } from '@scripts/guards/role.guard';
 
+// AUTH
+import { LogInComponent } from '@app/components/auth/login/login.component';
+import { RegisterComponent } from '@app/components/auth/register/register.component';
+
 // PAGES
-import { EmptyPageComponent } from '@app/pages/_components/empty-page.component';
-import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
-import { StatisticsComponent } from '@app/pages/_components/statistics/statistics.component';
-import { LogInComponent } from '@app/pages/auth/login/login.component';
-import { RegisterComponent } from '@app/pages/auth/register/register.component';
-import { HomepageComponent } from '@app/pages/home/home.component';
-import { SettingsComponent } from '@app/pages/settings/settings.component';
+import { EmptyPageComponent } from '@app/components/pages/empty-page.component';
+import { HomepageComponent } from '@app/components/pages/home/home.component';
+import { ProfileComponent } from '@app/components/pages/profile/profile.component';
+import { SettingsComponent } from '@app/components/pages/settings/settings.component';
+import { StatisticsComponent } from '@app/components/pages/statistics/statistics.component';
 
 // ENUM
 import { ERole } from '@scripts/models/enum/role.enum';

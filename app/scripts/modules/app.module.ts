@@ -15,7 +15,6 @@ import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ChartsModule } from 'ng2-charts';
 
 // MODULES
-import { AppComponent } from '@app/pages/app.component';
 import { AngularMaterialModule } from '@scripts/modules/angular-material.module';
 import { AppRoutingModule } from '@scripts/modules/app-routing.module';
 import { InterceptorModule } from '@scripts/modules/interceptor.module';
@@ -27,19 +26,22 @@ import { TaskService } from '@scripts/services/task.service';
 import { UserService } from '@scripts/services/user.service';
 
 // COMPONENTS
-import { MonthlyDoneComponent } from '@app/pages/_components/charts/monthly-done/monthly-done.component';
-import { ProfitOverFundsComponent } from '@app/pages/_components/charts/profit-over-funds/profit-over-funds.component';
-import { TasksDoneComponent } from '@app/pages/_components/charts/tasks-done/tasks-done.component';
-import { WeekEarningsComponent } from '@app/pages/_components/charts/week-earnings/week-earnings.component';
-import { MainNavComponent } from '@app/pages/_components/main-nav/main-nav.component';
-import { ProfileComponent } from '@app/pages/_components/profile/profile.component';
-import { StatisticsComponent } from '@app/pages/_components/statistics/statistics.component';
+import { AppComponent } from '@app/components/app.component';
+import { MonthlyDoneComponent } from '@app/components/shared/charts/monthly-done/monthly-done.component';
+import { ProfitOverFundsComponent } from '@app/components/shared/charts/profit-over-funds/profit-over-funds.component';
+import { TasksDoneComponent } from '@app/components/shared/charts/tasks-done/tasks-done.component';
+import { WeekEarningsComponent } from '@app/components/shared/charts/week-earnings/week-earnings.component';
+import { HeaderComponent } from '@app/components/shared/header/header.component';
+
+// AUTH
+import { LogInComponent } from '@app/components/auth//login/login.component';
+import { RegisterComponent } from '@app/components/auth/register/register.component';
 
 // PAGES
-import { LogInComponent } from '@app/pages/auth/login/login.component';
-import { RegisterComponent } from '@app/pages/auth/register/register.component';
-import { HomepageComponent } from '@app/pages/home/home.component';
-import { SettingsComponent } from '@app/pages/settings/settings.component';
+import { HomepageComponent } from '@app/components/pages/home/home.component';
+import { ProfileComponent } from '@app/components/pages/profile/profile.component';
+import { SettingsComponent } from '@app/components/pages/settings/settings.component';
+import { StatisticsComponent } from '@app/components/pages/statistics/statistics.component';
 
 // MODALS
 
@@ -57,7 +59,7 @@ registerLocaleData(localePt, 'pt-BR');
         RegisterComponent,
         ProfileComponent,
         SettingsComponent,
-        MainNavComponent,
+        HeaderComponent,
         TasksDoneComponent,
         WeekEarningsComponent,
         MonthlyDoneComponent,
