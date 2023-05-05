@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     );
 
     constructor (
-         private authService: AuthService,
+        private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
         public taskService: TaskService,
         public userService: UserService,

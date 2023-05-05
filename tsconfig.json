@@ -25,6 +25,8 @@
         "noImplicitAny": false,
         "noImplicitOverride": true,
         "noImplicitReturns": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "noPropertyAccessFromIndexSignature": false,
         "outDir": "./docs/out-tsc",
         "paths": {

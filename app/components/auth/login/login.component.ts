@@ -10,18 +10,16 @@ import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
 import { AuthService } from '@services/auth.service';
 import { SharedService } from '@services/shared.service';
-import { UserService } from '@services/user.service';
-@Component({
-    selector: 'app-log-in',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
+ @Component({
+     selector: 'app-log-in',
+     templateUrl: './login.component.html',
+     styleUrls: ['./login.component.scss'],
+     changeDetection: ChangeDetectionStrategy.OnPush
+ })
 export class LogInComponent implements OnInit {
     form: FormGroup;
 
     constructor (
-        private userService: UserService,
         private authService: AuthService,
         private formBuilder: FormBuilder,
         private titleService: Title,

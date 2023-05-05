@@ -210,7 +210,7 @@ mat-header-row {
 
 .mat-standard-chip {
     .dark-mode & {
-        background-color: mat-contrast($app-background, 50);
+        background-color: mat-contrast($app-background, 100) !important;
     }
 
     .mat-chip-remove {

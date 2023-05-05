@@ -122,9 +122,9 @@
         "lint": "yarn lint-client && yarn lint-api",
         "lint-api": "npx eslint ./api --ext .ts && yarn lint-types",
         "lint-types": "tsc --noemit",
-        "lint-client": "ng lint && yarn lint-types && yarn sass-lint:fix && yarn lint-sass",
+        "lint-client": "ng lint && yarn lint-types && yarn lint-sass:fix && yarn lint-sass",
         "lint-sass": "sass-lint -c .sasslintrc.json -v -q",
-        "sass-lint:fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
+        "lint-sass:fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
         "start": "npm install && node ./api/server.ts"
     },
     "version": "1.0.0"
