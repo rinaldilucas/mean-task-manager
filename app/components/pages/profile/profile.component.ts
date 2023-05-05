@@ -6,8 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
 
 @Component({
     selector: 'app-profile',

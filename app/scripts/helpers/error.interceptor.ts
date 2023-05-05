@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
-import { AuthService } from '@scripts/services/auth.service';
+import { AuthService } from '@services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

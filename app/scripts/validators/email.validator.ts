@@ -3,7 +3,7 @@ import { first, map, switchMap } from 'rxjs/operators';
 
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { UserService } from '@scripts/services/user.service';
+import { UserService } from '@services/user.service';
 
 export class EmailValidator {
     static createValidator (userService: UserService): AsyncValidatorFn {

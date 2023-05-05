@@ -11,9 +11,9 @@ import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
+import { TaskService } from '@services/task.service';
 
 @Component({
     selector: 'app-task-list',

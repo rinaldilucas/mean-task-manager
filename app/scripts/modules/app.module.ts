@@ -20,28 +20,28 @@ import { AppRoutingModule } from '@scripts/modules/app-routing.module';
 import { InterceptorModule } from '@scripts/modules/interceptor.module';
 
 // SERVICES
-import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
-import { TaskService } from '@scripts/services/task.service';
-import { UserService } from '@scripts/services/user.service';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
+import { TaskService } from '@services/task.service';
+import { UserService } from '@services/user.service';
 
 // COMPONENTS
-import { AppComponent } from '@app/components/app.component';
-import { MonthlyDoneComponent } from '@app/components/shared/charts/monthly-done/monthly-done.component';
-import { ProfitOverFundsComponent } from '@app/components/shared/charts/profit-over-funds/profit-over-funds.component';
-import { TasksDoneComponent } from '@app/components/shared/charts/tasks-done/tasks-done.component';
-import { WeekEarningsComponent } from '@app/components/shared/charts/week-earnings/week-earnings.component';
-import { HeaderComponent } from '@app/components/shared/header/header.component';
+import { AppComponent } from '@components/app.component';
+import { MonthlyDoneComponent } from '@components/shared/charts/monthly-done/monthly-done.component';
+import { ProfitOverFundsComponent } from '@components/shared/charts/profit-over-funds/profit-over-funds.component';
+import { TasksDoneComponent } from '@components/shared/charts/tasks-done/tasks-done.component';
+import { WeekEarningsComponent } from '@components/shared/charts/week-earnings/week-earnings.component';
+import { HeaderComponent } from '@components/shared/header/header.component';
 
 // AUTH
-import { LogInComponent } from '@app/components/auth//login/login.component';
-import { RegisterComponent } from '@app/components/auth/register/register.component';
+import { LogInComponent } from '@components/auth/login/login.component';
+import { RegisterComponent } from '@components/auth/register/register.component';
 
 // PAGES
-import { HomepageComponent } from '@app/components/pages/home/home.component';
-import { ProfileComponent } from '@app/components/pages/profile/profile.component';
-import { SettingsComponent } from '@app/components/pages/settings/settings.component';
-import { StatisticsComponent } from '@app/components/pages/statistics/statistics.component';
+import { HomepageComponent } from '@components/pages/home/home.component';
+import { ProfileComponent } from '@components/pages/profile/profile.component';
+import { SettingsComponent } from '@components/pages/settings/settings.component';
+import { StatisticsComponent } from '@components/pages/statistics/statistics.component';
 
 // MODALS
 

@@ -31,20 +31,23 @@
             "@app/*": [
                 "app/*"
             ],
-            "@components/*": [
-                "app/components/*"
-            ],
             "@assets/*": [
                 "app/assets/*"
+            ],
+            "@components/*": [
+                "app/components/*"
             ],
             "@env/*": [
                 "app/environments/*"
             ],
-            "@styles/*": [
-                "app/styles/*"
-            ],
             "@scripts/*": [
                 "app/scripts/*"
+            ],
+            "@services/*": [
+                "app/scripts/services/*"
+            ],
+            "@styles/*": [
+                "app/styles/*"
             ]
         },
         "resolveJsonModule": true,

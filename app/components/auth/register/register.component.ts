@@ -8,10 +8,10 @@ import { StatusCode } from 'status-code-enum';
 import { ERole } from '@scripts/models/enum/role.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
-import { UserService } from '@scripts/services/user.service';
 import { EmailValidator } from '@scripts/validators/email.validator';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-register',

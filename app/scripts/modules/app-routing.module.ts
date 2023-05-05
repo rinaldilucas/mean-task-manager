@@ -8,15 +8,15 @@ import { LoggedInAuthGuard } from '@scripts/guards/loggedIn.guard';
 import { RoleGuard } from '@scripts/guards/role.guard';
 
 // AUTH
-import { LogInComponent } from '@app/components/auth/login/login.component';
-import { RegisterComponent } from '@app/components/auth/register/register.component';
+import { LogInComponent } from '@components/auth/login/login.component';
+import { RegisterComponent } from '@components/auth/register/register.component';
 
 // PAGES
-import { EmptyPageComponent } from '@app/components/pages/empty-page.component';
-import { HomepageComponent } from '@app/components/pages/home/home.component';
-import { ProfileComponent } from '@app/components/pages/profile/profile.component';
-import { SettingsComponent } from '@app/components/pages/settings/settings.component';
-import { StatisticsComponent } from '@app/components/pages/statistics/statistics.component';
+import { EmptyPageComponent } from '@components/pages/empty-page.component';
+import { HomepageComponent } from '@components/pages/home/home.component';
+import { ProfileComponent } from '@components/pages/profile/profile.component';
+import { SettingsComponent } from '@components/pages/settings/settings.component';
+import { StatisticsComponent } from '@components/pages/statistics/statistics.component';
 
 // ENUM
 import { ERole } from '@scripts/models/enum/role.enum';

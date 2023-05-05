@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 
 import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { CategoryService } from '@scripts/services/category.service';
-import { SharedService } from '@scripts/services/shared.service';
+import { CategoryService } from '@services/category.service';
+import { SharedService } from '@services/shared.service';
 
 @Component({
     selector: 'app-settings',

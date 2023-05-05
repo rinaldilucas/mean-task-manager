@@ -12,8 +12,8 @@ import { IJwtPayload } from '@scripts/models/jwtPayload.interface';
 import { IJwtToken } from '@scripts/models/jwtToken.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { SharedService } from '@scripts/services/shared.service';
-import { UserService } from '@scripts/services/user.service';
+import { SharedService } from '@services/shared.service';
+import { UserService } from '@services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

@@ -12,10 +12,10 @@ import { ICategory } from '@scripts/models/category.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
-import { AuthService } from '@scripts/services/auth.service';
-import { CategoryService } from '@scripts/services/category.service';
-import { SharedService } from '@scripts/services/shared.service';
-import { TaskService } from '@scripts/services/task.service';
+import { AuthService } from '@services/auth.service';
+import { CategoryService } from '@services/category.service';
+import { SharedService } from '@services/shared.service';
+import { TaskService } from '@services/task.service';
 
 @Component({
     template: '',

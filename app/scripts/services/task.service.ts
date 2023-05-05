@@ -6,8 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
-import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {

@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-import { AuthService } from '@scripts/services/auth.service';
-import { TaskService } from '@scripts/services/task.service';
-import { UserService } from '@scripts/services/user.service';
+import { AuthService } from '@services/auth.service';
+import { TaskService } from '@services/task.service';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-header',

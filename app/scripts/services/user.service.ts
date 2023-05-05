@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { SharedService } from '@scripts/services/shared.service';
+import { SharedService } from '@services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

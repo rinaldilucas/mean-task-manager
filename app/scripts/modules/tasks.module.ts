@@ -6,13 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 
-// MODULES
+// SCRIPTS
 import { AngularMaterialModule } from '@scripts/modules/angular-material.module';
 import { TaskRoutingModule } from '@scripts/modules/tasks-routing.module';
-
-import { TaskFormBottomSheetComponent } from '@app/components/pages/tasks/task-form/task-form.component';
-import { TaskListComponent } from '@app/components/pages/tasks/task-list/task-list.component';
 import { ConvertDatePipe } from '@scripts/pipes/convertDate.pipe';
+
+import { TaskFormBottomSheetComponent } from '@components/pages/tasks/task-form/task-form.component';
+import { TaskListComponent } from '@components/pages/tasks/task-list/task-list.component';
 
 @NgModule({
     declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],

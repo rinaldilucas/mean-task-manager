@@ -5,8 +5,8 @@ import { Colors } from 'ng2-charts';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
-import { SharedService } from '@scripts/services/shared.service';
-import { TaskService } from '@scripts/services/task.service';
+import { SharedService } from '@services/shared.service';
+import { TaskService } from '@services/task.service';
 
 @Component({
     selector: 'app-tasks-done',

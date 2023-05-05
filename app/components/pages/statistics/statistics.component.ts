@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@scripts/services/auth.service';
-import { SharedService } from '@scripts/services/shared.service';
-import { UserService } from '@scripts/services/user.service';
+import { AuthService } from '@services/auth.service';
+import { SharedService } from '@services/shared.service';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-statistics',
