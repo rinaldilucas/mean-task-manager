@@ -42,7 +42,6 @@ import { HomepageComponent } from '@app/pages/home/home.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';
 
 // MODALS
-import { TaskFormBottomSheetComponent } from '@app/pages/tasks/task-form/task-form.component';
 
 export function createTranslateLoader (http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -65,7 +64,6 @@ registerLocaleData(localePt, 'pt-BR');
         ProfitOverFundsComponent,
         StatisticsComponent
     ],
-    entryComponents: [TaskFormBottomSheetComponent],
     imports: [
         AppRoutingModule,
         BrowserModule,

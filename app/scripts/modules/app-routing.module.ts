@@ -25,7 +25,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard] },
     {
         path: 'tasks',
-        loadChildren: () => import('@app/pages/tasks/tasks.module').then((module) => module.TaskModule)
+        loadChildren: () => import('@app/scripts/modules/tasks.module').then((module) => module.TaskModule)
     },
     { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
