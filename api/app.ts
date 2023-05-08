@@ -9,10 +9,10 @@ import DatabaseConfig from './config/mongodb.config';
 import swaggerDocs from './swagger.json';
 
 // Import routes
-import authRoutes from './routes/auth.routes';
-import categoryRoutes from './routes/category.routes';
-import taskRoutes from './routes/task.routes';
-import userRoutes from './routes/user.routes';
+import authRoutes from '@routes/auth.routes';
+import categoryRoutes from '@routes/category.routes';
+import taskRoutes from '@routes/task.routes';
+import userRoutes from '@routes/user.routes';
 
 class App {
     public express: express.Application;

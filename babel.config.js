@@ -15,9 +15,11 @@ module.exports = {
             'module-resolver',
             {
                 alias: {
+                    '@api': './api',
                     '@models': './api/models',
                     '@controllers': './api/controllers',
-                    '@middlewares': './api/middlewares'
+                    '@middlewares': './api/middlewares',
+                    '@routes': './api/routes'
                 }
             }
         ]

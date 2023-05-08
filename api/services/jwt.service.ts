@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import redisService from './redis.service';
+import redisService from '@api/services/redis.service';
 
 class JwtService {
     generate (email, userId, role): { access: string, refresh: string} {

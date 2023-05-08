@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import app from './app';
+import app from '@api/app';
 
 // Creates server
 app.listen(process.env.SERVER_PORT, () => {

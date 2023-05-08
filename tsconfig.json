@@ -34,6 +34,9 @@
             "@app/*": [
                 "./app/*"
             ],
+            "@api/*": [
+                "./api/*"
+            ],
             "@assets/*": [
                 "./app/assets/*"
             ],
@@ -60,6 +63,9 @@
             ],
             "@models/*": [
                 "./api/models/*"
+            ],
+            "@routes/*": [
+                "./api/routes/*"
             ]
         },
         "resolveJsonModule": true,

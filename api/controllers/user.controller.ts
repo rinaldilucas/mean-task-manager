@@ -2,8 +2,8 @@ import Async from 'async';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
-import { User as Model } from '../models/user.model';
-import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';
+import { User as Model } from '@models/user.model';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class UserController {
     public async findAll (request: Request, response: Response): Promise<Response | any> {

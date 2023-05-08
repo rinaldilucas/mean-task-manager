@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import StatusCode from 'status-code-enum';
-import redisService from '../services/redis.service';
 
-import { responseError } from '../utils/http.handler';
+import redisService from '@api/services/redis.service';
+import { responseError } from '@api/utils/http.handler';
 
 export default async (request: Request, response: Response, next: NextFunction): Promise<NextFunction | undefined | void> => {
     const language = request.headers.language;

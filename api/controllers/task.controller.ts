@@ -2,8 +2,8 @@ import Async from 'async';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
-import { Task as Model } from '../models/task.model';
-import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
+import { Task as Model } from '@models/task.model';
 
 class TaskController {
     public async findAllByUser (request: Request, response: Response): Promise<Response | any> {

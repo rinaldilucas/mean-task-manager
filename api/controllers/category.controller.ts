@@ -2,8 +2,8 @@ import Async from 'async';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
-import { Category as Model } from '../models/category.model';
-import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
+import { Category as Model } from '@models/category.model';
 
 class CategoryController {
     public async findAll (request: Request, response: Response): Promise<Response | any> {

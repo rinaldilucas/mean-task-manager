@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
+import jwtService from '@api/services/jwt.service';
+import redisService from '@api/services/redis.service';
 import { User as Model } from '@models/user.model';
-import jwtService from '../services/jwt.service';
-import redisService from '../services/redis.service';
-import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class AuthController {
     public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
