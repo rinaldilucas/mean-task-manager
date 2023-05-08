@@ -41,8 +41,7 @@
         "status-code-enum": "^1.0.0",
         "swagger-ui-express": "^4.6.2",
         "tslib": "^2.3.0",
-        "zone.js": "~0.11.4",
-        "typescript": "4.8.4"
+        "zone.js": "~0.11.4"
     },
     "description": "A Todo Web App built with MongoDB, ExpressJS, NodeJS 18 and Angular 15 (MEAN stack)",
     "devDependencies": {
@@ -55,6 +54,10 @@
         "@angular/cli": "~15.2.7",
         "@angular/compiler-cli": "^15.2.8",
         "@angular/language-service": "^15.2.8",
+        "@babel/cli": "^7.21.5",
+        "@babel/core": "^7.21.8",
+        "@babel/preset-env": "^7.21.5",
+        "@babel/preset-typescript": "^7.21.5",
         "@types/async": "^3.2.19",
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.12",
@@ -68,6 +71,7 @@
         "@types/swagger-ui-express": "^4.1.3",
         "@typescript-eslint/eslint-plugin": "5.43.0",
         "@typescript-eslint/parser": "5.43.0",
+        "babel-plugin-module-resolver": "^5.0.0",
         "e2e": "0.0.8",
         "eslint": "^8.28.0",
         "eslint-config-prettier": "^8.5.0",
@@ -96,9 +100,9 @@
         "sass-lint": "^1.13.1",
         "sass-lint-auto-fix": "^0.21.2",
         "sha.js": "^2.4.11",
-        "sucrase": "^3.24.0",
         "ts-node": "^10.9.1",
-        "tsconfig-paths": "^4.2.0"
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "4.8.4"
     },
     "homepage": "https://github.com/rinaldilucas/mean-stack-template#readme",
     "keywords": [
@@ -113,9 +117,8 @@
         "url": "git+https://github.com/rinaldilucas/mean-stack-template.git"
     },
     "scripts": {
-        "api-build": "sucrase ./api -d ./dist --transforms typescript,imports --prod=true",
+        "api-build": "babel api --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
         "api-debug": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./api/server.ts",
-        "api-prebuild": "rimraf dist",
         "build": "yarn api-prebuild && yarn api-build && yarn client-build",
         "client-build": "ng build --configuration production --base-href=/mean-stack-template/",
         "client-build-debug": "ng build --configuration development --watch",
@@ -124,10 +127,10 @@
         "dev": "run-p client-serve api-debug",
         "lint": "yarn lint-client && yarn lint-api",
         "lint-api": "npx eslint ./api --ext .ts && yarn lint-types",
-        "lint-types": "tsc --noemit",
         "lint-client": "ng lint && yarn lint-types && yarn lint-sass:fix && yarn lint-sass",
         "lint-sass": "sass-lint -c .sasslintrc.json -v -q",
         "lint-sass:fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
+        "lint-types": "tsc --noemit",
         "start": "npm install && node ./api/server.ts"
     },
     "version": "1.0.0"
