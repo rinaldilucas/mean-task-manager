@@ -121,7 +121,7 @@
         "api-debug": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./api/server.ts",
         "build": "yarn api-prebuild && yarn api-build && yarn client-build",
         "client-build": "ng build --configuration production --base-href=/mean-stack-template/",
-        "client-build-debug": "ng build --configuration development --watch",
+        "client-debug": "ng build --configuration development --watch",
         "client-serve": "ng serve --o",
         "client-test": "ng test",
         "dev": "run-p client-serve api-debug",
