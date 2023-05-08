@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import refreshMiddleware from '../middlewares/refresh.middleware';
-import { verifyValidations } from '../middlewares/validator.middleware';
+import refreshMiddleware from '@middlewares/refresh.middleware';
+import { verifyValidations } from '@middlewares/validator.middleware';
 
-import Controller from '../controllers/auth.controller';
+import Controller from '@controllers/auth.controller';
 
 const routes = Router();
 

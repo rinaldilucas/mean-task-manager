@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
-import { User as Model } from '../models/user.model';
+import { User as Model } from '@models/user.model';
 import jwtService from '../services/jwt.service';
 import redisService from '../services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '../utils/http.handler';

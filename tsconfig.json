@@ -9,7 +9,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "./",
+        "baseUrl": ".",
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
@@ -19,7 +19,8 @@
             "es2018",
             "dom"
         ],
-        "module": "es2020",
+        "esModuleInterop": true,
+        "module": "CommonJS",
         "moduleResolution": "node",
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": false,
@@ -31,25 +32,34 @@
         "outDir": "./docs/out-tsc",
         "paths": {
             "@app/*": [
-                "app/*"
+                "./app/*"
             ],
             "@assets/*": [
-                "app/assets/*"
+                "./app/assets/*"
             ],
             "@components/*": [
-                "app/components/*"
+                "./app/components/*"
             ],
             "@env/*": [
-                "app/environments/*"
+                "./app/environments/*"
             ],
             "@scripts/*": [
-                "app/scripts/*"
+                "./app/scripts/*"
             ],
             "@services/*": [
-                "app/scripts/services/*"
+                "./app/scripts/services/*"
             ],
             "@styles/*": [
-                "app/styles/*"
+                "./app/styles/*"
+            ],
+            "@controllers/*": [
+                "./api/controllers/*"
+            ],
+            "@middlewares/*": [
+                "./api/middlewares/*"
+            ],
+            "@models/*": [
+                "./api/models/*"
             ]
         },
         "resolveJsonModule": true,
@@ -58,5 +68,8 @@
         "strict": true,
         "strictNullChecks": true,
         "target": "es2018"
+    },
+    "ts-node": {
+        "esm": true
     }
 }
