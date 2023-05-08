@@ -118,7 +118,7 @@
     },
     "scripts": {
         "api-build": "babel api --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-        "api-debug": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./api/server.ts",
+        "api-debug": "nodemon --ignore \"app\" -e ts,js --exec ts-node -r tsconfig-paths/register ./api/server.ts",
         "build": "yarn api-prebuild && yarn api-build && yarn client-build",
         "client-build": "ng build --configuration production --base-href=/mean-stack-template/",
         "client-debug": "ng build --configuration development --watch",

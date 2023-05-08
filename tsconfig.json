@@ -77,6 +77,10 @@
         "useDefineForClassFields": false
     },
     "ts-node": {
-        "esm": true
-    }
+        "esm": true,
+        "exclude": [
+            "app/",
+            "dist/",
+        ]
+    },
 }
