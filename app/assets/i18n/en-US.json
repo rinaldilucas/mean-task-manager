@@ -69,6 +69,16 @@
         "language": "Language",
         "portuguese": "Portuguese"
     },
+    "statistics": {
+        "status": {
+            "done": "Done",
+            "progress": "In progress",
+            "to-do": "To do"
+        },
+        "tasks-done": "Tasks done",
+        "tasks-done-monthly": "Task done monthly",
+        "tasks-done-weekly": "Registered weekly"
+    },
     "table": {
         "actions": {
             "done": "Set as done",

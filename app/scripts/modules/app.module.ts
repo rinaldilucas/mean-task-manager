@@ -28,7 +28,6 @@ import { UserService } from '@services/user.service';
 // COMPONENTS
 import { AppComponent } from '@components/app.component';
 import { MonthlyDoneComponent } from '@components/shared/charts/monthly-done/monthly-done.component';
-import { ProfitOverFundsComponent } from '@components/shared/charts/profit-over-funds/profit-over-funds.component';
 import { TasksDoneComponent } from '@components/shared/charts/tasks-done/tasks-done.component';
 import { WeekEarningsComponent } from '@components/shared/charts/week-earnings/week-earnings.component';
 import { HeaderComponent } from '@components/shared/header/header.component';
@@ -63,7 +62,6 @@ registerLocaleData(localePt, 'pt-BR');
         TasksDoneComponent,
         WeekEarningsComponent,
         MonthlyDoneComponent,
-        ProfitOverFundsComponent,
         StatisticsComponent
     ],
     imports: [

@@ -16,7 +16,7 @@ export class TaskService {
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    listTasksByUser (pageSize: number, searchTerm?: string, pageIndex = 0, sortFilter?: string, sortDirection?: string): Promise<IQueryResult<ITask[]>> {
+    listTasksByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Promise<IQueryResult<ITask[]>> {
         const id = this.authService.getUserId();
         let url = `${this.url}/user/${id}?`;
 
@@ -58,5 +58,17 @@ export class TaskService {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
+    }
+
+    getTasksDoneMonthly (id: string): Promise<IQueryResult<any>> {
+        const url = `${this.url}/done-monthly/${id}`;
+
+        return lastValueFrom(this.http.get<IQueryResult<any>>(url).pipe(catchError(this.sharedService.errorHandler)));
+    }    
+
+    getTasksDoneWeekly (id: string): Promise<IQueryResult<any>> {
+        const url = `${this.url}/done-monthly/${id}`;
+
+        return lastValueFrom(this.http.get<IQueryResult<any>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

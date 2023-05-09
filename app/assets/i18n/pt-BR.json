@@ -69,6 +69,16 @@
         "language": "Linguagem",
         "portuguese": "Português"
     },
+    "statistics": {
+        "status": {
+            "done": "Feito",
+            "progress": "Em progresso",
+            "to-do": "A fazer"
+        },
+        "tasks-done": "Tarefas realizadas",
+        "tasks-done-monthly": "Tarefas realizadas mensalmente",
+        "tasks-done-weekly": "Tarefas realizadas semanalmente"
+    },
     "table": {
         "actions": {
             "done": "Finalizar",
