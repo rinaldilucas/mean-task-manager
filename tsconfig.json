@@ -75,12 +75,5 @@
         "strictNullChecks": true,
         "target": "ES2022",
         "useDefineForClassFields": false
-    },
-    "ts-node": {
-        "esm": true,
-        "exclude": [
-            "app/",
-            "dist/",
-        ]
-    },
+    }
 }

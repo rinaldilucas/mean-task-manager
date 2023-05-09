@@ -59,7 +59,7 @@ class TaskController {
                 else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
             }
 
-            responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
+            return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
         });
     }
 
@@ -73,7 +73,7 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
     public async create (request: Request, response: Response): Promise<Response | undefined> {
@@ -86,7 +86,7 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessCreated);
+        return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
     public async update (request: Request, response: Response): Promise<Response | undefined> {
@@ -106,7 +106,7 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
     public async remove (request: Request, response: Response): Promise<Response | undefined> {
@@ -126,7 +126,7 @@ class TaskController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 }
 

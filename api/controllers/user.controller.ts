@@ -31,7 +31,7 @@ class UserController {
                 else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
             }
 
-            responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
+            return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
         });
     }
 
@@ -45,7 +45,7 @@ class UserController {
             else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
     public async findOneByEmail (request: Request, response: Response): Promise<Response | undefined> {
@@ -53,7 +53,7 @@ class UserController {
         if (error) return;
         if (!data) return responseSuccess(response, {}, StatusCode.SuccessOK, 0);
 
-        responseSuccess(response, { alreadyRegistered: true }, StatusCode.SuccessOK);
+        return responseSuccess(response, { alreadyRegistered: true }, StatusCode.SuccessOK);
     }
 }
 

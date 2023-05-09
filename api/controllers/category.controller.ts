@@ -31,7 +31,7 @@ class CategoryController {
                 else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar categorias. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
             }
 
-            responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
+            return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
         });
     }
 
@@ -45,7 +45,7 @@ class CategoryController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessCreated);
+        return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
     public async remove (request: Request, response: Response): Promise<Response | undefined> {
@@ -65,7 +65,7 @@ class CategoryController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 }
 
