@@ -128,6 +128,22 @@ class TaskController {
 
         return responseSuccess(response, data, StatusCode.SuccessOK);
     }
+
+    public async getTasksDoneWeekly (request: Request, response: Response): Promise<Response | any> {
+        const language = request.headers.language;
+
+        const findQuery = { userId: request.params.userId } as any;
+        findQuery.createdAt = { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay() - 35), $lte: new Date() };
+
+        const [data, error] = await handlePromises(request, response, Model.find(findQuery));
+        if (error) return;
+        if (!data) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+        }
+
+        return responseSuccess(response, data, StatusCode.SuccessOK);
+    }
 }
 
 export default new TaskController();

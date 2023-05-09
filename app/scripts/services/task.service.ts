@@ -60,15 +60,10 @@ export class TaskService {
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getTasksDoneMonthly (id: string): Promise<IQueryResult<any>> {
-        const url = `${this.url}/done-monthly/${id}`;
+    getTasksDoneWeekly (): Promise<IQueryResult<ITask>> {
+        const id = this.authService.getUserId();
+        const url = `${this.url}/done-weekly/${id}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<any>>(url).pipe(catchError(this.sharedService.errorHandler)));
-    }    
-
-    getTasksDoneWeekly (id: string): Promise<IQueryResult<any>> {
-        const url = `${this.url}/done-monthly/${id}`;
-
-        return lastValueFrom(this.http.get<IQueryResult<any>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

@@ -38,11 +38,11 @@ export class TasksDoneComponent implements OnInit {
     ) {}
 
     ngOnInit (): void {
-        this.getDailyEarnings();
-        this.taskService.emitTask.subscribe(() => this.getDailyEarnings());
+        this.refresh();
+        this.taskService.emitTask.subscribe(() => this.refresh());
     }
 
-    async getDailyEarnings (): Promise<ITask | void> {
+    async refresh (): Promise<ITask | void> {
         this.translateService.get('statistics.tasks-done').subscribe((text: string) => { (this.pieChartOptions.title as ChartTitleOptions).text = text; });
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser());

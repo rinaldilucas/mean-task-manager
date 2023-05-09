@@ -35,7 +35,7 @@ class AuthController {
             keepUserLoggedIn: request.body.keepUserLoggedIn
         };
 
-        responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+        return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
     public async register (request: Request, response: Response): Promise<Response | undefined> {
@@ -64,7 +64,7 @@ class AuthController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessCreated);
+        return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
     public async changePassword (request: Request, response: Response): Promise<Response | undefined> {
@@ -88,7 +88,7 @@ class AuthController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
     public async refreshToken (request: Request, response: Response): Promise<Response | undefined> {
@@ -113,7 +113,7 @@ class AuthController {
             userId: request.body.userId
         };
 
-        responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+        return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
     public async logout (request: Request, response: Response): Promise<Response | undefined> {
@@ -121,7 +121,7 @@ class AuthController {
         const [, addToBlacklistError] = await handlePromises(request, response, redisService.addToBlacklist(token));
         if (addToBlacklistError) return;
 
-        responseSuccess(response, {}, StatusCode.SuccessOK);
+        return responseSuccess(response, {}, StatusCode.SuccessOK);
     }
 }
 

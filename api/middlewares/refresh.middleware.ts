@@ -18,24 +18,24 @@ export default async (request: Request, response: Response, next: NextFunction):
                 decoded.aud !== process.env.JWT_AUDIENCE ||
                 decoded.iss !== process.env.JWT_ISSUER
             ) {
-                if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type.'));
-                else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
+                if (language === 'en-US') return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Invalid token type.'));
+                else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
             }
 
             const value = await redisService.get(token);
             if (value) {
-                if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used.'));
-                else next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token já utilizado.'));
+                if (language === 'en-US') return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used.'));
+                else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token já utilizado.'));
             }
 
             request.body.email = decoded.sub;
             return next();
         } catch (error) {
-            if (language === 'en-US') next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token.'));
-            else next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'JWT inválido.'));
+            if (language === 'en-US') return next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid refresh token.'));
+            else return next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Refresh token inválido.'));
         }
     }
 
-    if (language === 'en-US') next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token is not present.'));
-    else next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token não está presente.'));
+    if (language === 'en-US') return next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token is not present.'));
+    else return next(responseError(response, {}, StatusCode.ClientErrorBadRequest, 'Refresh token não está presente.'));
 };
