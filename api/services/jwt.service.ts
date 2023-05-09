@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import redisService from '@api/services/redis.service';
+import { add as addToBlacklist } from '@api/services/redis.service';
 
 class JwtService {
     generate (email, userId, role): { access: string, refresh: string} {
@@ -39,13 +39,7 @@ class JwtService {
     }
 
     async refreshJwt ({ email, userId, role, token }): Promise<{ access: string, refresh: string}> {
-        await redisService.set({
-            key: token,
-            value: '1',
-            timeType: 'EX',
-            time: parseInt(String(process.env.JWT_REFRESH_TIME), 10)
-        });
-
+        await addToBlacklist(token);
         return this.generate(email, userId, role);
     }
 }

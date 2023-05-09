@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
 import jwtService from '@api/services/jwt.service';
-import redisService from '@api/services/redis.service';
-import { User as Model } from '@models/user.model';
+import { add as addToBlacklist } from '@api/services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
+import { User as Model } from '@models/user.model';
 
 class AuthController {
     public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
@@ -118,7 +118,7 @@ class AuthController {
 
     public async logout (request: Request, response: Response): Promise<Response | undefined> {
         const token = request.body.token;
-        const [, addToBlacklistError] = await handlePromises(request, response, redisService.addToBlacklist(token));
+        const [, addToBlacklistError] = await handlePromises(request, response, addToBlacklist(token));
         if (addToBlacklistError) return;
 
         return responseSuccess(response, {}, StatusCode.SuccessOK);

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import StatusCode from 'status-code-enum';
 
-import redisService from '@api/services/redis.service';
+import { verifyBlacklistForToken } from '@api/services/redis.service';
 import { responseError } from '@api/utils/http.handler';
 
 export default async (request: Request, response: Response, next: NextFunction): Promise<NextFunction | undefined | void> => {
@@ -22,7 +22,7 @@ export default async (request: Request, response: Response, next: NextFunction):
                 else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
             }
 
-            const value = await redisService.get(token);
+            const value = await verifyBlacklistForToken(token);
             if (value) {
                 if (language === 'en-US') return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token was already used.'));
                 else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Refresh token já utilizado.'));

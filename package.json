@@ -34,7 +34,7 @@
         "ng2-charts": "^2.3.2",
         "node": "^14.4.0",
         "openapi-types": "^12.1.0",
-        "redis": "^4.6.6",
+        "redis": "^3.0.2",
         "rxjs": "~7.5.0",
         "sass": "^1.50.1",
         "sass-loader": "^13.0.2",
