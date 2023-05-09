@@ -4,7 +4,7 @@ var OFF = 0,
 
 module.exports = {
     root: true,
-    ignorePatterns: [],
+    ignorePatterns: ['dist/*', 'docs/*', 'node_modules/*'],
     overrides: [
         {
             extends: [

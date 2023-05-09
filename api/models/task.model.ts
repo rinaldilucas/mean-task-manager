@@ -1,5 +1,5 @@
+import { TaskInterface as Interface } from '@api/models/interfaces/Task.interface';
 import { Model, Schema, SchemaTypes, model } from 'mongoose';
-import { TaskInterface as Interface } from '@api/interfaces/Task.interface';
 
 const SchemaModel = new Schema({
     title: { type: String, required: true, minLength: 2, maxLength: 100 },

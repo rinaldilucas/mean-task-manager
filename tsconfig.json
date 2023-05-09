@@ -74,6 +74,10 @@
         "strict": true,
         "strictNullChecks": true,
         "target": "ES2022",
-        "useDefineForClassFields": false
-    }
+        "useDefineForClassFields": false,
+    },
+    "include": [
+        "./app/",
+        "./api/"
+    ],
 }
