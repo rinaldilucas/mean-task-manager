@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _async = _interopRequireDefault(require("async"));
 var _statusCodeEnum = require("status-code-enum");
-var _category = require("../models/category.model");
 var _http = require("../utils/http.handler");
+var _category = require("../models/category.model");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class CategoryController {
   async findAll(request, response) {
@@ -26,7 +26,7 @@ class CategoryController {
       if (error) {
         if (language === 'en-US') return (0, _http.responseError)(response, error, _statusCodeEnum.StatusCode.ServerErrorInternal, `Error finding categories. Error: ${error.message}. Document name: {${_category.Category.modelName}}.`);else return (0, _http.responseError)(response, error, _statusCodeEnum.StatusCode.ServerErrorInternal, `Erro ao buscar categorias. Erro: ${error.message}. Nome do documento: {${_category.Category.modelName}}.`);
       }
-      (0, _http.responseSuccess)(response, results[1], _statusCodeEnum.StatusCode.SuccessOK, results[0]);
+      return (0, _http.responseSuccess)(response, results[1], _statusCodeEnum.StatusCode.SuccessOK, results[0]);
     });
   }
   async create(request, response) {
@@ -36,7 +36,7 @@ class CategoryController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${_category.Category.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${_category.Category.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
   }
   async remove(request, response) {
     const language = request.headers.language;
@@ -54,7 +54,7 @@ class CategoryController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${_category.Category.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${_category.Category.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
   }
 }
 var _default = new CategoryController();

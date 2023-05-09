@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _statusCodeEnum = require("status-code-enum");
-var _user = require("../models/user.model");
 var _jwt = _interopRequireDefault(require("../services/jwt.service"));
 var _redis = _interopRequireDefault(require("../services/redis.service"));
+var _user = require("../models/user.model");
 var _http = require("../utils/http.handler");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class AuthController {

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _async = _interopRequireDefault(require("async"));
 var _statusCodeEnum = require("status-code-enum");
-var _task = require("../models/task.model");
 var _http = require("../utils/http.handler");
+var _task = require("../models/task.model");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class TaskController {
   async findAllByUser(request, response) {
@@ -58,7 +58,7 @@ class TaskController {
       if (error) {
         if (language === 'en-US') return (0, _http.responseError)(response, error, _statusCodeEnum.StatusCode.ServerErrorInternal, `Error finding documents. Error: ${error.message}. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, error, _statusCodeEnum.StatusCode.ServerErrorInternal, `Erro ao buscar documentos. Erro: ${error.message}. Nome do documento: {${_task.Task.modelName}}.`);
       }
-      (0, _http.responseSuccess)(response, results[1], _statusCodeEnum.StatusCode.SuccessOK, results[0]);
+      return (0, _http.responseSuccess)(response, results[1], _statusCodeEnum.StatusCode.SuccessOK, results[0]);
     });
   }
   async findOne(request, response) {
@@ -70,7 +70,7 @@ class TaskController {
     if (!data) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${_task.Task.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
   }
   async create(request, response) {
     const language = request.headers.language;
@@ -79,7 +79,7 @@ class TaskController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${_task.Task.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
   }
   async update(request, response) {
     const language = request.headers.language;
@@ -99,7 +99,7 @@ class TaskController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${_task.Task.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
   }
   async remove(request, response) {
     const language = request.headers.language;
@@ -117,7 +117,7 @@ class TaskController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${_task.Task.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
   }
 }
 var _default = new TaskController();
