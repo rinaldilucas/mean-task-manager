@@ -67,14 +67,14 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Search and ordering features via the database to minimize requests
 -   AJAX requests used for pagination
 -   JWT implementation with refresh token on Redis
+-   Feature to blacklist access token which as logouted and refresh token already used
 -   Authentication and role guard features added
 -   Password encryption feature implemented
--   Redis blacklist feature added
 -   Front-end validation on requests and inputs
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
 -   Database and model validation using mongoose
 -   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easy to reuse on other applications, whether using only the frontend, backend or database
--   Custom pipes used to convert date to a selected language
+-   Custom pipes to convert date to selected language
 -   Custom async validator to check already registered user
 -   Interceptor modules added to verify bearer token, errors, and headers language
 -   Dark mode persistent trought browser local storage

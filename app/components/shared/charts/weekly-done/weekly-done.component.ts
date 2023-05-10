@@ -30,7 +30,7 @@ export class WeeklyDoneComponent implements OnInit {
         },
         title: {
             display: true,
-            text: "lol",
+            text: 'Title'
         }
     };
 
@@ -48,38 +48,38 @@ export class WeeklyDoneComponent implements OnInit {
     }
 
     async refresh (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done-weekly').subscribe((text) => { 
+        this.translateService.get('statistics.tasks-done-weekly').subscribe((text) => {
             debugger;
-            (this.lineChartOptions.title as any).text = text; 
+            (this.lineChartOptions.title as any).text = text;
             this.changeDetector.markForCheck();
         });
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTasksDoneWeekly());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
         this.tasks = result.data;
-      
+
         for (let i = 4; i > 0; i--) {
-             var date = new Date();
+            const date = new Date();
             date.setDate(date.getDate() - (7 * i));
-             this.lineChartLabels.push(`${date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}/${(date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}`);
+            this.lineChartLabels.push(`${date.getDate().toLocaleString('default', { minimumIntegerDigits: 2, useGrouping: false })}/${(date.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`);
         }
 
         this.verifyResolutions();
-        this.lineChartData = [[6, 12, 14, 18]]; 
+        this.lineChartData = [[6, 12, 14, 18]];
         this.changeDetector.markForCheck();
     }
 
     verifyResolutions (): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
-             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm') {
+            if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm') {
                 (this.lineChartOptions.title as ChartTitleOptions).fontSize = 26;
                 (this.lineChartOptions.tooltips as ChartTooltipOptions).titleFontSize = 24;
                 (this.lineChartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 24;
-             } else {
+            } else {
                 (this.lineChartOptions.title as ChartTitleOptions).fontSize = 16;
                 (this.lineChartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
                 (this.lineChartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-             }
+            }
             this.changeDetector.markForCheck();
         });
     }
