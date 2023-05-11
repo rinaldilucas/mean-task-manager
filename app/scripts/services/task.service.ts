@@ -16,9 +16,9 @@ export class TaskService {
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    listTasksByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Promise<IQueryResult<ITask[]>> {
-        const id = this.authService.getUserId();
-        let url = `${this.url}/user/${id}?`;
+    findAllByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Promise<IQueryResult<ITask[]>> {
+        const userId = this.authService.getUserId();
+        let url = `${this.url}/user/${userId}?`;
 
         if (sortFilter) url += `sortFilter=${sortFilter}&sortDirection=${sortDirection}&`;
         if (pageSize) url += `pageSize=${pageSize}&`;
@@ -29,8 +29,8 @@ export class TaskService {
     }
 
     filterTasksByUser (searchTerm: string): Promise<IQueryResult<ITask[]>> {
-        const id = this.authService.getUserId();
-        const url = `${this.url}/user/${id}?searchTerm=${searchTerm}`;
+        const userId = this.authService.getUserId();
+        const url = `${this.url}/user/${userId}?searchTerm=${searchTerm}`;
 
         return lastValueFrom(this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
@@ -60,9 +60,11 @@ export class TaskService {
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getTasksDoneWeekly (): Promise<IQueryResult<ITask>> {
-        const id = this.authService.getUserId();
-        const url = `${this.url}/done-weekly/${id}`;
+    getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
+        const userId = this.authService.getUserId();
+        let url = `${this.url}/by-interval/${userId}?`;
+        url += `startDate=${startDate.toISOString()}&`;
+        url += `finalDate=${finalDate.toISOString()}&`;
 
         return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }

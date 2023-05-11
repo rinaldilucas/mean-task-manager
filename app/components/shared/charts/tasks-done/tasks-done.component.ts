@@ -43,7 +43,7 @@ export class TasksDoneComponent implements OnInit {
     async refresh (): Promise<ITask | void> {
         this.translateService.get('statistics.tasks-done').subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser());
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
         this.tasks = result.data;
 

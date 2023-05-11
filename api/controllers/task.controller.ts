@@ -129,11 +129,14 @@ class TaskController {
         return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async getTasksDoneWeekly (request: Request, response: Response): Promise<Response | any> {
+    public async getTasksByInterval (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
 
+        const startDate = new Date((request.query as any).startDate);
+        const finalDate = new Date((request.query as any).finalDate);
+
         const findQuery = { userId: request.params.userId } as any;
-        findQuery.createdAt = { $gte: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay() - 35), $lte: new Date() };
+        findQuery.createdAt = { $gte: startDate, $lte: finalDate };
 
         const [data, error] = await handlePromises(request, response, Model.find(findQuery));
         if (error) return;

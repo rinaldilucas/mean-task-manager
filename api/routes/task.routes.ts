@@ -30,7 +30,7 @@ routes.put('/api/tasks', authMiddleware, Controller.update);
 // DELETE
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
 
-// GET TASKS WEEKLY
-routes.get('/api/tasks/done-weekly/:userId', authMiddleware, Controller.getTasksDoneWeekly);
+// GET TASKS BY INTERVAL
+routes.get('/api/tasks/by-interval/:userId', authMiddleware, Controller.getTasksByInterval);
 
 export default routes;

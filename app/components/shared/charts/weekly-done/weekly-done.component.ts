@@ -25,11 +25,7 @@ export class WeeklyDoneComponent implements OnInit {
         maintainAspectRatio: false,
         tooltips: { enabled: true },
         legend: { display: false },
-        title: { display: true },
-        scales: {
-            yAxes: [{ ticks: {} }],
-            xAxes: [{ ticks: {} }]
-        }
+        title: { display: true }
     };
 
     constructor (
@@ -51,26 +47,30 @@ export class WeeklyDoneComponent implements OnInit {
             this.changeDetector.markForCheck();
         });
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTasksDoneWeekly());
+        const numberOfWeeks = 4;
+        const weekDays = 7;
+        const startDate = new Date();
+        const finalDate = new Date();
+        startDate.setDate(finalDate.getDate() - (weekDays * (numberOfWeeks + 1)));
+
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTasksByDateInterval({ startDate, finalDate }));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
         this.tasks = result.data;
 
         this.verifyResolutions();
 
-        const weeksQuantity = 4;
-        const weekDays = 7;
-        for (let index = weeksQuantity, j = 0; index > 0; index--, j++) {
+        for (let index = 0, j = numberOfWeeks; j > 0; index++, j--) {
             const initialDate = new Date();
-            initialDate.setDate(initialDate.getDate() - (weekDays * (j + 1)));
+            initialDate.setDate(initialDate.getDate() - (weekDays * (index + 1)));
             const finalDate = new Date();
-            finalDate.setDate(finalDate.getDate() - (weekDays * j));
+            finalDate.setDate(finalDate.getDate() - (weekDays * index));
 
-            const tasks = this.tasks.filter((task) => {
+            const tasksByInterval = this.tasks.filter((task) => {
                 const taskDate = new Date(task.createdAt);
                 return taskDate >= initialDate && taskDate <= finalDate;
             });
 
-            this.chartData.push(tasks.length as any);
+            this.chartData.push(tasksByInterval.length as any);
             this.chartLabels.push(`${finalDate.getDate().toLocaleString('default', { minimumIntegerDigits: 2, useGrouping: false })}/${(finalDate.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`);
         }
         this.chartData.reverse();
