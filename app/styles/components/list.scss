@@ -31,7 +31,7 @@
         box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
         background-color: mat-color($app-background, 100);
         padding: vw(25) 0 vw(15);
-        height: vw(190);
+        height: vw(130);
         font-size: vw(22);
 
         @include media(">=desktop") {
@@ -59,7 +59,19 @@
         }
 
         &-button {
-            margin-left: vw(40) !important;
+            position: absolute !important;
+            left: unset;
+            left: vw(20);
+            bottom: vw(20);
+            z-index: 20;
+
+            @include media(">=desktop") {
+                margin-left: auto;
+                position: absolute !important;
+                left: unset;
+                right: vw(30);
+                bottom: vw(30);
+            }
         }
 
         &-search {
@@ -109,7 +121,7 @@
         }
 
         @include media("<=desktop") {
-            height: calc(100vh - (0.6rem + 0.6rem + 1.92rem + 0.4rem));
+            height: calc(100vh - (0.6rem + 0.6rem + 1.3rem + 0.4rem));
         }
 
         &-title {

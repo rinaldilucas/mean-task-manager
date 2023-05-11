@@ -1,7 +1,10 @@
 .form-modal {
     width: 100%;
     max-width: vw(580);
-    min-height: vw(650);
+
+    @include media(">=desktop") {
+        min-height: vw(650);
+    }
 
     &__header {
         display: flex;
@@ -31,7 +34,11 @@
         place-items: center;
 
         &-wrapper {
-            padding: vw(25) vw(75);
+            padding: vw(25) vw(75) vw(75);
+
+            @include media(">=desktop") {
+                padding: vw(25) vw(75);
+            }
         }
     }
 }
