@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { Colors } from 'ng2-charts';
 
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,11 +17,10 @@ import { TaskService } from '@services/task.service';
 })
 export class TasksDoneComponent implements OnInit {
     tasks!: ITask[];
-    pieChartType: ChartType = 'doughnut';
-    pieChartLabels: any[] = [];
-    pieChartData: any = [];
-    pieChartColors: Colors[] = [{ backgroundColor: ['#c5cbe9', '#5c6bc0', '#1b278d'] }];
-    pieChartOptions: ChartOptions = {
+    chartType: ChartType = 'doughnut';
+    chartLabels: any[] = [];
+    chartData: any = [];
+    chartOptions: ChartOptions = {
         responsive: true,
         tooltips: { enabled: true },
         legend: { display: true, position: 'left', align: 'center', labels: { boxWidth: 35, padding: 16 } },
@@ -43,7 +41,7 @@ export class TasksDoneComponent implements OnInit {
     }
 
     async refresh (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done').subscribe((text: string) => { (this.pieChartOptions.title as ChartTitleOptions).text = text; });
+        this.translateService.get('statistics.tasks-done').subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.listTasksByUser());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
@@ -51,31 +49,31 @@ export class TasksDoneComponent implements OnInit {
 
         this.verifyResolutions();
 
-        this.pieChartData = [];
-        this.pieChartLabels = [];
+        this.chartData = [];
+        this.chartLabels = [];
         if (this.tasks.length) {
-            this.pieChartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
-            this.translateService.get('statistics.status.to-do').subscribe((text: string) => { this.pieChartLabels.push(text); });
-            this.pieChartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
-            this.translateService.get('statistics.status.progress').subscribe((text: string) => { this.pieChartLabels.push(text); });
-            this.pieChartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
-            this.translateService.get('statistics.status.done').subscribe((text: string) => { this.pieChartLabels.push(text); });
+            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
+            this.translateService.get('statistics.status.to-do').subscribe((text: string) => { this.chartLabels.push(text); });
+            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
+            this.translateService.get('statistics.status.progress').subscribe((text: string) => { this.chartLabels.push(text); });
+            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
+            this.translateService.get('statistics.status.done').subscribe((text: string) => { this.chartLabels.push(text); });
         }
         this.changeDetector.markForCheck();
     }
 
     verifyResolutions (): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
-            if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm') {
-                (this.pieChartOptions.title as ChartTitleOptions).fontSize = 26;
-                (this.pieChartOptions.tooltips as ChartTooltipOptions).titleFontSize = 24;
-                (this.pieChartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 24;
-                (this.pieChartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 24;
+            if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
+                (this.chartOptions.title as ChartTitleOptions).fontSize = 26;
+                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 24;
+                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 24;
+                (this.chartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 24;
             } else {
-                (this.pieChartOptions.title as ChartTitleOptions).fontSize = 16;
-                (this.pieChartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
-                (this.pieChartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-                (this.pieChartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 13;
+                (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
+                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
+                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
+                (this.chartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 13;
             }
             this.changeDetector.markForCheck();
         });

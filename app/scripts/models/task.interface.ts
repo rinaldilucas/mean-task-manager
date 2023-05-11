@@ -8,5 +8,5 @@ export interface ITask {
     status: EStatus;
     category: string;
     userId: string;
-    createdAt?: Date;
+    createdAt: Date;
 }
