@@ -1,11 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { ICategory } from '@scripts/models/category.interface';
@@ -21,15 +21,23 @@ import { TaskService } from '@services/task.service';
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskFormEntryComponent {
+export class TaskFormEntryComponent implements OnDestroy {
     title!: string;
 
-    constructor (private bottomSheet: MatBottomSheet, private router: Router, private route: ActivatedRoute, private titleService: Title, private translateService: TranslateService) {
+    routeSubscription!: Subscription;
+
+    constructor (
+        private bottomSheet: MatBottomSheet, //
+        private router: Router,
+        private route: ActivatedRoute,
+        private titleService: Title,
+        private translateService: TranslateService
+    ) {
         this.open();
     }
 
     open (): void {
-        this.route.params.subscribe((params: Params) => {
+        this.routeSubscription = this.route.params.subscribe((params: Params) => {
             const id = params['id'] ? params['id'] : null;
             const config: MatBottomSheetConfig = { data: id };
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
@@ -38,6 +46,11 @@ export class TaskFormEntryComponent {
                 this.router.navigate(['tasks']);
             });
         });
+    }
+
+    ngOnDestroy (): void {
+        debugger;
+        this.routeSubscription.unsubscribe();
     }
 }
 @Component({
