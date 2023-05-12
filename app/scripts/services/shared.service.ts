@@ -18,6 +18,8 @@ export class SharedService {
     inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
     tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
     pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
+    formChangesListener: EventEmitter<boolean> = new EventEmitter<boolean>();
+    isFormDirty = false;
 
     constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
 
@@ -108,5 +110,15 @@ export class SharedService {
         } catch (error) {
             return [null, error];
         }
+    }
+
+    verifyFormChanges (): Promise<boolean> | undefined | void {
+        this.formChangesListener.subscribe((value: boolean) => {
+            return value;
+        });
+    }
+
+    getIsFormDirty (): boolean {
+        return this.isFormDirty;
     }
 }

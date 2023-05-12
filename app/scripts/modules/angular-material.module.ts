@@ -134,6 +134,7 @@ import { MatTreeModule } from '@angular/material/tree';
         CdkTableModule,
         CdkTreeModule
     ],
+    entryComponents: [MatDialogModule],
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-US' }]
 })
 export class AngularMaterialModule {

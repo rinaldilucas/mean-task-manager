@@ -98,7 +98,11 @@
         "create-success": "Tarefa criada com sucesso.",
         "edit-error": "Erro ao editar tarefa.",
         "edit-success": "Tarefa editada com sucesso.",
-        "get-error": "Erro ao buscar tarefa."
+        "get-error": "Erro ao buscar tarefa.",
+        "confirmation-title": "Alterações Não Salvas",
+        "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
+        "confirmation-discard": "Descartar",
+        "confirmation-cancel": "Cancelar"
     },
     "task-list": {
         "empty": "Sem tarefas.",
