@@ -9,6 +9,7 @@
         "signin": "Entrar"
     },
     "error": {
+        "required": "Campo obrigátorio",
         "email-exists": "E-mail já cadastrado.",
         "email-invalid": "E-mail inválido.",
         "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",

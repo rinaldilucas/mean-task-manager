@@ -9,6 +9,7 @@
         "signin": "Login"
     },
     "error": {
+        "required": "Required field",
         "email-exists": "E-mail already registered.",
         "email-invalid": "Invalid e-mail.",
         "max-length": "You must fill in text that does not exceed {{value}} characters.",

@@ -34,8 +34,8 @@ const routes: Routes = [
     { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
-    { path: '**', pathMatch: 'full', component: EmptyPageComponent }
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', component: EmptyPageComponent }
 ];
 
 @NgModule({
