@@ -48,14 +48,6 @@ export class LogInComponent implements OnInit {
         const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.authService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
 
         if (!!error || !result || !result?.success) {
-            if (error.status === StatusCode.ClientErrorNotFound) {
-                this.sharedService.handleSnackbarMessages({ translationKey: 'login.user-error', success: false });
-                return;
-            }
-            if (error.status === StatusCode.ClientErrorForbidden) {
-                this.sharedService.handleSnackbarMessages({ translationKey: 'login.password-error', success: false });
-                return;
-            }
             if (error.status === StatusCode.ClientErrorUnauthorized) {
                 this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
                 return;

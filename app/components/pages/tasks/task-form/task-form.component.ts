@@ -39,7 +39,7 @@ export class TaskFormEntryComponent implements OnDestroy {
     open (): void {
         this.routeSubscription = this.route.params.subscribe((params: Params) => {
             const id = params['id'] ? params['id'] : null;
-            const config: MatBottomSheetConfig = { data: id };
+            const config: MatBottomSheetConfig = { data: id, disableClose: true };
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
             sheetRef.afterDismissed().subscribe(() => {
                 this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));

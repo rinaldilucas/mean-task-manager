@@ -75,8 +75,8 @@
             "progress": "In progress",
             "to-do": "To do"
         },
-        "tasks-done": "Tasks done",
-        "tasks-done-monthly": "Task done monthly"
+        "tasks-done": "Tasks",
+        "tasks-done-weekly": "Tasks / Week"
     },
     "table": {
         "actions": {

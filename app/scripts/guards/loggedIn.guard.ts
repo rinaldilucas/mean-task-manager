@@ -7,12 +7,9 @@ import { AuthService } from '@services/auth.service';
 export class LoggedInAuthGuard {
     constructor (private authService: AuthService, private router: Router) { }
 
-    canActivate (): boolean {
+    canActivate (): void {
         if (this.authService.getIsAuthenticated()) {
             this.router.navigate(['tasks']);
-            return false;
-        } else {
-            return true;
         }
     }
 }

@@ -75,8 +75,8 @@
             "progress": "Em progresso",
             "to-do": "A fazer"
         },
-        "tasks-done": "Tarefas realizadas",
-        "tasks-done-weekly": "Tarefas realizadas semanalmente"
+        "tasks-done": "Tarefas",
+        "tasks-done-weekly": "Tarefas / Semana"
     },
     "table": {
         "actions": {

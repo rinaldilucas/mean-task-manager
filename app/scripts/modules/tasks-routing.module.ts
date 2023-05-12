@@ -11,8 +11,8 @@ const routes: Routes = [
         component: TaskListComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: 'add', component: TaskFormEntryComponent, canActivate: [AuthGuard] },
-            { path: 'edit/:id', component: TaskFormEntryComponent, canActivate: [AuthGuard] }
+            { path: 'add', component: TaskFormEntryComponent },
+            { path: 'edit/:id', component: TaskFormEntryComponent }
         ]
     }
 ];
