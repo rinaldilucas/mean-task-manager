@@ -28,11 +28,13 @@ export class TaskService {
         return lastValueFrom(this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    filterTasksByUser (searchTerm: string): Promise<IQueryResult<ITask[]>> {
+    getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
         const userId = this.authService.getUserId();
-        const url = `${this.url}/user/${userId}?searchTerm=${searchTerm}`;
+        let url = `${this.url}/by-interval/${userId}?`;
+        url += `startDate=${startDate.toISOString()}&`;
+        url += `finalDate=${finalDate.toISOString()}&`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     getTask (id: string): Promise<IQueryResult<ITask>> {
@@ -58,14 +60,5 @@ export class TaskService {
         const url = `${this.url}`;
 
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
-        const userId = this.authService.getUserId();
-        let url = `${this.url}/by-interval/${userId}?`;
-        url += `startDate=${startDate.toISOString()}&`;
-        url += `finalDate=${finalDate.toISOString()}&`;
-
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

@@ -3,5 +3,6 @@
     "userId": "62e5c194c972aa0ed83917a3",
     "email": "user@gmail.com",
     "password": "password",
-    "token": "{% response 'body', 'req_a99093fefe35488ea86ea5f7b1f521c7', 'b64::JC5kYXRhWzoxXS50b2tlbg==::46b', 'always', 60 %}"
+    "token": "{% response 'body', 'req_784defa9aa56408e89d1180369a9c291', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'always', 60 %}",
+    "refresh": "{% response 'body', 'req_784defa9aa56408e89d1180369a9c291', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'always', 60 %}"
 }

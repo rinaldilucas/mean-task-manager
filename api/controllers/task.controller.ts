@@ -63,6 +63,25 @@ class TaskController {
         });
     }
 
+    public async getTasksByInterval (request: Request, response: Response): Promise<Response | any> {
+        const language = request.headers.language;
+
+        const startDate = new Date((request.query as any).startDate);
+        const finalDate = new Date((request.query as any).finalDate);
+
+        const findQuery = { userId: request.params.userId } as any;
+        findQuery.createdAt = { $gte: startDate, $lte: finalDate };
+
+        const [data, error] = await handlePromises(request, response, Model.find(findQuery));
+        if (error) return;
+        if (!data) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+        }
+
+        return responseSuccess(response, data, StatusCode.SuccessOK);
+    }
+
     public async findOne (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
@@ -124,25 +143,6 @@ class TaskController {
         if (!data || data.n === 0) {
             if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
-        }
-
-        return responseSuccess(response, data, StatusCode.SuccessOK);
-    }
-
-    public async getTasksByInterval (request: Request, response: Response): Promise<Response | any> {
-        const language = request.headers.language;
-
-        const startDate = new Date((request.query as any).startDate);
-        const finalDate = new Date((request.query as any).finalDate);
-
-        const findQuery = { userId: request.params.userId } as any;
-        findQuery.createdAt = { $gte: startDate, $lte: finalDate };
-
-        const [data, error] = await handlePromises(request, response, Model.find(findQuery));
-        if (error) return;
-        if (!data) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
-            else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
         }
 
         return responseSuccess(response, data, StatusCode.SuccessOK);

@@ -189,10 +189,11 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 ```
 
 ```js
--------------------------------
+-----------------------------
 -------- [TASK ROUTES] --------
 -------------------------------
-[GET] localhost:3000/api/tasks/user/:userId -> 'findAllByUser'
+[GET] localhost:3000/api/tasks/user/:userId?pageSize&searchTerm&pageIndex&sortFilter&sortDirection -> 'findAllByUser'
+[GET] localhost:3000/api/tasks/by-interval/:userId?startDate&endDate -> 'getTasksByInterval'
 [GET] localhost:3000/api/tasks/:_id -> 'findOne'
 [POST] localhost:3000/api/tasks -> 'create'
 [PUT] localhost:3000/api/tasks -> 'update'

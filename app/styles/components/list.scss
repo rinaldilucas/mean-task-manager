@@ -21,7 +21,7 @@
             height: unset;
         }
 
-        &:before {
+        &::before {
             position: absolute;
             top: vw(-10);
             left: 0;
@@ -42,12 +42,10 @@
     &__add {
         position: absolute !important;
         bottom: vw(20);
-        left: unset;
         left: vw(20);
         z-index: 20;
 
         @include media(">=desktop") {
-            position: absolute !important;
             right: vw(30);
             bottom: vw(30);
             left: unset;
