@@ -1,27 +1,29 @@
 <div class="form" fxLayoutAlign="center center">
-    <mat-card class="form__box">
-        <mat-card-header>
-            <mat-card-title class="form__title">{{ "title.login" | translate }}</mat-card-title>
-        </mat-card-header>
+    <div class="form__box">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title class="form__title">{{ "title.login" | translate }}</mat-card-title>
+            </mat-card-header>
 
-        <form [formGroup]="form">
-            <mat-card-content>
-                <mat-form-field class="full-width">
-                    <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" required />
-                    <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 5 } }} </mat-error>
-                    <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
-                </mat-form-field>
+            <form [formGroup]="form">
+                <mat-card-content>
+                    <mat-form-field class="full-width">
+                        <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" required />
+                        <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 5 } }} </mat-error>
+                        <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
+                    </mat-form-field>
 
-                <mat-form-field class="full-width">
-                    <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required />
-                    <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
-                    <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
-                </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required />
+                        <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
+                        <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
+                    </mat-form-field>
 
-                <mat-checkbox formControlName="keepUserLogged" color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>
-            </mat-card-content>
+                    <mat-checkbox formControlName="keepUserLogged" color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>
+                </mat-card-content>
 
-            <button type="submit" mat-raised-button color="primary" class="form__button" (click)="loginAsync()">{{ "button.signin" | translate }}</button>
-        </form>
-    </mat-card>
+                <button type="submit" mat-raised-button color="primary" class="form__button" (click)="loginAsync()">{{ "button.signin" | translate }}</button>
+            </form>
+        </mat-card>
+    </div>
 </div>

@@ -22,9 +22,29 @@
     }
 
     &__content {
+        position: relative;
         height: 100%;
 
+        &::after {
+            position: absolute;
+            top: vw(-10);
+            left: 0;
+            transform: scale(0.95);
+            z-index: 0;
+            border-radius: vw(10);
+            background-color: mat-color($app-background, 50) !important;
+            width: 100%;
+            height: vw(30);
+            content: "";
+
+            .dark-mode & {
+                background-color: mat-contrast($app-background, 50) !important;
+            }
+        }
+
         &-wrapper {
+            position: relative;
+            z-index: 1;
             background-color: mat-color($app-background, 100);
             padding: vw(50) vw(40);
             height: 100%;

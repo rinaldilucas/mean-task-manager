@@ -20,35 +20,45 @@
 
     &__box {
         position: relative;
-        top: 0;
-        float: left;
-        transform: scale(1);
-        opacity: 1;
-        z-index: 5;
-        border-radius: vw(10);
-        padding: vw(40) vw(35) vw(30) !important;
-        width: 100%;
-        max-width: vw(260);
+        width: vw(330);
 
         @include media(">=desktop") {
-            padding: vw(60) vw(50) vw(40) !important;
-            max-width: vw(330);
+            width: vw(420);
         }
 
-        &::before {
+        mat-card {
+            position: relative;
+            top: 0;
+            float: left;
+            transform: scale(1);
+            opacity: 1;
+            z-index: 5;
+            margin: 0;
+            border-radius: vw(10);
+            background-color: mat-color($app-background, 50) !important;
+            padding: vw(40) vw(35) vw(30) !important;
+            width: 100%;
+            box-sizing: border-box;
+
+            .dark-mode & {
+                background-color: mat-contrast($app-background, 100) !important;
+            }
+        }
+
+        &:after {
             position: absolute;
             top: vw(-10);
             left: 0;
             transform: scale(0.95);
-            z-index: -1;
+            z-index: 0;
             border-radius: vw(10);
-            background-color: mat-color($app-background, 50);
+            background-color: mat-color($app-background, 50) !important;
             width: 100%;
             height: vw(30);
             content: "";
 
             .dark-mode & {
-                background-color: mat-contrast($app-background, 50);
+                background-color: mat-contrast($app-background, 50) !important;
             }
         }
     }

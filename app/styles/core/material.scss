@@ -7,12 +7,17 @@
 }
 
 mat-card {
+    z-index: 1;
     margin: vw(10);
     margin-bottom: unset;
     border-radius: vw(4) !important;
     padding: vw(16) vw(8) !important;
     width: vw(300);
     min-width: vw(250);
+
+    .dark-mode & {
+        background-color: mat-contrast($app-background, 100) !important;
+    }
 }
 
 mat-form-field {

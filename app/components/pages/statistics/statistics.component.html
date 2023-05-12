@@ -2,12 +2,16 @@
     <div class="page">
         <div class="page__wrapper">
             <div class="statistics" fxLayoutAlign="center center" fxLayout="row wrap">
-                <mat-card>
-                    <app-weekly-done></app-weekly-done>
-                </mat-card>
-                <mat-card>
-                    <app-tasks-done></app-tasks-done>
-                </mat-card>
+                <div class="statistics__block">
+                    <mat-card>
+                        <app-weekly-done></app-weekly-done>
+                    </mat-card>
+                </div>
+                <div class="statistics__block">
+                    <mat-card>
+                        <app-tasks-done></app-tasks-done>
+                    </mat-card>
+                </div>
             </div>
         </div>
     </div>

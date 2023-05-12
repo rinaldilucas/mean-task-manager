@@ -65,10 +65,11 @@ export class TasksDoneComponent implements OnInit {
     verifyResolutions (): void {
         this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
-                (this.chartOptions.title as ChartTitleOptions).fontSize = 26;
-                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 24;
-                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 24;
-                (this.chartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 24;
+                (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
+                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
+                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
+                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 18; });
+                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 18; });
             } else {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;

@@ -1,8 +1,32 @@
 .statistics {
-    display: flex;
+    &__block {
+        position: relative;
+        margin: vw(20) 0;
+
+        @include media(">=desktop") {
+            margin: vw(20);
+        }
+
+        &::after {
+            position: absolute;
+            top: vw(-10);
+            left: 0;
+            transform: scale(0.95);
+            z-index: 0;
+            border-radius: vw(10);
+            background-color: mat-color($app-background, 50) !important;
+            width: 100%;
+            height: vw(30);
+            content: "";
+
+            .dark-mode & {
+                background-color: mat-contrast($app-background, 50) !important;
+            }
+        }
+    }
 
     mat-card {
-        width: 100%;
+        margin: 0 !important;
         height: vw(160);
 
         @include media(">=desktop") {

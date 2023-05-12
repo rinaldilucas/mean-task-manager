@@ -1,13 +1,13 @@
 <div class="page-container page-container--table">
+    <button type="button" class="list__add" color="primary" mat-fab (click)="add()">
+        <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}">add</mat-icon>
+    </button>
+
     <div class="list" fxLayoutAlign="center center">
         <div class="list__wrapper">
             <div class="list__header">
                 <div class="list__header-title">
                     <span class="header-title">{{ "title.tasks" | translate }}</span>
-
-                    <button type="button" class="list__header-button" color="primary" mat-fab (click)="add()">
-                        <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}">add</mat-icon>
-                    </button>
                 </div>
 
                 <div class="list__header-search mat-elevation-z1">

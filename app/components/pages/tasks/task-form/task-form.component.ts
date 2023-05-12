@@ -49,7 +49,6 @@ export class TaskFormEntryComponent implements OnDestroy {
     }
 
     ngOnDestroy (): void {
-        debugger;
         this.routeSubscription.unsubscribe();
     }
 }
