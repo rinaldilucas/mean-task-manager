@@ -3,13 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TaskFormEntryComponent } from '@components/pages/tasks/task-form/task-form.component';
 import { TaskListComponent } from '@components/pages/tasks/task-list/task-list.component';
-import { AuthGuard } from '@scripts/guards/auth.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: TaskListComponent,
-        canActivate: [AuthGuard],
         children: [
             { path: 'add', component: TaskFormEntryComponent },
             { path: 'edit/:id', component: TaskFormEntryComponent }

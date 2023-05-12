@@ -18,4 +18,15 @@ export class AuthGuard {
             }
         });
     }
+
+    canLoad (): Observable<boolean> | Promise<boolean> | boolean {
+        return new Promise((resolve) => {
+            if (this.authService.verifyAuthorization()) {
+                resolve(true);
+            } else {
+                this.router.navigate(['login']);
+                resolve(false);
+            }
+        });
+    }
 }
