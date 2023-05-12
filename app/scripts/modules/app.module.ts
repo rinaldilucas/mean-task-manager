@@ -27,8 +27,8 @@ import { UserService } from '@services/user.service';
 
 // COMPONENTS
 import { AppComponent } from '@components/app.component';
-import { WeeklyDoneComponent } from '@components/shared/charts/weekly-done/weekly-done.component';
 import { TasksDoneComponent } from '@components/shared/charts/tasks-done/tasks-done.component';
+import { WeeklyDoneComponent } from '@components/shared/charts/weekly-done/weekly-done.component';
 import { HeaderComponent } from '@components/shared/header/header.component';
 
 // AUTH
@@ -36,6 +36,7 @@ import { LogInComponent } from '@components/auth/login/login.component';
 import { RegisterComponent } from '@components/auth/register/register.component';
 
 // PAGES
+import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { HomepageComponent } from '@components/pages/home/home.component';
 import { ProfileComponent } from '@components/pages/profile/profile.component';
 import { SettingsComponent } from '@components/pages/settings/settings.component';
@@ -60,7 +61,8 @@ registerLocaleData(localePt, 'pt-BR');
         HeaderComponent,
         TasksDoneComponent,
         WeeklyDoneComponent,
-        StatisticsComponent
+        StatisticsComponent,
+        ConfirmationDialogComponent
     ],
     imports: [
         AppRoutingModule,

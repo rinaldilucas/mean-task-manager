@@ -2,19 +2,21 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { ICategory } from '@scripts/models/category.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
+import { SharedService } from '@scripts/services/shared.service';
 import { AuthService } from '@services/auth.service';
 import { CategoryService } from '@services/category.service';
-import { SharedService } from '@services/shared.service';
 import { TaskService } from '@services/task.service';
 
 @Component({
@@ -79,6 +81,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private titleService: Title,
         private translateService: TranslateService,
         private sharedService: SharedService,
+        private dialog: MatDialog,
         @Inject(MAT_BOTTOM_SHEET_DATA) public id: string
     ) {
         this.form = this.formBuilder.group({
@@ -90,8 +93,11 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     async ngOnInit (): Promise<void> {
+        this.form.valueChanges.subscribe(() => { this.sharedService.isFormDirty = this.form.dirty; });
+
         const isEdit = !!this.id;
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
+        this.sharedService.formChangesListener.subscribe(() => this.changeDetector.detectChanges());
 
         if (!isEdit) {
             this.translateService.get('title.add-task').subscribe((text: string) => {
@@ -152,14 +158,31 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
         this.sharedService.handleSnackbarMessages(isEdit ? { translationKey: 'task-form.edit-success' } : { translationKey: 'task-form.create-success' });
         this.taskService.emitTask.emit(task);
-        this.form.reset();
+        this.form.reset({}, { emitEvent: false });
         this.close();
     }
 
     close (): void {
-        this.bottomSheetRef.dismiss();
-        this.form.reset();
-        this.router.navigate(['tasks']);
+        if (this.form.dirty) {
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+                data: {
+                    title: 'task-form.confirmation-title',
+                    message: 'task-form.confirmation-message'
+                }
+            });
+
+            dialogRef.afterClosed().subscribe((result: boolean) => {
+                if (result) {
+                    this.bottomSheetRef.dismiss();
+                    this.form.reset({}, { emitEvent: false });
+                    this.router.navigate(['tasks']);
+                }
+            });
+        } else {
+            this.bottomSheetRef.dismiss();
+            this.form.reset({}, { emitEvent: false });
+            this.router.navigate(['tasks']);
+        }
     }
 
     setAutoCompletes (): void {

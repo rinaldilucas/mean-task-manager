@@ -99,7 +99,11 @@
         "create-success": "Task created with success.",
         "edit-error": "Error updating the task.",
         "edit-success": "Task edited with success.",
-        "get-error": "Error retrieving task."
+        "get-error": "Error retrieving task.",
+        "confirmation-title": "Unsaved Changes",
+        "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
+        "confirmation-discard": "Discard",
+        "confirmation-cancel": "Cancel"
     },
     "task-list": {
         "empty": "No tasks.",
