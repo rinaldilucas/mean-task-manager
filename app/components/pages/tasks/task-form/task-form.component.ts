@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { IFormDeactivate } from '@app/scripts/models/formDeactivate';
 import { ICategory } from '@scripts/models/category.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -21,7 +22,7 @@ import { TaskService } from '@services/task.service';
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskFormEntryComponent implements OnDestroy {
+export class TaskFormEntryComponent implements OnDestroy, IFormDeactivate {
     title!: string;
 
     routeSubscription!: Subscription;
@@ -50,6 +51,11 @@ export class TaskFormEntryComponent implements OnDestroy {
 
     ngOnDestroy (): void {
         this.routeSubscription.unsubscribe();
+    }
+
+    canDeactivate (): boolean {
+        debugger;
+        return true;
     }
 }
 @Component({
