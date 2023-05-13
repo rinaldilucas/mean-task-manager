@@ -93,11 +93,8 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     async ngOnInit (): Promise<void> {
-        this.form.valueChanges.subscribe(() => { this.sharedService.isFormDirty = this.form.dirty; });
-
         const isEdit = !!this.id;
         this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
-        this.sharedService.formChangesListener.subscribe(() => this.changeDetector.detectChanges());
 
         if (!isEdit) {
             this.translateService.get('title.add-task').subscribe((text: string) => {
@@ -164,23 +161,18 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
     close (): void {
         if (this.form.dirty) {
-            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-                data: {
-                    title: 'task-form.confirmation-title',
-                    message: 'task-form.confirmation-message'
-                }
-            });
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent);
 
             dialogRef.afterClosed().subscribe((result: boolean) => {
                 if (result) {
                     this.bottomSheetRef.dismiss();
-                    this.form.reset({}, { emitEvent: false });
+                    this.form.reset();
                     this.router.navigate(['tasks']);
                 }
             });
         } else {
             this.bottomSheetRef.dismiss();
-            this.form.reset({}, { emitEvent: false });
+            this.form.reset();
             this.router.navigate(['tasks']);
         }
     }
