@@ -1,7 +1,48 @@
 .chart {
-    padding: vw(20);
-    height: 100%;
-    box-sizing: border-box;
+    position: relative;
+    margin: vw(20) 0;
+
+    @include media(">=desktop") {
+        margin: vw(20);
+    }
+
+    &::after {
+        position: absolute;
+        top: vw(-10);
+        left: 0;
+        transform: scale(0.95);
+        z-index: 0;
+        border-radius: vw(10);
+        background-color: mat-color($app-background, 50) !important;
+        width: 100%;
+        height: vw(30);
+        content: "";
+
+        .dark-mode & {
+            background-color: mat-contrast($app-background, 50) !important;
+        }
+    }
+
+    mat-card {
+        margin: 0 !important;
+        height: vw(160);
+
+        @include media(">=desktop") {
+            width: vw(440);
+            height: vw(225);
+        }
+
+        > div {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__wrapper {
+        padding: vw(20);
+        height: 100%;
+        box-sizing: border-box;
+    }
 
     &__container {
         height: 100%;

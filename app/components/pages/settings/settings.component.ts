@@ -46,10 +46,10 @@ export class SettingsComponent implements OnInit {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.listCategories());
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.findAllByUser());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
 
-        this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title }));
+        this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title, userId: category.userId }));
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }

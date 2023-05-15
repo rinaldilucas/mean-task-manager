@@ -63,6 +63,7 @@ I built this project to make a cool template for those who wants to learn the ME
 
 -   Node.js API written with TypeScript
 -   Multilingual features implemented in both the client-side and API responses
+-   Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
 -   Virtual scrolling feature implemented on tables
 -   Search and ordering features via the database to minimize requests
 -   AJAX requests used for pagination
@@ -204,7 +205,7 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 -------------------------------
 ------ [CATEGORY ROUTES] ------
 -------------------------------
-[GET] localhost:3000/api/categories -> 'findAll'
+[GET] localhost:3000/api/categories/user/:userId -> 'findAllByUser'
 [POST] localhost:3000/api/categories -> 'create'
 [DELETE] localhost:3000/api/categories/:_id -> 'remove'
 ```

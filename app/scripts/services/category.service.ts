@@ -7,16 +7,18 @@ import { environment } from '@app/environments/environment';
 import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { SharedService } from '@services/shared.service';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
     emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
     private url: string = environment.baseUri + '/categories';
 
-    constructor (private http: HttpClient, private sharedService: SharedService) {}
+    constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    listCategories (): Promise<IQueryResult<ICategory[]>> {
-        const url = `${this.url}`;
+    findAllByUser (): Promise<IQueryResult<ICategory[]>> {
+        const userId = this.authService.getUserId();
+        const url = `${this.url}/user/${userId}?`;
 
         return lastValueFrom(this.http.get<IQueryResult<ICategory[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
@@ -29,6 +31,7 @@ export class CategoryService {
 
     createCategory (category: ICategory): Promise<IQueryResult<ICategory>> {
         const url = `${this.url}`;
+        category.userId = this.authService.getUserId();
 
         return lastValueFrom(this.http.post<IQueryResult<ICategory>>(url, category).pipe(catchError(this.sharedService.errorHandler)));
     }

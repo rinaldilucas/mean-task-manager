@@ -45,6 +45,7 @@ export class TaskService {
 
     createTask (task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
+        task.userId = this.authService.getUserId();
 
         return lastValueFrom(this.http.post<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }
@@ -58,6 +59,7 @@ export class TaskService {
 
     updateTask (task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
+        task.userId = this.authService.getUserId();
 
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
     }

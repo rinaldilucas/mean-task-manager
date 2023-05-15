@@ -1,5 +1,9 @@
-<div class="chart">
-    <div class="chart__container" *ngIf="tasks && tasks.length > 0">
-        <canvas baseChart [data]="chartData" [labels]="chartLabels" [chartType]="chartType" [options]="chartOptions"> </canvas>
-    </div>
+<div class="chart" *ngIf="tasks && tasks.length > 0">
+    <mat-card>
+        <div class="chart__wrapper">
+            <div class="chart__container">
+                <canvas baseChart [data]="chartData" [labels]="chartLabels" [chartType]="chartType" [options]="chartOptions"> </canvas>
+            </div>
+        </div>
+    </mat-card>
 </div>

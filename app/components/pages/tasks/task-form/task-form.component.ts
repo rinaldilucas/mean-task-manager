@@ -15,7 +15,6 @@ import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@scripts/services/shared.service';
-import { AuthService } from '@services/auth.service';
 import { CategoryService } from '@services/category.service';
 import { TaskService } from '@services/task.service';
 
@@ -74,8 +73,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private categoryService: CategoryService,
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
+         private formBuilder: FormBuilder,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
         private router: Router,
         private titleService: Title,
@@ -114,7 +112,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             this.changeDetector.markForCheck();
         }
 
-        const [categories, categoriesError] = await this.sharedService.handlePromises(this.categoryService.listCategories());
+        const [categories, categoriesError] = await this.sharedService.handlePromises(this.categoryService.findAllByUser());
         if (!!categoriesError || !categories || !categories?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
 
         this.categories = categories.data;
@@ -145,7 +143,6 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         const isEdit = !!this.id;
         const task = {
             ...this.form.value,
-            userId: this.authService.getUserId(),
             _id: isEdit ? this.id : null
         } as ITask;
         task.status = EStatus.toDo;

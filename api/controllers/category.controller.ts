@@ -6,11 +6,11 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 import { Category as Model } from '@models/category.model';
 
 class CategoryController {
-    public async findAll (request: Request, response: Response): Promise<Response | any> {
+    public async findAllByUser (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
 
         const countQuery = (callback): any => {
-            Model.find()
+            Model.find({ userId: request.params.userId })
                 .countDocuments({}, (error, count) => {
                     if (error) callback(error, null);
                     else callback(null, count);
@@ -18,7 +18,7 @@ class CategoryController {
         };
 
         const retrieveQuery = (callback): any => {
-            Model.find()
+            Model.find({ userId: request.params.userId })
                 .exec((error, documents) => {
                     if (error) callback(error, null);
                     else callback(null, documents);
