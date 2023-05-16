@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';

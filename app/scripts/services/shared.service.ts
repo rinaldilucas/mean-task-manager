@@ -7,7 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
 import { ITask } from '@app/scripts/models/task.interface';
@@ -15,9 +16,9 @@ import { ITask } from '@app/scripts/models/task.interface';
 @Injectable({ providedIn: 'root' })
 export class SharedService {
     emitTitle: EventEmitter<string> = new EventEmitter<string>();
-    inputErrorListener: EventEmitter<boolean> = new EventEmitter<boolean>();
     tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
     pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
+    subscriptions: Subscription[] = [];
 
     constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
 
@@ -53,7 +54,7 @@ export class SharedService {
 
     isValidForm (form: FormGroup<string>): boolean {
         if (!form.valid) {
-            this.translateService.get('messages.mandatory-fields').subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+            this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput(form);
             return false;
         }
@@ -69,11 +70,10 @@ export class SharedService {
                 break;
             }
         }
-        this.inputErrorListener.emit(true);
     }
 
     setTableColumnsAndPagesize (columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
-        this.media.asObservable().subscribe((change: MediaChange[]) => {
+        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'xs') {
                 columnOptions = columns.xsColumns;
                 pageSize = 20;
@@ -94,11 +94,11 @@ export class SharedService {
 
             this.tableColumnListener.emit(columnOptions);
             this.pageSizeListener.emit({ pageSize, pageSizeOptions });
-        });
+        }));
     }
 
     handleSnackbarMessages ({ translationKey, success = true }): void {
-        this.translateService.get(translationKey).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
+        this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
     }
 
     async handlePromises (promise: Promise<any>): Promise<Promise<any>> {
@@ -108,5 +108,9 @@ export class SharedService {
         } catch (error) {
             return [null, error];
         }
+    }
+
+    dispose (): void {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
 import { ERole } from '@scripts/models/enum/role.enum';
@@ -28,8 +29,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private titleService: Title,
         private router: Router,
-        private changeDetector: ChangeDetectorRef,
-        private translateService: TranslateService,
+         private translateService: TranslateService,
         private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
@@ -39,8 +39,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit (): void {
-        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
-        this.translateService.get('title.register').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.translateService.get('title.register').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
     }
 
     async registerAsync (): Promise<void> {

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
 import { IJwtPayload } from '@scripts/models/jwtPayload.interface';
@@ -25,8 +26,7 @@ export class LogInComponent implements OnInit {
         private titleService: Title,
         private router: Router,
         private translateService: TranslateService,
-        private sharedService: SharedService,
-        private changeDetector: ChangeDetectorRef
+        private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
             email: [null, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
@@ -36,8 +36,7 @@ export class LogInComponent implements OnInit {
     }
 
     ngOnInit (): void {
-        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
-        this.translateService.get('title.login').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.translateService.get('title.login').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.authService.getUserIsLoggedIn() ? this.form.controls.keepUserLogged.setValue(true) : this.form.controls.keepUserLogged.setValue(false);
     }
 

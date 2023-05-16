@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
+import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { take } from 'rxjs/operators';
+
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
@@ -15,7 +17,9 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./tasks-done.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TasksDoneComponent implements OnInit {
+export class TasksDoneComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
+
     tasks!: ITask[];
     chartType: ChartType = 'doughnut';
     chartLabels: any[] = [];
@@ -37,11 +41,11 @@ export class TasksDoneComponent implements OnInit {
 
     ngOnInit (): void {
         this.refresh();
-        this.taskService.emitTask.subscribe(() => this.refresh());
+        this.taskService.emitTask.pipe(take(1)).subscribe(() => this.refresh());
     }
 
     async refresh (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done').subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
+        this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
@@ -53,17 +57,17 @@ export class TasksDoneComponent implements OnInit {
         this.chartLabels = [];
         if (this.tasks.length) {
             this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
-            this.translateService.get('statistics.status.to-do').subscribe((text: string) => { this.chartLabels.push(text); });
+            this.translateService.get('statistics.status.to-do').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
             this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
-            this.translateService.get('statistics.status.progress').subscribe((text: string) => { this.chartLabels.push(text); });
+            this.translateService.get('statistics.status.progress').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
             this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
-            this.translateService.get('statistics.status.done').subscribe((text: string) => { this.chartLabels.push(text); });
+            this.translateService.get('statistics.status.done').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
         }
         this.changeDetector.markForCheck();
     }
 
     verifyResolutions (): void {
-        this.media.asObservable().subscribe((change: MediaChange[]) => {
+        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
@@ -77,6 +81,10 @@ export class TasksDoneComponent implements OnInit {
                 (this.chartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 13;
             }
             this.changeDetector.markForCheck();
-        });
+        }));
+    }
+
+    ngOnDestroy (): void {
+        this.sharedService.dispose();
     }
 }

@@ -6,7 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { take } from 'rxjs/operators';
 
 import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -93,8 +94,8 @@ export class SettingsComponent implements OnInit {
     }
 
     updateTitle (): void {
-        this.translateService.get('title.settings').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.emitTitle.subscribe(() => this.updateTitle());
+        this.translateService.get('title.settings').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
     }
 
     changeLanguage (language: string): void {

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomepageComponent implements OnInit {
     constructor (private titleService: Title, private translateService: TranslateService) {}
 
     ngOnInit (): void {
-        this.translateService.get('title.home').subscribe((text: string) => {
+        this.translateService.get('title.home').pipe(take(1)).subscribe((text: string) => {
             this.title = text;
             this.titleService.setTitle(`${this.title} — Mean Stack Template`);
         });

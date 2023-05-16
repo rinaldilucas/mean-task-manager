@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { Label, MultiDataSet } from 'ng2-charts';
-
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
+import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import { Label, MultiDataSet } from 'ng2-charts';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { take } from 'rxjs/operators';
+
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@services/shared.service';
@@ -16,6 +18,8 @@ import { TaskService } from '@services/task.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeeklyDoneComponent implements OnInit {
+    subscriptions: Subscription[] = [];
+
     tasks!: ITask[];
     chartType: ChartType = 'line';
     chartLabels: Label[] = [];
@@ -38,11 +42,11 @@ export class WeeklyDoneComponent implements OnInit {
 
     ngOnInit (): void {
         this.refresh();
-        this.taskService.emitTask.subscribe(() => this.refresh());
+        this.taskService.emitTask.pipe(take(1)).subscribe(() => this.refresh());
     }
 
     async refresh (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done-weekly').subscribe((text) => {
+        this.translateService.get('statistics.tasks-done-weekly').pipe(take(1)).subscribe((text) => {
             (this.chartOptions.title as any).text = text;
             this.changeDetector.markForCheck();
         });
@@ -80,7 +84,7 @@ export class WeeklyDoneComponent implements OnInit {
     }
 
     verifyResolutions (): void {
-        this.media.asObservable().subscribe((change: MediaChange[]) => {
+        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
@@ -95,6 +99,10 @@ export class WeeklyDoneComponent implements OnInit {
                 this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 13; });
             }
             this.changeDetector.markForCheck();
-        });
+        }));
+    }
+
+    ngOnDetroy (): void {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

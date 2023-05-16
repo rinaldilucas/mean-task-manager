@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { take } from 'rxjs/operators';
 import StatusCode from 'status-code-enum';
 
 import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
@@ -21,10 +23,12 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./task-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
+
+    subscriptions: Subscription[] = [];
 
     columnOptions: IColumnsOptions = {
         lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
@@ -64,14 +68,14 @@ export class TaskListComponent implements OnInit {
     ngOnInit (): void {
         this.updateTitle();
         this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
-        this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
-        this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[]}) => {
+        this.subscriptions.push(this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions)));
+        this.subscriptions.push(this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[]}) => {
             this.paginator.pageSize = options.pageSize;
             this.paginator.pageSizeOptions = options.pageSizeOptions;
-        });
+        }));
 
         this.refreshAsync();
-        this.taskService.emitTask.subscribe(() => this.refreshAsync());
+        this.subscriptions.push(this.taskService.emitTask.subscribe(() => this.refreshAsync()));
     }
 
     add (): void {
@@ -174,7 +178,12 @@ export class TaskListComponent implements OnInit {
     }
 
     updateTitle (): void {
-        this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.emitTitle.subscribe(() => this.updateTitle());
+        this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+        this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+    }
+
+    ngOnDestroy (): void {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.sharedService.dispose();
     }
 }

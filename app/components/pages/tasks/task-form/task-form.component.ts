@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, take } from 'rxjs/operators';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { ICategory } from '@scripts/models/category.interface';
@@ -22,7 +22,7 @@ import { TaskService } from '@services/task.service';
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskFormEntryComponent implements OnDestroy {
+export class TaskFormEntryComponent {
     title!: string;
 
     routeSubscription!: Subscription;
@@ -38,19 +38,15 @@ export class TaskFormEntryComponent implements OnDestroy {
     }
 
     open (): void {
-        this.routeSubscription = this.route.params.subscribe((params: Params) => {
+        this.routeSubscription = this.route.params.pipe(take(1)).subscribe((params: Params) => {
             const id = params['id'] ? params['id'] : null;
             const config: MatBottomSheetConfig = { data: id, disableClose: true };
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
-            sheetRef.afterDismissed().subscribe(() => {
-                this.translateService.get('title.tasks').subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+            sheetRef.afterDismissed().pipe(take(1)).subscribe(() => {
+                this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
                 this.router.navigate(['tasks']);
             });
         });
-    }
-
-    ngOnDestroy (): void {
-        this.routeSubscription.unsubscribe();
     }
 }
 @Component({
@@ -73,7 +69,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private categoryService: CategoryService,
-         private formBuilder: FormBuilder,
+        private formBuilder: FormBuilder,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
         private router: Router,
         private titleService: Title,
@@ -92,15 +88,14 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
     async ngOnInit (): Promise<void> {
         const isEdit = !!this.id;
-        this.sharedService.inputErrorListener.subscribe(() => this.changeDetector.detectChanges());
 
         if (!isEdit) {
-            this.translateService.get('title.add-task').subscribe((text: string) => {
+            this.translateService.get('title.add-task').pipe(take(1)).subscribe((text: string) => {
                 this.title = text;
                 this.titleService.setTitle(`${this.title} — Mean Stack Template`);
             });
         } else {
-            this.translateService.get('title.edit-task').subscribe((text: string) => {
+            this.translateService.get('title.edit-task').pipe(take(1)).subscribe((text: string) => {
                 this.title = text;
                 this.titleService.setTitle(`${this.title} — Mean Stack Template`);
             });
@@ -120,7 +115,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit (): void {
-        this.categoryTrigger.panelClosingActions.subscribe(() => {
+        this.categoryTrigger.panelClosingActions.pipe(take(1)).subscribe(() => {
             if (this.categoryTrigger.activeOption) {
                 this.form.controls['category'].setValue(this.categoryTrigger.activeOption.value);
             }
@@ -160,7 +155,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         if (this.form.dirty) {
             const dialogRef = this.dialog.open(ConfirmationDialogComponent);
 
-            dialogRef.afterClosed().subscribe((result: boolean) => {
+            dialogRef.afterClosed().pipe(take(1)).subscribe((result: boolean) => {
                 if (result) {
                     this.bottomSheetRef.dismiss();
                     this.form.reset();
