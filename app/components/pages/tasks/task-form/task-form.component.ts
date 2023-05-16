@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
@@ -23,10 +23,6 @@ import { TaskService } from '@services/task.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskFormEntryComponent {
-    title!: string;
-
-    routeSubscription!: Subscription;
-
     constructor (
         private bottomSheet: MatBottomSheet, //
         private router: Router,
@@ -38,7 +34,7 @@ export class TaskFormEntryComponent {
     }
 
     open (): void {
-        this.routeSubscription = this.route.params.pipe(take(1)).subscribe((params: Params) => {
+        this.route.params.subscribe((params: Params) => {
             const id = params['id'] ? params['id'] : null;
             const config: MatBottomSheetConfig = { data: id, disableClose: true };
             const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
@@ -87,9 +83,9 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     async ngOnInit (): Promise<void> {
-        const isEdit = !!this.id;
+        const isNew = !this.id;
 
-        if (!isEdit) {
+        if (isNew) {
             this.translateService.get('title.add-task').pipe(take(1)).subscribe((text: string) => {
                 this.title = text;
                 this.titleService.setTitle(`${this.title} — Mean Stack Template`);

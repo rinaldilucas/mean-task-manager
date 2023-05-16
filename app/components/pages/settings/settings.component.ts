@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
         const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.findAllByUser());
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
 
-        this.categories = result.data.map((category: ICategory) => ({ _id: category._id, title: category.title, userId: category.userId }));
+        this.categories = result.data;
         this.isLoading = false;
         this.changeDetector.markForCheck();
     }
@@ -70,7 +70,6 @@ export class SettingsComponent implements OnInit {
         }
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-success' });
-        this.categoryService.emitCategory.emit(result.data[0]);
         this.categoryCtrl.setValue(null);
         this.categoryInput.nativeElement.value = '';
         this.categories.push(result.data[0]);
@@ -85,7 +84,6 @@ export class SettingsComponent implements OnInit {
         }
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-success' });
-        this.categoryService.emitCategory.emit(category);
         this.categoryCtrl.setValue(null);
         this.categoryInput.nativeElement.value = '';
         const index = this.categories.indexOf(category);

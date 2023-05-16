@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -11,7 +11,6 @@ import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-    emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
     private readonly url = environment.baseUri + '/categories';
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
