@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
     emitCategory: EventEmitter<ICategory> = new EventEmitter<ICategory>();
-    private url: string = environment.baseUri + '/categories';
+    private readonly url = environment.baseUri + '/categories';
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 

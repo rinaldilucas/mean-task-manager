@@ -17,7 +17,7 @@ import { UserService } from '@services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private url: string = environment.baseUri + '/auth';
+    private readonly url = environment.baseUri + '/auth';
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private accessToken!: string;

@@ -20,10 +20,6 @@ import { AppRoutingModule } from '@scripts/modules/app-routing.module';
 import { InterceptorModule } from '@scripts/modules/interceptor.module';
 
 // SERVICES
-import { AuthService } from '@services/auth.service';
-import { SharedService } from '@services/shared.service';
-import { TaskService } from '@services/task.service';
-import { UserService } from '@services/user.service';
 
 // COMPONENTS
 import { AppComponent } from '@components/app.component';
@@ -86,7 +82,6 @@ registerLocaleData(localePt, 'pt-BR');
             }
         })
     ],
-    providers: [AuthService, SharedService, TaskService, UserService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

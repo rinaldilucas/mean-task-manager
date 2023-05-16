@@ -12,7 +12,7 @@ import { SharedService } from '@services/shared.service';
 @Injectable({ providedIn: 'root' })
 export class TaskService {
     emitTask: EventEmitter<ITask> = new EventEmitter<ITask>();
-    private url: string = environment.baseUri + '/tasks';
+    private readonly url = environment.baseUri + '/tasks';
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 

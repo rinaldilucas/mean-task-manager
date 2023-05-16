@@ -62,6 +62,7 @@
 I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
 
 -   Node.js API written with TypeScript
+-   Built with yarn as package manager
 -   Multilingual features implemented in both the client-side and API responses
 -   Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
 -   Virtual scrolling feature implemented on tables

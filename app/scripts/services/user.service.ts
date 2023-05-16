@@ -11,7 +11,7 @@ import { SharedService } from '@services/shared.service';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
-    private url: string = environment.baseUri + '/users';
+    private readonly url = environment.baseUri + '/users';
 
     constructor (private http: HttpClient, private sharedService: SharedService) {}
 
