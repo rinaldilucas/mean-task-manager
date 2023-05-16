@@ -8,7 +8,7 @@
             <form [formGroup]="form">
                 <mat-card-content>
                     <mat-form-field class="full-width">
-                        <input formControlName="email" type="email" matInput placeholder="{{ 'input.email' | translate }}" required />
+                        <input formControlName="email" type="email" matInput placeholder="{{ 'input.email' | translate }}" />
                         <mat-error *ngIf="form.get('email')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
                         <mat-error *ngIf="form.get('email')?.hasError('email')"> {{ "error.email-invalid" | translate }} </mat-error>
                         <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 5 } }} </mat-error>
@@ -17,7 +17,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="full-width">
-                        <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" required />
+                        <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
                         <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
                         <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
                         <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
