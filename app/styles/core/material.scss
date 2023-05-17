@@ -80,6 +80,7 @@ mat-row {
 
 .mat-cell {
     padding-right: vw(16);
+    word-break: break-word;
 
     @include media("<=desktop") {
         &:last-of-type {

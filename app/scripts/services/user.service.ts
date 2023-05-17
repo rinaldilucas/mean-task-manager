@@ -39,10 +39,4 @@ export class UserService {
 
         return lastValueFrom(this.http.delete<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
-
-    updateUser (user: IUser): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}`;
-
-        return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
-    }
 }

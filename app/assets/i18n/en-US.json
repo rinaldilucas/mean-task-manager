@@ -84,7 +84,8 @@
         "actions": {
             "done": "Set as done",
             "progress": "Mark as in progress",
-            "remove": "Remove"
+            "remove": "Remove",
+            "to-do": "Set as to do"
         },
         "category": "Category",
         "date": "Date",
@@ -107,6 +108,9 @@
         "get-error": "Error retrieving task."
     },
     "task-list": {
+        "confirmation-delete": "Delete",
+        "confirmation-message": "Are you sure you want to delete this item?",
+        "confirmation-title": "Remote Task",
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",

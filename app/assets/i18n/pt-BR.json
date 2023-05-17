@@ -84,7 +84,8 @@
         "actions": {
             "done": "Finalizar",
             "progress": "Marcar como em progresso",
-            "remove": "Remover"
+            "remove": "Remover",
+            "to-do": "Marcar como a fazer"
         },
         "category": "Categoria",
         "date": "Data",
@@ -107,6 +108,9 @@
         "get-error": "Erro ao buscar tarefa."
     },
     "task-list": {
+        "confirmation-delete": "Remover",
+        "confirmation-message": "Tem certeza de que deseja excluir este item?",
+        "confirmation-title": "Remover Tarefa",
         "empty": "Sem tarefas.",
         "empty-search": "Sem tarefas encontradas em sua pesquisa.",
         "refresh": "Atualizar",

@@ -97,6 +97,15 @@
                                     <button
                                         type="button"
                                         mat-icon-button
+                                        matTooltip="{{ 'table.actions.to-do' | translate }}"
+                                        class="list__body-actions"
+                                        (click)="changeStatusAsync(task, status.toDo); $event.stopPropagation()"
+                                    >
+                                        <mat-icon>undo</mat-icon>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        mat-icon-button
                                         matTooltip="{{ 'table.actions.progress' | translate }}"
                                         class="list__body-actions"
                                         (click)="changeStatusAsync(task, status.progress); $event.stopPropagation()"
@@ -117,7 +126,7 @@
                                         mat-icon-button
                                         matTooltip="{{ 'table.actions.remove' | translate }}"
                                         class="list__body-actions"
-                                        (click)="removeAsync(task); $event.stopPropagation()"
+                                        (click)="confirmDelete(task); $event.stopPropagation()"
                                     >
                                         <mat-icon>delete</mat-icon>
                                     </button>
@@ -133,7 +142,18 @@
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <ng-template matMenuContent>
-                                            <button type="button" mat-menu-item (click)="removeAsync(task); $event.stopPropagation()"><span>Remove</span></button>
+                                            <button *ngIf="task.status !== status.toDo" type="button" mat-menu-item (click)="changeStatusAsync(task, status.toDo)">
+                                                <span>{{ "table.actions.to-do" | translate }}</span>
+                                            </button>
+                                            <button *ngIf="task.status !== status.progress" type="button" mat-menu-item (click)="changeStatusAsync(task, status.progress)">
+                                                <span>{{ "table.actions.progress" | translate }}</span>
+                                            </button>
+                                            <button *ngIf="task.status !== status.done" type="button" mat-menu-item (click)="changeStatusAsync(task, status.done)">
+                                                <span>{{ "table.actions.done" | translate }}</span>
+                                            </button>
+                                            <button type="button" mat-menu-item (click)="confirmDelete(task)">
+                                                <span>{{ "table.actions.remove" | translate }}</span>
+                                            </button>
                                         </ng-template>
                                     </mat-menu>
                                 </mat-cell>

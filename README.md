@@ -76,10 +76,11 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
 -   Database and model validation using mongoose
 -   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easy to reuse on other applications, whether using only the frontend, backend or database
+-   Handler of promises and errors using destructuring
 -   Custom pipes to convert date to selected language
 -   Custom async validator to check already registered user
 -   Interceptor modules added to verify bearer token, errors, and headers language
--   A easy example using Resolver to retrieve data
+-   Example using resolver guard to retrieve data
 -   Dark mode persistent trought browser local storage
 -   An SCSS method used that utilizes REMs to maintain size scales
 -   SCSS written using BEM methodology

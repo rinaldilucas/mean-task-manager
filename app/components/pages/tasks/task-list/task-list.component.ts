@@ -8,6 +8,8 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { take } from 'rxjs/operators';
 
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -59,7 +61,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
         private sharedService: SharedService,
         private router: Router,
         private titleService: Title,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit (): void {
@@ -96,8 +99,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     async changeStatusAsync (task: ITask, status: EStatus): Promise<void> {
         task.status = status;
+        const a = '';
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.updateTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.saveTask(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change', success: true });
@@ -176,5 +180,14 @@ export class TaskListComponent implements OnInit, OnDestroy {
     ngOnDestroy (): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
         this.sharedService.dispose();
+    }
+
+    confirmDelete (task: ITask): void {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            data: { title: 'task-list.confirmation-title', message: 'task-list.confirmation-message', action: 'task-list.confirmation-delete' }
+        });
+        dialogRef.afterClosed().pipe(take(1)).subscribe((result: boolean) => {
+            if (result) { this.removeAsync(task); }
+        });
     }
 }

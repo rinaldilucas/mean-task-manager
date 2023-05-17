@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 
-import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
+import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { ICategory } from '@scripts/models/category.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -66,7 +66,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     constructor (
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
-         private formBuilder: FormBuilder,
+        private formBuilder: FormBuilder,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
         private router: Router,
         private sharedService: SharedService,
@@ -124,7 +124,7 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         const task = { ...this.form.value } as ITask;
         task.status = this.isNew ? EStatus.toDo : task.status;
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.isNew ? this.taskService.createTask(task) : this.taskService.updateTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.saveTask(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
 
         this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
@@ -135,7 +135,9 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
     close (): void {
         if (this.form.dirty) {
-            const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+                data: { title: 'task-form.confirmation-title', message: 'task-form.confirmation-message', action: 'task-form.confirmation-discard' }
+            });
             dialogRef.afterClosed().pipe(take(1)).subscribe((result: boolean) => {
                 if (result) { this.dismissModalAndNavigate('tasks'); }
             });

@@ -43,7 +43,7 @@ export class TaskService {
         return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
-    createTask (task: ITask): Promise<IQueryResult<ITask>> {
+    private createTask (task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
         task.userId = this.authService.getUserId();
 
@@ -57,10 +57,15 @@ export class TaskService {
         return lastValueFrom(this.http.delete<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    updateTask (task: ITask): Promise<IQueryResult<ITask>> {
+    private updateTask (task: ITask): Promise<IQueryResult<ITask>> {
         const url = `${this.url}`;
         task.userId = this.authService.getUserId();
 
         return lastValueFrom(this.http.put<IQueryResult<ITask>>(url, task).pipe(catchError(this.sharedService.errorHandler)));
+    }
+
+    saveTask (task: ITask): Promise<IQueryResult<ITask>> {
+        if (task._id) return this.updateTask(task);
+        else return this.createTask(task);
     }
 }

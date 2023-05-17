@@ -68,20 +68,6 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    async logoutAsync (): Promise<void> {
-        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-error', success: false });
-
-        this.stopRefreshTokenTimer();
-        this.accessToken = '';
-        this.isAuthenticated = false;
-        this.authStatusListener.next(false);
-        this.clearAuthData();
-        this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
-        this.router.navigate(['']);
-        this.emitMenu.emit(false);
-    }
-
     authenticate (email: string, password: string, keepUserLoggedIn: boolean): Promise<IQueryResult<IJwtPayload>> {
         const credentials = { email, password, keepUserLoggedIn };
         const url = `${this.url}/authenticate`;
@@ -131,7 +117,7 @@ export class AuthService {
             this.authStatusListener.next(true);
             const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
             this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
-            this.startRefreshTokenTimer(result);
+            this.startRefreshTokenTimerAsync(result);
             this.emitMenu.emit(true);
             return true;
         } else {
@@ -196,7 +182,7 @@ export class AuthService {
         localStorage.removeItem('userId');
     }
 
-    private async startRefreshTokenTimer (jwtPayload: IJwtPayload): Promise<void> {
+    private async startRefreshTokenTimerAsync (jwtPayload: IJwtPayload): Promise<void> {
         const jwtToken = jwtPayload;
         const timeout = jwtToken.expiresIn * 1000;
 
@@ -224,5 +210,19 @@ export class AuthService {
             email: this.decodedToken.email,
             userId: this.decodedToken.userId
         };
+    }
+
+    async logoutAsync (): Promise<void> {
+        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-error', success: false });
+
+        this.stopRefreshTokenTimer();
+        this.accessToken = '';
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        this.clearAuthData();
+        this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
+        this.router.navigate(['']);
+        this.emitMenu.emit(false);
     }
 }
