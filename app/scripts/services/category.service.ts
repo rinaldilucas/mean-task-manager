@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
@@ -15,11 +15,11 @@ export class CategoryService {
 
     constructor (private http: HttpClient, private sharedService: SharedService, private authService: AuthService) {}
 
-    findAllByUser (): Promise<IQueryResult<ICategory[]>> {
+    findAllByUser (): Observable<IQueryResult<ICategory[]>> {
         const userId = this.authService.getUserId();
         const url = `${this.url}/user/${userId}?`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ICategory[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return this.http.get<IQueryResult<ICategory[]>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
     getCategory (id: string): Promise<IQueryResult<ICategory>> {

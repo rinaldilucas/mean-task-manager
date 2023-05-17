@@ -19,8 +19,6 @@ import { AngularMaterialModule } from '@scripts/modules/angular-material.module'
 import { AppRoutingModule } from '@scripts/modules/app-routing.module';
 import { InterceptorModule } from '@scripts/modules/interceptor.module';
 
-// SERVICES
-
 // COMPONENTS
 import { AppComponent } from '@components/app.component';
 import { TasksDoneComponent } from '@components/shared/charts/tasks-done/tasks-done.component';
@@ -32,11 +30,11 @@ import { LogInComponent } from '@components/auth/login/login.component';
 import { RegisterComponent } from '@components/auth/register/register.component';
 
 // PAGES
-import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { HomepageComponent } from '@components/pages/home/home.component';
 import { ProfileComponent } from '@components/pages/profile/profile.component';
 import { SettingsComponent } from '@components/pages/settings/settings.component';
 import { StatisticsComponent } from '@components/pages/statistics/statistics.component';
+import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 
 // MODALS
 

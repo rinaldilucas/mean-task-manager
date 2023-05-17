@@ -10,8 +10,8 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, Subscription, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
-import { ITask } from '@app/scripts/models/task.interface';
+import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
+import { ITask } from '@scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {

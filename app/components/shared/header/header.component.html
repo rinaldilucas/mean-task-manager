@@ -8,15 +8,15 @@
         [opened]="(isDesktop$ | async) && isLogged ? true : false"
     >
         <mat-nav-list class="header__left">
-            <a mat-list-item [routerLink]="['tasks/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['tasks/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tasks">create</mat-icon>
                 {{ "navigation.tasks" | translate }}
             </a>
-            <a mat-list-item [routerLink]="['statistics/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['statistics/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Statistics">insights</mat-icon>
                 {{ "navigation.statistics" | translate }}
             </a>
-            <a mat-list-item [routerLink]="['settings/']" routerLinkActive="active">
+            <a mat-list-item [routerLink]="['settings/']" (keypress)="drawer.close()" (click)="drawer.close()" routerLinkActive="active">
                 <mat-icon matTooltip="Tools">settings</mat-icon>
                 {{ "navigation.settings" | translate }}
             </a>

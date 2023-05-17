@@ -9,11 +9,11 @@
         "signin": "Entrar"
     },
     "error": {
-        "required": "Campo obrigátorio",
         "email-exists": "E-mail já cadastrado.",
         "email-invalid": "E-mail inválido.",
         "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
-        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres."
+        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres.",
+        "required": "Campo obrigátorio"
     },
     "input": {
         "category": "Categoria",
@@ -67,6 +67,7 @@
         "category-remove-success": "Categoria removida com sucesso.",
         "category-selection": "Selecionar categoria",
         "english": "Inglês",
+        "get-error": "Erro ao carregar configurações.",
         "language": "Linguagem",
         "portuguese": "Português"
     },
@@ -95,15 +96,15 @@
         "to-do": "A fazer"
     },
     "task-form": {
+        "confirmation-cancel": "Cancelar",
+        "confirmation-discard": "Descartar",
+        "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
+        "confirmation-title": "Alterações Não Salvas",
         "create-error": "Erro ao adicionar tarefa.",
         "create-success": "Tarefa criada com sucesso.",
         "edit-error": "Erro ao editar tarefa.",
         "edit-success": "Tarefa editada com sucesso.",
-        "get-error": "Erro ao buscar tarefa.",
-        "confirmation-title": "Alterações Não Salvas",
-        "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
-        "confirmation-discard": "Descartar",
-        "confirmation-cancel": "Cancelar"
+        "get-error": "Erro ao buscar tarefa."
     },
     "task-list": {
         "empty": "Sem tarefas.",

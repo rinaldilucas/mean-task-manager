@@ -7,13 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { take } from 'rxjs/operators';
-import StatusCode from 'status-code-enum';
 
-import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
-import { EStatus } from '@app/scripts/models/enum/status.enum';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { ITask } from '@app/scripts/models/task.interface';
-import { AuthService } from '@services/auth.service';
+import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
+import { EStatus } from '@scripts/models/enum/status.enum';
+import { IQueryResult } from '@scripts/models/queryResult.interface';
+import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@services/shared.service';
 import { TaskService } from '@services/task.service';
 
@@ -56,7 +54,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
     columnDirection = '';
 
     constructor (
-        private authService: AuthService, //
         private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private sharedService: SharedService,
@@ -88,12 +85,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     async refreshAsync (): Promise<void> {
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser({ pageSize: this.pageSize }));
-
-        if (!!error && error.status === StatusCode.ClientErrorUnauthorized) {
-            this.authService.logoutAsync();
-            return this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
-        }
-
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
         this.tasks = result.data;

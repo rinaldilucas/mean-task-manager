@@ -13,6 +13,7 @@ import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { CategoryService } from '@services/category.service';
 import { SharedService } from '@services/shared.service';
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 
 @Component({
     selector: 'app-settings',
@@ -47,8 +48,8 @@ export class SettingsComponent implements OnInit {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.findAllByUser());
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-form.get-error', success: false });
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAllByUser()));
+        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
 
         this.categories = result.data;
         this.isLoading = false;

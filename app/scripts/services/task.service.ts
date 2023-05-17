@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
@@ -37,10 +37,10 @@ export class TaskService {
         return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    getTask (id: string): Promise<IQueryResult<ITask>> {
+    getTask (id: string): Observable<IQueryResult<ITask>> {
         const url = `${this.url}/${id}`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        return this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
     createTask (task: ITask): Promise<IQueryResult<ITask>> {

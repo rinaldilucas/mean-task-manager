@@ -9,11 +9,11 @@
         "signin": "Login"
     },
     "error": {
-        "required": "Required field",
         "email-exists": "E-mail already registered.",
         "email-invalid": "Invalid e-mail.",
         "max-length": "You must fill in text that does not exceed {{value}} characters.",
-        "min-length": "You must fill in text that exceeds {{value}} characters."
+        "min-length": "You must fill in text that exceeds {{value}} characters.",
+        "required": "Required field"
     },
     "input": {
         "category": "Category",
@@ -67,6 +67,7 @@
         "category-remove-success": "Category removed with success.",
         "category-selection": "Category selection",
         "english": "English",
+        "get-error": "Error retrieving settings.",
         "language": "Language",
         "portuguese": "Portuguese"
     },
@@ -95,15 +96,15 @@
         "to-do": "To do"
     },
     "task-form": {
+        "confirmation-cancel": "Cancel",
+        "confirmation-discard": "Discard",
+        "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
+        "confirmation-title": "Unsaved Changes",
         "create-error": "Error adding the task.",
         "create-success": "Task created with success.",
         "edit-error": "Error updating the task.",
         "edit-success": "Task edited with success.",
-        "get-error": "Error retrieving task.",
-        "confirmation-title": "Unsaved Changes",
-        "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
-        "confirmation-discard": "Discard",
-        "confirmation-cancel": "Cancel"
+        "get-error": "Error retrieving task."
     },
     "task-list": {
         "empty": "No tasks.",
