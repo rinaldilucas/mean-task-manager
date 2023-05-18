@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -7,9 +7,10 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Subscription, debounceTime, lastValueFrom, take } from 'rxjs';
+import { debounceTime, lastValueFrom, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
+import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -23,11 +24,9 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./task-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnInit, OnDestroy {
+export class TaskListComponent extends Unsubscriber implements OnInit {
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-    subscriptions: Subscription[] = [];
 
     columnOptions: IColumnsOptions = {
         lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
@@ -62,20 +61,24 @@ export class TaskListComponent implements OnInit, OnDestroy {
         private titleService: Title,
         private translateService: TranslateService,
         private dialog: MatDialog
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit (): void {
         this.updateTitle();
         this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
-        this.subscriptions.push(this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions)));
-        this.subscriptions.push(this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[]}) => {
+        this.disposeServicesOnDestroy = true;
+
+        this.addSubscription(this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions)));
+        this.addSubscription(this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[]}) => {
             this.paginator.pageSize = options.pageSize;
             this.paginator.pageSizeOptions = options.pageSizeOptions;
         }));
-        this.subscriptions.push(this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value)));
+        this.addSubscription(this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value)));
 
         this.refreshAsync();
-        this.subscriptions.push(this.taskService.emitTask.subscribe(() => this.refreshAsync()));
+        this.addSubscription(this.taskService.emitTask.subscribe(() => this.refreshAsync()));
     }
 
     add (): void {
@@ -174,11 +177,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
     updateTitle (): void {
         this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
         this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
-    }
-
-    ngOnDestroy (): void {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
-        this.sharedService.disposeSubscriptions();
     }
 
     confirmDelete (task: ITask): void {

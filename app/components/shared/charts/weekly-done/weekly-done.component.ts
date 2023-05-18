@@ -3,9 +3,9 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { take } from 'rxjs/operators';
 
+import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@services/shared.service';
@@ -17,9 +17,7 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./weekly-done.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WeeklyDoneComponent implements OnInit {
-    subscriptions: Subscription[] = [];
-
+export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
     tasks!: ITask[];
     chartType: ChartType = 'line';
     chartLabels: Label[] = [];
@@ -38,7 +36,9 @@ export class WeeklyDoneComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
         private media: MediaObserver
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit (): void {
         this.refresh();
@@ -84,7 +84,7 @@ export class WeeklyDoneComponent implements OnInit {
     }
 
     verifyResolutions (): void {
-        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
+        this.addSubscription(this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
@@ -100,9 +100,5 @@ export class WeeklyDoneComponent implements OnInit {
             }
             this.changeDetector.markForCheck();
         }));
-    }
-
-    ngOnDetroy (): void {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

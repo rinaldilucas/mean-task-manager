@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { Subscription, lastValueFrom, take } from 'rxjs';
+import { lastValueFrom, take } from 'rxjs';
 
+import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
@@ -16,9 +17,7 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./tasks-done.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TasksDoneComponent implements OnInit, OnDestroy {
-    subscriptions: Subscription[] = [];
-
+export class TasksDoneComponent extends Unsubscriber implements OnInit, OnDestroy {
     tasks!: ITask[];
     chartType: ChartType = 'doughnut';
     chartLabels: any[] = [];
@@ -36,7 +35,9 @@ export class TasksDoneComponent implements OnInit, OnDestroy {
         private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
         private media: MediaObserver
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit (): void {
         this.refresh();
@@ -66,7 +67,7 @@ export class TasksDoneComponent implements OnInit, OnDestroy {
     }
 
     verifyResolutions (): void {
-        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
+        this.addSubscription(this.media.asObservable().subscribe((change: MediaChange[]) => {
             if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
@@ -81,9 +82,5 @@ export class TasksDoneComponent implements OnInit, OnDestroy {
             }
             this.changeDetector.markForCheck();
         }));
-    }
-
-    ngOnDestroy (): void {
-        this.sharedService.disposeSubscriptions();
     }
 }

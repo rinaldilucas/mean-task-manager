@@ -2,9 +2,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
+import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
 import { AuthService } from '@services/auth.service';
 import { TaskService } from '@services/task.service';
 import { UserService } from '@services/user.service';
@@ -15,12 +16,11 @@ import { UserService } from '@services/user.service';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
     time = new Date();
     opened!: boolean;
     isLogged = false;
     toggleTheme = new FormControl(false);
-    subscriptions: Subscription[] = [];
 
     isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
         map((result) => result.matches),
@@ -34,12 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         public userService: UserService,
         public changeDetector: ChangeDetectorRef,
         public router: Router
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit (): void {
         setInterval(() => (this.time = new Date()), 1000);
         this.isLogged = this.authService.getIsAuthenticated();
-        this.subscriptions.push(this.authService.emitMenu.subscribe((result: boolean) => {
+        this.addSubscription(this.authService.emitMenu.subscribe((result: boolean) => {
             this.isLogged = result;
             this.changeDetector.detectChanges();
         }));
@@ -51,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.toggleTheme = new FormControl(true);
         }
 
-        this.subscriptions.push(this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
+        this.addSubscription(this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
             if (enableDarkMode) {
                 document.body.classList.add(darkClassName);
                 localStorage.setItem('theme', darkClassName);
@@ -64,9 +66,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     logout (): void {
         this.authService.logoutAsync();
-    }
-
-    ngOnDestroy (): void {
-        this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
     }
 }

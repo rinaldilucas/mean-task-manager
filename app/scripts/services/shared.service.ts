@@ -17,7 +17,7 @@ export class SharedService {
     emitTitle: EventEmitter<string> = new EventEmitter<string>();
     tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
     pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
-    subscriptions: Subscription[] = [];
+    static subscriptions: Subscription[] = [];
 
     constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
 
@@ -72,15 +72,14 @@ export class SharedService {
     }
 
     setTableColumnsAndPagesize (columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
-        this.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
+        SharedService.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
+            pageSize = 20;
+            pageSizeOptions = [20];
+
             if (change[0].mqAlias === 'xs') {
                 columnOptions = columns.xsColumns;
-                pageSize = 20;
-                pageSizeOptions = [20];
             } else if (change[0].mqAlias === 'sm') {
                 columnOptions = columns.smColumns;
-                pageSize = 20;
-                pageSizeOptions = [20];
             } else if (change[0].mqAlias === 'md') {
                 columnOptions = columns.mdColumns;
                 pageSize = 10;
@@ -109,7 +108,7 @@ export class SharedService {
         }
     }
 
-    disposeSubscriptions (): void {
+    static disposeSubscriptions (): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }
