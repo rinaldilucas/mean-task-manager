@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, catchError, lastValueFrom } from 'rxjs';
 
@@ -25,22 +25,25 @@ export class TaskService extends CrudService<ITask> {
 
     override findAllByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Observable<IQueryResult<ITask[]>> {
         const userId = this.authService.getUserId();
-        let url = `${endpoint}/user/${userId}?`;
+        const url = `${endpoint}/user/${userId}?`;
 
-        if (sortFilter) url += `sortFilter=${sortFilter}&sortDirection=${sortDirection}&`;
-        if (pageSize) url += `pageSize=${pageSize}&`;
-        if (pageIndex) url += `pageIndex=${pageIndex}&`;
-        if (searchTerm) url += `searchTerm=${searchTerm}`;
+        let params = new HttpParams();
+        if (sortFilter) { params = params.set('sortFilter', sortFilter).set('sortDirection', sortDirection as string); }
+        if (pageSize) params = params.set('pageSize', pageSize);
+        if (pageIndex) params = params.set('pageIndex', pageIndex);
+        if (searchTerm) params = params.set('searchTerm', searchTerm as string);
 
-        return this.http.get<IQueryResult<ITask[]>>(url).pipe(catchError(this.sharedService.errorHandler));
+        return this.http.get<IQueryResult<ITask[]>>(url, { params }).pipe(catchError(this.sharedService.errorHandler));
     }
 
     getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
         const userId = this.authService.getUserId();
-        let url = `${endpoint}/by-interval/${userId}?`;
-        url += `startDate=${startDate.toISOString()}&`;
-        url += `finalDate=${finalDate.toISOString()}&`;
+        const url = `${endpoint}/by-interval/${userId}?`;
 
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url).pipe(catchError(this.sharedService.errorHandler)));
+        let params = new HttpParams();
+        params = params.set('startDate', startDate.toISOString());
+        params = params.set('finalDate', finalDate.toISOString());
+
+        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url, { params }).pipe(catchError(this.sharedService.errorHandler)));
     }
 }
