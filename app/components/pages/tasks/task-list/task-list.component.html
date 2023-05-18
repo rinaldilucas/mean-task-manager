@@ -10,14 +10,10 @@
                     <span class="header-title">{{ "title.tasks" | translate }}</span>
                 </div>
 
-                <div class="list__header-search mat-elevation-z1">
+                <div class="list__header-search">
                     <mat-form-field>
-                        <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput (keyup.enter)="filterTasksAsync(searchInput.value)" [value]="search" />
+                        <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput [formControl]="search" />
                     </mat-form-field>
-
-                    <button type="button" mat-icon-button>
-                        <mat-icon matTooltip="{{ 'task-list.search' | translate }}" (click)="filterTasksAsync(searchInput.value)">done</mat-icon>
-                    </button>
                 </div>
             </div>
 

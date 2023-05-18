@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -6,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Subscription, lastValueFrom, take } from 'rxjs';
+import { Subscription, debounceTime, lastValueFrom, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
@@ -25,7 +26,6 @@ import { TaskService } from '@services/task.service';
 export class TaskListComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild('searchInput', { static: false }) searchInput!: ElementRef;
 
     subscriptions: Subscription[] = [];
 
@@ -39,7 +39,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = this.columnOptions.lgColumns;
 
     title = 'Tasks';
-    search = '';
+    search = new FormControl();
     searchedTasks: ITask[] = [];
     isLoading = true;
     isSearching = false;
@@ -72,6 +72,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
             this.paginator.pageSize = options.pageSize;
             this.paginator.pageSizeOptions = options.pageSizeOptions;
         }));
+        this.subscriptions.push(this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value)));
 
         this.refreshAsync();
         this.subscriptions.push(this.taskService.emitTask.subscribe(() => this.refreshAsync()));
@@ -119,7 +120,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     async onPaginateChangeAsync (event: PageEvent): Promise<void> {
         this.isLoading = true;
         const pageIndex = event.pageIndex;
-        const searchTerm = this.searchInput.nativeElement.value ?? null;
+        const searchTerm = this.search.value ?? null;
         this.pageSize = event.pageSize;
 
         const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
@@ -134,7 +135,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     async sortDataAsync (event: Sort): Promise<void> {
         this.isLoading = true;
-        const searchTerm = this.searchInput.nativeElement.value ?? null;
+        const searchTerm = this.search.value ?? null;
         this.columnFilter = event.active;
         this.columnDirection = event.direction;
 
@@ -151,10 +152,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     async filterTasksAsync (text: string): Promise<void> {
         if (text === '') {
-            this.searchInput.nativeElement.value = '';
+            this.search.setValue('');
             this.isSearching = false;
             this.refreshAsync();
-        } else {
+        } else if (text.length > 2) {
             this.isLoading = true;
             const searchTerm = text.trim().toLowerCase();
 
