@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { take } from 'rxjs/operators';
+import { Subscription, lastValueFrom, take } from 'rxjs';
 
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
@@ -87,7 +86,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser({ pageSize: this.pageSize }));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser({ pageSize: this.pageSize })));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
         this.tasks = result.data;
@@ -99,9 +98,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     async changeStatusAsync (task: ITask, status: EStatus): Promise<void> {
         task.status = status;
-        const a = '';
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.saveTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change', success: true });
@@ -110,7 +108,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     }
 
     async removeAsync (task: ITask): Promise<void> {
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.removeTask(task._id));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-success', success: true });
@@ -124,7 +122,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
         const searchTerm = this.searchInput.nativeElement.value ?? null;
         this.pageSize = event.pageSize;
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection }));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
         this.tasks = result.data;
@@ -140,7 +138,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
         this.columnFilter = event.active;
         this.columnDirection = event.direction;
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection }));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
         this.paginator.pageIndex = 0;
@@ -160,7 +158,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
             this.isLoading = true;
             const searchTerm = text.trim().toLowerCase();
 
-            const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection }));
+            const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
             if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
             this.paginator.pageIndex = 0;
@@ -179,7 +177,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy (): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
-        this.sharedService.dispose();
+        this.sharedService.disposeSubscriptions();
     }
 
     confirmDelete (task: ITask): void {

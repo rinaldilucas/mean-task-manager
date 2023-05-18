@@ -6,14 +6,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { take } from 'rxjs/operators';
+import { Observable, lastValueFrom, take } from 'rxjs';
 
 import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { CategoryService } from '@services/category.service';
 import { SharedService } from '@services/shared.service';
-import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 
 @Component({
     selector: 'app-settings',
@@ -62,7 +60,7 @@ export class SettingsComponent implements OnInit {
 
         if (!value) return;
 
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.createCategory(category));
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
             this.categoryCtrl.setValue(null);
@@ -77,7 +75,7 @@ export class SettingsComponent implements OnInit {
     }
 
     async removeCategoryAsync (category: ICategory): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.removeCategory(category._id));
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
             this.categoryCtrl.setValue(null);

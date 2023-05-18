@@ -13,7 +13,7 @@ export class TaskIdResolverGuard {
 
     resolve (route: ActivatedRouteSnapshot): Observable<ITask> {
         if (route.params && route.params['id']) {
-            return this.taskService.getTask(route.params['id'])
+            return this.taskService.get(route.params['id'])
                 .pipe(map((result: IQueryResult<ITask>) => result.data[0]));
         } else {
             return of({} as ITask);

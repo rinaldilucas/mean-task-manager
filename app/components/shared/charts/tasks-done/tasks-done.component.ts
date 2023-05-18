@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { take } from 'rxjs/operators';
+import { Subscription, lastValueFrom, take } from 'rxjs';
 
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -47,7 +46,7 @@ export class TasksDoneComponent implements OnInit, OnDestroy {
     async refresh (): Promise<ITask | void> {
         this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.findAllByUser());
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser()));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
         this.tasks = result.data;
 
@@ -85,6 +84,6 @@ export class TasksDoneComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy (): void {
-        this.sharedService.dispose();
+        this.sharedService.disposeSubscriptions();
     }
 }

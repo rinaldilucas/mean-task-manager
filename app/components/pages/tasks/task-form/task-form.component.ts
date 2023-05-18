@@ -6,8 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { map, startWith, take } from 'rxjs/operators';
+import { Observable, map, startWith, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { ICategory } from '@scripts/models/category.interface';
@@ -113,18 +112,13 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue));
     }
 
-    refresh (): void {
-        this.changeDetector.detectChanges();
-        this.bottomSheetRef.dismiss();
-    }
-
     async saveAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
         const task = { ...this.form.value } as ITask;
         task.status = this.isNew ? EStatus.toDo : task.status;
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.saveTask(task));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
 
         this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });

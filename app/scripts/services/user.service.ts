@@ -1,42 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
+import { AuthService } from '@services/auth.service';
+import { CrudService } from '@services/crud.service';
 import { SharedService } from '@services/shared.service';
 
+const endpoint = environment.baseUri + '/users';
+
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserService extends CrudService<IUser> {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
-    private readonly url = environment.baseUri + '/users';
 
-    constructor (private http: HttpClient, private sharedService: SharedService) {}
-
-    listUsers (): Promise<IQueryResult<IUser[]>> {
-        const url = `${this.url}`;
-
-        return lastValueFrom(this.http.get<IQueryResult<IUser[]>>(url).pipe(catchError(this.sharedService.errorHandler)));
-    }
-
-    getUser (id: string): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}/${id}`;
-
-        return lastValueFrom(this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler)));
+    constructor (
+        protected override http: HttpClient, //
+        protected override sharedService: SharedService,
+        protected override authService: AuthService
+    ) {
+        super(http, sharedService, authService, endpoint);
     }
 
     checkIfEmailExists (email: string): Observable<IQueryResult<IUser>> {
-        const url = `${this.url}/email/${email}`;
+        const url = `${endpoint}/email/${email}`;
 
         return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
-    }
-
-    removeUser (user: IUser | string): Promise<IQueryResult<IUser>> {
-        const id = typeof user === 'string' ? user : user._id;
-        const url = `${this.url}/${id}`;
-
-        return lastValueFrom(this.http.delete<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

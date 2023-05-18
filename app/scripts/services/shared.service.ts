@@ -7,8 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Observable, Subscription, throwError } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subscription, take, throwError } from 'rxjs';
 
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
 import { ITask } from '@scripts/models/task.interface';
@@ -53,7 +52,7 @@ export class SharedService {
     }
 
     isValidForm (form: FormGroup<string>): boolean {
-        if (!form.valid) {
+        if (!form.valid || !form.dirty) {
             this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput(form);
             return false;
@@ -110,7 +109,7 @@ export class SharedService {
         }
     }
 
-    dispose (): void {
+    disposeSubscriptions (): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

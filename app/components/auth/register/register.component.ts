@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private titleService: Title,
         private router: Router,
-         private translateService: TranslateService,
+        private translateService: TranslateService,
         private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({

@@ -6,7 +6,7 @@
             </button>
             <h2 class="form-modal__header-title">{{ title }}</h2>
             <div class="form-header">
-                <button type="submit" mat-fab color="primary" [disabled]="!this.form.valid" (click)="saveAsync()">
+                <button type="submit" mat-fab color="primary" [disabled]="!this.form.dirty || !this.form.valid" (click)="saveAsync()">
                     <mat-icon>check</mat-icon>
                 </button>
             </div>
@@ -14,10 +14,10 @@
     </div>
 
     <div class="form-modal__body">
-        <form [formGroup]="form" class="form-modal__body-wrapper">
+        <form [formGroup]="form" class="form-modal__body-wrapper" tabindex="0" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
             <mat-card-content>
                 <mat-form-field class="full-width">
-                    <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" />
+                    <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" cdkFocusInitial />
                     <mat-hint align="end">{{ taskTitle.value.length || 0 }}/100</mat-hint>
                     <mat-error *ngIf="form.get('title')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
                     <mat-error *ngIf="form.get('title')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 2 } }} </mat-error>
