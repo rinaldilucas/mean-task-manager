@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { SharedService } from '@app/scripts/services/shared.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-unsubscriber',
@@ -10,7 +11,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class Unsubscriber implements OnDestroy {
-    subscriptions: Subscription[] = [];
+    private subscriptions = new SubSink();
     disposeServicesOnDestroy = false;
 
     ngOnDestroy (): void {
@@ -18,11 +19,11 @@ export class Unsubscriber implements OnDestroy {
     }
 
     resetSubscriptions (): void {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.unsubscribe();
         if (this.disposeServicesOnDestroy) SharedService.disposeSubscriptions();
     }
 
     addSubscription (subscription: Subscription): void {
-        this.subscriptions.push(subscription);
+        this.subscriptions.add(subscription);
     }
 }

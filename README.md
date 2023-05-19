@@ -77,6 +77,9 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Database and model validation using mongoose
 -   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easy to reuse on other applications, whether using only the frontend, backend or database
 -   Handler of promises and errors using destructuring
+-   Improved http security using HttpParams
+-   Unsubscriber component with subsink to facilitate the manuvering of unsubcribres
+-   Shared CRUD service, allowing services to inherit its operations
 -   Custom pipes to convert date to selected language
 -   Custom async validator to check already registered user
 -   Interceptor modules added to verify bearer token, errors, and headers language
@@ -97,6 +100,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Routed bottom sheet example implemented using only one component
 -   Input validators with multilingual features added
 -   Charts have been developed using chart.js
+-   Angular routing animations using dynamic params
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
