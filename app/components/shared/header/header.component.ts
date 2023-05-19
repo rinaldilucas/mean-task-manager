@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
 import { AuthService } from '@services/auth.service';
@@ -20,11 +20,15 @@ export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
     time = new Date();
     opened!: boolean;
     isLogged = false;
+    isDesktop = false;
     toggleTheme = new FormControl(false);
 
     isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
         map((result) => result.matches),
-        shareReplay()
+        shareReplay(),
+        tap((result: boolean) => {
+            this.isDesktop = result;
+        })
     );
 
     constructor (

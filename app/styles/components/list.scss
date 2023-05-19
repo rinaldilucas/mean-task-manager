@@ -110,10 +110,6 @@
                 width: unset;
             }
 
-            .dark-mode & {
-                background-color: mat-contrast($app-background, 50) !important;
-            }
-
             .mat-form-field {
                 width: 100% !important;
             }
