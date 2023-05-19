@@ -1,17 +1,19 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
-import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
+import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@services/auth.service';
 import { TaskService } from '@services/task.service';
 import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-header',
+    animations: [routerTransition],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -70,5 +72,9 @@ export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
 
     logout (): void {
         this.authService.logoutAsync();
+    }
+
+    getState (outlet: RouterOutlet): any {
+        return outlet.activatedRouteData.state;
     }
 }

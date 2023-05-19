@@ -80,6 +80,10 @@ a {
                 height: calc(100vh - #{$header-size});
                 overflow: hidden;
             }
+
+            @include media(">desktop") {
+                height: calc(100vh - #{$header-size});
+            }
         }
     }
 

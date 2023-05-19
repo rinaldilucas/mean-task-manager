@@ -5,8 +5,8 @@ import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 
 import { Label, MultiDataSet } from 'ng2-charts';
 import { take } from 'rxjs/operators';
 
+import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { IQueryResult } from '@app/scripts/models/queryResult.interface';
-import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
 import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@services/shared.service';
 import { TaskService } from '@services/task.service';

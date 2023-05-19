@@ -10,7 +10,7 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { debounceTime, lastValueFrom, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
-import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';

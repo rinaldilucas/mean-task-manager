@@ -1,11 +1,11 @@
 <div class="form" fxLayoutAlign="center center">
-    <div class="form__box" tabindex="0" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
+    <div class="form__box">
         <mat-card>
             <mat-card-header>
                 <mat-card-title class="form__title">{{ "title.profile" | translate }}</mat-card-title>
             </mat-card-header>
 
-            <form [formGroup]="form">
+            <form [formGroup]="form" tabindex="0" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
                 <mat-card-content>
                     <mat-form-field class="full-width">
                         <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />

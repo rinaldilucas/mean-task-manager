@@ -22,18 +22,18 @@ import { StatisticsComponent } from '@components/pages/statistics/statistics.com
 import { ERole } from '@scripts/models/enum/role.enum';
 
 const routes: Routes = [
-    { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard] },
-    { path: 'login', component: LogInComponent, canActivate: [LoggedInAuthGuard] },
-    { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard] },
+    { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
+    { path: 'login', component: LogInComponent, canActivate: [LoggedInAuthGuard], data: { state: 'login' } },
+    { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard], data: { state: 'register' } },
     {
         path: 'tasks',
         loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule),
         canActivate: [AuthGuard],
         canLoad: [AuthGuard]
     },
-    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user } },
+    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { state: 'profile' } },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' } },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', component: EmptyPageComponent }
 ];

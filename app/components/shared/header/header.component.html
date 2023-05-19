@@ -63,8 +63,8 @@
             </div>
         </mat-toolbar>
 
-        <div class="mat-app-background page-container">
-            <router-outlet></router-outlet>
+        <div class="mat-app-background page-container" [@routerTransition]="getState(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

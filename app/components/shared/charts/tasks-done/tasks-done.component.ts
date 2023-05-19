@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { lastValueFrom, take } from 'rxjs';
 
-import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { EStatus } from '@scripts/models/enum/status.enum';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
