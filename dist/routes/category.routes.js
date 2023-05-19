@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const routes = (0, _express.Router)();
 
 // GET ALL
-routes.get('/api/categories', _auth.default, _category.default.findAll);
+routes.get('/api/categories/user/:userId', _auth.default, _category.default.findAllByUser);
 
 // CREATE
 routes.post('/api/categories', (0, _expressValidator.check)('title', 'Must be at least 2 and lesser than 50 chars long') //

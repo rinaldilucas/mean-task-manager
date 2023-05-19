@@ -4,7 +4,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Debug vscode client via Chrome",
+            "name": "Debug VS Code",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}"
         },

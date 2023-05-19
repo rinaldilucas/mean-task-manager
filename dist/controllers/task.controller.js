@@ -61,6 +61,24 @@ class TaskController {
       return (0, _http.responseSuccess)(response, results[1], _statusCodeEnum.StatusCode.SuccessOK, results[0]);
     });
   }
+  async getTasksByInterval(request, response) {
+    const language = request.headers.language;
+    const startDate = new Date(request.query.startDate);
+    const finalDate = new Date(request.query.finalDate);
+    const findQuery = {
+      userId: request.params.userId
+    };
+    findQuery.createdAt = {
+      $gte: startDate,
+      $lte: finalDate
+    };
+    const [data, error] = await (0, _http.handlePromises)(request, response, _task.Task.find(findQuery));
+    if (error) return;
+    if (!data) {
+      if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${_task.Task.modelName}}.`);
+    }
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+  }
   async findOne(request, response) {
     const language = request.headers.language;
     const [data, error] = await (0, _http.handlePromises)(request, response, _task.Task.findOne({

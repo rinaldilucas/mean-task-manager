@@ -9,8 +9,12 @@ const SchemaModel = new _mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
     minLength: 2
+  },
+  userId: {
+    type: _mongoose.SchemaTypes.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true

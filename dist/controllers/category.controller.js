@@ -10,15 +10,19 @@ var _http = require("../utils/http.handler");
 var _category = require("../models/category.model");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class CategoryController {
-  async findAll(request, response) {
+  async findAllByUser(request, response) {
     const language = request.headers.language;
     const countQuery = callback => {
-      _category.Category.find().countDocuments({}, (error, count) => {
+      _category.Category.find({
+        userId: request.params.userId
+      }).countDocuments({}, (error, count) => {
         if (error) callback(error, null);else callback(null, count);
       });
     };
     const retrieveQuery = callback => {
-      _category.Category.find().exec((error, documents) => {
+      _category.Category.find({
+        userId: request.params.userId
+      }).exec((error, documents) => {
         if (error) callback(error, null);else callback(null, documents);
       });
     };

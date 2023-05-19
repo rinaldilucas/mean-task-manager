@@ -32,5 +32,8 @@ routes.put('/api/tasks', _auth.default, _task.default.update);
 
 // DELETE
 routes.delete('/api/tasks/:_id', _auth.default, _task.default.remove);
+
+// GET TASKS BY INTERVAL
+routes.get('/api/tasks/by-interval/:userId', _auth.default, _task.default.getTasksByInterval);
 var _default = routes;
 exports.default = _default;

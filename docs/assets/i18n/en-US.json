@@ -12,7 +12,8 @@
         "email-exists": "E-mail already registered.",
         "email-invalid": "Invalid e-mail.",
         "max-length": "You must fill in text that does not exceed {{value}} characters.",
-        "min-length": "You must fill in text that exceeds {{value}} characters."
+        "min-length": "You must fill in text that exceeds {{value}} characters.",
+        "required": "Required field"
     },
     "input": {
         "category": "Category",
@@ -66,14 +67,25 @@
         "category-remove-success": "Category removed with success.",
         "category-selection": "Category selection",
         "english": "English",
+        "get-error": "Error retrieving settings.",
         "language": "Language",
         "portuguese": "Portuguese"
+    },
+    "statistics": {
+        "status": {
+            "done": "Done",
+            "progress": "In progress",
+            "to-do": "To do"
+        },
+        "tasks-done": "Tasks",
+        "tasks-done-weekly": "Tasks / Week"
     },
     "table": {
         "actions": {
             "done": "Set as done",
             "progress": "Mark as in progress",
-            "remove": "Remove"
+            "remove": "Remove",
+            "to-do": "Set as to do"
         },
         "category": "Category",
         "date": "Date",
@@ -85,6 +97,10 @@
         "to-do": "To do"
     },
     "task-form": {
+        "confirmation-cancel": "Cancel",
+        "confirmation-discard": "Discard",
+        "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
+        "confirmation-title": "Unsaved Changes",
         "create-error": "Error adding the task.",
         "create-success": "Task created with success.",
         "edit-error": "Error updating the task.",
@@ -92,6 +108,9 @@
         "get-error": "Error retrieving task."
     },
     "task-list": {
+        "confirmation-delete": "Delete",
+        "confirmation-message": "Are you sure you want to delete this item?",
+        "confirmation-title": "Remote Task",
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",

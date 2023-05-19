@@ -7,9 +7,9 @@ exports.default = void 0;
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _statusCodeEnum = require("status-code-enum");
 var _jwt = _interopRequireDefault(require("../services/jwt.service"));
-var _redis = _interopRequireDefault(require("../services/redis.service"));
-var _user = require("../models/user.model");
+var _redis = require("../services/redis.service");
 var _http = require("../utils/http.handler");
+var _user = require("../models/user.model");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class AuthController {
   async authenticate(request, response) {
@@ -37,7 +37,7 @@ class AuthController {
       userId: document._id,
       keepUserLoggedIn: request.body.keepUserLoggedIn
     };
-    (0, _http.responseSuccess)(response, jwtPayload, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, jwtPayload, _statusCodeEnum.StatusCode.SuccessOK);
   }
   async register(request, response) {
     const language = request.headers.language;
@@ -60,7 +60,7 @@ class AuthController {
     if (!data) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error creating document. Document name: {${_user.User.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao criar documento. Nome do documento: {${_user.User.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessCreated);
   }
   async changePassword(request, response) {
     const language = request.headers.language;
@@ -86,7 +86,7 @@ class AuthController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${_user.User.modelName}}.`);
     }
-    (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
   }
   async refreshToken(request, response) {
     const language = request.headers.language;
@@ -108,13 +108,13 @@ class AuthController {
       expiresIn: process.env.JWT_ACCESS_TIME,
       userId: request.body.userId
     };
-    (0, _http.responseSuccess)(response, jwtPayload, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, jwtPayload, _statusCodeEnum.StatusCode.SuccessOK);
   }
   async logout(request, response) {
     const token = request.body.token;
-    const [, addToBlacklistError] = await (0, _http.handlePromises)(request, response, _redis.default.addToBlacklist(token));
+    const [, addToBlacklistError] = await (0, _http.handlePromises)(request, response, (0, _redis.add)(token));
     if (addToBlacklistError) return;
-    (0, _http.responseSuccess)(response, {}, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, {}, _statusCodeEnum.StatusCode.SuccessOK);
   }
 }
 var _default = new AuthController();

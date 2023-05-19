@@ -12,7 +12,8 @@
         "email-exists": "E-mail já cadastrado.",
         "email-invalid": "E-mail inválido.",
         "max-length": "Você deve preencher um texto que não exceda {{value}} caracteres.",
-        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres."
+        "min-length": "Você deve preencher um texto que exceda {{value}} caracteres.",
+        "required": "Campo obrigátorio"
     },
     "input": {
         "category": "Categoria",
@@ -66,14 +67,25 @@
         "category-remove-success": "Categoria removida com sucesso.",
         "category-selection": "Selecionar categoria",
         "english": "Inglês",
+        "get-error": "Erro ao carregar configurações.",
         "language": "Linguagem",
         "portuguese": "Português"
+    },
+    "statistics": {
+        "status": {
+            "done": "Feito",
+            "progress": "Em progresso",
+            "to-do": "A fazer"
+        },
+        "tasks-done": "Tarefas",
+        "tasks-done-weekly": "Tarefas / Semana"
     },
     "table": {
         "actions": {
             "done": "Finalizar",
             "progress": "Marcar como em progresso",
-            "remove": "Remover"
+            "remove": "Remover",
+            "to-do": "Marcar como a fazer"
         },
         "category": "Categoria",
         "date": "Data",
@@ -85,6 +97,10 @@
         "to-do": "A fazer"
     },
     "task-form": {
+        "confirmation-cancel": "Cancelar",
+        "confirmation-discard": "Descartar",
+        "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
+        "confirmation-title": "Alterações Não Salvas",
         "create-error": "Erro ao adicionar tarefa.",
         "create-success": "Tarefa criada com sucesso.",
         "edit-error": "Erro ao editar tarefa.",
@@ -92,6 +108,9 @@
         "get-error": "Erro ao buscar tarefa."
     },
     "task-list": {
+        "confirmation-delete": "Remover",
+        "confirmation-message": "Tem certeza de que deseja excluir este item?",
+        "confirmation-title": "Remover Tarefa",
         "empty": "Sem tarefas.",
         "empty-search": "Sem tarefas encontradas em sua pesquisa.",
         "refresh": "Atualizar",
