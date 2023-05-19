@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import { Label, SingleDataSet } from 'ng2-charts';
 import { lastValueFrom, take } from 'rxjs';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
@@ -20,8 +21,8 @@ import { TaskService } from '@services/task.service';
 export class TasksDoneComponent extends Unsubscriber implements OnInit {
     tasks!: ITask[];
     chartType: ChartType = 'doughnut';
-    chartLabels: any[] = [];
-    chartData: any = [];
+    chartLabels: Label[] = [];
+    chartData: SingleDataSet = [];
     chartOptions: ChartOptions = {
         responsive: true,
         tooltips: { enabled: true },

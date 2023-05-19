@@ -82,7 +82,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
         this.authService.logoutAsync();
     }
 
-    getState (outlet: RouterOutlet): any {
+    getState (outlet: RouterOutlet): string {
         return outlet.activatedRouteData.state;
     }
 }

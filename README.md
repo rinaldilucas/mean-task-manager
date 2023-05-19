@@ -137,6 +137,7 @@ You need to have the following requirements:
     ```
 
 -   angular cli 14
+
     ```sh
     npm install -g @angular/cli@14
     ```
@@ -163,9 +164,9 @@ _Below is an example of how you can run the project._
     ```js
     yarn dev
     ```
-7. Build the dist folders
+7. Deploy to github pages
     ```js
-    yarn build
+    yarn deploy
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
