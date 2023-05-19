@@ -73,7 +73,7 @@
         "sourceMap": true,
         "strict": true,
         "strictNullChecks": true,
-        "target": "ES2022",
+        "target": "ES2021",
         "useDefineForClassFields": false,
     },
     "include": [
