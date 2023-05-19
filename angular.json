@@ -27,13 +27,13 @@
                             "aot": true,
                             "budgets": [
                                 {
-                                    "maximumError": "6mb",
-                                    "maximumWarning": "4mb",
+                                    "maximumError": "12mb",
+                                    "maximumWarning": "8mb",
                                     "type": "initial"
                                 },
                                 {
-                                    "maximumError": "200kb",
-                                    "maximumWarning": "100kb",
+                                    "maximumError": "4kb",
+                                    "maximumWarning": "2kb",
                                     "type": "anyComponentStyle"
                                 }
                             ],
@@ -46,7 +46,7 @@
                                 }
                             ],
                             "namedChunks": false,
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
                             "sourceMap": false,
                             "vendorChunk": false
@@ -125,6 +125,9 @@
                         "lintFilePatterns": ["app/**/*.ts", "app/**/*.html"],
                         "fix": true
                     }
+                },
+                "deploy": {
+                    "builder": "angular-cli-ghpages:deploy"
                 }
             },
             "prefix": "app",
