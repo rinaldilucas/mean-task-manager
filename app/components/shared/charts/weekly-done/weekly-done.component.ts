@@ -5,8 +5,8 @@ import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 
 import { Label, MultiDataSet } from 'ng2-charts';
 import { take } from 'rxjs/operators';
 
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
 import { SharedService } from '@services/shared.service';
 import { TaskService } from '@services/task.service';
@@ -27,7 +27,32 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
         maintainAspectRatio: false,
         tooltips: { enabled: true },
         legend: { display: false },
-        title: { display: true }
+        title: { display: true },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    lineWidth: 0.5
+                },
+                ticks: {
+                    display: true,
+                    maxTicksLimit: 3,
+
+                    minor: {
+                        fontSize: 14
+                    }
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display: false
+                },
+                ticks: {
+                    minor: {
+                        fontSize: 14
+                    }
+                }
+            }]
+        }
     };
 
     constructor (
@@ -89,14 +114,14 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
                 (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 18; });
-                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 18; });
+                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.minor.fontSize = 14; });
+                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.minor.fontSize = 14; });
             } else {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
                 (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 13; });
-                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 13; });
+                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.minor.fontSize = 14; });
+                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.minor.fontSize = 14; });
             }
             this.changeDetector.markForCheck();
         }));

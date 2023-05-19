@@ -42,6 +42,10 @@
         padding: vw(20);
         height: 100%;
         box-sizing: border-box;
+
+        .dark-mode & {
+            filter: invert(0.8) hue-rotate(-295deg) brightness(1.5) !important;
+        }
     }
 
     &__container {

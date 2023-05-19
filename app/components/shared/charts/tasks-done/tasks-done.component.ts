@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { lastValueFrom, take } from 'rxjs';
 
 import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
@@ -25,7 +25,7 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit, OnDestro
     chartOptions: ChartOptions = {
         responsive: true,
         tooltips: { enabled: true },
-        legend: { display: true, position: 'left', align: 'center', labels: { boxWidth: 35, padding: 16 } },
+        legend: { display: true, position: 'left', align: 'center', labels: { boxWidth: 35, padding: 16, fontSize: 16 } },
         title: { display: true }
     };
 
@@ -72,14 +72,12 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit, OnDestro
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
                 (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 18; });
-                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 18; });
+                (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 15;
             } else {
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
                 (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 14; });
-                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 14; });
+                (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 14;
             }
             this.changeDetector.markForCheck();
         }));
