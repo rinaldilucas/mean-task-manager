@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartLegendLabelOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { lastValueFrom, take } from 'rxjs';
 
 import { Unsubscriber } from '@components/shared/unsubscriber/unsubscriber.component';
@@ -78,7 +78,8 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit, OnDestro
                 (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
                 (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
                 (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-                (this.chartOptions.legend?.labels as ChartLegendLabelOptions).fontSize = 13;
+                this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.fontSize = 14; });
+                this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.fontSize = 14; });
             }
             this.changeDetector.markForCheck();
         }));

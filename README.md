@@ -104,7 +104,7 @@ I built this project to make a cool template for those who wants to learn the ME
 
 This section shows what technologies are used in this particular project.
 
--   [Angular 15](https://angular.io/)
+-   [Angular 14](https://angular.io/)
 -   [NodeJS 18](https://nodejs.org/en/)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Express.js](https://expressjs.com/)
@@ -123,7 +123,7 @@ After cloning the project, you need to do a few things to be able to run it.
 You need to have the following requirements:
 
 -   mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
--   node 18 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+-   node 16.14 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
 -   redis <a target="_blank" href="https://redis.io/download/">(download here for linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
 
 -   yarn
@@ -132,9 +132,9 @@ You need to have the following requirements:
     npm install -g yarn
     ```
 
--   angular cli 15
+-   angular cli 14
     ```sh
-    npm install -g @angular/cli@15
+    npm install -g @angular/cli@14
     ```
 
 ### Installation
