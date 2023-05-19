@@ -24,6 +24,8 @@ export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
     isLogged = false;
     isDesktop = false;
     toggleTheme = new FormControl(false);
+    sidebarIsOpened = false;
+    sidebarSize = '1.81rem';
 
     isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
         map((result) => result.matches),
@@ -47,9 +49,15 @@ export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
     ngOnInit (): void {
         setInterval(() => (this.time = new Date()), 1000);
         this.isLogged = this.authService.getIsAuthenticated();
+        this.sidebarIsOpened = this.isLogged;
+
         this.addSubscription(this.authService.emitMenu.subscribe((result: boolean) => {
             this.isLogged = result;
-            this.changeDetector.detectChanges();
+            this.changeDetector.markForCheck();
+        }));
+        this.addSubscription(this.authService.emitSidebar.subscribe(() => {
+            this.sidebarIsOpened = !!(this.isDesktop && this.isLogged);
+            this.changeDetector.markForCheck();
         }));
 
         const darkClassName = 'dark-mode';

@@ -19,6 +19,7 @@ import { UserService } from '@services/user.service';
 export class AuthService {
     private readonly url = environment.baseUri + '/auth';
     emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
+    emitSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private accessToken!: string;
     private refreshToken!: string;
@@ -119,6 +120,7 @@ export class AuthService {
             this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
             this.startRefreshTokenTimerAsync(result);
             this.emitMenu.emit(true);
+            setTimeout(() => { this.emitSidebar.emit(true); }, 750);
             return true;
         } else {
             return false;
@@ -224,5 +226,6 @@ export class AuthService {
         this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
         this.router.navigate(['']);
         this.emitMenu.emit(false);
+        this.emitSidebar.emit(false);
     }
 }
