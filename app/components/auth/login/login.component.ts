@@ -55,7 +55,7 @@ export class LogInComponent implements OnInit {
             this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
 
-        if (this.authService.authenticateToken(result.data[0])) {
+        if (result && this.authService.authenticateToken(result.data[0])) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-success' });
             this.router.navigate(['tasks']);
         } else {

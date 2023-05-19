@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ import { UserService } from '@services/user.service';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class HeaderComponent extends Unsubscriber implements OnInit {
     time = new Date();
     opened!: boolean;
     isLogged = false;

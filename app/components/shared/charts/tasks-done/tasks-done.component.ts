@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
@@ -17,7 +17,7 @@ import { TaskService } from '@services/task.service';
     styleUrls: ['./tasks-done.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TasksDoneComponent extends Unsubscriber implements OnInit, OnDestroy {
+export class TasksDoneComponent extends Unsubscriber implements OnInit {
     tasks!: ITask[];
     chartType: ChartType = 'doughnut';
     chartLabels: any[] = [];
