@@ -27,8 +27,8 @@
                             "aot": true,
                             "budgets": [
                                 {
-                                    "maximumError": "12mb",
-                                    "maximumWarning": "8mb",
+                                    "maximumError": "6mb",
+                                    "maximumWarning": "4mb",
                                     "type": "initial"
                                 },
                                 {
