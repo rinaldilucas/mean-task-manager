@@ -17,7 +17,6 @@ import { TaskListComponent } from '@components/pages/tasks/task-list/task-list.c
 @NgModule({
     declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],
     imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule],
-    entryComponents: [TaskFormBottomSheetComponent],
     exports: []
 })
 export class TaskModule {}
