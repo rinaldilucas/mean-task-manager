@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, Subject, lastValueFrom } from 'rxjs';
@@ -13,7 +13,6 @@ import { IJwtToken } from '@scripts/models/jwtToken.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
 import { SharedService } from '@services/shared.service';
-import { UserService } from '@services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,10 +29,11 @@ export class AuthService {
     private refreshTokenTimeout;
     private keepUserLoggedIn = false;
 
+    protected sharedService = this.injector.get(SharedService);
+
     constructor (
+        private injector: Injector,
         private router: Router, //
-        public userService: UserService,
-        private sharedService: SharedService,
         private http: HttpClient
     ) {}
 

@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '@services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoggedInAuthGuard {
-    constructor (private authService: AuthService, private router: Router) { }
+    private authService = this.injector.get(AuthService);
+
+    constructor (private injector: Injector, private router: Router) { }
 
     canActivate (): void {
         if (this.authService.getIsAuthenticated()) {

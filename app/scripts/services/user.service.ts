@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@services/auth.service';
 import { CrudService } from '@services/crud.service';
-import { SharedService } from '@services/shared.service';
 
 const endpoint = environment.baseUri + '/users';
 
@@ -16,11 +14,10 @@ export class UserService extends CrudService<IUser> {
     emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
 
     constructor (
-        protected override http: HttpClient, //
-        protected override sharedService: SharedService,
-        protected override authService: AuthService
+        http: HttpClient, //
+        injector: Injector
     ) {
-        super(http, sharedService, authService, endpoint);
+        super(http, injector, endpoint);
     }
 
     checkIfEmailExists (email: string): Observable<IQueryResult<IUser>> {

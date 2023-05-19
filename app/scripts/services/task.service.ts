@@ -1,13 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Observable, catchError, lastValueFrom } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
-import { AuthService } from '@services/auth.service';
 import { CrudService } from '@services/crud.service';
-import { SharedService } from '@services/shared.service';
 
 const endpoint = environment.baseUri + '/tasks';
 
@@ -16,11 +14,10 @@ export class TaskService extends CrudService<ITask> {
     emitTask: EventEmitter<ITask> = new EventEmitter<ITask>();
 
     constructor (
-        protected override http: HttpClient, //
-        protected override sharedService: SharedService,
-        protected override authService: AuthService
+        http: HttpClient, //
+        injector: Injector
     ) {
-        super(http, sharedService, authService, endpoint);
+        super(http, injector, endpoint);
     }
 
     override findAllByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Observable<IQueryResult<ITask[]>> {

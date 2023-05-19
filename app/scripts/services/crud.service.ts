@@ -2,15 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { Injector } from '@angular/core';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { AuthService } from '@services/auth.service';
 import { SharedService } from '@services/shared.service';
 
 export class CrudService<T> {
+    protected sharedService = this.injector.get(SharedService);
+    protected authService = this.injector.get(AuthService);
+
     constructor (
         protected http: HttpClient, //
-        protected sharedService: SharedService,
-        protected authService: AuthService,
+        private injector: Injector,
         private endpoint: string
     ) {}
 

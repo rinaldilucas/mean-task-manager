@@ -19,7 +19,11 @@ export class SharedService {
     pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
     static subscriptions: Subscription[] = [];
 
-    constructor (private translateService: TranslateService, private snackBar: MatSnackBar, private media: MediaObserver) {}
+    constructor (
+        private translateService: TranslateService, //
+        private snackBar: MatSnackBar,
+        private media: MediaObserver
+    ) {}
 
     setDataSource (list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
         const dataSource = new TableVirtualScrollDataSource(list);
