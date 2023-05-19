@@ -122,7 +122,7 @@
         "client-debug": "ng build --configuration development --watch",
         "client-serve": "ng serve --o",
         "client-test": "ng test",
-        "deploy": "ng deploy --base-href=/mean-stack-template/",
+        "deploy": "ng deploy --base-href=/mean-stack-template/ && git reset --hard && git clean -fxd",
         "dev": "run-p client-serve api-debug",
         "lint": "yarn lint-client && yarn lint-api",
         "lint-api": "npx eslint ./api --ext .ts && yarn lint-types",
