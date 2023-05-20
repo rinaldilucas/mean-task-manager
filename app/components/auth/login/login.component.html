@@ -5,7 +5,7 @@
                 <mat-card-title class="form__title">{{ "title.login" | translate }}</mat-card-title>
             </mat-card-header>
 
-            <form [formGroup]="form" tabindex="0" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="loginAsync()">
+            <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="loginAsync()">
                 <mat-card-content>
                     <mat-form-field class="full-width">
                         <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial />

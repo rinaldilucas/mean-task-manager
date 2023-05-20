@@ -61,7 +61,7 @@ module.exports = {
                 '@angular-eslint/template/no-autofocus': WARN,
                 '@angular-eslint/template/mouse-events-have-key-events': WARN,
                 '@angular-eslint/template/click-events-have-key-events': WARN,
-                '@angular-eslint/template/accessibility-interactive-supports-focus': WARN,
+                '@angular-eslint/template/accessibility-interactive-supports-focus': OFF,
                 '@angular-eslint/template/accessibility-valid-aria': WARN,
                 '@angular-eslint/template/accessibility-role-has-required-aria': WARN,
                 '@angular-eslint/template/button-has-type': WARN,

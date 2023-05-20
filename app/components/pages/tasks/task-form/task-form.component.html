@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-modal__body">
-        <form [formGroup]="form" class="form-modal__body-wrapper" tabindex="0" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
+        <form [formGroup]="form" class="form-modal__body-wrapper" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
             <mat-card-content>
                 <mat-form-field class="full-width">
                     <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" cdkFocusInitial />
