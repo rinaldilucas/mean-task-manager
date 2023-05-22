@@ -177,6 +177,7 @@ _Below is an example of how you can run the project._
 ## Usage
 
 You can import the Insomnia routes via file `./db/routes-collection.json` and import the mongodb collections via file `./db/colletions`. And below are the implemented routes. You also can consult them inside `./api/routes` folder.
+Swagger documentation is also available at `http://localhost:3000/api-docs/`.
 
 ```js
 -------------------------------
