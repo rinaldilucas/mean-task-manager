@@ -21,10 +21,10 @@ import { UserService } from '@services/user.service';
 export class HeaderComponent extends Unsubscriber implements OnInit {
     time = new Date();
     opened!: boolean;
+    toggleTheme = new FormControl(false);
     isLogged = false;
     isDesktop = false;
-    toggleTheme = new FormControl(false);
-    sidebarIsOpened = false;
+    isSidebarIsOpened = false;
     sidebarSize = '1.81rem';
 
     isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
@@ -49,14 +49,14 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     ngOnInit (): void {
         setInterval(() => (this.time = new Date()), 1000);
         this.isLogged = this.authService.getIsAuthenticated();
-        this.sidebarIsOpened = this.isLogged;
+        this.isSidebarIsOpened = this.isLogged;
 
         this.addSubscription(this.authService.menuEmitter.subscribe((result: boolean) => {
             this.isLogged = result;
             this.changeDetector.markForCheck();
         }));
         this.addSubscription(this.authService.sidebarEmitter.subscribe(() => {
-            this.sidebarIsOpened = !!(this.isDesktop && this.isLogged);
+            this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
             this.changeDetector.markForCheck();
         }));
 

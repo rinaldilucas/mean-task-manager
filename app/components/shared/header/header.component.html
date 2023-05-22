@@ -5,7 +5,7 @@
         fixedInViewport
         [attr.role]="(isDesktop$ | async) ? 'navigation' : 'dialog'"
         [mode]="(isDesktop$ | async) ? 'side' : 'over'"
-        [(opened)]="this.sidebarIsOpened"
+        [(opened)]="this.isSidebarIsOpened"
     >
         <mat-nav-list class="header__left">
             <a mat-list-item [routerLink]="['tasks/']" (keypress)="isDesktop ? null : drawer.close()" (click)="isDesktop ? null : drawer.close()" routerLinkActive="active">
@@ -63,7 +63,7 @@
             </div>
         </mat-toolbar>
 
-        <div class="mat-app-background page-container" [@routerTransition]="{ value: getState(outlet), params: { size: this.sidebarIsOpened && this.isDesktop ? this.sidebarSize : '0px' } }">
+        <div class="mat-app-background page-container" [@routerTransition]="{ value: getState(outlet), params: { size: this.isSidebarIsOpened && this.isDesktop ? this.sidebarSize : '0px' } }">
             <router-outlet #outlet="outlet"></router-outlet>
         </div>
     </mat-sidenav-content>

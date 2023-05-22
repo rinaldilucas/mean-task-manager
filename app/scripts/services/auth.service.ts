@@ -3,6 +3,7 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
+import Cookies from 'js-cookie';
 import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -150,12 +151,12 @@ export class AuthService {
     }
 
     getAuthData (): IJwtPayload | false {
-        const access = localStorage.getItem('access') as string;
-        const refresh = localStorage.getItem('refresh') as string;
-        const expirationDate = localStorage.getItem('expiration') as string;
-        const userId = localStorage.getItem('userId') as string;
-        const userRole = localStorage.getItem('userRole') as ERole;
-        const keepUserLoggedIn = JSON.parse(localStorage.getItem('keepUserLoggedIn') as string) === true;
+        const access = Cookies.get('access');
+        const refresh = Cookies.get('refresh');
+        const expirationDate = Cookies.get('expiration');
+        const userId = Cookies.get('userId');
+        const userRole = Cookies.get('userRole');
+        const keepUserLoggedIn = Cookies.get('keepUserLoggedIn') === 'true';
 
         if (!access || !expirationDate) {
             return false;
@@ -173,18 +174,23 @@ export class AuthService {
     }
 
     private saveAuthData (access: string, refresh: string, expirationDate: Date, userId: string, keepUserLogged: boolean): void {
-        localStorage.setItem('access', access);
-        localStorage.setItem('refresh', refresh);
-        localStorage.setItem('expiration', expirationDate.toISOString());
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('keepUserLogged', String(keepUserLogged));
+        const options = {
+            secure: true,
+            sameSite: 'strict'
+        };
+
+        Cookies.set('access', access, options);
+        Cookies.set('refresh', refresh, options);
+        Cookies.set('expiration', expirationDate.toISOString(), options);
+        Cookies.set('userId', userId, options);
+        Cookies.set('keepUserLogged', String(keepUserLogged), options);
     }
 
     private clearAuthData (): void {
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        localStorage.removeItem('expiration');
-        localStorage.removeItem('userId');
+        Cookies.remove('access');
+        Cookies.remove('refresh');
+        Cookies.remove('expiration');
+        Cookies.remove('userId');
     }
 
     private async startRefreshTokenTimerAsync (jwtPayload: IJwtPayload): Promise<void> {
