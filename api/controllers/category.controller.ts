@@ -65,7 +65,7 @@ class CategoryController {
             else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
         }
 
-        return responseSuccess(response, data, StatusCode.SuccessOK);
+        return responseSuccess(response, data, StatusCode.SuccessNoContent);
     }
 }
 
