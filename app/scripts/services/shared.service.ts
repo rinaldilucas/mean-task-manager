@@ -86,12 +86,12 @@ export class SharedService {
                 columnOptions = columns.smColumns;
             } else if (change[0].mqAlias === 'md') {
                 columnOptions = columns.mdColumns;
-                pageSize = 10;
-                pageSizeOptions = [10, 20, 30];
+                pageSize = 5;
+                pageSizeOptions = [5, 15, 30];
             } else {
                 columnOptions = columns.lgColumns;
-                pageSize = 10;
-                pageSizeOptions = [10, 20, 30];
+                pageSize = 5;
+                pageSizeOptions = [5, 15, 30];
             }
 
             this.tableColumnListener.emit(columnOptions);

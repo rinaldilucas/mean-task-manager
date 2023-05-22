@@ -47,9 +47,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     tasks: ITask[] = [];
     status = EStatus;
 
-    pageSize = 10;
+    pageSize = 5;
     pageCount = 1;
-    pageSizeOptions = [10, 20, 30];
+    pageSizeOptions = [5, 15, 30];
     columnFilter = '';
     columnDirection = '';
 
@@ -112,8 +112,8 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     }
 
     async removeAsync (task: ITask): Promise<void> {
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
+        const [, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
+        if (error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-success', success: true });
         this.taskService.taskEmitter.emit();

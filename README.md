@@ -72,10 +72,11 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Feature to blacklist access token which as logouted and refresh token already used
 -   Authentication and role guard features added
 -   Password encryption feature implemented
+-   Error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easier to plug-in frontend, backend or database individually
 -   Front-end validation on requests and inputs
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
 -   Database and model validation using mongoose
--   Minimalist error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easy to reuse on other applications, whether using only the frontend, backend or database
+-   API documentation using Swagger
 -   Handler of promises and errors using destructuring
 -   Improved http security using HttpParams
 -   Unsubscriber component with subsink to facilitate the manuvering of unsubcribres
@@ -108,8 +109,8 @@ I built this project to make a cool template for those who wants to learn the ME
 
 This section shows what technologies are used in this particular project.
 
--   [Angular 14](https://angular.io/)
--   [NodeJS 18](https://nodejs.org/en/)
+-   [Angular](https://angular.io/)
+-   [NodeJS](https://nodejs.org/en/)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Express.js](https://expressjs.com/)
 -   [Redis](https://redis.io/)

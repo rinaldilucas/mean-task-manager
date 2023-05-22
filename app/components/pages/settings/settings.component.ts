@@ -75,8 +75,8 @@ export class SettingsComponent implements OnInit {
     }
 
     async removeCategoryAsync (category: ICategory): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
-        if (!!error || !result || !result?.success) {
+        const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
+        if (error) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
             this.categoryCtrl.setValue(null);
             this.categoryInput.nativeElement.value = '';

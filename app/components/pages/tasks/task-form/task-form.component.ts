@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -63,7 +63,6 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     categoriesFilteredOptions!: Observable<ICategory[]>;
 
     constructor (
-        private changeDetector: ChangeDetectorRef,
         private taskService: TaskService,
         private formBuilder: FormBuilder,
         private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,

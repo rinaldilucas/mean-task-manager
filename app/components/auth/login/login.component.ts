@@ -37,7 +37,7 @@ export class LogInComponent implements OnInit {
 
     ngOnInit (): void {
         this.translateService.get('title.login').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.authService.getUserIsLoggedIn() ? this.form.controls.keepUserLogged.setValue(true) : this.form.controls.keepUserLogged.setValue(false);
+        this.authService.getKeepUserLoggedIn() ? this.form.controls.keepUserLogged.setValue(true) : this.form.controls.keepUserLogged.setValue(false);
     }
 
     async loginAsync (): Promise<void> {
@@ -51,7 +51,6 @@ export class LogInComponent implements OnInit {
                 this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
                 return;
             }
-
             this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
 

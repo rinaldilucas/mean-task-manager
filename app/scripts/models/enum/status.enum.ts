@@ -1,5 +1,5 @@
 export enum EStatus {
     toDo = 'toDo',
-    progress = 'progress',
+    progress = 'inProgress',
     done = 'done',
 }

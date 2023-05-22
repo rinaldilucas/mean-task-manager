@@ -17,12 +17,12 @@
                 </div>
             </div>
 
-            <div class="list__body mat-elevation-z1">
+            <div class="list__body mat-elevation-z1" [class.list__body--empty]="tasks.length === 0">
                 <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
                     <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
                 </div>
 
-                <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--empty" fxLayout="column" fxLayoutAlign="center center">
+                <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--placeholder" fxLayout="column" fxLayoutAlign="center center">
                     <div>
                         <mat-icon class="icon icon--big">sms</mat-icon>
                     </div>
@@ -73,7 +73,7 @@
                                     <div [ngSwitch]="task.status">
                                         <div *ngSwitchDefault>{{ "table.to-do" | translate }}</div>
                                         <div *ngSwitchCase="'toDo'">{{ "table.to-do" | translate }}</div>
-                                        <div *ngSwitchCase="'progress'">{{ "table.in-progress" | translate }}</div>
+                                        <div *ngSwitchCase="'inProgress'">{{ "table.in-progress" | translate }}</div>
                                         <div *ngSwitchCase="'done'">{{ "table.done" | translate }}</div>
                                     </div>
                                 </mat-cell>

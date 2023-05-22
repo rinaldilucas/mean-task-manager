@@ -3,10 +3,10 @@ import { EStatus } from '@scripts/models/enum/status.enum';
 export interface ITask {
     _id: string;
     title: string;
-    description: string;
-    date: Date;
+    description?: string;
+    date?: Date;
     status: EStatus;
-    category: string;
+    category?: string;
     userId: string;
     createdAt: Date;
 }

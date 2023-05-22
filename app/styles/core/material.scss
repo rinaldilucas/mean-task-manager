@@ -38,7 +38,11 @@ mat-toolbar {
 
 mat-row {
     cursor: pointer;
-    padding: vw(8) 0;
+    padding: vw(12) 0;
+
+    @include media(">=desktop") {
+        padding: vw(16) 0;
+    }
 }
 
 .mat-drawer-container {

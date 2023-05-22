@@ -29,7 +29,7 @@ export class AuthService {
     private authStatusListener = new Subject<boolean>();
     private refreshTokenTimeout;
     private isAuthenticated = false;
-    private isKeepUserSession = false;
+    private keepUserLoggedIn = false;
 
     protected sharedService = this.injector.get(SharedService);
 
@@ -39,8 +39,8 @@ export class AuthService {
         private http: HttpClient
     ) {}
 
-    getUserIsLoggedIn (): boolean {
-        return this.isKeepUserSession;
+    getKeepUserLoggedIn (): boolean {
+        return this.keepUserLoggedIn;
     }
 
     getAccessToken (): string {
@@ -112,7 +112,7 @@ export class AuthService {
 
         this.accessToken = access;
         this.refreshToken = refresh;
-        this.isKeepUserSession = keepUserLoggedIn ?? this.isKeepUserSession;
+        this.keepUserLoggedIn = keepUserLoggedIn ?? this.keepUserLoggedIn;
 
         if (access) {
             const expiresInDuration = result.expiresIn;
@@ -121,7 +121,7 @@ export class AuthService {
             this.authStatusListener.next(true);
             const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
 
-            this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.isKeepUserSession);
+            this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
             this.startRefreshTokenTimerAsync(result);
             this.menuEmitter.emit(true);
             setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
@@ -197,7 +197,7 @@ export class AuthService {
         const jwtToken = jwtPayload;
         const timeout = jwtToken.expiresIn * 1000;
 
-        if (this.getUserIsLoggedIn()) {
+        if (this.getKeepUserLoggedIn()) {
             this.refreshTokenTimeout = setTimeout(async () => {
                 const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.generateRefreshToken());
 

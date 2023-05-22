@@ -11,9 +11,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor (private authService: AuthService) {}
 
     intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const loginUrl = 'authenticate';
+
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status === StatusCode.ClientErrorUnauthorized) { this.authService.logoutAsync(); }
+                if (error.status === StatusCode.ClientErrorUnauthorized) {
+                    if (request.url.search(loginUrl) === -1) { this.authService.logoutAsync(); }
+                }
                 return throwError(error);
             })
         );
