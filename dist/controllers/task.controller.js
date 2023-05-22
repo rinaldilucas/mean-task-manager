@@ -135,7 +135,7 @@ class TaskController {
     if (!data || data.n === 0) {
       if (language === 'en-US') return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${_task.Task.modelName}}.`);else return (0, _http.responseError)(response, {}, _statusCodeEnum.StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${_task.Task.modelName}}.`);
     }
-    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessOK);
+    return (0, _http.responseSuccess)(response, data, _statusCodeEnum.StatusCode.SuccessNoContent);
   }
 }
 var _default = new TaskController();

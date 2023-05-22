@@ -110,7 +110,7 @@
     "task-list": {
         "confirmation-delete": "Delete",
         "confirmation-message": "Are you sure you want to delete this item?",
-        "confirmation-title": "Remote Task",
+        "confirmation-title": "Remove Task",
         "empty": "No tasks.",
         "empty-search": "No tasks found in your search.",
         "refresh": "Refresh",
