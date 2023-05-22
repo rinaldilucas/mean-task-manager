@@ -8,7 +8,7 @@ class UserController {
     public async findOneByEmail (request: Request, response: Response): Promise<Response | undefined> {
         const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
         if (error) return;
-        if (!data) return responseSuccess(response, {}, StatusCode.SuccessOK, 0);
+        if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
 
         return responseSuccess(response, { alreadyRegistered: true }, StatusCode.SuccessOK);
     }

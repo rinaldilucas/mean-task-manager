@@ -116,19 +116,6 @@ class TaskController {
         return responseSuccess(response, data, StatusCode.SuccessNoContent);
     }
 
-    public async findOne (request: Request, response: Response): Promise<Response | undefined> {
-        const language = request.headers.language;
-
-        const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
-        if (error) return;
-        if (!data) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
-            else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
-        }
-
-        return responseSuccess(response, data, StatusCode.SuccessOK);
-    }
-
     public async getTasksByInterval (request: Request, response: Response): Promise<Response | any> {
         const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
         const language = request.headers.language;
@@ -140,6 +127,19 @@ class TaskController {
         findQuery.createdAt = { $gte: startDate, $lte: finalDate };
 
         const [data, error] = await handlePromises(request, response, Model.find(findQuery));
+        if (error) return;
+        if (!data) {
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+            else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+        }
+
+        return responseSuccess(response, data, StatusCode.SuccessOK);
+    }
+
+    public async findOne (request: Request, response: Response): Promise<Response | undefined> {
+        const language = request.headers.language;
+
+        const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
         if (error) return;
         if (!data) {
             if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);

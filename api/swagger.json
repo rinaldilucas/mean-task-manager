@@ -27,10 +27,11 @@
                 "tags": ["Task"],
                 "summary": "Returns all tasks",
                 "description": "Returns all tasks which the user has access to.",
+                "operationId": "getTasks",
                 "parameters": [
                     {
                         "name": "pageSize",
-                        "in": "path",
+                        "in": "query",
                         "description": "Size of the page to be fetched",
                         "required": false,
                         "schema": {
@@ -39,7 +40,7 @@
                     },
                     {
                         "name": "searchTerm",
-                        "in": "path",
+                        "in": "query",
                         "description": "Term to be fetch withing the title of the task",
                         "required": false,
                         "schema": {
@@ -48,7 +49,7 @@
                     },
                     {
                         "name": "pageIndex",
-                        "in": "path",
+                        "in": "query",
                         "description": "Index of the page to be fetched",
                         "required": false,
                         "schema": {
@@ -57,7 +58,7 @@
                     },
                     {
                         "name": "sortFilter",
-                        "in": "path",
+                        "in": "query",
                         "description": "Field to be sorted",
                         "required": false,
                         "schema": {
@@ -66,7 +67,7 @@
                     },
                     {
                         "name": "sortDirection",
-                        "in": "path",
+                        "in": "query",
                         "description": "Direction of the sort (asc or desc)",
                         "required": false,
                         "schema": {
@@ -88,15 +89,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "500": {
+                        "description": "Error retrieving tasks"
                     }
                 }
             },
@@ -104,63 +98,7 @@
                 "tags": ["Task"],
                 "summary": "Creates a new task.",
                 "description": "Creates a new task for the current user. Duplicates are allowed.",
-                "parameters": [
-                    {
-                        "name": "_id",
-                        "in": "path",
-                        "description": "Id of the task to be created",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "title",
-                        "in": "path",
-                        "description": "Title of the task to be created",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "path",
-                        "description": "Description of the task to be created",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "date",
-                        "in": "path",
-                        "description": "Date of the task to be created",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "path",
-                        "description": "Status of the task to be created",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["toDo", "inProgress", "done"]
-                        }
-                    },
-                    {
-                        "name": "category",
-                        "in": "path",
-                        "description": "Category of the task to be created",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "createTask",
                 "requestBody": {
                     "description": "Task to add",
                     "required": true,
@@ -183,15 +121,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "400": {
+                        "description": "Error creating task"
                     }
                 }
             },
@@ -199,63 +130,7 @@
                 "tags": ["Task"],
                 "summary": "Updates a task.",
                 "description": "Updates a task based on the body of requisition.",
-                "parameters": [
-                    {
-                        "name": "_id",
-                        "in": "path",
-                        "description": "Id of the task to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "title",
-                        "in": "path",
-                        "description": "Title of the task to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "path",
-                        "description": "Description of the task to be updated",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "date",
-                        "in": "path",
-                        "description": "Date of the task to be updated",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "path",
-                        "description": "Status of the task to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["toDo", "inProgress", "done"]
-                        }
-                    },
-                    {
-                        "name": "category",
-                        "in": "path",
-                        "description": "Category of the task to be updated",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "updateTask",
                 "requestBody": {
                     "description": "Task to update",
                     "required": true,
@@ -278,15 +153,11 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "400": {
+                        "description": "Error removing task"
                     }
                 }
             },
@@ -294,17 +165,7 @@
                 "tags": ["Task"],
                 "summary": "Removes a task.",
                 "description": "Removes a single task based on the ID supplied.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of task to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "removeTask",
                 "responses": {
                     "204": {
                         "description": "Successful response",
@@ -316,28 +177,25 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "400": {
+                        "description": "Error removing task"
                     }
                 }
             }
         },
-        "/tasks/by-interval/": {
+        "/tasks/by-interval": {
             "get": {
                 "tags": ["Task"],
                 "summary": "Returns all tasks by interval.",
                 "description": "Returns all tasks by two dates interval.",
+                "operationId": "getTaskByInterval",
                 "parameters": [
                     {
                         "name": "startDate",
-                        "in": "path",
+                        "in": "query",
                         "description": "Initial date to fetch",
                         "required": true,
                         "schema": {
@@ -346,7 +204,7 @@
                     },
                     {
                         "name": "finalDate",
-                        "in": "path",
+                        "in": "query",
                         "description": "Final date to fetch",
                         "required": true,
                         "schema": {
@@ -365,15 +223,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Tasks not found"
                     }
                 }
             }
@@ -383,6 +234,7 @@
                 "tags": ["Task"],
                 "summary": "Returns a task.",
                 "description": "Returns a task based on a single ID.",
+                "operationId": "getTaskById",
                 "parameters": [
                     {
                         "name": "id",
@@ -405,15 +257,11 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "400": {
+                        "description": "Error removing task"
                     }
                 }
             }
@@ -423,6 +271,7 @@
                 "tags": ["Category"],
                 "summary": "Returns all categories.",
                 "description": "Returns all categories which the user has access to.",
+                "operationId": "getCategories",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -437,15 +286,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "500": {
+                        "description": "Error retrieving categories"
                     }
                 }
             },
@@ -453,17 +295,7 @@
                 "tags": ["Category"],
                 "summary": "Creates a new category.",
                 "description": "Creates a new category for the current user. Duplicates are allowed.",
-                "parameters": [
-                    {
-                        "name": "title",
-                        "in": "path",
-                        "description": "Title of the category to be created",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "createCategory",
                 "requestBody": {
                     "description": "Category to add",
                     "required": true,
@@ -486,15 +318,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "400": {
+                        "description": "Error creating category"
                     }
                 }
             }
@@ -504,6 +329,7 @@
                 "tags": ["Category"],
                 "summary": "Removes a category.",
                 "description": "Removes a single category based on the ID supplied.",
+                "operationId": "removeCategory",
                 "parameters": [
                     {
                         "name": "id",
@@ -519,15 +345,11 @@
                     "204": {
                         "description": "Successful response"
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "400": {
+                        "description": "Error removing category"
                     }
                 }
             }
@@ -537,6 +359,7 @@
                 "tags": ["User"],
                 "summary": "Returns a user based on email.",
                 "description": "Returns a user based email.",
+                "operationId": "getUserByEmail",
                 "parameters": [
                     {
                         "name": "email",
@@ -559,15 +382,11 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "User not registered"
+                    },
+                    "400": {
+                        "description": "User already registered"
                     }
                 }
             }
@@ -577,42 +396,31 @@
                 "tags": ["Auth"],
                 "summary": "Authenticate the user.",
                 "description": "Authenticates the user and retrieve a JWT token.",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "Email of the user to be authenticated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "path",
-                        "description": "Password of the user to be authenticated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "keepUserLoggedIn",
-                        "in": "path",
-                        "description": "Boolean value to maintain session of the user",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
+                "operationId": "authenticate",
                 "requestBody": {
                     "description": "User to be authenticated",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "minLength": 5,
+                                        "maxLength": 150,
+                                        "example": "user@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "minLength": 8,
+                                        "maxLength": 150
+                                    },
+                                    "keepUserLoggedIn": {
+                                        "type": "boolean"
+                                    }
+                                }
                             }
                         }
                     }
@@ -628,15 +436,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "401": {
+                        "description": "User or password missmatchs"
                     }
                 }
             }
@@ -646,43 +447,32 @@
                 "tags": ["Auth"],
                 "summary": "Register a new user.",
                 "description": "Register a new user.",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "Email of the user to be registered",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "path",
-                        "description": "Password of the user to be registered",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "role",
-                        "in": "path",
-                        "description": "Role of the user to be registered",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["admin", "user"]
-                        }
-                    }
-                ],
+                "operationId": "register",
                 "requestBody": {
                     "description": "User to be registered",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "minLength": 5,
+                                        "maxLength": 150,
+                                        "example": "user@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "minLength": 8,
+                                        "maxLength": 150
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "enum": ["admin", "user"]
+                                    }
+                                }
                             }
                         }
                     }
@@ -698,15 +488,11 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "409": {
+                        "description": "User already exists with email"
+                    },
+                    "400": {
+                        "description": "ErrorError creating document"
                     }
                 }
             }
@@ -716,26 +502,7 @@
                 "tags": ["Auth"],
                 "summary": "Change the password.",
                 "description": "Change the password of the user generating hash.",
-                "parameters": [
-                    {
-                        "name": "_id",
-                        "in": "path",
-                        "description": "Id of the user to have the password changed",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "path",
-                        "description": "New password to be changed",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "changePassword",
                 "requestBody": {
                     "description": "User to have the password changed",
                     "required": true,
@@ -748,7 +515,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Successful response",
                         "content": {
                             "application/json": {
@@ -758,15 +525,11 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Error updating user"
                     }
                 }
             }
@@ -776,61 +539,36 @@
                 "tags": ["Auth"],
                 "summary": "Generate refresh token.",
                 "description": "Generate a refresh token to user.",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "UserId to be refreshed",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "Email of the current user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "role",
-                        "in": "path",
-                        "description": "Role of the current user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["admin", "user"]
-                        }
-                    },
-                    {
-                        "name": "expirationDate",
-                        "in": "path",
-                        "description": "Expiration date of the current user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "refreshToken",
-                        "in": "path",
-                        "description": "Refresh token to be regenerated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "refreshToken",
                 "requestBody": {
                     "description": "Refresh token to be genereated",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "minLength": 5,
+                                        "maxLength": 150,
+                                        "example": "user@gmail.com"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "enum": ["admin", "user"]
+                                    },
+                                    "expirationDate": {
+                                        "type": "string"
+                                    },
+                                    "refreshToken": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
@@ -846,15 +584,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
+                    "401": {
+                        "description": "Error refreshing token"
                     }
                 }
             }
@@ -864,24 +595,19 @@
                 "tags": ["Auth"],
                 "summary": "Sign out user.",
                 "description": "Sign out user and invalidate token.",
-                "parameters": [
-                    {
-                        "name": "token",
-                        "in": "path",
-                        "description": "Token to be invalidated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "operationId": "logout",
                 "requestBody": {
                     "description": "Sign out user",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
@@ -893,16 +619,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
@@ -940,13 +656,13 @@
                         "type": "string"
                     },
                     "createdAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "type": "string",
+                        "format": "date",
                         "example": "2023-05-22"
                     },
                     "updatedAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "type": "string",
+                        "format": "date",
                         "example": "2023-05-22"
                     }
                 }
@@ -963,13 +679,13 @@
                         "type": "string"
                     },
                     "createdAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "type": "string",
+                        "format": "date",
                         "example": "2023-05-22"
                     },
                     "updatedAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "type": "string",
+                        "format": "date",
                         "example": "2023-05-22"
                     }
                 }
@@ -983,9 +699,7 @@
                         "format": "email",
                         "minLength": 5,
                         "maxLength": 150,
-                        "example": "user@gmail.com",
-                        "pattern": "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
-                        "unique": true
+                        "example": "user@gmail.com"
                     },
                     "password": {
                         "type": "string",
@@ -997,34 +711,35 @@
                         "enum": ["admin", "user"]
                     },
                     "createdAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
-                        "example": "2023-05-22"
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-05-17"
                     },
                     "updatedAt": {
-                        "type": "date",
-                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "type": "string",
+                        "format": "date",
                         "example": "2023-05-22"
-                    }
-                }
-            },
-            "Error": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "number"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "validationErrors": {
-                        "type": "array | object"
                     }
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Task",
+            "description": "Operations about tasks"
+        },
+        {
+            "name": "Category",
+            "description": "Operations about categories"
+        },
+        {
+            "name": "User",
+            "description": "Operations about user"
+        },
+        {
+            "name": "Auth",
+            "description": "Operations about authentication"
+        }
+    ]
 }
