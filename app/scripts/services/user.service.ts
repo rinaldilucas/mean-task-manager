@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
@@ -11,8 +11,6 @@ const endpoint = environment.baseUri + '/users';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends CrudService<IUser> {
-    emitUser: EventEmitter<IUser> = new EventEmitter<IUser>();
-
     constructor (
         http: HttpClient, //
         injector: Injector

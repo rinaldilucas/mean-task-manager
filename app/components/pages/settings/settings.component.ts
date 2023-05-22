@@ -92,7 +92,7 @@ export class SettingsComponent implements OnInit {
 
     updateTitle (): void {
         this.translateService.get('title.settings').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
     }
 
     changeLanguage (language: string): void {
@@ -100,6 +100,6 @@ export class SettingsComponent implements OnInit {
         localStorage.setItem('language', language);
         this.sharedService.handleSnackbarMessages({ translationKey: 'messages.language-changed' });
         this.changeDetector.markForCheck();
-        this.sharedService.emitTitle.emit();
+        this.sharedService.titleEmitter.emit();
     }
 }

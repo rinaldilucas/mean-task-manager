@@ -78,7 +78,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
         this.addSubscription(this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value)));
 
         this.refreshAsync();
-        this.addSubscription(this.taskService.emitTask.subscribe(() => this.refreshAsync()));
+        this.addSubscription(this.taskService.taskEmitter.subscribe(() => this.refreshAsync()));
     }
 
     add (): void {
@@ -107,7 +107,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change', success: true });
-        this.taskService.emitTask.emit();
+        this.taskService.taskEmitter.emit();
         this.changeDetector.markForCheck();
     }
 
@@ -116,7 +116,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-success', success: true });
-        this.taskService.emitTask.emit();
+        this.taskService.taskEmitter.emit();
         this.changeDetector.markForCheck();
     }
 
@@ -176,7 +176,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     updateTitle (): void {
         this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
     }
 
     confirmDelete (task: ITask): void {

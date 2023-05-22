@@ -67,7 +67,7 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
 
     ngOnInit (): void {
         this.refresh();
-        this.taskService.emitTask.pipe(take(1)).subscribe(() => this.refresh());
+        this.taskService.taskEmitter.pipe(take(1)).subscribe(() => this.refresh());
     }
 
     async refresh (): Promise<ITask | void> {

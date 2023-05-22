@@ -53,6 +53,6 @@ export class ProfileComponent implements OnInit {
 
     updateTitle (): void {
         this.translateService.get('title.profile').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.emitTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
     }
 }

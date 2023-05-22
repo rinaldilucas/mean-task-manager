@@ -51,11 +51,11 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
         this.isLogged = this.authService.getIsAuthenticated();
         this.sidebarIsOpened = this.isLogged;
 
-        this.addSubscription(this.authService.emitMenu.subscribe((result: boolean) => {
+        this.addSubscription(this.authService.menuEmitter.subscribe((result: boolean) => {
             this.isLogged = result;
             this.changeDetector.markForCheck();
         }));
-        this.addSubscription(this.authService.emitSidebar.subscribe(() => {
+        this.addSubscription(this.authService.sidebarEmitter.subscribe(() => {
             this.sidebarIsOpened = !!(this.isDesktop && this.isLogged);
             this.changeDetector.markForCheck();
         }));

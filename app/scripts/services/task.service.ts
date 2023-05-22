@@ -11,7 +11,7 @@ const endpoint = environment.baseUri + '/tasks';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService extends CrudService<ITask> {
-    emitTask: EventEmitter<ITask> = new EventEmitter<ITask>();
+    taskEmitter: EventEmitter<ITask> = new EventEmitter<ITask>();
 
     constructor (
         http: HttpClient, //

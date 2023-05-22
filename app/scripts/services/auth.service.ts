@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -17,17 +18,17 @@ import { SharedService } from '@services/shared.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private readonly url = environment.baseUri + '/auth';
-    emitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
-    emitSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
+    menuEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+    sidebarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private accessToken!: string;
     private refreshToken!: string;
     private decodedToken!: IJwtToken;
-    private isAuthenticated = false;
     private loggedUser!: IAuthData;
     private authStatusListener = new Subject<boolean>();
     private refreshTokenTimeout;
-    private keepUserLoggedIn = false;
+    private isAuthenticated = false;
+    private isKeepUserSession = false;
 
     protected sharedService = this.injector.get(SharedService);
 
@@ -38,7 +39,7 @@ export class AuthService {
     ) {}
 
     getUserIsLoggedIn (): boolean {
-        return this.keepUserLoggedIn;
+        return this.isKeepUserSession;
     }
 
     getAccessToken (): string {
@@ -107,9 +108,10 @@ export class AuthService {
         const access = result.access;
         const refresh = result.refresh;
         const keepUserLoggedIn = result.keepUserLoggedIn;
+
         this.accessToken = access;
         this.refreshToken = refresh;
-        this.keepUserLoggedIn = keepUserLoggedIn ?? this.keepUserLoggedIn;
+        this.isKeepUserSession = keepUserLoggedIn ?? this.isKeepUserSession;
 
         if (access) {
             const expiresInDuration = result.expiresIn;
@@ -117,10 +119,11 @@ export class AuthService {
             this.decodeJwtToken(this.accessToken);
             this.authStatusListener.next(true);
             const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
-            this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
+
+            this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.isKeepUserSession);
             this.startRefreshTokenTimerAsync(result);
-            this.emitMenu.emit(true);
-            setTimeout(() => { this.emitSidebar.emit(true); }, 750);
+            this.menuEmitter.emit(true);
+            setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
             return true;
         } else {
             return false;
@@ -215,9 +218,7 @@ export class AuthService {
     }
 
     async logoutAsync (): Promise<void> {
-        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-error', success: false });
-
+        await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
         this.stopRefreshTokenTimer();
         this.accessToken = '';
         this.isAuthenticated = false;
@@ -225,7 +226,7 @@ export class AuthService {
         this.clearAuthData();
         this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
         this.router.navigate(['']);
-        this.emitMenu.emit(false);
-        this.emitSidebar.emit(false);
+        this.menuEmitter.emit(false);
+        this.sidebarEmitter.emit(false);
     }
 }
