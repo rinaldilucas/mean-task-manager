@@ -17,11 +17,8 @@ export class CrudService<T> {
         private endpoint: string
     ) {}
 
-    findAllByUser (): Observable<IQueryResult<T[]>> {
-        const userId = this.authService.getUserId();
-        const url = `${this.endpoint}/user/${userId}?`;
-
-        return this.http.get<IQueryResult<T[]>>(url).pipe(catchError(this.sharedService.errorHandler));
+    findAll (): Observable<IQueryResult<T[]>> {
+        return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));
     }
 
     get (id: string): Observable<IQueryResult<T>> {
@@ -43,16 +40,14 @@ export class CrudService<T> {
     }
 
     private create (record: T): Promise<IQueryResult<T>> {
-        const url = `${this.endpoint}`;
         record['userId'] = this.authService.getUserId();
 
-        return lastValueFrom(this.http.post<IQueryResult<T>>(url, record).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     private update (record: T): Promise<IQueryResult<T>> {
-        const url = `${this.endpoint}`;
         record['userId'] = this.authService.getUserId();
 
-        return lastValueFrom(this.http.put<IQueryResult<T>>(url, record).pipe(catchError(this.sharedService.errorHandler)));
+        return lastValueFrom(this.http.put<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

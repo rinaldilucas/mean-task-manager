@@ -10,7 +10,7 @@
         },
         {
             "command": "yarn dev",
-            "name": "Debug API",
+            "name": "Debug API/Client",
             "request": "launch",
             "type": "node-terminal"
         }

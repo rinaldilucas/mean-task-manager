@@ -141,6 +141,14 @@
 
         &--empty {
             height: calc(100% - (1.4rem + 0.6rem));
+
+            @include media(">=desktop") {
+                height: calc(3.87rem);
+            }
+
+            @include media(">=common-desktop") {
+                height: calc(5rem + 0.6rem);
+            }
         }
 
         &--placeholder {

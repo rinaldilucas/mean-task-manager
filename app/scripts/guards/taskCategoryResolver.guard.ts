@@ -11,7 +11,7 @@ export class TaskCategoryResolverGuard {
     constructor (private categoryService: CategoryService) { }
 
     resolve (): Observable<ICategory[][]> {
-        return this.categoryService.findAllByUser()
+        return this.categoryService.findAll()
             .pipe(map((result: IQueryResult<ICategory[]>) => result.data));
     }
 }

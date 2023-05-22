@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
     }
 
     async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAllByUser()));
+        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAll()));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
 
         this.categories = result.data;

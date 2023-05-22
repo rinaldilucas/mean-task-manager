@@ -21,7 +21,6 @@ export default async (request: Request, response: Response, next: NextFunction):
                 }
 
                 const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
-
                 if (
                     decoded.type !== process.env.JWT_ACCESS ||
                     decoded.aud !== process.env.JWT_AUDIENCE ||

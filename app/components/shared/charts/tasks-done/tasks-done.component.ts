@@ -48,7 +48,7 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
     async refresh (): Promise<ITask | void> {
         this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
 
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAllByUser()));
+        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll()));
         if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
         this.tasks = result.data;
 

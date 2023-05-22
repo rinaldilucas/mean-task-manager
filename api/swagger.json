@@ -22,21 +22,12 @@
         }
     ],
     "paths": {
-        "/tasks/user/{userId}": {
+        "/tasks": {
             "get": {
                 "tags": ["Task"],
                 "summary": "Returns all tasks",
                 "description": "Returns all tasks which the user has access to.",
                 "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "User id of the tasks to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
                     {
                         "name": "pageSize",
                         "in": "path",
@@ -108,107 +99,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/tasks/{id}": {
-            "get": {
-                "tags": ["Task"],
-                "summary": "Returns a task.",
-                "description": "Returns a task based on a single ID.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of task to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Task"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/tasks/by-interval/{userId}": {
-            "get": {
-                "tags": ["Task"],
-                "summary": "Returns all tasks by interval.",
-                "description": "Returns all tasks by two dates interval.",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "User id of the tasks to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "startDate",
-                        "in": "path",
-                        "description": "Initial date to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "finalDate",
-                        "in": "path",
-                        "description": "Final date to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Task"
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Unsuccessful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/tasks": {
+            },
             "post": {
                 "tags": ["Task"],
                 "summary": "Creates a new task.",
@@ -438,22 +329,100 @@
                 }
             }
         },
-        "/categories/{userId}": {
+        "/tasks/by-interval/": {
             "get": {
-                "tags": ["Category"],
-                "summary": "Returns all categories.",
-                "description": "Returns all categories which the user has access to.",
+                "tags": ["Task"],
+                "summary": "Returns all tasks by interval.",
+                "description": "Returns all tasks by two dates interval.",
                 "parameters": [
                     {
-                        "name": "userId",
+                        "name": "startDate",
                         "in": "path",
-                        "description": "User id of the tasks to fetch",
+                        "description": "Initial date to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "finalDate",
+                        "in": "path",
+                        "description": "Final date to fetch",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unsuccessful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "tags": ["Task"],
+                "summary": "Returns a task.",
+                "description": "Returns a task based on a single ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of task to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unsuccessful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": ["Category"],
+                "summary": "Returns all categories.",
+                "description": "Returns all categories which the user has access to.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -479,9 +448,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/categories": {
+            },
             "post": {
                 "tags": ["Category"],
                 "summary": "Creates a new category.",
@@ -1043,10 +1010,18 @@
             },
             "Error": {
                 "type": "object",
-                "required": ["message"],
                 "properties": {
+                    "success": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "number"
+                    },
                     "message": {
                         "type": "string"
+                    },
+                    "validationErrors": {
+                        "type": "array | object"
                     }
                 }
             }

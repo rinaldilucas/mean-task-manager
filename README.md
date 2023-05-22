@@ -180,6 +180,34 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 Swagger documentation is also available at `http://localhost:3000/api-docs/`.
 
 ```js
+-----------------------------
+-------- [TASK ROUTES] --------
+-------------------------------
+[GET] localhost:3000/api/tasks?pageSize&searchTerm&pageIndex&sortFilter&sortDirection -> 'findAll'
+[POST] localhost:3000/api/tasks -> 'create'
+[PUT] localhost:3000/api/tasks -> 'update'
+[DELETE] localhost:3000/api/tasks/:_id -> 'remove'
+[GET] localhost:3000/api/tasks/by-interval?startDate&endDate -> 'getTasksByInterval'
+[GET] localhost:3000/api/tasks/:_id -> 'findOne'
+```
+
+```js
+-------------------------------
+------ [CATEGORY ROUTES] ------
+-------------------------------
+[GET] localhost:3000/api/categories -> 'findAll'
+[POST] localhost:3000/api/categories -> 'create'
+[DELETE] localhost:3000/api/categories/:_id -> 'remove'
+```
+
+```js
+-------------------------------
+-------- [USER ROUTES] --------
+-------------------------------
+[GET] localhost:3000/api/users/email/:email -> 'findOneByEmail'
+```
+
+```js
 -------------------------------
 -------- [AUTH ROUTES] --------
 -------------------------------
@@ -188,36 +216,6 @@ Swagger documentation is also available at `http://localhost:3000/api-docs/`.
 [PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
 [POST] localhost:3000/api/auth/refresh -> 'refreshToken'
 [POST] localhost:3000/api/auth/logout -> 'logout'
-```
-
-```js
--------------------------------
--------- [USER ROUTES] --------
--------------------------------
-[GET] localhost:3000/api/users -> 'findAll'
-[GET] localhost:3000/api/users/:_id -> 'findOne'
-[GET] localhost:3000/api/users/email/:email -> 'findOneByEmail'
-```
-
-```js
------------------------------
--------- [TASK ROUTES] --------
--------------------------------
-[GET] localhost:3000/api/tasks/user/:userId?pageSize&searchTerm&pageIndex&sortFilter&sortDirection -> 'findAllByUser'
-[GET] localhost:3000/api/tasks/by-interval/:userId?startDate&endDate -> 'getTasksByInterval'
-[GET] localhost:3000/api/tasks/:_id -> 'findOne'
-[POST] localhost:3000/api/tasks -> 'create'
-[PUT] localhost:3000/api/tasks -> 'update'
-[DELETE] localhost:3000/api/tasks/:_id -> 'remove'
-```
-
-```js
--------------------------------
------- [CATEGORY ROUTES] ------
--------------------------------
-[GET] localhost:3000/api/categories/user/:userId -> 'findAllByUser'
-[POST] localhost:3000/api/categories -> 'create'
-[DELETE] localhost:3000/api/categories/:_id -> 'remove'
 ```
 
 If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`.

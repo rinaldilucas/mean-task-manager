@@ -1,16 +1,18 @@
 import Async from 'async';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 import { Category as Model } from '@models/category.model';
 
 class CategoryController {
-    public async findAllByUser (request: Request, response: Response): Promise<Response | any> {
+    public async findAll (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
+        const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
 
         const countQuery = (callback): any => {
-            Model.find({ userId: request.params.userId })
+            Model.find({ userId })
                 .countDocuments({}, (error, count) => {
                     if (error) callback(error, null);
                     else callback(null, count);
@@ -18,7 +20,7 @@ class CategoryController {
         };
 
         const retrieveQuery = (callback): any => {
-            Model.find({ userId: request.params.userId })
+            Model.find({ userId })
                 .exec((error, documents) => {
                     if (error) callback(error, null);
                     else callback(null, documents);

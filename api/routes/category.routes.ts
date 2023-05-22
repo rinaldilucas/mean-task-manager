@@ -8,8 +8,8 @@ import Controller from '@controllers/category.controller';
 
 const routes = Router();
 
-// GET ALL
-routes.get('/api/categories/user/:userId', authMiddleware, Controller.findAllByUser);
+// FIND ALL
+routes.get('/api/categories', authMiddleware, Controller.findAll);
 
 // CREATE
 routes.post(

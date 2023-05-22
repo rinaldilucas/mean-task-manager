@@ -20,22 +20,18 @@ export class TaskService extends CrudService<ITask> {
         super(http, injector, endpoint);
     }
 
-    override findAllByUser ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Observable<IQueryResult<ITask[]>> {
-        const userId = this.authService.getUserId();
-        const url = `${endpoint}/user/${userId}?`;
-
+    override findAll ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Observable<IQueryResult<ITask[]>> {
         let params = new HttpParams();
         if (sortFilter) { params = params.set('sortFilter', sortFilter).set('sortDirection', sortDirection as string); }
         if (pageSize) params = params.set('pageSize', pageSize);
         if (pageIndex) params = params.set('pageIndex', pageIndex);
         if (searchTerm) params = params.set('searchTerm', searchTerm as string);
 
-        return this.http.get<IQueryResult<ITask[]>>(url, { params }).pipe(catchError(this.sharedService.errorHandler));
+        return this.http.get<IQueryResult<ITask[]>>(endpoint, { params }).pipe(catchError(this.sharedService.errorHandler));
     }
 
     getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
-        const userId = this.authService.getUserId();
-        const url = `${endpoint}/by-interval/${userId}?`;
+        const url = `${endpoint}/by-interval`;
 
         let params = new HttpParams();
         params = params.set('startDate', startDate.toISOString());

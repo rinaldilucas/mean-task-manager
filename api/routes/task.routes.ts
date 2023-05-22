@@ -8,11 +8,8 @@ import Controller from '@controllers/task.controller';
 
 const routes = Router();
 
-// GET ALL TASKS BY USER
-routes.get('/api/tasks/user/:userId', authMiddleware, Controller.findAllByUser);
-
-// GET BY ID
-routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
+// FIND ALL
+routes.get('/api/tasks', authMiddleware, Controller.findAll);
 
 // CREATE
 routes.post(
@@ -31,6 +28,9 @@ routes.put('/api/tasks', authMiddleware, Controller.update);
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
 
 // GET TASKS BY INTERVAL
-routes.get('/api/tasks/by-interval/:userId', authMiddleware, Controller.getTasksByInterval);
+routes.get('/api/tasks/by-interval', authMiddleware, Controller.getTasksByInterval);
+
+// GET BY ID
+routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
 
 export default routes;
