@@ -40,6 +40,7 @@ module.exports = {
                 '@typescript-eslint/no-this-alias': OFF,
                 '@typescript-eslint/no-unused-vars': WARN,
                 '@typescript-eslint/no-var-requires': OFF,
+                'no-lonely-if': ERROR,
                 'dot-notation': OFF,
                 indent: [2, 4],
                 'n/handle-callback-err': WARN,

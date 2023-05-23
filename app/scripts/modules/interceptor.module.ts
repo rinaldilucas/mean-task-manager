@@ -1,9 +1,9 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { ErrorInterceptor } from '@scripts/helpers/error.interceptor';
-import { LanguageInterceptor } from '@scripts/helpers/language.interceptor';
-import { TokenInterceptor } from '@scripts/helpers/token.interceptor';
+import { ErrorInterceptor } from '@app/scripts/interceptors/error.interceptor';
+import { LanguageInterceptor } from '@app/scripts/interceptors/language.interceptor';
+import { TokenInterceptor } from '@app/scripts/interceptors/token.interceptor';
 
 @NgModule({
     providers: [

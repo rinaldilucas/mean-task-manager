@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+import { SubSink } from 'subsink';
 
 import { SharedService } from '@app/scripts/services/shared.service';
-import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-unsubscriber',

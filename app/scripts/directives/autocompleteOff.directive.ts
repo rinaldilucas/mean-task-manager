@@ -6,7 +6,8 @@ import { Directive, ElementRef } from '@angular/core';
 })
 export class AutocompleteOffDirective {
     constructor (private element: ElementRef) {
-        const isChrome = (window as any)?.chrome;
+        const w: any = window;
+        const isChrome = w.chrome;
 
         if (isChrome) {
             this.element.nativeElement.setAttribute('autocomplete', 'new-password');

@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
@@ -18,6 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (error.status === StatusCode.ClientErrorUnauthorized) {
                     if (request.url.search(loginRoute) === -1) { this.authService.logoutAsync(); }
                 }
+
                 return throwError(error);
             })
         );
