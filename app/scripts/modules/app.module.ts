@@ -35,6 +35,7 @@ import { ProfileComponent } from '@components/pages/profile/profile.component';
 import { SettingsComponent } from '@components/pages/settings/settings.component';
 import { StatisticsComponent } from '@components/pages/statistics/statistics.component';
 import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
+import { AutocompleteOffDirective } from '@scripts/directives/autocompleteOff.directive';
 
 // MODALS
 
@@ -56,7 +57,8 @@ registerLocaleData(localePt, 'pt-BR');
         TasksDoneComponent,
         WeeklyDoneComponent,
         StatisticsComponent,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        AutocompleteOffDirective
     ],
     imports: [
         AppRoutingModule,

@@ -84,6 +84,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Unsubscriber component with subsink to facilitate the manuvering of unsubcribres
 -   Shared CRUD service, allowing services to inherit its operations
 -   Custom pipes to convert date to selected language
+-   Custom directive to prevent autofill
 -   Custom async validator to check already registered user
 -   Dark mode persistent trought browser local storage
 -   An SCSS method used that utilizes REMs to maintain size scales

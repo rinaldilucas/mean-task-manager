@@ -5,10 +5,10 @@
                 <mat-card-title class="form__title">{{ "title.profile" | translate }}</mat-card-title>
             </mat-card-header>
 
-            <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
+            <form [formGroup]="form" (keyup.enter)="saveAsync()">
                 <mat-card-content>
                     <mat-form-field class="full-width">
-                        <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" cdkFocusInitial />
+                        <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
                         <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
                         <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
                         <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
