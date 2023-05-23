@@ -15,7 +15,7 @@
   <h3 align="center">MEAN Stack Crud Template</h3>
 
   <p align="center">
-    Project built using Angular, NodeJS, Express.js<br> and MongoDB to jumpstart your studies!
+    Project built using Angular, NodeJS, Express.js<br> and MongoDB with Angular Material to jumpstart your studies!
     <br />
     <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
     <br />
@@ -114,6 +114,7 @@ This section shows what technologies are used in this particular project.
 -   [Redis](https://redis.io/)
 -   [Swagger](https://swagger.io/)
 -   [Chart.js](https://www.chartjs.org/)
+-   [Angular Material](https://material.angular.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -168,8 +169,8 @@ _More scripts at package.json_
     ```
 7. Deploy to github pages
    `js
-    yarn deploy
-    `
+yarn deploy
+`
    If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`. <br>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
