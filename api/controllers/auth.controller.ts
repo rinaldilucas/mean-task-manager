@@ -67,6 +67,14 @@ class AuthController {
         return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
+    public async checkIfEmailExists (request: Request, response: Response): Promise<Response | undefined> {
+        const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
+        if (error) return;
+        if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+
+        return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
+    }
+
     public async changePassword (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 

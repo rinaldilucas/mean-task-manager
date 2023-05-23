@@ -84,10 +84,10 @@ export class AuthService {
         return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
     }
 
-    logout (token: string): Promise<IQueryResult<IUser>> {
-        const url = `${this.url}/logout`;
+    checkIfEmailExists (email: string): Observable<IQueryResult<IUser>> {
+        const url = `${this.url}/email-exists/${email}`;
 
-        return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
+        return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
     }
 
     changePassword (userId: string, password: string): Promise<IQueryResult<IUser>> {
@@ -103,6 +103,12 @@ export class AuthService {
         return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, { ...this.loggedUser, refresh: this.getRefreshToken() })
             .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authenticateToken(response.data[0])))
             .pipe(catchError(this.sharedService.errorHandler)));
+    }
+
+    logout (token: string): Promise<IQueryResult<IUser>> {
+        const url = `${this.url}/logout`;
+
+        return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
     }
 
     authenticateToken (result: IJwtPayload): boolean {
@@ -195,8 +201,6 @@ export class AuthService {
     }
 
     private async startRefreshTokenTimerAsync (jwtPayload: IJwtPayload): Promise<void> {
-        debugger;
-
         const jwtToken = jwtPayload;
         const timeout = jwtToken.expiresIn * 1000;
 

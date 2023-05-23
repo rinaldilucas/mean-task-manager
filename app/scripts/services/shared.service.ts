@@ -56,7 +56,7 @@ export class SharedService {
     }
 
     isValidForm (form: FormGroup<string>): boolean {
-        if (!form.valid || !form.dirty) {
+        if (!form.valid) {
             this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
             this.highlightRequiredInput(form);
             return false;

@@ -3,15 +3,15 @@ import { delay, first, map, switchMap } from 'rxjs/operators';
 
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
-import { UserService } from '@services/user.service';
+import { AuthService } from '@services/auth.service';
 
 export class EmailValidator {
-    static createValidator (userService: UserService): AsyncValidatorFn {
+    static createValidator (authService: AuthService): AsyncValidatorFn {
         return (control: AbstractControl) => {
             return control.valueChanges.pipe(
                 delay(500),
-                switchMap((email: string) => userService.checkIfEmailExists(email)),
-                map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { alreadyregistered: true } : null)),
+                switchMap((email: string) => authService.checkIfEmailExists(email)),
+                map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { emailexists: true } : null)),
                 first()
             );
         };

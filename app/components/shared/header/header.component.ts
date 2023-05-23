@@ -9,7 +9,6 @@ import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@services/auth.service';
 import { TaskService } from '@services/task.service';
-import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-header',
@@ -39,7 +38,6 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
         public taskService: TaskService,
-        public userService: UserService,
         public changeDetector: ChangeDetectorRef,
         public router: Router
     ) {

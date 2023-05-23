@@ -23,6 +23,169 @@
             "description": "Local server"
         }
     ],
+    "tags": [
+        {
+            "name": "Task",
+            "description": "Operations about tasks"
+        },
+        {
+            "name": "Category",
+            "description": "Operations about categories"
+        },
+        {
+            "name": "Auth",
+            "description": "Operations about authentication"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "Task": {
+                "type": "object",
+                "required": ["title", "status", "userId"],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 100
+                    },
+                    "description": {
+                        "type": "string",
+                        "maxLength": 300
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["toDo", "inProgress", "done"]
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    }
+                }
+            },
+            "Category": {
+                "type": "object",
+                "required": ["name", "userId"],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 2
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "required": ["email", "password", "role"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 5,
+                        "maxLength": 150,
+                        "example": "user@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 150
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": ["admin", "user"]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-05-17"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
+                    }
+                }
+            },
+            "AuthData": {
+                "type": "object",
+                "required": ["access", "expiresIn", "refresh", "userId"],
+                "properties": {
+                    "access": {
+                        "type": "string"
+                    },
+                    "expiresIn": {
+                        "type": "string"
+                    },
+                    "refresh": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "keepUserLoggedIn": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "required": ["success", "status", "message"],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "validationErrors": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "auth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
     "paths": {
         "/tasks": {
             "get": {
@@ -619,75 +782,6 @@
                 ]
             }
         },
-        "/users/email/{email}": {
-            "get": {
-                "tags": ["User"],
-                "summary": "Returns a user based on email",
-                "description": "Returns a user based email",
-                "operationId": "getUserByEmail",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "Email of user to fetch",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "alreadyRegistered": {
-                                                        "type": "boolean"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "User not registered"
-                    },
-                    "400": {
-                        "description": "User already exists with email",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/auth/authenticate": {
             "post": {
                 "tags": ["Auth"],
@@ -770,7 +864,7 @@
             "post": {
                 "tags": ["Auth"],
                 "summary": "Register a new user",
-                "description": "Register a new user",
+                "description": "Register a brand new user",
                 "operationId": "register",
                 "requestBody": {
                     "description": "User to be registered",
@@ -833,7 +927,7 @@
                         }
                     },
                     "409": {
-                        "description": "ser already exists with email",
+                        "description": "User already exists with email",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -844,6 +938,75 @@
                     },
                     "400": {
                         "description": "ErrorError creating document",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/email-exists/{email}": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Verify if user is registered",
+                "description": "Returns a boolean if the user is already registered",
+                "operationId": "getUserByEmail",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email of user to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "emailExists": {
+                                                        "type": "boolean"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "totalCount": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "User not registered"
+                    },
+                    "400": {
+                        "description": "User already exists with email",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1055,169 +1218,5 @@
                 ]
             }
         }
-    },
-    "components": {
-        "schemas": {
-            "Task": {
-                "type": "object",
-                "required": ["title", "status", "userId"],
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "minLength": 2,
-                        "maxLength": 100
-                    },
-                    "description": {
-                        "type": "string",
-                        "maxLength": 300
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": ["toDo", "inProgress", "done"]
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    }
-                }
-            },
-            "Category": {
-                "type": "object",
-                "required": ["name", "userId"],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "minLength": 2
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    }
-                }
-            },
-            "User": {
-                "type": "object",
-                "required": ["email", "password", "role"],
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "minLength": 5,
-                        "maxLength": 150,
-                        "example": "user@gmail.com"
-                    },
-                    "password": {
-                        "type": "string",
-                        "minLength": 8,
-                        "maxLength": 150
-                    },
-                    "role": {
-                        "type": "string",
-                        "enum": ["admin", "user"]
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2019-05-17"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-05-22"
-                    }
-                }
-            },
-            "AuthData": {
-                "type": "object",
-                "required": ["access", "expiresIn", "refresh", "userId"],
-                "properties": {
-                    "access": {
-                        "type": "string"
-                    },
-                    "expiresIn": {
-                        "type": "string"
-                    },
-                    "refresh": {
-                        "type": "string"
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "keepUserLoggedIn": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "Error": {
-                "type": "object",
-                "required": ["success", "expiresIn", "refresh", "userId"],
-                "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "status": {
-                        "type": "integer"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "validationErrors": {
-                        "type": "array"
-                    }
-                }
-            }
-        },
-        "securitySchemes": {
-            "auth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
-        }
-    },
-    "tags": [
-        {
-            "name": "Task",
-            "description": "Operations about tasks"
-        },
-        {
-            "name": "Category",
-            "description": "Operations about categories"
-        },
-        {
-            "name": "User",
-            "description": "Operations about user"
-        },
-        {
-            "name": "Auth",
-            "description": "Operations about authentication"
-        }
-    ]
+    }
 }

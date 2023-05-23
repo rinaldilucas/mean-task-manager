@@ -12,7 +12,6 @@ import swaggerDocs from './swagger.json';
 import authRoutes from '@routes/auth.routes';
 import categoryRoutes from '@routes/category.routes';
 import taskRoutes from '@routes/task.routes';
-import userRoutes from '@routes/user.routes';
 
 class App {
     public express: express.Application;
@@ -69,7 +68,6 @@ class App {
     private routes (): void {
         this.express.use(authRoutes);
         this.express.use(taskRoutes);
-        this.express.use(userRoutes);
         this.express.use(categoryRoutes);
     }
 }

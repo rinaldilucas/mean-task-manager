@@ -26,6 +26,9 @@ routes.post(
     Controller.register
 );
 
+// GET BY EMAIL
+routes.get('/api/auth/email-exists/:email', Controller.checkIfEmailExists);
+
 // CHANGE PASSWORD
 routes.put(
     '/api/auth/changePassword', //

@@ -68,10 +68,12 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Virtual scrolling feature implemented on tables
 -   Search and ordering features via the database to minimize requests
 -   AJAX requests used for pagination
--   JWT implementation with refresh token on Redis
+-   JWT implementation with refresh token on Redis and cookies using strict mode
 -   Feature to blacklist access token which as logouted and refresh token already used
 -   Authentication and role guard features added
--   Password encryption feature implemented
+-   Example using resolver guard to retrieve data
+-   Interceptor modules added to verify bearer token, errors, and headers language
+-   Password encryption using web best practices
 -   Error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easier to plug-in frontend, backend or database individually
 -   Front-end validation on requests and inputs
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
@@ -83,24 +85,20 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Shared CRUD service, allowing services to inherit its operations
 -   Custom pipes to convert date to selected language
 -   Custom async validator to check already registered user
--   Interceptor modules added to verify bearer token, errors, and headers language
--   Example using resolver guard to retrieve data
 -   Dark mode persistent trought browser local storage
 -   An SCSS method used that utilizes REMs to maintain size scales
 -   SCSS written using BEM methodology
--   Custom SCSS structure to improve reusability
+-   Custom SCSS structure to improve reusability and maintain aspect ratio
 -   Material components rewritten to support REM and improve mobile and table compatibility with minimum code
--   Improved readability on media queries through some functions
--   Examples added with mat-chips, mat-autocomplete, and more
+-   Improved readability on media queries through some custom functions
 -   Interfaces added for queries results to improve code reusability
 -   Custom ESLint rules implemented that work on both the client-side and API
 -   Assure keyboard accessibility, ARIA and Accessible HTML Content via ESLint rules
 -   Implementation of sass-lint that guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 -   Prettier rules implemented to improve code readability
--   Middleware examples added
 -   Routed bottom sheet example implemented using only one component
 -   Input validators with multilingual features added
--   Charts have been developed using chart.js
+-   Development of charts using chart.js
 -   Angular routing animations using dynamic params
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -114,6 +112,8 @@ This section shows what technologies are used in this particular project.
 -   [MongoDB](https://www.mongodb.com/)
 -   [Express.js](https://expressjs.com/)
 -   [Redis](https://redis.io/)
+-   [Swagger](https://swagger.io/)
+-   [Chart.js](https://www.chartjs.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -145,7 +145,8 @@ You need to have the following requirements:
 
 ### Installation
 
-_Below is an example of how you can run the project._
+_Below is an example of how you can run the project._<br>
+_More scripts at package.json_
 
 1. Clone the repo
     ```sh
@@ -166,9 +167,10 @@ _Below is an example of how you can run the project._
     yarn dev
     ```
 7. Deploy to github pages
-    ```js
+   `js
     yarn deploy
-    ```
+    `
+   If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`. <br>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -176,8 +178,7 @@ _Below is an example of how you can run the project._
 
 ## Usage
 
-You can import the Insomnia routes via file `./db/routes-collection.json` and import the mongodb collections via file `./db/colletions`. And below are the implemented routes. You also can consult them inside `./api/routes` folder.
-Swagger documentation is also available at `http://localhost:3000/api-docs/`.
+You can import the Insomnia routes via file `./db/routes-collection.json` and import the mongodb collections via file `./db/colletions`. <br>Below are the implemented routes: you also can view them inside `./api/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
 
 ```js
 -----------------------------
@@ -202,23 +203,15 @@ Swagger documentation is also available at `http://localhost:3000/api-docs/`.
 
 ```js
 -------------------------------
--------- [USER ROUTES] --------
--------------------------------
-[GET] localhost:3000/api/users/email/:email -> 'findOneByEmail'
-```
-
-```js
--------------------------------
 -------- [AUTH ROUTES] --------
 -------------------------------
 [POST] localhost:3000/api/auth/authenticate -> 'authenticate'
 [POST] localhost:3000/api/auth/register -> 'register'
+[GET] localhost:3000/api/auth/email-exists/:email -> 'checkIfEmailExists'
 [PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
 [POST] localhost:3000/api/auth/refresh -> 'refreshToken'
 [POST] localhost:3000/api/auth/logout -> 'logout'
 ```
-
-If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

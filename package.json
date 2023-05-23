@@ -126,7 +126,7 @@
         "dev": "run-p dev:client dev:api",
         "dev:api": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register api/server.ts\" -e ts,json",
         "dev:client": "ng serve --o",
-        "lint": "yarn lint:client && yarn lint:api",
+        "lint": "yarn lint:client && npx eslint ./api --ext .ts",
         "lint:api": "npx eslint ./api --ext .ts && yarn lint:types",
         "lint:client": "ng lint && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
         "lint:sass": "sass-lint -c .sasslintrc.json -v -q",
