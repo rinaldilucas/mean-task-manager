@@ -10,7 +10,7 @@ export class AuthGuard {
 
     canActivate (): Observable<boolean> | Promise<boolean> | boolean {
         return new Promise((resolve) => {
-            if (this.authService.verifyAuthorization()) {
+            if (this.authService.getIsAuthenticated()) {
                 resolve(true);
             } else {
                 this.router.navigate(['login']);
@@ -21,7 +21,7 @@ export class AuthGuard {
 
     canLoad (): Observable<boolean> | Promise<boolean> | boolean {
         return new Promise((resolve) => {
-            if (this.authService.verifyAuthorization()) {
+            if (this.authService.getIsAuthenticated()) {
                 resolve(true);
             } else {
                 this.router.navigate(['login']);

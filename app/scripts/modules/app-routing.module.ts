@@ -28,7 +28,6 @@ const routes: Routes = [
     {
         path: 'tasks',
         loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule),
-        canActivate: [AuthGuard],
         canLoad: [AuthGuard]
     },
     { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },

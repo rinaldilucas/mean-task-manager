@@ -138,6 +138,7 @@ export class AuthService {
 
         const now = new Date();
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+        if (!this.refreshTokenTimeout) { this.refreshTokenTimeout = setTimeout(async () => this.logoutAsync(), expiresIn); }
 
         if (expiresIn > 0) {
             this.accessToken = authInformation.access;
@@ -194,6 +195,8 @@ export class AuthService {
     }
 
     private async startRefreshTokenTimerAsync (jwtPayload: IJwtPayload): Promise<void> {
+        debugger;
+
         const jwtToken = jwtPayload;
         const timeout = jwtToken.expiresIn * 1000;
 

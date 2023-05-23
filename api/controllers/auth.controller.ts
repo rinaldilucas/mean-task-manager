@@ -109,7 +109,7 @@ class AuthController {
         const jwtPayload = {
             access,
             refresh,
-            expiresIn: process.env.JWT_ACCESS_TIME,
+            expiresIn: process.env.JWT_REFRESH_TIME,
             userId: request.body.userId
         };
 
