@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0",
         "title": "Mean Stack Template - OpenAPI 3.0",
-        "description": "Documentation of Mean Stack Template project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey.",
+        "description": "Documentation of Mean Stack Template project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey",
         "contact": {
             "name": "Lucas Rinaldi",
             "email": "lucasreinaldi@gmail.com"
@@ -28,7 +28,7 @@
             "get": {
                 "tags": ["Task"],
                 "summary": "Returns all tasks",
-                "description": "Returns all tasks which the user has access to.",
+                "description": "Returns all tasks which the user has access to",
                 "operationId": "getTasks",
                 "parameters": [
                     {
@@ -109,14 +109,26 @@
                         }
                     },
                     "500": {
-                        "description": "Error retrieving tasks"
+                        "description": "Error retrieving tasks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             },
             "post": {
                 "tags": ["Task"],
-                "summary": "Creates a new task.",
-                "description": "Creates a new task for the current user. Duplicates are allowed.",
+                "summary": "Creates a new task",
+                "description": "Creates a new task for the current user. Duplicates are allowed",
                 "operationId": "createTask",
                 "requestBody": {
                     "description": "Task to add",
@@ -161,14 +173,26 @@
                         }
                     },
                     "400": {
-                        "description": "Error creating task"
+                        "description": "Error creating task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             },
             "put": {
                 "tags": ["Task"],
-                "summary": "Updates a task.",
-                "description": "Updates a task based on the body of requisition.",
+                "summary": "Updates a task",
+                "description": "Updates a task based on the body of requisition",
                 "operationId": "updateTask",
                 "requestBody": {
                     "description": "Task to update",
@@ -213,43 +237,74 @@
                         }
                     },
                     "404": {
-                        "description": "Task not found"
-                    },
-                    "400": {
-                        "description": "Error removing task"
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["Task"],
-                "summary": "Removes a task.",
-                "description": "Removes a single task based on the ID supplied.",
-                "operationId": "removeTask",
-                "responses": {
-                    "204": {
-                        "description": "Successful response",
+                        "description": "Task not found",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Category"
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
                     },
+                    "400": {
+                        "description": "Error removing task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": ["Task"],
+                "summary": "Removes a task",
+                "description": "Removes a single task based on the ID supplied",
+                "operationId": "removeTask",
+                "responses": {
+                    "204": {
+                        "description": "Successful response"
+                    },
                     "404": {
-                        "description": "Task not found"
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error removing task"
+                        "description": "Error removing task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/tasks/by-interval": {
             "get": {
                 "tags": ["Task"],
-                "summary": "Returns all tasks by interval.",
-                "description": "Returns all tasks by two dates interval.",
+                "summary": "Returns all tasks by interval",
+                "description": "Returns all tasks by two dates interval",
                 "operationId": "getTaskByInterval",
                 "parameters": [
                     {
@@ -303,16 +358,28 @@
                         }
                     },
                     "404": {
-                        "description": "Tasks not found"
+                        "description": "Tasks not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/tasks/{id}": {
             "get": {
                 "tags": ["Task"],
-                "summary": "Returns a task.",
-                "description": "Returns a task based on a single ID.",
+                "summary": "Returns a task",
+                "description": "Returns a task based on a single ID",
                 "operationId": "getTaskById",
                 "parameters": [
                     {
@@ -357,19 +424,38 @@
                         }
                     },
                     "404": {
-                        "description": "Task not found"
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error removing task"
+                        "description": "Error removing task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/categories": {
             "get": {
                 "tags": ["Category"],
-                "summary": "Returns all categories.",
-                "description": "Returns all categories which the user has access to.",
+                "summary": "Returns all categories",
+                "description": "Returns all categories which the user has access to",
                 "operationId": "getCategories",
                 "responses": {
                     "200": {
@@ -403,14 +489,26 @@
                         }
                     },
                     "500": {
-                        "description": "Error retrieving categories"
+                        "description": "Error retrieving categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             },
             "post": {
                 "tags": ["Category"],
-                "summary": "Creates a new category.",
-                "description": "Creates a new category for the current user. Duplicates are allowed.",
+                "summary": "Creates a new category",
+                "description": "Creates a new category for the current user. Duplicates are allowed",
                 "operationId": "createCategory",
                 "requestBody": {
                     "description": "Category to add",
@@ -455,16 +553,28 @@
                         }
                     },
                     "400": {
-                        "description": "Error creating category"
+                        "description": "Error creating category",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/categories/{id}": {
             "delete": {
                 "tags": ["Category"],
-                "summary": "Removes a category.",
-                "description": "Removes a single category based on the ID supplied.",
+                "summary": "Removes a category",
+                "description": "Removes a single category based on the ID supplied",
                 "operationId": "removeCategory",
                 "parameters": [
                     {
@@ -482,19 +592,38 @@
                         "description": "Successful response"
                     },
                     "404": {
-                        "description": "Category not found"
+                        "description": "Category not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error removing category"
+                        "description": "Error removing category",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/users/email/{email}": {
             "get": {
                 "tags": ["User"],
-                "summary": "Returns a user based on email.",
-                "description": "Returns a user based email.",
+                "summary": "Returns a user based on email",
+                "description": "Returns a user based email",
                 "operationId": "getUserByEmail",
                 "parameters": [
                     {
@@ -547,7 +676,14 @@
                         "description": "User not registered"
                     },
                     "400": {
-                        "description": "User already exists with email"
+                        "description": "User already exists with email",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -555,8 +691,8 @@
         "/auth/authenticate": {
             "post": {
                 "tags": ["Auth"],
-                "summary": "Authenticate the user.",
-                "description": "Authenticates the user and retrieve a JWT token.",
+                "summary": "Authenticate the user",
+                "description": "Authenticates the user and retrieve a JWT token",
                 "operationId": "authenticate",
                 "requestBody": {
                     "description": "User to be authenticated",
@@ -597,24 +733,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "access": {
-                                                        "type": "string"
-                                                    },
-                                                    "expiresIn": {
-                                                        "type": "string"
-                                                    },
-                                                    "KeepUserLoggedIn": {
-                                                        "type": "boolean"
-                                                    },
-                                                    "refresh": {
-                                                        "type": "string"
-                                                    },
-                                                    "userId": {
-                                                        "type": "string"
-                                                    }
-                                                }
+                                                "$ref": "#/components/schemas/AuthData"
                                             }
                                         },
                                         "success": {
@@ -635,7 +754,14 @@
                         }
                     },
                     "401": {
-                        "description": "User or password missmatchs"
+                        "description": "User or password missmatchs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -643,8 +769,8 @@
         "/auth/register": {
             "post": {
                 "tags": ["Auth"],
-                "summary": "Register a new user.",
-                "description": "Register a new user.",
+                "summary": "Register a new user",
+                "description": "Register a new user",
                 "operationId": "register",
                 "requestBody": {
                     "description": "User to be registered",
@@ -707,10 +833,24 @@
                         }
                     },
                     "409": {
-                        "description": "User already exists with email"
+                        "description": "ser already exists with email",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "ErrorError creating document"
+                        "description": "ErrorError creating document",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -718,8 +858,8 @@
         "/auth/changePassword": {
             "put": {
                 "tags": ["Auth"],
-                "summary": "Change the password.",
-                "description": "Change the password of the user generating hash.",
+                "summary": "Change the password",
+                "description": "Change the password of the user generating hash",
                 "operationId": "changePassword",
                 "requestBody": {
                     "description": "User to have the password changed",
@@ -764,19 +904,38 @@
                         }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error updating user"
+                        "description": "Error updating user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/auth/refresh": {
             "post": {
                 "tags": ["Auth"],
-                "summary": "Generate refresh token.",
-                "description": "Generate a refresh token to user.",
+                "summary": "Generate refresh token",
+                "description": "Generate a refresh token to user",
                 "operationId": "refreshToken",
                 "requestBody": {
                     "description": "Refresh token to be genereated",
@@ -789,21 +948,7 @@
                                     "data": {
                                         "type": "array",
                                         "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "access": {
-                                                    "type": "string"
-                                                },
-                                                "expiresIn": {
-                                                    "type": "string"
-                                                },
-                                                "refresh": {
-                                                    "type": "string"
-                                                },
-                                                "userId": {
-                                                    "type": "string"
-                                                }
-                                            }
+                                            "$ref": "#/components/schemas/AuthData"
                                         }
                                     },
                                     "success": {
@@ -835,16 +980,28 @@
                         }
                     },
                     "401": {
-                        "description": "Error refreshing token"
+                        "description": "Error refreshing token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         },
         "/auth/logout": {
             "post": {
                 "tags": ["Auth"],
-                "summary": "Sign out user.",
-                "description": "Sign out user and invalidate token.",
+                "summary": "Sign out user",
+                "description": "Sign out user and invalidate token",
                 "operationId": "logout",
                 "requestBody": {
                     "description": "Sign out user",
@@ -890,7 +1047,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
             }
         }
     },
@@ -910,7 +1072,9 @@
                         "maxLength": 300
                     },
                     "date": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-22"
                     },
                     "status": {
                         "type": "string",
@@ -988,6 +1152,53 @@
                         "example": "2023-05-22"
                     }
                 }
+            },
+            "AuthData": {
+                "type": "object",
+                "required": ["access", "expiresIn", "refresh", "userId"],
+                "properties": {
+                    "access": {
+                        "type": "string"
+                    },
+                    "expiresIn": {
+                        "type": "string"
+                    },
+                    "refresh": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "keepUserLoggedIn": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "required": ["success", "expiresIn", "refresh", "userId"],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "validationErrors": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "auth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     },
