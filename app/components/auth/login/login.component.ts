@@ -68,7 +68,8 @@ export class LogInComponent implements OnInit {
         }
     }
 
-    togglePasswordVisibility (): void {
+    togglePasswordVisibility (event: MouseEvent): void {
+        event.stopPropagation();
         this.showPassword = !this.showPassword;
     }
 }

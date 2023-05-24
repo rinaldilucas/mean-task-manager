@@ -65,7 +65,8 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['login']);
     }
 
-    togglePasswordVisibility (): void {
+    togglePasswordVisibility (event: MouseEvent): void {
+        event.stopPropagation();
         this.showPassword = !this.showPassword;
     }
 }
