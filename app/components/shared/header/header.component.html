@@ -5,7 +5,7 @@
         fixedInViewport
         [attr.role]="(isDesktop$ | async) ? 'navigation' : 'dialog'"
         [mode]="(isDesktop$ | async) ? 'side' : 'over'"
-        [(opened)]="this.isSidebarIsOpened"
+        [(opened)]="isSidebarIsOpened"
     >
         <mat-nav-list class="header__left">
             <a mat-list-item [routerLink]="['tasks/']" (keypress)="isDesktop ? null : drawer.close()" (click)="isDesktop ? null : drawer.close()" routerLinkActive="active">

@@ -37,7 +37,7 @@
                 </div>
 
                 <div [hidden]="isLoading || !tasks.length || searchedTasks.length > 0" class="table">
-                    <cdk-virtual-scroll-viewport *ngIf="this.tasks && this.tasks.length > 0" class="list__body-table" tvsItemSize="20">
+                    <cdk-virtual-scroll-viewport *ngIf="tasks && tasks.length > 0" class="list__body-table" tvsItemSize="20">
                         <table [hidden]="isLoading || !tasks || !tasks.length" mat-table [dataSource]="tasksDataSource" matSort (matSortChange)="sortDataAsync($event)">
                             <ng-container matColumnDef="date">
                                 <mat-cell mat-header-cell *matHeaderCellDef mat-sort-header>

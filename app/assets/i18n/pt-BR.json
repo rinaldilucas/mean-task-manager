@@ -80,6 +80,8 @@
         "portuguese": "Português"
     },
     "statistics": {
+        "no-data-bar": "Sem dados para exibir o gráfico de barras.",
+        "no-data-doughnut": "Sem dados para exibir o gráfico de rosca.",
         "status": {
             "done": "Feito",
             "progress": "Em progresso",

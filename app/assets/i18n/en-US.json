@@ -80,6 +80,8 @@
         "portuguese": "Portuguese"
     },
     "statistics": {
+        "no-data-bar": "No data to display bar chart.",
+        "no-data-doughnut": "No data to display doughnut chart.",
         "status": {
             "done": "Done",
             "progress": "In progress",
