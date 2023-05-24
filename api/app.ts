@@ -14,9 +14,9 @@ import categoryRoutes from '@routes/category.routes';
 import taskRoutes from '@routes/task.routes';
 
 class App {
-    public express: express.Application;
+    express: express.Application;
 
-    public constructor () {
+    constructor () {
         this.express = express();
 
         this.middlewares();

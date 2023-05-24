@@ -7,8 +7,10 @@ import { IUser } from '@scripts/models/user.interface';
 import { AuthService } from '@services/auth.service';
 
 export class CustomValidators {
+    static emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
+
     static incremental (control: FormControl): { [key: string]: boolean } | undefined {
-        const regex = /([0-9]{4,})/;
+        const regex = /12345|23456|34567|45678|56789/;
 
         if (control.value && regex.test(control.value)) {
             return { hasIncremental: true };

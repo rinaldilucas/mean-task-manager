@@ -8,7 +8,7 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 import { User as Model } from '@models/user.model';
 
 class AuthController {
-    public async authenticate (request: Request, response: Response): Promise<Response | undefined> {
+    async authenticate (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
@@ -38,7 +38,7 @@ class AuthController {
         return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
-    public async register (request: Request, response: Response): Promise<Response | undefined> {
+    async register (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_RONDS) || 12));
@@ -67,7 +67,7 @@ class AuthController {
         return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async checkIfEmailExists (request: Request, response: Response): Promise<Response | undefined> {
+    async checkIfEmailExists (request: Request, response: Response): Promise<Response | undefined> {
         const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
         if (error) return;
         if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
@@ -75,7 +75,7 @@ class AuthController {
         return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
     }
 
-    public async changePassword (request: Request, response: Response): Promise<Response | undefined> {
+    async changePassword (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process.env.SALT_RONDS)));
@@ -99,7 +99,7 @@ class AuthController {
         return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async refreshToken (request: Request, response: Response): Promise<Response | undefined> {
+    async refreshToken (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const { access, refresh } = await jwtService.refreshJwt({
@@ -124,7 +124,7 @@ class AuthController {
         return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
     }
 
-    public async logout (request: Request, response: Response): Promise<Response | undefined> {
+    async logout (request: Request, response: Response): Promise<Response | undefined> {
         const token = request.body.token;
         const [, addToBlacklistError] = await handlePromises(request, response, addToBlacklist(token));
         if (addToBlacklistError) return;

@@ -137,7 +137,7 @@ import { MatTreeModule } from '@angular/material/tree';
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-US' }]
 })
 export class AngularMaterialModule {
-    constructor (public matIconRegistry: MatIconRegistry) {
+    constructor (matIconRegistry: MatIconRegistry) {
         matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
     }
 

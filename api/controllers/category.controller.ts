@@ -7,7 +7,7 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 import { Category as Model } from '@models/category.model';
 
 class CategoryController {
-    public async findAll (request: Request, response: Response): Promise<Response | any> {
+    async findAll (request: Request, response: Response): Promise<Response | any> {
         const language = request.headers.language;
         const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
 
@@ -37,7 +37,7 @@ class CategoryController {
         });
     }
 
-    public async create (request: Request, response: Response): Promise<Response | undefined> {
+    async create (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, new Model(request.body).save());
@@ -50,7 +50,7 @@ class CategoryController {
         return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async remove (request: Request, response: Response): Promise<Response | undefined> {
+    async remove (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));

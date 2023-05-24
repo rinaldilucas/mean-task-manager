@@ -19,7 +19,7 @@ import { ITask } from '@scripts/models/task.interface';
 export class TasksDoneComponent extends Unsubscriber implements OnInit {
     @Input() tasks!: ITask[];
 
-    @ViewChild(BaseChartDirective) public baseChart!: BaseChartDirective;
+    @ViewChild(BaseChartDirective) baseChart!: BaseChartDirective;
 
     chartType: ChartType = 'doughnut';
     chartLabels: Label[] = [];

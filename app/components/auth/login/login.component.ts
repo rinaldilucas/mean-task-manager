@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
+import { CustomValidators } from '@app/scripts/validators/custom.validator';
 import { IJwtPayload } from '@scripts/models/jwtPayload.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
 import { IUser } from '@scripts/models/user.interface';
@@ -20,7 +21,7 @@ import { SharedService } from '@services/shared.service';
  })
 export class LogInComponent implements OnInit {
     form: FormGroup;
-    public showPassword = false;
+    showPassword = false;
 
     constructor (
         private authService: AuthService,
@@ -31,8 +32,18 @@ export class LogInComponent implements OnInit {
         private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
-            email: [null, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+            email: [null,
+                [Validators.required,
+                    Validators.minLength(5),
+                    Validators.maxLength(150),
+                    Validators.pattern(CustomValidators.emailRegex)
+                ]
+            ],
+            password: [null,
+                [Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(150)
+                ]],
             keepUserLogged: [false]
         });
     }

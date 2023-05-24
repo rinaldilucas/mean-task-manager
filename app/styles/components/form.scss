@@ -85,8 +85,8 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: vw(24) !important;
         color: mat-contrast($app-background, 50) !important;
+        font-size: vw(24) !important;
 
         .dark-mode & {
             color: mat-color($app-background, 900) !important;

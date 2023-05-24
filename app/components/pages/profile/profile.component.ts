@@ -32,7 +32,11 @@ export class ProfileComponent implements OnInit {
         private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
-            password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]]
+            password: [null,
+                [Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(150)
+                ]]
         });
     }
 

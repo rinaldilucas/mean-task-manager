@@ -22,7 +22,7 @@ import { SharedService } from '@services/shared.service';
 })
 export class RegisterComponent implements OnInit {
     form: FormGroup;
-    public showPassword = false;
+    showPassword = false;
 
     constructor (
         private authService: AuthService,
@@ -33,16 +33,24 @@ export class RegisterComponent implements OnInit {
         private sharedService: SharedService
     ) {
         this.form = this.formBuilder.group({
-            email: [null, [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)], [CustomValidators.checkEmail(this.authService)]],
-            password: [null, [Validators.required, //
-                Validators.minLength(8),
-                Validators.maxLength(150),
-                CustomValidators.incremental,
-                CustomValidators.sequential,
-                CustomValidators.capitalized,
-                CustomValidators.number,
-                CustomValidators.specialCharacters
-            ]],
+            email: [null,
+                [Validators.required,
+                    Validators.minLength(5),
+                    Validators.maxLength(150),
+                    Validators.pattern(CustomValidators.emailRegex)
+                ],
+                [CustomValidators.checkEmail(this.authService)]
+            ],
+            password: [null,
+                [Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(150),
+                    CustomValidators.incremental,
+                    CustomValidators.sequential,
+                    CustomValidators.capitalized,
+                    CustomValidators.number,
+                    CustomValidators.specialCharacters
+                ]],
             confirmPassword: [null, [Validators.required, CustomValidators.equalsTo('password')]]
         });
     }

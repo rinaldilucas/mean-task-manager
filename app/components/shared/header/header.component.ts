@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
@@ -9,7 +9,6 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@services/auth.service';
-import { TaskService } from '@services/task.service';
 
 @Component({
     selector: 'app-header',
@@ -38,9 +37,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     constructor (
         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
-        public taskService: TaskService,
-        public changeDetector: ChangeDetectorRef,
-        public router: Router
+        private changeDetector: ChangeDetectorRef
     ) {
         super();
     }

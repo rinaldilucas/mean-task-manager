@@ -7,7 +7,7 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 import { Task as Model } from '@models/task.model';
 
 class TaskController {
-    public async findAll (request: Request, response: Response): Promise<Response | any> {
+    async findAll (request: Request, response: Response): Promise<Response | any> {
         const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
         const language = request.headers.language;
         const pageIndex = Number(request.query.pageIndex) ?? 1;
@@ -67,7 +67,7 @@ class TaskController {
         });
     }
 
-    public async create (request: Request, response: Response): Promise<Response | undefined> {
+    async create (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, new Model(request.body).save());
@@ -80,7 +80,7 @@ class TaskController {
         return responseSuccess(response, data, StatusCode.SuccessCreated);
     }
 
-    public async update (request: Request, response: Response): Promise<Response | undefined> {
+    async update (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.body._id }));
@@ -100,7 +100,7 @@ class TaskController {
         return responseSuccess(response, data, StatusCode.SuccessOK);
     }
 
-    public async remove (request: Request, response: Response): Promise<Response | undefined> {
+    async remove (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
@@ -120,7 +120,7 @@ class TaskController {
         return responseSuccess(response, data, StatusCode.SuccessNoContent);
     }
 
-    public async findOne (request: Request, response: Response): Promise<Response | undefined> {
+    async findOne (request: Request, response: Response): Promise<Response | undefined> {
         const language = request.headers.language;
 
         const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));

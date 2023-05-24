@@ -80,8 +80,13 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
 
         this.form = this.formBuilder.group({
             _id: [this.bottomsheetData.task._id, null],
-            title: [this.bottomsheetData.task.title, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-            description: [this.bottomsheetData.task.description, [Validators.maxLength(300)]],
+            title: [this.bottomsheetData.task.title,
+                [Validators.required,
+                    Validators.minLength(2),
+                    Validators.maxLength(100)
+                ]],
+            description: [this.bottomsheetData.task.description,
+                [Validators.maxLength(300)]],
             date: [this.bottomsheetData.task.date, null],
             category: [this.bottomsheetData.task.category, null]
         });
