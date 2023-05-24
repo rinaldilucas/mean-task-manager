@@ -123,7 +123,7 @@
         "debug:api": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register api/server.ts\" -e ts,json",
         "debug:clint": "ng build --configuration development --watch",
         "deploy": "yarn deploy:client",
-        "deploy:client": "ng deploy --base-href=/mean-stack-template/ && git reset --hard && git clean -fxd",
+        "deploy:client": "ng deploy --base-href=/mean-stack-template/ && rm -rd ./app-dist",
         "dev": "run-p dev:client dev:api",
         "dev:api": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register api/server.ts\" -e ts,json",
         "dev:client": "ng serve --o",
