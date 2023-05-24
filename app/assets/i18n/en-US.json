@@ -40,6 +40,7 @@
         "password": "Password",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",
+        "too-many-requests-error": "Too many attempts to login. Try again later.",
         "user-error": "Account not found."
     },
     "messages": {

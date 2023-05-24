@@ -71,9 +71,11 @@ I built this project to make a cool template for those who wants to learn the ME
 -   JWT implementation with refresh token on Redis and cookies using strict mode
 -   Feature to blacklist access token which as logouted and refresh token already used
 -   Authentication and role guard features added
+-   Custom validators to enhances password stregth
+-   Authentication with brute force prevention using ExpressBrute
 -   Example using resolver guard to retrieve data
 -   Interceptor modules added to verify bearer token, errors, and headers language
--   Password encryption using web best practices
+-   Password encryption using bcrypt with salt rounds
 -   Error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easier to plug-in frontend, backend or database individually
 -   Front-end validation on requests and inputs
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman

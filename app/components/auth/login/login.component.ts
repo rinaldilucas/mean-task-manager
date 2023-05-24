@@ -52,6 +52,10 @@ export class LogInComponent implements OnInit {
                 this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
                 return;
             }
+            if (error.status === StatusCode.ClientErrorTooManyRequests) {
+                this.sharedService.handleSnackbarMessages({ translationKey: 'login.too-many-requests-error', success: false });
+                return;
+            }
             this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
 

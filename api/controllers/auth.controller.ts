@@ -14,15 +14,15 @@ class AuthController {
         const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
         if (documentError) return;
         if (!document) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Missmatch credential: Invalid email.');
-            else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial: Usuário inválido.');
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Missmatch credentials.');
+            else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
         }
 
         const [validation, validationError] = await handlePromises(request, response, bcrypt.compare(request.body.password, document.password));
         if (validationError) return;
         if (!validation) {
-            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Missmatch credential: Invalid password.');
-            else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial: Senha inválida.');
+            if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Missmatch credentials.');
+            else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
         }
 
         const { access, refresh } = jwtService.generate(document.email, document._id, document.role);
