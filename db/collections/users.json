@@ -1,18 +1,18 @@
 [{
   "_id": {
-    "$oid": "62e5c194c972aa0ed83917a3"
+    "$oid": "646d96ecc09cdb2e9c4b327e"
   },
   "role": "user",
   "email": "user@gmail.com",
-  "password": "$2b$12$6N0UgHrRQqzG9dhySzfhve2U5HUbC4CZjxLGxNNSn2u82SE/fdqhG",
+  "password": "$2b$12$iDj9Kalzv7imofkDr5VSSevzAnLXjfMo8ACS6qi5RufPIWugrZbt6",
   "createdAt": {
     "$date": {
-      "$numberLong": "1659224468582"
+      "$numberLong": "1684903660726"
     }
   },
   "updatedAt": {
     "$date": {
-      "$numberLong": "1682396217483"
+      "$numberLong": "1684903660726"
     }
   },
   "__v": 0

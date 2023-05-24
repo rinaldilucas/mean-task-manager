@@ -1,8 +1,8 @@
 {
     "baseUrl": "localhost:3000/api/",
-    "userId": "62e5c194c972aa0ed83917a3",
+    "userId": "646d96ecc09cdb2e9c4b327e",
     "email": "user@gmail.com",
-    "password": "password",
-    "token": "{% response 'body', 'req_784defa9aa56408e89d1180369a9c291', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'always', 60 %}",
-    "refresh": "{% response 'body', 'req_784defa9aa56408e89d1180369a9c291', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'always', 60 %}"
+    "password": "Userpassword#0",
+    "token": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'always', 60 %}",
+    "refresh": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'always', 60 %}"
 }
