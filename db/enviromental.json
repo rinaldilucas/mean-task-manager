@@ -3,8 +3,9 @@
     "userId": "646d96ecc09cdb2e9c4b327e",
     "email": "user@gmail.com",
     "password": "Userpassword#0",
+    "role": "user",
     "token": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'no-history', 60 %}",
     "refresh": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'no-history', 60 %}",
-    "taskId": "{% response 'body', 'req_8348ec98af804a628444aea01688db06', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'always', 60 %}",
-    "categoryId": "{% response 'body', 'req_59ba3f1f578f43dab21a0e05c4e64e9d', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'always', 60 %}"
+    "taskId": "{% response 'body', 'req_8348ec98af804a628444aea01688db06', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'no-history', 60 %}",
+    "categoryId": "{% response 'body', 'req_59ba3f1f578f43dab21a0e05c4e64e9d', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'no-history', 60 %}"
 }

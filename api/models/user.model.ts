@@ -1,7 +1,7 @@
 import { UserInterface as Interface } from '@api/models/interfaces/User.interface';
 import { Model, Schema, model } from 'mongoose';
 
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;
+const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const validateEmail = (email: string): boolean => {
     return emailRegex.test(email);
