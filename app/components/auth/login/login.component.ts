@@ -20,6 +20,7 @@ import { SharedService } from '@services/shared.service';
  })
 export class LogInComponent implements OnInit {
     form: FormGroup;
+    public showPassword = false;
 
     constructor (
         private authService: AuthService,
@@ -65,5 +66,9 @@ export class LogInComponent implements OnInit {
         } else {
             this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
         }
+    }
+
+    togglePasswordVisibility (): void {
+        this.showPassword = !this.showPassword;
     }
 }

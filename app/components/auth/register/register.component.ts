@@ -22,6 +22,7 @@ import { SharedService } from '@services/shared.service';
 })
 export class RegisterComponent implements OnInit {
     form: FormGroup;
+    public showPassword = false;
 
     constructor (
         private authService: AuthService,
@@ -62,5 +63,9 @@ export class RegisterComponent implements OnInit {
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-success' });
         this.router.navigate(['login']);
+    }
+
+    togglePasswordVisibility (): void {
+        this.showPassword = !this.showPassword;
     }
 }

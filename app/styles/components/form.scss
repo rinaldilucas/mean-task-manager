@@ -77,4 +77,13 @@
     &__button {
         @extend .button;
     }
+
+    mat-icon {
+        font-size: vw(24) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: vw(4);
+    }
 }
