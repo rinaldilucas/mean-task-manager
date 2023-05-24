@@ -86,5 +86,10 @@
         justify-content: center;
         cursor: pointer;
         font-size: vw(24) !important;
+        color: mat-contrast($app-background, 50) !important;
+
+        .dark-mode & {
+            color: mat-color($app-background, 900) !important;
+        }
     }
 }
