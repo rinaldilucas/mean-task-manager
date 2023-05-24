@@ -9,15 +9,22 @@
         "signin": "Login"
     },
     "error": {
-        "email-exists": "E-mail already registered.",
-        "email-invalid": "Invalid e-mail.",
-        "max-length": "You must fill in text that does not exceed {{value}} characters.",
-        "min-length": "You must fill in text that exceeds {{value}} characters.",
+        "email-exists": "E-mail already registered",
+        "email-invalid": "Invalid e-mail",
+        "has-incremental": "The field cannot contain more than {{value}} occurences as increment",
+        "has-sequential": "The field cannot contain more than {{value}} occurences in sequence",
+        "hasnt-capitalized": "Field must contain at least one capitalized letter",
+        "hasnt-number": "The field must contain at least one number",
+        "hasnt-special": "Password must contain a special character (@, $, !, &, etc)",
+        "match": "Passwords did not match",
+        "max-length": "The field length must be greater than {{value}} characters",
+        "min-length": "The field length must be lesser than {{value}} characters",
         "required": "Required field"
     },
     "input": {
         "category": "Category",
         "choose-due-date": "Choose a due date",
+        "confirm-password": "Confirm Password",
         "description": "Description",
         "email": "Email",
         "password": "Password",
@@ -33,6 +40,7 @@
         "password": "Password",
         "password-error": "Password doesn't match.",
         "remember-me": "Remember me",
+        "too-many-requests-error": "Too many attempts to login. Try again later.",
         "user-error": "Account not found."
     },
     "messages": {
