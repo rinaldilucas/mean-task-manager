@@ -29,7 +29,7 @@
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "noPropertyAccessFromIndexSignature": false,
-        "outDir": "./docs/out-tsc",
+        "outDir": "./app-dist/out-tsc",
         "paths": {
             "@app/*": [
                 "./app/*"

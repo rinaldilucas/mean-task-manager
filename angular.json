@@ -69,7 +69,7 @@
                         "index": "app/index.html",
                         "inlineStyleLanguage": "scss",
                         "main": "app/main.ts",
-                        "outputPath": "docs",
+                        "outputPath": "app-dist",
                         "polyfills": "app/polyfills.ts",
                         "scripts": [],
                         "styles": ["app/styles/main.scss"],

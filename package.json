@@ -27,6 +27,7 @@
         "createerror": "^1.3.0",
         "dotenv": "^16.0.0",
         "express": "^4.17.1",
+        "express-brute": "^1.0.1",
         "express-validator": "^6.14.2",
         "js-cookie": "^3.0.5",
         "jsonwebtoken": "^8.5.1",
@@ -117,7 +118,7 @@
     },
     "scripts": {
         "build": "yarn build:api && yarn build:client",
-        "build:api": "babel api --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
+        "build:api": "babel api --extensions \".ts\" --out-dir api-dist --copy-files --no-copy-ignored",
         "build:client": "ng build --configuration production --base-href=/mean-stack-template/",
         "debug:api": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register api/server.ts\" -e ts,json",
         "debug:clint": "ng build --configuration development --watch",

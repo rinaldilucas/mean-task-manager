@@ -34,8 +34,8 @@ class App {
         const args = process.argv;
 
         if (args.includes('--prod=true')) {
-            this.express.use(express.static(path.join(__dirname, 'docs')));
-            this.express.use('/', express.static(path.join(__dirname, 'docs')));
+            this.express.use(express.static(path.join(__dirname, 'app-dist')));
+            this.express.use('/', express.static(path.join(__dirname, 'app-dist')));
         }
     }
 
