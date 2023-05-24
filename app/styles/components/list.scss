@@ -215,13 +215,5 @@
         mat-paginator {
             height: vw(60);
         }
-
-        mat-icon {
-            font-size: vw(70) !important;
-
-            @include media(">=desktop") {
-                font-size: vw(100) !important;
-            }
-        }
     }
 }

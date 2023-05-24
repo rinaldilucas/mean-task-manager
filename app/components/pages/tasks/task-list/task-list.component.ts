@@ -38,7 +38,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     displayedColumns: string[] = this.columnOptions.lgColumns;
 
-    title = 'Tasks';
     search = new FormControl();
     searchedTasks: ITask[] = [];
     isLoading = true;

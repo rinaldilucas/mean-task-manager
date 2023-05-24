@@ -1,6 +1,7 @@
 .icon {
     opacity: 0.15;
-    font-size: vw(80);
+    font-size: vw(45) !important;
+    padding: vw(10);
 
     &--big {
         display: flex !important;
@@ -8,5 +9,10 @@
         justify-content: center;
         width: vw(85) !important;
         height: vw(85) !important;
+        font-size: vw(70) !important;
+
+        @include media(">=desktop") {
+            font-size: vw(100) !important;
+        }
     }
 }

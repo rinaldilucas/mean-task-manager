@@ -162,20 +162,18 @@ _More scripts at package.json_
     ```sh
     yarn install
     ```
-3. Create a database named `meantemplatedb`
-4. Create collections named users, tasks, categories (or import from `./db/collections`)
-5. If running for the first time, run the following command to answer angular cli questions
+3. If running for the first time, run the following command to answer angular cli questions
     ```js
     ng serve
     ```
-6. Run angular, express and mongoDB as development mode
+4. Run angular, express and mongoDB as development mode
     ```js
     yarn dev
     ```
-7. Deploy to github pages
-   `js
-yarn deploy
-`
+5. Deploy to github pages
+     ```js
+    yarn deploy
+    ```
    If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`. <br>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -187,14 +185,25 @@ yarn deploy
 You can import the Insomnia routes via file `./db/routes-collection.json` and import the mongodb collections via file `./db/colletions`. <br>Below are the implemented routes: you also can view them inside `./api/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
 
 ```js
------------------------------
+-------------------------------
+-------- [AUTH ROUTES] --------
+-------------------------------
+[POST] localhost:3000/api/auth/authenticate -> 'authenticate'
+[POST] localhost:3000/api/auth/register -> 'register'
+[GET] localhost:3000/api/auth/email-exists/:email -> 'checkIfEmailExists'
+[PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
+[POST] localhost:3000/api/auth/refresh -> 'refreshToken'
+[POST] localhost:3000/api/auth/logout -> 'logout'
+```
+
+```js
+-------------------------------
 -------- [TASK ROUTES] --------
 -------------------------------
-[GET] localhost:3000/api/tasks?pageSize&searchTerm&pageIndex&sortFilter&sortDirection -> 'findAll'
+[GET] localhost:3000/api/tasks?pageSize&searchTerm&pageIndex&sortFilter&sortDirection&startDate&finalDate -> 'findAll'
 [POST] localhost:3000/api/tasks -> 'create'
 [PUT] localhost:3000/api/tasks -> 'update'
 [DELETE] localhost:3000/api/tasks/:_id -> 'remove'
-[GET] localhost:3000/api/tasks/by-interval?startDate&endDate -> 'getTasksByInterval'
 [GET] localhost:3000/api/tasks/:_id -> 'findOne'
 ```
 
@@ -205,18 +214,6 @@ You can import the Insomnia routes via file `./db/routes-collection.json` and im
 [GET] localhost:3000/api/categories -> 'findAll'
 [POST] localhost:3000/api/categories -> 'create'
 [DELETE] localhost:3000/api/categories/:_id -> 'remove'
-```
-
-```js
--------------------------------
--------- [AUTH ROUTES] --------
--------------------------------
-[POST] localhost:3000/api/auth/authenticate -> 'authenticate'
-[POST] localhost:3000/api/auth/register -> 'register'
-[GET] localhost:3000/api/auth/email-exists/:email -> 'checkIfEmailExists'
-[PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
-[POST] localhost:3000/api/auth/refresh -> 'refreshToken'
-[POST] localhost:3000/api/auth/logout -> 'logout'
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

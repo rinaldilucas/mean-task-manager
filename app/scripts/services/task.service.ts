@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 
-import { Observable, catchError, lastValueFrom } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -21,23 +21,14 @@ export class TaskService extends CrudService<ITask> {
         super(http, injector, endpoint);
     }
 
-    override findAll ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; } = {}): Observable<IQueryResult<ITask[]>> {
+    override findAll ({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection, startDate, finalDate }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; startDate?: Date, finalDate?: Date } = {}): Observable<IQueryResult<ITask[]>> {
         let params = new HttpParams();
         if (sortFilter) { params = params.set('sortFilter', sortFilter).set('sortDirection', sortDirection as string); }
         if (pageSize) params = params.set('pageSize', pageSize);
         if (pageIndex) params = params.set('pageIndex', pageIndex);
         if (searchTerm) params = params.set('searchTerm', searchTerm as string);
+        if (startDate && finalDate) { params = params.set('startDate', startDate.toISOString()).set('finalDate', finalDate.toISOString()); }
 
         return this.http.get<IQueryResult<ITask[]>>(endpoint, { params }).pipe(catchError(this.sharedService.errorHandler));
-    }
-
-    getTasksByDateInterval ({ startDate, finalDate }: { startDate: Date; finalDate: Date; }): Promise<IQueryResult<ITask>> {
-        const url = `${endpoint}/by-interval`;
-
-        let params = new HttpParams();
-        params = params.set('startDate', startDate.toISOString());
-        params = params.set('finalDate', finalDate.toISOString());
-
-        return lastValueFrom(this.http.get<IQueryResult<ITask>>(url, { params }).pipe(catchError(this.sharedService.errorHandler)));
     }
 }

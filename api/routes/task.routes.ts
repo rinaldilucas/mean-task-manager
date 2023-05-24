@@ -27,9 +27,6 @@ routes.put('/api/tasks', authMiddleware, Controller.update);
 // DELETE
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
 
-// GET TASKS BY INTERVAL
-routes.get('/api/tasks/by-interval', authMiddleware, Controller.getTasksByInterval);
-
 // GET BY ID
 routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
 

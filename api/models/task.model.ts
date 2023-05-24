@@ -11,7 +11,7 @@ const SchemaModel = new Schema({
         default: 'toDo',
         required: true
     },
-    category: { type: String },
+    category: { type: SchemaTypes.String, ref: 'Category' },
     userId: { type: SchemaTypes.ObjectId, ref: 'User', required: true }
 },
 { timestamps: true }

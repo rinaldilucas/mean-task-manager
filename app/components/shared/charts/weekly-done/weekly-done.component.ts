@@ -1,16 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { TranslateService } from '@ngx-translate/core';
 import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { Label, MultiDataSet } from 'ng2-charts';
+import { BaseChartDirective, Label, MultiDataSet } from 'ng2-charts';
 import { take } from 'rxjs/operators';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
 import { ITask } from '@scripts/models/task.interface';
-import { SharedService } from '@services/shared.service';
-import { TaskService } from '@services/task.service';
 
 @Component({
     selector: 'app-weekly-done',
@@ -19,7 +16,10 @@ import { TaskService } from '@services/task.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
-    tasks!: ITask[];
+    @Input() tasks!: ITask[];
+
+    @ViewChild(BaseChartDirective) public baseChart!: BaseChartDirective;
+
     chartType: ChartType = 'line';
     chartLabels: Label[] = [];
     chartData: MultiDataSet = [];
@@ -31,35 +31,23 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
         title: { display: true },
         scales: {
             yAxes: [{
-                gridLines: {
-                    lineWidth: 0.5
-                },
+                gridLines: { lineWidth: 0.5 },
                 ticks: {
                     display: true,
                     maxTicksLimit: 3,
-
-                    minor: {
-                        fontSize: 14
-                    }
+                    minor: { fontSize: 14 }
                 }
             }],
             xAxes: [{
-                gridLines: {
-                    display: false
-                },
+                gridLines: { display: false },
                 ticks: {
-                    minor: {
-                        fontSize: 14
-                    }
+                    minor: { fontSize: 14 }
                 }
             }]
         }
     };
 
     constructor (
-        private taskService: TaskService, //
-        private sharedService: SharedService,
-        private changeDetector: ChangeDetectorRef,
         private translateService: TranslateService,
         private media: MediaObserver
     ) {
@@ -68,26 +56,17 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
 
     ngOnInit (): void {
         this.refresh();
-        this.taskService.taskEmitter.pipe(take(1)).subscribe(() => this.refresh());
     }
 
     async refresh (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done-weekly').pipe(take(1)).subscribe((text) => {
-            (this.chartOptions.title as any).text = text;
-            this.changeDetector.markForCheck();
-        });
+        this.translateService.get('statistics.tasks-done-weekly').pipe(take(1)).subscribe((text) => { (this.chartOptions.title as any).text = text; });
+        this.verifyResolutions();
 
         const numberOfWeeks = 4;
         const weekDays = 7;
         const startDate = new Date();
         const finalDate = new Date();
         startDate.setDate(finalDate.getDate() - (weekDays * (numberOfWeeks + 1)));
-
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.getTasksByDateInterval({ startDate, finalDate }));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
-        this.tasks = result.data;
-
-        this.verifyResolutions();
 
         for (let index = 0, j = numberOfWeeks; j > 0; index++, j--) {
             const initialDate = new Date();
@@ -105,8 +84,6 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
         }
         this.chartData.reverse();
         this.chartLabels.reverse();
-
-        this.changeDetector.markForCheck();
     }
 
     verifyResolutions (): void {
@@ -124,7 +101,9 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
                 this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.minor.fontSize = 14; });
                 this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.minor.fontSize = 14; });
             }
-            this.changeDetector.markForCheck();
+
+            this.baseChart.chart.options = this.chartOptions;
+            this.baseChart.chart.update();
         }));
     }
 }

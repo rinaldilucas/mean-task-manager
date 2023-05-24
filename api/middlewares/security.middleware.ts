@@ -14,7 +14,7 @@ const failCallback = (request: Request, response: Response): Response<any, Recor
 
 const store = new ExpressBrute.MemoryStore();
 export const bruteforce = new ExpressBrute(store, {
-    freeRetries: 5,
+    freeRetries: process.env.ENVIROMENT === 'PRODUCTION' ? 5 : 1000,
     minWait: 5 * 60 * 1000,
     maxWait: 60 * 60 * 1000,
     failCallback
