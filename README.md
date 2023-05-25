@@ -67,17 +67,22 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Built with yarn as package manager
 -   Multilingual features implemented in both the client-side and API responses
 -   Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
+-   Routed bottom sheet example implemented using only one component
 -   Virtual scrolling feature implemented on tables
--   Search and ordering features via the database to minimize requests
--   AJAX requests used for pagination
--   JWT implementation with refresh token on Redis and cookies using strict mode
--   Feature to blacklist access token which as logouted and refresh token already used
--   Authentication and role guard features added
--   Custom validators to enhances password stregth
+-   Charts using chart.js library
+-   Angular routing animations using dynamic params
+-   Search and ordering features via the database to minimize request size
+-   AJAX requests used for pagination and search
+-   JWT implementation with refresh token using Redis and cookies on strict mode
+-   Blacklist of access/refresh token
+-   Authentication and role guard
+-   Multiple examples of syncronous custom validators
+-   Custom async validator to check already registered user
+-   Register with strong password validator
+-   Password encryption using bcrypt with salt rounds
 -   Authentication with brute force prevention using ExpressBrute
 -   Example using resolver guard to retrieve data
 -   Interceptor modules added to verify bearer token, errors, and headers language
--   Password encryption using bcrypt with salt rounds
 -   Error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easier to plug-in frontend, backend or database individually
 -   Front-end validation on requests and inputs
 -   Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
@@ -88,23 +93,19 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Unsubscriber component with subsink to facilitate the manuvering of unsubcribres
 -   Shared CRUD service, allowing services to inherit its operations
 -   Custom pipes to convert date to selected language
--   Custom directive to prevent autofill
--   Custom async validator to check already registered user
--   Dark mode persistent trought browser local storage
--   An SCSS method used that utilizes REMs to maintain size scales
--   SCSS written using BEM methodology
--   Custom SCSS structure to improve reusability and maintain aspect ratio
--   Material components rewritten to support REM and improve mobile and table compatibility with minimum code
--   Improved readability on media queries through some custom functions
--   Interfaces added for queries results to improve code reusability
--   Custom ESLint rules implemented that work on both the client-side and API
--   Assure keyboard accessibility, ARIA and Accessible HTML Content via ESLint rules
--   Implementation of sass-lint that guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
+-   Custom directive to prevent form autofill
+-   Dark mode persistent trought browser cookies
+-   SCSS algorythm which uses rem unit to maintain aspect ratio
+-   Stylesheets written using BEM methodology
+-   Custom SCSS structure to improve reusability
+-   Material components are overwritten to support rem unit and improve mobile/table compatibility coding less
+-   Improved readability on media queries using include-media library
+-   Helper query interface to maneuver http responses
+-   Custom ESLint rules implemented which work both on the client-side and API
+-   Kkeyboard accessibility, ARIA and accessible HTML ESLint rules
+-   Implementation of sass-lint which guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 -   Prettier rules implemented to improve code readability
--   Routed bottom sheet example implemented using only one component
 -   Input validators with multilingual features added
--   Development of charts using chart.js
--   Angular routing animations using dynamic params
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -171,10 +172,10 @@ _More scripts at package.json_
     yarn dev
     ```
 5. Deploy to github pages
-     ```js
+    ```js
     yarn deploy
     ```
-   If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`. <br>
+    If needed, you can debug express using `yarn api-debug`. <br>More builds scripts at `./package.json`. <br>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
