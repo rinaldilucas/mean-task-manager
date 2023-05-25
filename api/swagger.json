@@ -294,7 +294,8 @@
                                     },
                                     "role": {
                                         "type": "string",
-                                        "enum": ["admin", "user"]
+                                        "enum": ["admin", "user"],
+                                        "example": "user"
                                     }
                                 }
                             }
