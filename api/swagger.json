@@ -46,10 +46,10 @@
                     "access": {
                         "type": "string"
                     },
-                    "expiresIn": {
+                    "refresh": {
                         "type": "string"
                     },
-                    "refresh": {
+                    "expiresIn": {
                         "type": "string"
                     },
                     "userId": {
@@ -64,6 +64,10 @@
                 "type": "object",
                 "required": ["email", "password", "role"],
                 "properties": {
+                    "role": {
+                        "type": "string",
+                        "enum": ["admin", "user"]
+                    },
                     "email": {
                         "type": "string",
                         "format": "email",
@@ -76,10 +80,7 @@
                         "minLength": 8,
                         "maxLength": 150
                     },
-                    "role": {
-                        "type": "string",
-                        "enum": ["admin", "user"]
-                    },
+
                     "createdAt": {
                         "type": "string",
                         "format": "date",
@@ -96,6 +97,10 @@
                 "type": "object",
                 "required": ["title", "status", "userId"],
                 "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": ["toDo", "inProgress", "done"]
+                    },
                     "title": {
                         "type": "string",
                         "minLength": 2,
@@ -109,10 +114,6 @@
                         "type": "string",
                         "format": "date",
                         "example": "2023-05-22"
-                    },
-                    "status": {
-                        "type": "string",
-                        "enum": ["toDo", "inProgress", "done"]
                     },
                     "category": {
                         "type": "string"
@@ -136,7 +137,7 @@
                 "type": "object",
                 "required": ["name", "userId"],
                 "properties": {
-                    "name": {
+                    "title": {
                         "type": "string",
                         "minLength": 2
                     },
@@ -211,7 +212,8 @@
                                     "password": {
                                         "type": "string",
                                         "minLength": 8,
-                                        "maxLength": 150
+                                        "maxLength": 150,
+                                        "example": "Userpassword#0"
                                     },
                                     "keepUserLoggedIn": {
                                         "type": "boolean"
@@ -229,23 +231,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/AuthData"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -308,23 +309,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/User"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -379,6 +379,13 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
@@ -390,17 +397,9 @@
                                                 }
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -448,23 +447,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/User"
-                                            }
-                                        },
                                         "success": {
                                             "type": "boolean"
                                         },
-                                        "message": {
-                                            "type": "string"
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AuthData"
+                                            }
                                         },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -492,11 +490,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         },
         "/auth/refresh": {
@@ -513,23 +507,27 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "data": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/AuthData"
-                                        }
-                                    },
-                                    "success": {
-                                        "type": "boolean"
-                                    },
-                                    "message": {
+                                    "userId": {
                                         "type": "string"
                                     },
-                                    "totalCount": {
-                                        "type": "integer"
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "minLength": 5,
+                                        "maxLength": 150,
+                                        "example": "user@gmail.com"
                                     },
-                                    "status": {
-                                        "type": "integer"
+                                    "role": {
+                                        "type": "string",
+                                        "enum": ["admin", "user"]
+                                    },
+                                    "expirationDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-05-22"
+                                    },
+                                    "refresh": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -542,7 +540,38 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "required": ["access", "expiresIn", "refresh", "userId"],
+                                            "properties": {
+                                                "access": {
+                                                    "type": "string"
+                                                },
+                                                "refresh": {
+                                                    "type": "string"
+                                                },
+                                                "expiresIn": {
+                                                    "type": "string"
+                                                },
+                                                "userId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "totalCount": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -558,11 +587,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         },
         "/auth/logout": {
@@ -595,20 +620,8 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "object"
-                                        },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
+                                        "token": {
                                             "type": "string"
-                                        },
-                                        "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
                                         }
                                     }
                                 }
@@ -616,11 +629,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         },
         "/tasks": {
@@ -706,23 +715,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Task"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -740,11 +748,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             },
             "post": {
                 "tags": ["Task"],
@@ -770,23 +774,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Task"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -804,11 +807,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             },
             "put": {
                 "tags": ["Task"],
@@ -834,23 +833,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Task"
-                                            }
-                                        },
                                         "success": {
                                             "type": "boolean"
                                         },
-                                        "message": {
-                                            "type": "string"
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AuthData"
+                                            }
                                         },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -878,47 +876,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": ["Task"],
-                "summary": "Removes a task",
-                "description": "Removes a single task based on the ID supplied",
-                "operationId": "removeTask",
-                "responses": {
-                    "204": {
-                        "description": "Successful response"
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Error removing task",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         },
         "/tasks/{id}": {
@@ -946,23 +904,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Task"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -990,11 +947,50 @@
                         }
                     }
                 },
-                "security": [
+                "security": [{ "auth": [] }]
+            },
+            "delete": {
+                "tags": ["Task"],
+                "summary": "Removes a task",
+                "description": "Removes a single task based on the ID supplied",
+                "operationId": "removeTask",
+                "parameters": [
                     {
-                        "auth": []
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of task to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful response"
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error removing task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [{ "auth": [] }]
             }
         },
         "/categories": {
@@ -1011,23 +1007,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Category"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -1045,11 +1040,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             },
             "post": {
                 "tags": ["Category"],
@@ -1075,23 +1066,22 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
                                         "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/Category"
                                             }
                                         },
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
                                         "totalCount": {
-                                            "type": "integer"
-                                        },
-                                        "status": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "example": 1
                                         }
                                     }
                                 }
@@ -1109,11 +1099,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         },
         "/categories/{id}": {
@@ -1158,11 +1144,7 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
+                "security": [{ "auth": [] }]
             }
         }
     }
