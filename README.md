@@ -102,7 +102,7 @@ I built this project to make a cool template for those who wants to learn the ME
 -   Improved readability on media queries using include-media library
 -   Helper query interface to maneuver http responses
 -   Custom ESLint rules implemented which work both on the client-side and API
--   Kkeyboard accessibility, ARIA and accessible HTML ESLint rules
+-   Keyboard accessibility, ARIA and accessible HTML ESLint rules
 -   Implementation of sass-lint which guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 -   Prettier rules implemented to improve code readability
 -   Input validators with multilingual features added
