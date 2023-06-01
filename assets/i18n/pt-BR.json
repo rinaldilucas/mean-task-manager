@@ -80,13 +80,14 @@
         "portuguese": "Português"
     },
     "statistics": {
+        "no-data": "Sem dados para exibir gráficos.",
         "status": {
             "done": "Feito",
             "progress": "Em progresso",
             "to-do": "A fazer"
         },
         "tasks-done": "Tarefas",
-        "tasks-done-weekly": "Tarefas / Semana"
+        "tasks-done-weekly": "Tarefas por Semana"
     },
     "table": {
         "actions": {
@@ -123,6 +124,7 @@
         "empty-search": "Sem tarefas encontradas em sua pesquisa.",
         "refresh": "Atualizar",
         "refresh-error": "Erro ao buscar tarefas.",
+        "remove": "Tarefa removida.",
         "remove-error": "Erro ao remover tarefa.",
         "remove-success": "Tarefa removida com sucesso.",
         "search": "Buscar",
@@ -139,6 +141,7 @@
         "profile": "Configurações do Perfil",
         "register": "Registrar",
         "settings": "Configurações",
+        "statistics": "Estatísticas",
         "tasks": "Tarefas"
     }
 }

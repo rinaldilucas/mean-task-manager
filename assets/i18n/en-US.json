@@ -80,13 +80,14 @@
         "portuguese": "Portuguese"
     },
     "statistics": {
+        "no-data": "No data to display charts.",
         "status": {
             "done": "Done",
             "progress": "In progress",
             "to-do": "To do"
         },
         "tasks-done": "Tasks",
-        "tasks-done-weekly": "Tasks / Week"
+        "tasks-done-weekly": "Tasks per Week"
     },
     "table": {
         "actions": {
@@ -125,6 +126,7 @@
         "refresh-error": "Error retrieving tasks.",
         "remove": "Task removed.",
         "remove-error": "Error removing task.",
+        "remove-success": "Task removed successfully.",
         "search": "Search",
         "status-change": "Task status changed.",
         "status-change-error": "Error changing task status.",
@@ -139,6 +141,7 @@
         "profile": "Profile Settings",
         "register": "Register",
         "settings": "Settings",
+        "statistics": "Statistics",
         "tasks": "Tasks"
     }
 }
