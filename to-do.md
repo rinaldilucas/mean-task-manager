@@ -1,0 +1,5 @@
+- update to angular 15
+- update to new angular material
+- update to standalone components
+- update backend to nestJS
+- apply functional resolvers
