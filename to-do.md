@@ -4,3 +4,4 @@
 - update backend to nestJS
 - apply functional resolvers
 - overwrite angular material with their api
+- change translation style to instant instead of get
