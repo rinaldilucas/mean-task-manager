@@ -28,7 +28,7 @@
                                 <input
                                     placeholder="{{ 'settings.category-label' | translate }}"
                                     #categoryInput
-                                    [formControl]="categoryCtrl"
+                                    [formControl]="categoryControl"
                                     [matChipInputFor]="chipList"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                     (matChipInputTokenEnd)="saveCategoryAsync($event)"

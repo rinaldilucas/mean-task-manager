@@ -183,7 +183,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: { title: 'task-list.confirmation-title', message: 'task-list.confirmation-message', action: 'task-list.confirmation-delete' }
         });
-        dialogRef.afterClosed().pipe(take(1)).subscribe((result: boolean) => {
+        dialogRef.afterClosed().subscribe((result: boolean) => {
             if (result) { this.removeAsync(task); }
         });
     }

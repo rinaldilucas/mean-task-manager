@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, map, startWith, take } from 'rxjs';
 
+import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { ICategory } from '@scripts/models/category.interface';
 import { EStatus } from '@scripts/models/enum/status.enum';
@@ -28,7 +29,7 @@ export class TaskFormEntryComponent implements OnInit {
         private route: ActivatedRoute,
         private titleService: Title,
         private translateService: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit (): void {
         this.open();
@@ -40,7 +41,7 @@ export class TaskFormEntryComponent implements OnInit {
 
         const config: MatBottomSheetConfig = { data: { task, categories }, disableClose: true };
         const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
-        sheetRef.afterDismissed().pipe(take(1)).subscribe(() => {
+        sheetRef.afterDismissed().subscribe(() => {
             this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
             this.router.navigate(['tasks']);
         });
@@ -52,7 +53,7 @@ export class TaskFormEntryComponent implements OnInit {
     styleUrls: ['./task-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
+export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit, AfterViewInit {
     @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
     title!: string;
@@ -73,7 +74,9 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         private translateService: TranslateService,
         private dialog: MatDialog,
         @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] }
-    ) {}
+    ) {
+        super();
+    }
 
     async ngOnInit (): Promise<void> {
         this.isNew = !this.bottomsheetData.task?._id;
@@ -106,17 +109,6 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
         this.setAutoCompletes();
     }
 
-    ngAfterViewInit (): void {
-        this.categoryTrigger.panelClosingActions.pipe(take(1)).subscribe(() => {
-            if (this.categoryTrigger.activeOption) { this.form.controls['category'].setValue(this.categoryTrigger.activeOption.value); }
-        });
-    }
-
-    private _filterCategories (value: string): ICategory[] {
-        const filterValue = value?.toString().toLowerCase();
-        return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue));
-    }
-
     async saveAsync (): Promise<void> {
         if (!this.sharedService.isValidForm(this.form)) return;
 
@@ -137,8 +129,8 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
             const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
                 data: { title: 'task-form.confirmation-title', message: 'task-form.confirmation-message', action: 'task-form.confirmation-discard' }
             });
-            dialogRef.afterClosed().pipe(take(1)).subscribe((result: boolean) => {
-                if (result) { this.dismissModalAndNavigate('tasks'); }
+            dialogRef.afterClosed().subscribe((result: boolean) => {
+                if (result) this.dismissModalAndNavigate('tasks');
             });
         } else {
             this.dismissModalAndNavigate('tasks');
@@ -146,10 +138,21 @@ export class TaskFormBottomSheetComponent implements OnInit, AfterViewInit {
     }
 
     setAutoCompletes (): void {
-        this.categoriesFilteredOptions = this.form.controls['category'].valueChanges.pipe(
-            startWith(''),
-            map((value) => this._filterCategories(value))
-        );
+        this.categoriesFilteredOptions = this.form.controls['category']
+            .valueChanges
+            .pipe(
+                startWith(''),
+                map((value) => {
+                    const filterValue = value?.toString().toLowerCase();
+                    return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue));
+                })
+            );
+    }
+
+    ngAfterViewInit (): void {
+        this.addSubscription(this.categoryTrigger.panelClosingActions.subscribe(() => {
+            if (this.categoryTrigger.activeOption) { this.form.controls['category'].setValue(this.categoryTrigger.activeOption.value); }
+        }));
     }
 
     dismissModalAndNavigate (path: string): void {

@@ -2,12 +2,10 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, lastValueFrom, take } from 'rxjs';
+import { lastValueFrom, take } from 'rxjs';
 
 import { ICategory } from '@scripts/models/category.interface';
 import { IQueryResult } from '@scripts/models/queryResult.interface';
@@ -22,15 +20,12 @@ import { SharedService } from '@services/shared.service';
 })
 export class SettingsComponent implements OnInit {
     @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
-    @ViewChild(MatSort) sort!: MatSort;
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     isLoading = true;
     isSearching = false;
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    categoryCtrl = new FormControl();
-    filteredCategories!: Observable<string[]>;
+    categoryControl = new FormControl();
     categories: ICategory[] = [];
 
     constructor (
@@ -57,20 +52,20 @@ export class SettingsComponent implements OnInit {
 
     async saveCategoryAsync (event: MatChipInputEvent): Promise<void> {
         const value = (event.value || '').trim();
-        const category = { title: value } as ICategory;
-
         if (!value) return;
+
+        const category = { title: value } as ICategory;
 
         const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
         if (!!error || !result || !result?.success) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
-            this.categoryCtrl.setValue(null);
+            this.categoryControl.setValue(null);
             this.categoryInput.nativeElement.value = '';
             return;
         }
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-success' });
-        this.categoryCtrl.setValue(null);
+        this.categoryControl.setValue(null);
         this.categoryInput.nativeElement.value = '';
         this.categories.push(result.data[0]);
     }
@@ -79,12 +74,12 @@ export class SettingsComponent implements OnInit {
         const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
         if (error) {
             this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
-            this.categoryCtrl.setValue(null);
+            this.categoryControl.setValue(null);
             this.categoryInput.nativeElement.value = '';
         }
 
         this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-success' });
-        this.categoryCtrl.setValue(null);
+        this.categoryControl.setValue(null);
         this.categoryInput.nativeElement.value = '';
         const index = this.categories.indexOf(category);
         this.categories.splice(index, 1);
