@@ -11,74 +11,74 @@ import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@services/auth.service';
 
 @Component({
-    selector: 'app-header',
-    animations: [routerTransition],
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-header',
+  animations: [routerTransition],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends Unsubscriber implements OnInit {
-    time = new Date();
-    opened!: boolean;
-    toggleTheme = new FormControl(false);
-    isLogged = false;
-    isDesktop = false;
-    isSidebarIsOpened = false;
-    sidebarSize = '1.81rem';
+  time = new Date();
+  opened!: boolean;
+  toggleTheme = new FormControl(false);
+  isLogged = false;
+  isDesktop = false;
+  isSidebarIsOpened = false;
+  sidebarSize = '1.81rem';
 
-    isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
-        map((result) => result.matches),
-        shareReplay(),
-        tap((result: boolean) => {
-            this.isDesktop = result;
-        })
-    );
+  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
+    map((result) => result.matches),
+    shareReplay(),
+    tap((result: boolean) => {
+      this.isDesktop = result;
+    }),
+  );
 
-    constructor (
-        private authService: AuthService,
-        private breakpointObserver: BreakpointObserver,
-        private changeDetector: ChangeDetectorRef
-    ) {
-        super();
+  constructor(
+    private authService: AuthService,
+    private breakpointObserver: BreakpointObserver,
+    private changeDetector: ChangeDetectorRef,
+  ) {
+    super();
+  }
+
+  ngOnInit(): void {
+    setInterval(() => (this.time = new Date()), 1000);
+    this.isLogged = this.authService.getIsAuthenticated();
+    this.isSidebarIsOpened = this.isLogged;
+
+    this.addSubscription(this.authService.menuEmitter.subscribe((result: boolean) => {
+      this.isLogged = result;
+      this.changeDetector.markForCheck();
+    }));
+    this.addSubscription(this.authService.sidebarEmitter.subscribe(() => {
+      this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
+      this.changeDetector.markForCheck();
+    }));
+
+    const darkClassName = 'dark-mode';
+    const previousTheme = localStorage.getItem('theme') as string;
+    if (previousTheme) {
+      document.body.classList.add(darkClassName);
+      this.toggleTheme = new FormControl(true);
     }
 
-    ngOnInit (): void {
-        setInterval(() => (this.time = new Date()), 1000);
-        this.isLogged = this.authService.getIsAuthenticated();
-        this.isSidebarIsOpened = this.isLogged;
+    this.addSubscription(this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
+      if (enableDarkMode) {
+        document.body.classList.add(darkClassName);
+        localStorage.setItem('theme', darkClassName);
+      } else {
+        document.body.classList.remove(darkClassName);
+        localStorage.removeItem('theme');
+      }
+    }));
+  }
 
-        this.addSubscription(this.authService.menuEmitter.subscribe((result: boolean) => {
-            this.isLogged = result;
-            this.changeDetector.markForCheck();
-        }));
-        this.addSubscription(this.authService.sidebarEmitter.subscribe(() => {
-            this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
-            this.changeDetector.markForCheck();
-        }));
+  logout(): void {
+    this.authService.logoutAsync();
+  }
 
-        const darkClassName = 'dark-mode';
-        const previousTheme = localStorage.getItem('theme') as string;
-        if (previousTheme) {
-            document.body.classList.add(darkClassName);
-            this.toggleTheme = new FormControl(true);
-        }
-
-        this.addSubscription(this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
-            if (enableDarkMode) {
-                document.body.classList.add(darkClassName);
-                localStorage.setItem('theme', darkClassName);
-            } else {
-                document.body.classList.remove(darkClassName);
-                localStorage.removeItem('theme');
-            }
-        }));
-    }
-
-    logout (): void {
-        this.authService.logoutAsync();
-    }
-
-    getState (outlet: RouterOutlet): string {
-        return outlet.activatedRouteData.state;
-    }
+  getState(outlet: RouterOutlet): string {
+    return outlet.activatedRouteData.state;
+  }
 }

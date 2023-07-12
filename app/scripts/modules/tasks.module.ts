@@ -13,8 +13,8 @@ import { TaskRoutingModule } from '@scripts/modules/tasks-routing.module';
 import { ConvertDatePipe } from '@scripts/pipes/convertDate.pipe';
 
 @NgModule({
-    declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],
-    imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule],
-    exports: []
+  declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],
+  imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule],
+  exports: [],
 })
 export class TaskModule {}

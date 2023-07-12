@@ -6,10 +6,10 @@ import { LanguageInterceptor } from '@app/scripts/interceptors/language.intercep
 import { TokenInterceptor } from '@app/scripts/interceptors/token.interceptor';
 
 @NgModule({
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true }
-    ]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
+  ],
 })
 export class InterceptorModule {}

@@ -39,52 +39,50 @@ import { StatisticsComponent } from '@components/pages/statistics/statistics.com
 import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { AutocompleteOffDirective } from '@scripts/directives/autocompleteOff.directive';
 
-// MODALS
-
-export function createTranslateLoader (http: HttpClient): TranslateHttpLoader {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-    declarations: [
-        AppComponent, //
-        HomepageComponent,
-        LogInComponent,
-        RegisterComponent,
-        ProfileComponent,
-        SettingsComponent,
-        HeaderComponent,
-        TasksDoneComponent,
-        WeeklyDoneComponent,
-        StatisticsComponent,
-        ConfirmationDialogComponent,
-        AutocompleteOffDirective
-    ],
-    imports: [
-        AppRoutingModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        RouterModule,
-        FormsModule,
-        ReactiveFormsModule,
-        FlexLayoutModule,
-        AngularMaterialModule,
-        ScrollingModule,
-        ChartsModule,
-        TableVirtualScrollModule,
-        InterceptorModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: createTranslateLoader,
-                deps: [HttpClient]
-            }
-        })
-    ],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [
+    AppComponent,
+    HomepageComponent,
+    LogInComponent,
+    RegisterComponent,
+    ProfileComponent,
+    SettingsComponent,
+    HeaderComponent,
+    TasksDoneComponent,
+    WeeklyDoneComponent,
+    StatisticsComponent,
+    ConfirmationDialogComponent,
+    AutocompleteOffDirective,
+  ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    AngularMaterialModule,
+    ScrollingModule,
+    ChartsModule,
+    TableVirtualScrollModule,
+    InterceptorModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+  ],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

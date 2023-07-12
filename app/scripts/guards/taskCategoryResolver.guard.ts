@@ -9,10 +9,10 @@ import { CategoryService } from '@services/category.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskCategoryResolverGuard {
-    constructor (private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) { }
 
-    resolve (): Observable<ICategory[][]> {
-        return this.categoryService.findAll()
-            .pipe(map((result: IQueryResult<ICategory[]>) => result.data));
-    }
+  resolve(): Observable<ICategory[][]> {
+    return this.categoryService.findAll()
+      .pipe(map((result: IQueryResult<ICategory[]>) => result.data));
+  }
 }

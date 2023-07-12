@@ -15,105 +15,105 @@ import { ITask } from '@scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
-    titleEmitter: EventEmitter<string> = new EventEmitter<string>();
-    tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
-    pageSizeListener: EventEmitter<{pageSize: number, pageSizeOptions: number[]}> = new EventEmitter<{pageSize: number, pageSizeOptions: number[]}>();
-    static subscriptions: Subscription[] = [];
+  titleEmitter: EventEmitter<string> = new EventEmitter<string>();
+  tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
+  pageSizeListener: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
+  static subscriptions: Subscription[] = [];
 
-    constructor (
-        private translateService: TranslateService, //
-        private snackBar: MatSnackBar,
-        private media: MediaObserver
-    ) {}
+  constructor(
+    private translateService: TranslateService, //
+    private snackBar: MatSnackBar,
+    private media: MediaObserver,
+  ) {}
 
-    setDataSource (list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
-        const dataSource = new TableVirtualScrollDataSource(list);
-        if (sort) dataSource.sort = sort;
-        if (paginator) dataSource.paginator = paginator;
+  setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
+    const dataSource = new TableVirtualScrollDataSource(list);
+    if (sort) dataSource.sort = sort;
+    if (paginator) dataSource.paginator = paginator;
 
-        return dataSource;
+    return dataSource;
+  }
+
+  errorHandler(result: HttpErrorResponse): Observable<never> {
+    const errorResponse = {
+      success: result.error.success,
+      status: result.status,
+      message: '',
+    };
+
+    if (result?.error?.message) {
+      errorResponse.message = result.error.message;
+      console.log(`[${result.status}] - Message: ${result.error.message}`);
+    } else if (result?.error?.validationErrors?.length > 0) {
+      console.log(`[${result.status}] - Message: Validation Error.`);
+      console.table(result.error.validationErrors);
+    } else if (result?.error) {
+      console.log(`[${result.status}] - Message: ${result.error}`);
+    } else {
+      console.log(`[${result.status}] - Message: ${result.message}`);
     }
 
-    errorHandler (result: HttpErrorResponse): Observable<never> {
-        const errorResponse = {
-            success: result.error.success,
-            status: result.status,
-            message: ''
-        };
+    return throwError(() => errorResponse);
+  }
 
-        if (result?.error?.message) {
-            errorResponse.message = result.error.message;
-            console.log(`[${result.status}] - Message: ${result.error.message}`);
-        } else if (result?.error?.validationErrors?.length > 0) {
-            console.log(`[${result.status}] - Message: Validation Error.`);
-            console.table(result.error.validationErrors);
-        } else if (result?.error) {
-            console.log(`[${result.status}] - Message: ${result.error}`);
-        } else {
-            console.log(`[${result.status}] - Message: ${result.message}`);
-        }
-
-        return throwError(() => errorResponse);
+  isValidForm(form: FormGroup<string>): boolean {
+    if (!form.valid) {
+      this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+      this.highlightRequiredInput(form);
+      return false;
     }
+    return true;
+  }
 
-    isValidForm (form: FormGroup<string>): boolean {
-        if (!form.valid) {
-            this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-            this.highlightRequiredInput(form);
-            return false;
-        }
-        return true;
+  highlightRequiredInput(form: FormGroup<string>): void {
+    form.markAllAsTouched();
+    for (const input of Object.keys(form.controls)) {
+      if (!form.get(input)?.valid) {
+        const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
+        (invalidControl as HTMLInputElement).focus();
+        break;
+      }
     }
+  }
 
-    highlightRequiredInput (form: FormGroup<string>): void {
-        form.markAllAsTouched();
-        for (const input of Object.keys(form.controls)) {
-            if (!form.get(input)?.valid) {
-                const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
-                (invalidControl as HTMLInputElement).focus();
-                break;
-            }
-        }
+  setTableColumnsAndPagesize(columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
+    SharedService.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
+      pageSize = 20;
+      pageSizeOptions = [20];
+
+      if (change[0].mqAlias === 'xs') {
+        columnOptions = columns.xsColumns;
+      } else if (change[0].mqAlias === 'sm') {
+        columnOptions = columns.smColumns;
+      } else if (change[0].mqAlias === 'md') {
+        columnOptions = columns.mdColumns;
+        pageSize = 5;
+        pageSizeOptions = [5, 15, 30];
+      } else {
+        columnOptions = columns.lgColumns;
+        pageSize = 5;
+        pageSizeOptions = [5, 15, 30];
+      }
+
+      this.tableColumnListener.emit(columnOptions);
+      this.pageSizeListener.emit({ pageSize, pageSizeOptions });
+    }));
+  }
+
+  handleSnackbarMessages({ translationKey, success = true }): void {
+    this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
+  }
+
+  async handlePromises(promise: Promise<any>): Promise<Promise<any>> {
+    try {
+      const data = await promise;
+      return [data, null];
+    } catch (error) {
+      return [null, error];
     }
+  }
 
-    setTableColumnsAndPagesize (columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
-        SharedService.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
-            pageSize = 20;
-            pageSizeOptions = [20];
-
-            if (change[0].mqAlias === 'xs') {
-                columnOptions = columns.xsColumns;
-            } else if (change[0].mqAlias === 'sm') {
-                columnOptions = columns.smColumns;
-            } else if (change[0].mqAlias === 'md') {
-                columnOptions = columns.mdColumns;
-                pageSize = 5;
-                pageSizeOptions = [5, 15, 30];
-            } else {
-                columnOptions = columns.lgColumns;
-                pageSize = 5;
-                pageSizeOptions = [5, 15, 30];
-            }
-
-            this.tableColumnListener.emit(columnOptions);
-            this.pageSizeListener.emit({ pageSize, pageSizeOptions });
-        }));
-    }
-
-    handleSnackbarMessages ({ translationKey, success = true }): void {
-        this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
-    }
-
-    async handlePromises (promise: Promise<any>): Promise<Promise<any>> {
-        try {
-            const data = await promise;
-            return [data, null];
-        } catch (error) {
-            return [null, error];
-        }
-    }
-
-    static disposeSubscriptions (): void {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    }
+  static disposeSubscriptions(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
 }

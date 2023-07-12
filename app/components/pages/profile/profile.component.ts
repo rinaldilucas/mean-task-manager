@@ -12,52 +12,52 @@ import { AuthService } from '@services/auth.service';
 import { SharedService } from '@services/shared.service';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
-    form: FormGroup;
-    isSaving = false;
-    isLoading = true;
-    user!: IUser;
+  form: FormGroup;
+  isSaving = false;
+  isLoading = true;
+  user!: IUser;
 
-    constructor (
-        private authService: AuthService,
-        private titleService: Title,
-        private formBuilder: FormBuilder,
-        private translateService: TranslateService,
-        private router: Router,
-        private sharedService: SharedService
-    ) {
-        this.form = this.formBuilder.group({
-            password: [null,
-                [Validators.required,
-                    Validators.minLength(8),
-                    Validators.maxLength(150)
-                ]]
-        });
-    }
+  constructor(
+    private authService: AuthService,
+    private titleService: Title,
+    private formBuilder: FormBuilder,
+    private translateService: TranslateService,
+    private router: Router,
+    private sharedService: SharedService,
+  ) {
+    this.form = this.formBuilder.group({
+      password: [null,
+        [Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(150),
+        ]],
+    });
+  }
 
-    ngOnInit (): void {
-        this.updateTitle();
-    }
+  ngOnInit(): void {
+    this.updateTitle();
+  }
 
-    async saveAsync (): Promise<void> {
-        if (!this.sharedService.isValidForm(this.form)) return;
+  async saveAsync(): Promise<void> {
+    if (!this.sharedService.isValidForm(this.form)) return;
 
-        const password = this.form.controls['password'].value;
-        const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.changePassword(this.authService.getUserId(), password));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-error', success: false });
+    const password = this.form.controls.password.value;
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.changePassword(this.authService.getUserId(), password));
+    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-error', success: false });
 
-        this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-success' });
-        this.form.reset();
-        this.router.navigate(['tasks']);
-    }
+    this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-success' });
+    this.form.reset();
+    this.router.navigate(['tasks']);
+  }
 
-    updateTitle (): void {
-        this.translateService.get('title.profile').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
-    }
+  updateTitle(): void {
+    this.translateService.get('title.profile').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
+  }
 }

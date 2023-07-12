@@ -9,19 +9,19 @@ import { AuthService } from '@services/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor (private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-    intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const loginRoute = 'authenticate';
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const loginRoute = 'authenticate';
 
-        return next.handle(request).pipe(
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === StatusCode.ClientErrorUnauthorized) {
-                    if (request.url.search(loginRoute) === -1) { this.authService.logoutAsync(); }
-                }
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === StatusCode.ClientErrorUnauthorized) {
+          if (request.url.search(loginRoute) === -1) { this.authService.logoutAsync(); }
+        }
 
-                return throwError(error);
-            })
-        );
-    }
+        return throwError(error);
+      }),
+    );
+  }
 }

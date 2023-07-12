@@ -6,20 +6,20 @@ import { SharedService } from '@services/shared.service';
 
 @Injectable({ providedIn: 'root' })
 export class RoleGuard {
-    constructor (
-        private authService: AuthService, //
-        private router: Router,
-        private sharedService: SharedService
-    ) {}
+  constructor(
+    private authService: AuthService, //
+    private router: Router,
+    private sharedService: SharedService,
+  ) {}
 
-    canActivate (route: ActivatedRouteSnapshot): boolean {
-        const currentUser = this.authService.getLoggedUser();
-        const expectedRole = route.data['expectedRole'];
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const currentUser = this.authService.getLoggedUser();
+    const expectedRole = route.data.expectedRole;
 
-        if (currentUser.role === expectedRole) return true;
+    if (currentUser.role === expectedRole) return true;
 
-        this.sharedService.handleSnackbarMessages({ translationKey: 'messages.user-without-permission', success: false });
-        this.router.navigate(['tasks']);
-        return false;
-    }
+    this.sharedService.handleSnackbarMessages({ translationKey: 'messages.user-without-permission', success: false });
+    this.router.navigate(['tasks']);
+    return false;
+  }
 }

@@ -5,10 +5,10 @@ import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable()
 export class LanguageInterceptor implements HttpInterceptor {
-    intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const language = localStorage.getItem('language') ?? 'en-US';
-        request = request.clone({ headers: request.headers.set('Language', language) });
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const language = localStorage.getItem('language') ?? 'en-US';
+    request = request.clone({ headers: request.headers.set('Language', language) });
 
-        return next.handle(request);
-    }
+    return next.handle(request);
+  }
 }

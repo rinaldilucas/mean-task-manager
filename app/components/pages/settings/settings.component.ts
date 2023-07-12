@@ -13,89 +13,89 @@ import { CategoryService } from '@services/category.service';
 import { SharedService } from '@services/shared.service';
 
 @Component({
-    selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit {
-    @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
 
-    isLoading = true;
-    isSearching = false;
+  isLoading = true;
+  isSearching = false;
 
-    separatorKeysCodes: number[] = [ENTER, COMMA];
-    categoryControl = new FormControl();
-    categories: ICategory[] = [];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  categoryControl = new FormControl();
+  categories: ICategory[] = [];
 
-    constructor (
-        private changeDetector: ChangeDetectorRef, //
-        private categoryService: CategoryService,
-        private translateService: TranslateService,
-        private titleService: Title,
-        private sharedService: SharedService
-    ) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef, //
+    private categoryService: CategoryService,
+    private translateService: TranslateService,
+    private titleService: Title,
+    private sharedService: SharedService,
+  ) {}
 
-    ngOnInit (): void {
-        this.updateTitle();
-        this.refreshAsync();
+  ngOnInit(): void {
+    this.updateTitle();
+    this.refreshAsync();
+  }
+
+  async refreshAsync(): Promise<void> {
+    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAll()));
+    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
+
+    this.categories = result.data;
+    this.isLoading = false;
+    this.changeDetector.markForCheck();
+  }
+
+  async saveCategoryAsync(event: MatChipInputEvent): Promise<void> {
+    const value = (event.value || '').trim();
+    if (!value) return;
+
+    const category = { title: value } as ICategory;
+
+    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
+    if (!!error || !result || !result?.success) {
+      this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
+      this.categoryControl.setValue(null);
+      this.categoryInput.nativeElement.value = '';
+      return;
     }
 
-    async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAll()));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
+    this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-success' });
+    this.categoryControl.setValue(null);
+    this.categoryInput.nativeElement.value = '';
+    this.categories.push(result.data[0]);
+  }
 
-        this.categories = result.data;
-        this.isLoading = false;
-        this.changeDetector.markForCheck();
+  async removeCategoryAsync(category: ICategory): Promise<void> {
+    const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
+    if (error) {
+      this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
+      this.categoryControl.setValue(null);
+      this.categoryInput.nativeElement.value = '';
     }
 
-    async saveCategoryAsync (event: MatChipInputEvent): Promise<void> {
-        const value = (event.value || '').trim();
-        if (!value) return;
+    this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-success' });
+    this.categoryControl.setValue(null);
+    this.categoryInput.nativeElement.value = '';
+    const index = this.categories.indexOf(category);
+    this.categories.splice(index, 1);
+    this.changeDetector.markForCheck();
+  }
 
-        const category = { title: value } as ICategory;
+  updateTitle(): void {
+    this.translateService.get('title.settings').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
+  }
 
-        const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
-        if (!!error || !result || !result?.success) {
-            this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
-            this.categoryControl.setValue(null);
-            this.categoryInput.nativeElement.value = '';
-            return;
-        }
-
-        this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-success' });
-        this.categoryControl.setValue(null);
-        this.categoryInput.nativeElement.value = '';
-        this.categories.push(result.data[0]);
-    }
-
-    async removeCategoryAsync (category: ICategory): Promise<void> {
-        const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
-        if (error) {
-            this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
-            this.categoryControl.setValue(null);
-            this.categoryInput.nativeElement.value = '';
-        }
-
-        this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-success' });
-        this.categoryControl.setValue(null);
-        this.categoryInput.nativeElement.value = '';
-        const index = this.categories.indexOf(category);
-        this.categories.splice(index, 1);
-        this.changeDetector.markForCheck();
-    }
-
-    updateTitle (): void {
-        this.translateService.get('title.settings').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
-    }
-
-    changeLanguage (language: string): void {
-        this.translateService.use(language);
-        localStorage.setItem('language', language);
-        this.sharedService.handleSnackbarMessages({ translationKey: 'messages.language-changed' });
-        this.changeDetector.markForCheck();
-        this.sharedService.titleEmitter.emit();
-    }
+  changeLanguage(language: string): void {
+    this.translateService.use(language);
+    localStorage.setItem('language', language);
+    this.sharedService.handleSnackbarMessages({ translationKey: 'messages.language-changed' });
+    this.changeDetector.markForCheck();
+    this.sharedService.titleEmitter.emit();
+  }
 }

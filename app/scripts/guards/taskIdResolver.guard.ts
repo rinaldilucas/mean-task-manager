@@ -10,14 +10,14 @@ import { TaskService } from '@services/task.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskIdResolverGuard {
-    constructor (private taskService: TaskService) { }
+  constructor(private taskService: TaskService) { }
 
-    resolve (route: ActivatedRouteSnapshot): Observable<ITask> {
-        if (route.params && route.params['id']) {
-            return this.taskService.get(route.params['id'])
-                .pipe(map((result: IQueryResult<ITask>) => result.data[0]));
-        } else {
-            return of({} as ITask);
-        }
+  resolve(route: ActivatedRouteSnapshot): Observable<ITask> {
+    if (route.params && route.params.id) {
+      return this.taskService.get(route.params.id)
+        .pipe(map((result: IQueryResult<ITask>) => result.data[0]));
+    } else {
+      return of({} as ITask);
     }
+  }
 }

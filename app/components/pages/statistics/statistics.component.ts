@@ -10,41 +10,41 @@ import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
-    selector: 'app-statistics',
-    templateUrl: './statistics.component.html',
-    styleUrls: ['./statistics.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-statistics',
+  templateUrl: './statistics.component.html',
+  styleUrls: ['./statistics.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticsComponent implements OnInit {
-    tasks: ITask[] = [];
+  tasks: ITask[] = [];
 
-    isLoading = true;
+  isLoading = true;
 
-    constructor (
-        private changeDetector: ChangeDetectorRef,
-        private taskService: TaskService,
-        private sharedService: SharedService,
-        private titleService: Title,
-        private translateService: TranslateService
-    ) {
-    }
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private taskService: TaskService,
+    private sharedService: SharedService,
+    private titleService: Title,
+    private translateService: TranslateService,
+  ) {
+  }
 
-    ngOnInit (): void {
-        this.updateTitle();
-        this.refreshAsync();
-    }
+  ngOnInit(): void {
+    this.updateTitle();
+    this.refreshAsync();
+  }
 
-    async refreshAsync (): Promise<void> {
-        const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll()));
-        if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+  async refreshAsync(): Promise<void> {
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll()));
+    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
-        this.tasks = result.data;
-        this.isLoading = false;
-        this.changeDetector.markForCheck();
-    }
+    this.tasks = result.data;
+    this.isLoading = false;
+    this.changeDetector.markForCheck();
+  }
 
-    updateTitle (): void {
-        this.translateService.get('title.statistics').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-        this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
-    }
+  updateTitle(): void {
+    this.translateService.get('title.statistics').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
+  }
 }

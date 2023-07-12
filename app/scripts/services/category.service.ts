@@ -9,10 +9,10 @@ const endpoint = environment.baseUri + '/categories';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService extends CrudService<ICategory> {
-    constructor (
-        http: HttpClient, //
-        injector: Injector
-    ) {
-        super(http, injector, endpoint);
-    }
+  constructor(
+    http: HttpClient, //
+    injector: Injector,
+  ) {
+    super(http, injector, endpoint);
+  }
 }

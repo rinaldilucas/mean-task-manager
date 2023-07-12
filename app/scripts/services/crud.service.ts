@@ -9,46 +9,46 @@ import { AuthService } from '@services/auth.service';
 import { SharedService } from '@services/shared.service';
 
 export class CrudService<T> {
-    protected sharedService = this.injector.get(SharedService);
-    protected authService = this.injector.get(AuthService);
+  protected sharedService = this.injector.get(SharedService);
+  protected authService = this.injector.get(AuthService);
 
-    constructor (
-        protected http: HttpClient, //
-        private injector: Injector,
-        private endpoint: string
-    ) {}
+  constructor(
+    protected http: HttpClient, //
+    private injector: Injector,
+    private endpoint: string,
+  ) {}
 
-    findAll (): Observable<IQueryResult<T[]>> {
-        return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));
-    }
+  findAll(): Observable<IQueryResult<T[]>> {
+    return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));
+  }
 
-    get (id: string): Observable<IQueryResult<T>> {
-        const url = `${this.endpoint}/${id}`;
+  get(id: string): Observable<IQueryResult<T>> {
+    const url = `${this.endpoint}/${id}`;
 
-        return this.http.get<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler));
-    }
+    return this.http.get<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler));
+  }
 
-    save (record: T): Promise<IQueryResult<T>> {
-        if (record['_id']) return this.update(record);
-        else return this.create(record);
-    }
+  save(record: T): Promise<IQueryResult<T>> {
+    if (record._id) return this.update(record);
+    else return this.create(record);
+  }
 
-    remove (record: T | string): Promise<IQueryResult<T>> {
-        const id = typeof record === 'string' ? record : record['_id'];
-        const url = `${this.endpoint}/${id}`;
+  remove(record: T | string): Promise<IQueryResult<T>> {
+    const id = typeof record === 'string' ? record : record._id;
+    const url = `${this.endpoint}/${id}`;
 
-        return lastValueFrom(this.http.delete<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler)));
-    }
+    return lastValueFrom(this.http.delete<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler)));
+  }
 
-    private create (record: T): Promise<IQueryResult<T>> {
-        record['userId'] = this.authService.getUserId();
+  private create(record: T): Promise<IQueryResult<T>> {
+    record.userId = this.authService.getUserId();
 
-        return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
-    }
+    return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
+  }
 
-    private update (record: T): Promise<IQueryResult<T>> {
-        record['userId'] = this.authService.getUserId();
+  private update(record: T): Promise<IQueryResult<T>> {
+    record.userId = this.authService.getUserId();
 
-        return lastValueFrom(this.http.put<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
-    }
+    return lastValueFrom(this.http.put<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
+  }
 }

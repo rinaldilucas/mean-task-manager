@@ -5,10 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({ name: 'convertDate', pure: false })
 export class ConvertDatePipe implements PipeTransform {
-    constructor (private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) {}
 
-    transform (value: string, pattern = 'mediumDate'): string | null {
-        const datePipe: DatePipe = new DatePipe(this.translateService.currentLang);
-        return datePipe.transform(value, pattern);
-    }
+  transform(value: string, pattern = 'mediumDate'): string | null {
+    const datePipe: DatePipe = new DatePipe(this.translateService.currentLang);
+    return datePipe.transform(value, pattern);
+  }
 }

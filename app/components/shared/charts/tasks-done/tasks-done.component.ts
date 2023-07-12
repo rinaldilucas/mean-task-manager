@@ -11,70 +11,70 @@ import { EStatus } from '@scripts/models/enum/status.enum';
 import { ITask } from '@scripts/models/task.interface';
 
 @Component({
-    selector: 'app-tasks-done',
-    templateUrl: './tasks-done.component.html',
-    styleUrls: ['./tasks-done.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-tasks-done',
+  templateUrl: './tasks-done.component.html',
+  styleUrls: ['./tasks-done.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksDoneComponent extends Unsubscriber implements OnInit {
-    @Input() tasks!: ITask[];
+  @Input() tasks!: ITask[];
 
-    @ViewChild(BaseChartDirective) baseChart!: BaseChartDirective;
+  @ViewChild(BaseChartDirective) baseChart!: BaseChartDirective;
 
-    chartType: ChartType = 'doughnut';
-    chartLabels: Label[] = [];
-    chartData: SingleDataSet = [];
-    chartOptions: ChartOptions = {
-        responsive: true,
-        tooltips: { enabled: true },
-        legend: { display: true, position: 'left', align: 'center', labels: { boxWidth: 35, padding: 16, fontSize: 16 } },
-        title: { display: true }
-    };
+  chartType: ChartType = 'doughnut';
+  chartLabels: Label[] = [];
+  chartData: SingleDataSet = [];
+  chartOptions: ChartOptions = {
+    responsive: true,
+    tooltips: { enabled: true },
+    legend: { display: true, position: 'left', align: 'center', labels: { boxWidth: 35, padding: 16, fontSize: 16 } },
+    title: { display: true },
+  };
 
-    constructor (
-        private translateService: TranslateService,
-        private media: MediaObserver
-    ) {
-        super();
+  constructor(
+    private translateService: TranslateService,
+    private media: MediaObserver,
+  ) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.refreshAsync();
+  }
+
+  async refreshAsync(): Promise<ITask | void> {
+    this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
+    this.verifyResolutions();
+
+    this.chartData = [];
+    this.chartLabels = [];
+
+    if (this.tasks.length) {
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
+      this.translateService.get('statistics.status.to-do').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
+      this.translateService.get('statistics.status.progress').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
+      this.translateService.get('statistics.status.done').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
     }
+  }
 
-    ngOnInit (): void {
-        this.refreshAsync();
-    }
+  verifyResolutions(): void {
+    this.addSubscription(this.media.asObservable().subscribe((change: MediaChange[]) => {
+      if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
+        (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
+        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
+        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
+        (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 15;
+      } else {
+        (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
+        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
+        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
+        (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 14;
+      }
 
-    async refreshAsync (): Promise<ITask | void> {
-        this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
-        this.verifyResolutions();
-
-        this.chartData = [];
-        this.chartLabels = [];
-
-        if (this.tasks.length) {
-            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
-            this.translateService.get('statistics.status.to-do').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
-            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
-            this.translateService.get('statistics.status.progress').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
-            this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
-            this.translateService.get('statistics.status.done').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
-        }
-    }
-
-    verifyResolutions (): void {
-        this.addSubscription(this.media.asObservable().subscribe((change: MediaChange[]) => {
-            if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
-                (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
-                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
-                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-                (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 15;
-            } else {
-                (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
-                (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
-                (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-                (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 14;
-            }
-
-            this.baseChart.chart.options = this.chartOptions;
-            this.baseChart.chart.update();
-        }));
-    }
+      this.baseChart.chart.options = this.chartOptions;
+      this.baseChart.chart.update();
+    }));
+  }
 }

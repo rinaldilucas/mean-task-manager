@@ -7,18 +7,18 @@ import { TaskCategoryResolverGuard } from '@scripts/guards/taskCategoryResolver.
 import { TaskIdResolverGuard } from '@scripts/guards/taskIdResolver.guard';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: TaskListComponent,
-        children: [
-            { path: 'add', component: TaskFormEntryComponent, resolve: { task: TaskIdResolverGuard, categories: TaskCategoryResolverGuard } },
-            { path: 'edit/:id', component: TaskFormEntryComponent, resolve: { task: TaskIdResolverGuard, categories: TaskCategoryResolverGuard } }
-        ]
-    }
+  {
+    path: '',
+    component: TaskListComponent,
+    children: [
+      { path: 'add', component: TaskFormEntryComponent, resolve: { task: TaskIdResolverGuard, categories: TaskCategoryResolverGuard } },
+      { path: 'edit/:id', component: TaskFormEntryComponent, resolve: { task: TaskIdResolverGuard, categories: TaskCategoryResolverGuard } },
+    ],
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 export class TaskRoutingModule {}

@@ -22,23 +22,23 @@ import { StatisticsComponent } from '@components/pages/statistics/statistics.com
 import { ERole } from '@scripts/models/enum/role.enum';
 
 const routes: Routes = [
-    { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
-    { path: 'login', component: LogInComponent, canActivate: [LoggedInAuthGuard], data: { state: 'login' } },
-    { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard], data: { state: 'register' } },
-    {
-        path: 'tasks',
-        loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule),
-        canLoad: [AuthGuard]
-    },
-    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { state: 'profile' } },
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' } },
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: '**', component: EmptyPageComponent }
+  { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
+  { path: 'login', component: LogInComponent, canActivate: [LoggedInAuthGuard], data: { state: 'login' } },
+  { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard], data: { state: 'register' } },
+  {
+    path: 'tasks',
+    loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule),
+    canLoad: [AuthGuard],
+  },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { state: 'profile' } },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' } },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', component: EmptyPageComponent },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled' })],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled' })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
