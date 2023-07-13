@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, lastValueFrom } from 'rxjs';
@@ -29,25 +30,25 @@ export class CrudService<T> {
   }
 
   save(record: T): Promise<IQueryResult<T>> {
-    if (record._id) return this.update(record);
+    if (record['_id']) return this.update(record);
     else return this.create(record);
   }
 
   remove(record: T | string): Promise<IQueryResult<T>> {
-    const id = typeof record === 'string' ? record : record._id;
+    const id = typeof record === 'string' ? record : record['_id'];
     const url = `${this.endpoint}/${id}`;
 
     return lastValueFrom(this.http.delete<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   private create(record: T): Promise<IQueryResult<T>> {
-    record.userId = this.authService.getUserId();
+    record['userId'] = this.authService.getUserId();
 
     return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   private update(record: T): Promise<IQueryResult<T>> {
-    record.userId = this.authService.getUserId();
+    record['userId'] = this.authService.getUserId();
 
     return lastValueFrom(this.http.put<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
   }
