@@ -3,256 +3,256 @@
 /* ============================================== */
 
 .mat-paginator-outer-container {
-    height: vw(60) !important;
+  height: vw(60) !important;
 }
 
 mat-card {
-    z-index: 1;
-    margin: vw(10);
-    margin-bottom: unset;
-    border-radius: vw(4) !important;
-    padding: vw(16) vw(8) !important;
-    width: vw(300);
-    min-width: vw(250);
+  z-index: 1;
+  margin: vw(10);
+  margin-bottom: unset;
+  border-radius: vw(4) !important;
+  padding: vw(16) vw(8) !important;
+  width: vw(300);
+  min-width: vw(250);
 
-    .dark-mode & {
-        background-color: mat-contrast($app-background, 100) !important;
-    }
+  .dark-mode & {
+    background-color: mat-contrast($app-background, 100) !important;
+  }
 }
 
 mat-form-field {
-    padding: vw(3);
+  padding: vw(3);
 
-    mat-error {
-        display: none !important;
+  mat-error {
+    display: none !important;
 
-        &:first-child {
-            display: block !important;
-        }
+    &:first-child {
+      display: block !important;
     }
+  }
 }
 
 mat-toolbar {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 mat-row {
-    cursor: pointer;
-    padding: vw(12) 0;
+  cursor: pointer;
+  padding: vw(12) 0;
 
-    @include media(">=desktop") {
-        padding: vw(16) 0;
-    }
+  @include media(">=desktop") {
+    padding: vw(16) 0;
+  }
 }
 
 .mat-drawer-container {
-    position: unset !important;
+  position: unset !important;
 }
 
 .mat-bottom-sheet-container {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .mat-bottom-sheet-container-large {
-    min-width: 100% !important;
-    height: 85vh;
+  min-width: 100% !important;
+  height: 85vh;
 }
 
 .mat-form-field-label-wrapper {
-    overflow: hidden;
-    font-size: vw(16);
-    pointer-events: none;
+  overflow: hidden;
+  font-size: vw(16);
+  pointer-events: none;
 }
 
 .mat-button {
-    font-size: vw(16) !important;
+  font-size: vw(16) !important;
 }
 
 .mat-raised-button {
-    line-height: vw(36) !important;
+  line-height: vw(36) !important;
 }
 
 .mat-toolbar {
-    height: $header-size !important;
-    min-height: $header-size !important;
+  height: $header-size !important;
+  min-height: $header-size !important;
 }
 
 .mat-toolbar-row {
-    height: $header-size !important;
-    min-height: $header-size !important;
+  height: $header-size !important;
+  min-height: $header-size !important;
 }
 
 .mat-cell {
-    padding-right: vw(16);
-    word-break: break-word;
+  padding-right: vw(16);
+  word-break: break-word;
 
-    @include media("<=desktop") {
-        &:last-of-type {
-            flex: 0.5;
-            padding-right: 0 !important;
-        }
+  @include media("<=desktop") {
+    &:last-of-type {
+      flex: 0.5;
+      padding-right: 0 !important;
     }
+  }
 }
 
 .mat-paginator-page-size {
-    @include media("<=desktop") {
-        display: none !important;
-    }
+  @include media("<=desktop") {
+    display: none !important;
+  }
 }
 
 .mat-simple-snackbar {
-    line-height: vw(20) !important;
-    font-size: vw(18);
+  line-height: vw(20) !important;
+  font-size: vw(18);
 
-    @include media(">=desktop") {
-        font-size: vw(16);
-    }
+  @include media(">=desktop") {
+    font-size: vw(16);
+  }
 }
 
 .mat-card-title {
-    line-height: vw(34);
+  line-height: vw(34);
 }
 
 .mat-icon-button {
-    width: vw(40) !important;
-    height: vw(40) !important;
-    line-height: vw(40) !important;
+  width: vw(40) !important;
+  height: vw(40) !important;
+  line-height: vw(40) !important;
 
-    @include media(">=desktop") {
-        line-height: vw(24) !important;
-        font-size: vw(24) !important;
-    }
+  @include media(">=desktop") {
+    line-height: vw(24) !important;
+    font-size: vw(24) !important;
+  }
 
-    .mat-icon {
-        line-height: vw(34) !important;
-        font-size: vw(34) !important;
-    }
+  .mat-icon {
+    line-height: vw(34) !important;
+    font-size: vw(34) !important;
+  }
 }
 
 .mat-icon {
-    width: vw(34) !important;
-    height: vw(34) !important;
+  width: vw(34) !important;
+  height: vw(34) !important;
 }
 
 .material-icons {
-    font-size: vw(34) !important;
+  font-size: vw(34) !important;
 }
 
 .mat-fab {
-    width: vw(56) !important;
-    height: vw(56) !important;
+  width: vw(56) !important;
+  height: vw(56) !important;
 
-    .mat-button-wrapper {
-        padding: vw(6) 0 !important;
-        line-height: vw(24) !important;
-    }
+  .mat-button-wrapper {
+    padding: vw(6) 0 !important;
+    line-height: vw(24) !important;
+  }
 }
 
 mat-icon-button {
-    i {
-        line-height: vw(34) !important;
+  i {
+    line-height: vw(34) !important;
 
-        @include media(">=desktop") {
-            font-size: vw(24) !important;
-        }
+    @include media(">=desktop") {
+      font-size: vw(24) !important;
     }
+  }
 }
 
 .mat-slide-toggle {
-    height: vw(34) !important;
-    line-height: vw(34) !important;
+  height: vw(34) !important;
+  line-height: vw(34) !important;
 
-    &.mat-checked {
-        .mat-slide-toggle-thumb-container {
-            transform: translate3d(vw(16), 0, 0) !important;
-        }
+  &.mat-checked {
+    .mat-slide-toggle-thumb-container {
+      transform: translate3d(vw(16), 0, 0) !important;
     }
+  }
 
-    .mat-slide-toggle-ripple {
-        position: absolute;
-        top: calc(50% - vw(20)) !important;
-        left: calc(50% - vw(20)) !important;
-        z-index: 1;
-        width: vw(40) !important;
-        height: vw(40) !important;
-        pointer-events: none;
-    }
+  .mat-slide-toggle-ripple {
+    position: absolute;
+    top: calc(50% - vw(20)) !important;
+    left: calc(50% - vw(20)) !important;
+    z-index: 1;
+    width: vw(40) !important;
+    height: vw(40) !important;
+    pointer-events: none;
+  }
 }
 
 .mat-slide-toggle-thumb {
-    width: vw(20) !important;
-    height: vw(20) !important;
+  width: vw(20) !important;
+  height: vw(20) !important;
 }
 
 .mat-slide-toggle-bar {
-    border-radius: vw(8) !important;
-    width: vw(36) !important;
-    height: vw(14) !important;
+  border-radius: vw(8) !important;
+  width: vw(36) !important;
+  height: vw(14) !important;
 }
 
 .mat-slide-toggle-thumb-container {
-    top: vw(-3) !important;
-    width: vw(20) !important;
-    height: vw(20) !important;
+  top: vw(-3) !important;
+  width: vw(20) !important;
+  height: vw(20) !important;
 }
 
 mat-header-row {
-    min-height: vw(56) !important;
+  min-height: vw(56) !important;
 }
 
 .mat-list-base {
-    .mat-list-item {
-        height: vw(48) !important;
+  .mat-list-item {
+    height: vw(48) !important;
 
-        .mat-list-item-content {
-            padding: 0 vw(16) !important;
-        }
+    .mat-list-item-content {
+      padding: 0 vw(16) !important;
     }
+  }
 
-    .mat-list-option {
-        height: vw(48) !important;
+  .mat-list-option {
+    height: vw(48) !important;
 
-        .mat-list-item-content {
-            padding: 0 vw(16) !important;
-        }
+    .mat-list-item-content {
+      padding: 0 vw(16) !important;
     }
+  }
 }
 
 .mat-standard-chip {
-    .dark-mode & {
-        background-color: mat-contrast($app-background, 100) !important;
-    }
+  .dark-mode & {
+    background-color: mat-contrast($app-background, 100) !important;
+  }
 
-    .mat-chip-remove {
-        width: vw(18) !important;
-        height: vw(18) !important;
+  .mat-chip-remove {
+    width: vw(18) !important;
+    height: vw(18) !important;
 
-        .mat-icon {
-            width: vw(18) !important;
-            height: vw(18) !important;
-            font-size: vw(18) !important;
-        }
+    .mat-icon {
+      width: vw(18) !important;
+      height: vw(18) !important;
+      font-size: vw(18) !important;
     }
+  }
 
-    .mat-chip-trailing-icon {
-        width: vw(18) !important;
-        height: vw(18) !important;
-    }
+  .mat-chip-trailing-icon {
+    width: vw(18) !important;
+    height: vw(18) !important;
+  }
 }
 
 .cdk-virtual-scroll {
-    &-orientation-vertical,
-    &-content-wrapper {
-        min-width: 100%;
-        height: 100%;
-        overflow: auto;
-    }
+  &-orientation-vertical,
+  &-content-wrapper {
+    min-width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
 
-    &-viewport {
-        background-color: mat-color($app-background, 50);
+  &-viewport {
+    background-color: mat-color($app-background, 50);
 
-        .dark-mode & {
-            background-color: mat-contrast($app-background, 50);
-        }
+    .dark-mode & {
+      background-color: mat-contrast($app-background, 50);
     }
+  }
 }

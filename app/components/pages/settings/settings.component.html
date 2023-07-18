@@ -1,43 +1,43 @@
 <div class="page-container">
-    <div class="page">
-        <div class="page__wrapper mat-elevation-z1">
-            <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
-                <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
-            </div>
-            <div class="page__content" *ngIf="!isLoading">
-                <div class="page__content-wrapper">
-                    <section>
-                        <h2>{{ "settings.language" | translate }}</h2>
-                        <button type="button" color="primary" mat-raised-button (click)="changeLanguage('en-US')">{{ "settings.english" | translate }}</button>
-                        <button type="button" color="primary" mat-raised-button (click)="changeLanguage('pt-BR')">{{ "settings.portuguese" | translate }}</button>
-                    </section>
+  <div class="page">
+    <div class="page__wrapper mat-elevation-z1">
+      <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
+        <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+      </div>
+      <div class="page__content" *ngIf="!isLoading">
+        <div class="page__content-wrapper">
+          <section>
+            <h2>{{ "settings.language" | translate }}</h2>
+            <button type="button" color="primary" mat-raised-button (click)="changeLanguage('en-US')">{{ "settings.english" | translate }}</button>
+            <button type="button" color="primary" mat-raised-button (click)="changeLanguage('pt-BR')">{{ "settings.portuguese" | translate }}</button>
+          </section>
 
-                    <section fxLayout="column">
-                        <h2>{{ "title.categories" | translate }}</h2>
+          <section fxLayout="column">
+            <h2>{{ "title.categories" | translate }}</h2>
 
-                        <mat-form-field class="component__chip" appearance="fill" fxFlex="100">
-                            <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
+            <mat-form-field class="component__chip" appearance="fill" fxFlex="100">
+              <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
 
-                            <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">
-                                <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
-                                    {{ category.title }}
-                                    <button type="button" matChipRemove>
-                                        <mat-icon>cancel</mat-icon>
-                                    </button>
-                                </mat-chip>
-                                <input
-                                    placeholder="{{ 'settings.category-label' | translate }}"
-                                    #categoryInput
-                                    [formControl]="categoryControl"
-                                    [matChipInputFor]="chipList"
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    (matChipInputTokenEnd)="saveCategoryAsync($event)"
-                                />
-                            </mat-chip-list>
-                        </mat-form-field>
-                    </section>
-                </div>
-            </div>
+              <mat-chip-list #chipList aria-label="{{ 'settings.category-selection' | translate }}">
+                <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
+                  {{ category.title }}
+                  <button type="button" matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+                <input
+                  placeholder="{{ 'settings.category-label' | translate }}"
+                  #categoryInput
+                  [formControl]="categoryControl"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="saveCategoryAsync($event)"
+                />
+              </mat-chip-list>
+            </mat-form-field>
+          </section>
         </div>
+      </div>
     </div>
+  </div>
 </div>

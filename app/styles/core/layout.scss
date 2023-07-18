@@ -5,12 +5,26 @@
 /* ============================================== */
 
 @function define-typography-level($font-size, $line-height: $font-size, $font-weight: 400, $font-family: null, $letter-spacing: normal) {
-    @return (font-size: $font-size, line-height: $line-height, font-weight: $font-weight, font-family: $font-family, letter-spacing: $letter-spacing);
+  @return (font-size: $font-size, line-height: $line-height, font-weight: $font-weight, font-family: $font-family, letter-spacing: $letter-spacing);
 }
 
 $custom-typography: mat-typography-config(
+  $font-family: $font-main,
+  $headline: define-typography-level(0.48rem, 0.6rem, 500),
+  $title: define-typography-level(0.26rem, 0.3rem, 500),
+  $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
+  $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
+  $body-1: define-typography-level(0.14rem, 0.2rem, 400),
+  $body-2: define-typography-level(0.14rem, 0.2rem, 400),
+  $caption: define-typography-level(0.14rem, 0.2rem, 400),
+  $button: define-typography-level(0.16rem, 0.28rem, 500),
+  $input: define-typography-level(inherit, 1.125, 400)
+);
+
+@include media(">=desktop") {
+  $custom-typography: mat-typography-config(
     $font-family: $font-main,
-    $headline: define-typography-level(0.48rem, 0.6rem, 500),
+    $headline: define-typography-level(0.48rem, 1.1rem, 500),
     $title: define-typography-level(0.26rem, 0.3rem, 500),
     $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
     $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
@@ -19,21 +33,7 @@ $custom-typography: mat-typography-config(
     $caption: define-typography-level(0.14rem, 0.2rem, 400),
     $button: define-typography-level(0.16rem, 0.28rem, 500),
     $input: define-typography-level(inherit, 1.125, 400)
-);
-
-@include media(">=desktop") {
-    $custom-typography: mat-typography-config(
-        $font-family: $font-main,
-        $headline: define-typography-level(0.48rem, 1.1rem, 500),
-        $title: define-typography-level(0.26rem, 0.3rem, 500),
-        $subheading-1: define-typography-level(0.2rem, 0.28rem, 400),
-        $subheading-2: define-typography-level(0.16rem, 0.22rem, 400),
-        $body-1: define-typography-level(0.14rem, 0.2rem, 400),
-        $body-2: define-typography-level(0.14rem, 0.2rem, 400),
-        $caption: define-typography-level(0.14rem, 0.2rem, 400),
-        $button: define-typography-level(0.16rem, 0.28rem, 500),
-        $input: define-typography-level(inherit, 1.125, 400)
-    );
+  );
 }
 
 @include mat-core($custom-typography);
@@ -43,49 +43,49 @@ $custom-typography: mat-typography-config(
 /* ============================================== */
 
 html {
-    @extend .scrollbar;
-    max-width: 100vw;
-    height: 100%;
-    font-size: mobile-vw($pixel-base + $mobile-factor, true);
-    overflow-x: hidden;
+  @extend .scrollbar;
+  max-width: 100vw;
+  height: 100%;
+  font-size: mobile-vw($pixel-base + $mobile-factor, true);
+  overflow-x: hidden;
 
-    @include media(">=desktop") {
-        font-size: fixed-vw($pixel-base);
-    }
+  @include media(">=desktop") {
+    font-size: fixed-vw($pixel-base);
+  }
 }
 
 body {
-    width: 100%;
-    max-width: 100vw;
-    height: 100%;
-    font-family: $font-main;
-    font-size: vw(18);
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
+  font-family: $font-main;
+  font-size: vw(18);
 }
 
 a {
-    text-decoration: none;
-    color: $white;
+  text-decoration: none;
+  color: $white;
 }
 
 .page {
-    &-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+  &-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-        &--table {
-            @include media("<=desktop") {
-                height: calc(100vh - #{$header-size});
-                overflow: hidden;
-            }
+    &--table {
+      @include media("<=desktop") {
+        height: calc(100vh - #{$header-size});
+        overflow: hidden;
+      }
 
-            @include media(">desktop") {
-                height: calc(100vh - #{$header-size});
-            }
-        }
+      @include media(">desktop") {
+        height: calc(100vh - #{$header-size});
+      }
     }
+  }
 
-    &-wrapper {
-        padding: vw(40);
-    }
+  &-wrapper {
+    padding: vw(40);
+  }
 }

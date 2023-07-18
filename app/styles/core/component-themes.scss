@@ -1,5 +1,5 @@
 @import "../core/nav-theme";
 
 @mixin component-themes($theme) {
-    @include nav-theme($theme);
+  @include nav-theme($theme);
 }

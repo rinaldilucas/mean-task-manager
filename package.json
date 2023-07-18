@@ -123,7 +123,7 @@
     "lint:api": "npx eslint ./api --ext .ts && yarn lint:types",
     "lint:client": "ng lint --fix && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
     "lint:sass": "sass-lint -c .sasslintrc.json -v -q",
-    "lint:sass-fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
+    "lint:sass-fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.js",
     "lint:types": "tsc --noemit",
     "start": "npm install && node ./api/server.ts",
     "test:client": "ng test"

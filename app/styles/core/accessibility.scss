@@ -1,10 +1,10 @@
 a,
 button {
-    &:focus {
-        outline: vw(4) dashed mat-color($primary, A100) !important;
+  &:focus {
+    outline: vw(4) dashed mat-color($primary, A100) !important;
 
-        &.contrast {
-            outline: vw(4) dashed mat-color($primary, A100) !important;
-        }
+    &.contrast {
+      outline: vw(4) dashed mat-color($primary, A100) !important;
     }
+  }
 }

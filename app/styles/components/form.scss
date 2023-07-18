@@ -1,95 +1,95 @@
 .form {
-    display: flex;
+  display: flex;
+  justify-content: center;
+  margin-top: vw(45);
+
+  @include media(">=desktop") {
+    align-items: center;
     justify-content: center;
-    margin-top: vw(45);
+    margin-top: 0;
+    height: calc(100vh - #{$header-size});
+  }
+
+  mat-card-header {
+    display: block;
+    margin: vw(20) 0;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &__box {
+    position: relative;
+    width: vw(330);
 
     @include media(">=desktop") {
-        align-items: center;
-        justify-content: center;
-        margin-top: 0;
-        height: calc(100vh - #{$header-size});
+      width: vw(420);
     }
 
-    mat-card-header {
-        display: block;
-        margin: vw(20) 0;
-        width: 100%;
-        text-align: center;
-        font-weight: 700;
+    mat-card {
+      position: relative;
+      top: 0;
+      float: left;
+      transform: scale(1);
+      opacity: 1;
+      z-index: 5;
+      margin: 0;
+      border-radius: vw(10);
+      background-color: mat-color($app-background, 50) !important;
+      padding: vw(40) vw(35) vw(30) !important;
+      width: 100%;
+      box-sizing: border-box;
+
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 100) !important;
+      }
     }
 
-    &__box {
-        position: relative;
-        width: vw(330);
+    &::after {
+      position: absolute;
+      top: vw(-10);
+      left: 0;
+      transform: scale(0.95);
+      z-index: 0;
+      border-radius: vw(10);
+      background-color: mat-color($app-background, 50) !important;
+      width: 100%;
+      height: vw(30);
+      content: "";
 
-        @include media(">=desktop") {
-            width: vw(420);
-        }
-
-        mat-card {
-            position: relative;
-            top: 0;
-            float: left;
-            transform: scale(1);
-            opacity: 1;
-            z-index: 5;
-            margin: 0;
-            border-radius: vw(10);
-            background-color: mat-color($app-background, 50) !important;
-            padding: vw(40) vw(35) vw(30) !important;
-            width: 100%;
-            box-sizing: border-box;
-
-            .dark-mode & {
-                background-color: mat-contrast($app-background, 100) !important;
-            }
-        }
-
-        &::after {
-            position: absolute;
-            top: vw(-10);
-            left: 0;
-            transform: scale(0.95);
-            z-index: 0;
-            border-radius: vw(10);
-            background-color: mat-color($app-background, 50) !important;
-            width: 100%;
-            height: vw(30);
-            content: "";
-
-            .dark-mode & {
-                background-color: mat-contrast($app-background, 50) !important;
-            }
-        }
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 50) !important;
+      }
     }
+  }
 
-    form {
-        width: 100%;
-        min-width: 100%;
-        max-width: vw(300);
-        height: 100%;
+  form {
+    width: 100%;
+    min-width: 100%;
+    max-width: vw(300);
+    height: 100%;
 
-        .mat-card {
-            padding: 0;
-        }
+    .mat-card {
+      padding: 0;
     }
+  }
 
-    &__button {
-        @extend .button;
+  &__button {
+    @extend .button;
+  }
+
+  mat-icon {
+    display: flex;
+    position: relative;
+    top: vw(4);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: mat-contrast($app-background, 50) !important;
+    font-size: vw(24) !important;
+
+    .dark-mode & {
+      color: mat-color($app-background, 900) !important;
     }
-
-    mat-icon {
-        display: flex;
-        position: relative;
-        top: vw(4);
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: mat-contrast($app-background, 50) !important;
-        font-size: vw(24) !important;
-
-        .dark-mode & {
-            color: mat-color($app-background, 900) !important;
-        }
-    }
+  }
 }

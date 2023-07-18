@@ -1,50 +1,50 @@
 .header {
-    height: 100%;
+  height: 100%;
 
-    mat-toolbar {
-        background-color: mat-color($app-primary-dark, 700) !important;
-    }
+  mat-toolbar {
+    background-color: mat-color($app-primary-dark, 700) !important;
+  }
 
-    &__left {
-        width: vw(180);
+  &__left {
+    width: vw(180);
 
-        a {
-            letter-spacing: 0;
+    a {
+      letter-spacing: 0;
 
-            &:last-child {
-                position: absolute !important;
-                bottom: 0 !important;
-            }
+      &:last-child {
+        position: absolute !important;
+        bottom: 0 !important;
+      }
 
-            mat-icon {
-                padding-right: vw(10) !important;
-            }
+      mat-icon {
+        padding-right: vw(10) !important;
+      }
 
-            &.active,
-            &:hover {
-                background-color: mat-color($primary, 100) !important;
+      &.active,
+      &:hover {
+        background-color: mat-color($primary, 100) !important;
 
-                .dark-mode & {
-                    background-color: mat-color($primary, 600) !important;
-                }
-            }
+        .dark-mode & {
+          background-color: mat-color($primary, 600) !important;
         }
+      }
     }
+  }
 
-    &__top {
-        &-right {
-            display: flex;
-            align-items: center;
-        }
+  &__top {
+    &-right {
+      display: flex;
+      align-items: center;
     }
+  }
 
-    &__darkmode-wrapper {
-        display: flex;
-        align-content: center;
-        margin-right: vw(16);
+  &__darkmode-wrapper {
+    display: flex;
+    align-content: center;
+    margin-right: vw(16);
 
-        mat-icon {
-            margin-right: vw(8);
-        }
+    mat-icon {
+      margin-right: vw(8);
     }
+  }
 }

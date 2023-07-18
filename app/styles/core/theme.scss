@@ -4,168 +4,168 @@
 @include mat-core;
 
 $app-primary: (
-    50: #e8eaf6,
-    100: #c5cbe9,
-    200: #9fa8da,
-    300: #7985cb,
-    400: #5c6bc0,
-    500: #3f51b5,
-    600: #394aae,
-    700: #3140a5,
-    800: #29379d,
-    900: #1b278d,
-    A100: #c6cbff,
-    A200: #939dff,
-    A400: #606eff,
-    A700: #4757ff,
-    contrast: (
-        50: #000000,
-        100: #000000,
-        200: #000000,
-        300: #000000,
-        400: #ffffff,
-        500: #ffffff,
-        600: #ffffff,
-        700: #ffffff,
-        800: #ffffff,
-        900: #ffffff,
-        A100: #000000,
-        A200: #000000,
-        A400: #ffffff,
-        A700: #ffffff
-    )
+  50: #e8eaf6,
+  100: #c5cbe9,
+  200: #9fa8da,
+  300: #7985cb,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #394aae,
+  700: #3140a5,
+  800: #29379d,
+  900: #1b278d,
+  A100: #c6cbff,
+  A200: #939dff,
+  A400: #606eff,
+  A700: #4757ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff
+  )
 );
 
 $app-primary-dark: (
-    50: #eef5fb,
-    100: #d4e5f5,
-    200: #b7d4ee,
-    300: #9ac2e7,
-    400: #85b5e1,
-    500: #528dce,
-    600: #67a0d8,
-    700: #3f51b5,
-    800: #528dce,
-    900: #407dc5,
-    A100: #ffffff,
-    A200: #e3efff,
-    A400: #b0d3ff,
-    A700: #96c4ff,
-    contrast: (
-        50: #000000,
-        100: #000000,
-        200: #000000,
-        300: #000000,
-        400: #ffffff,
-        500: #ffffff,
-        600: #ffffff,
-        700: #ffffff,
-        800: #ffffff,
-        900: #ffffff,
-        A100: #000000,
-        A200: #000000,
-        A400: #ffffff,
-        A700: #ffffff
-    )
+  50: #eef5fb,
+  100: #d4e5f5,
+  200: #b7d4ee,
+  300: #9ac2e7,
+  400: #85b5e1,
+  500: #528dce,
+  600: #67a0d8,
+  700: #3f51b5,
+  800: #528dce,
+  900: #407dc5,
+  A100: #ffffff,
+  A200: #e3efff,
+  A400: #b0d3ff,
+  A700: #96c4ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff
+  )
 );
 
 $app-accent: (
-    50: #e4f1ff,
-    100: #baddff,
-    200: #8dc6ff,
-    300: #5fafff,
-    400: #3c9dff,
-    500: #1a8cff,
-    600: #1784ff,
-    700: #1379ff,
-    800: #0f6fff,
-    900: #085cff,
-    A100: #ffffff,
-    A200: #f4f7ff,
-    A400: #c1d3ff,
-    A700: #a7c1ff,
-    contrast: (
-        50: #000000,
-        100: #000000,
-        200: #000000,
-        300: #000000,
-        400: #000000,
-        500: #ffffff,
-        600: #ffffff,
-        700: #ffffff,
-        800: #ffffff,
-        900: #ffffff,
-        A100: #000000,
-        A200: #000000,
-        A400: #000000,
-        A700: #000000
-    )
+  50: #e4f1ff,
+  100: #baddff,
+  200: #8dc6ff,
+  300: #5fafff,
+  400: #3c9dff,
+  500: #1a8cff,
+  600: #1784ff,
+  700: #1379ff,
+  800: #0f6fff,
+  900: #085cff,
+  A100: #ffffff,
+  A200: #f4f7ff,
+  A400: #c1d3ff,
+  A700: #a7c1ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 $app-danger: (
-    50: #fee8e7,
-    100: #fcc7c3,
-    200: #faa19b,
-    300: #f77b72,
-    400: #f65f54,
-    500: #f44336,
-    600: #f33d30,
-    700: #f13429,
-    800: #ef2c22,
-    900: #ec1e16,
-    A100: #ffffff,
-    A200: #ffe9e9,
-    A400: #ffb8b6,
-    A700: #ff9f9c,
-    contrast: (
-        50: #000000,
-        100: #000000,
-        200: #000000,
-        300: #000000,
-        400: #000000,
-        500: #ffffff,
-        600: #ffffff,
-        700: #ffffff,
-        800: #ffffff,
-        900: #ffffff,
-        A100: #000000,
-        A200: #000000,
-        A400: #000000,
-        A700: #000000
-    )
+  50: #fee8e7,
+  100: #fcc7c3,
+  200: #faa19b,
+  300: #f77b72,
+  400: #f65f54,
+  500: #f44336,
+  600: #f33d30,
+  700: #f13429,
+  800: #ef2c22,
+  900: #ec1e16,
+  A100: #ffffff,
+  A200: #ffe9e9,
+  A400: #ffb8b6,
+  A700: #ff9f9c,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 $app-background: (
-    50: #ffffff,
-    100: #ffffff,
-    200: #ffffff,
-    300: #ffffff,
-    400: #ffffff,
-    500: #ffffff,
-    600: #f2f2f2,
-    700: #e6e6e6,
-    800: #d9d9d9,
-    900: #cccccc,
-    A100: #ffffff,
-    A200: #ffffff,
-    A400: #ffffff,
-    A700: #bfbfbf,
-    contrast: (
-        50: #424242,
-        100: #4d4d4d,
-        200: #000000,
-        300: #000000,
-        400: #000000,
-        500: #000000,
-        600: #000000,
-        700: #000000,
-        800: #000000,
-        900: #000000,
-        A100: #000000,
-        A200: #000000,
-        A400: #000000,
-        A700: #000000
-    )
+  50: #ffffff,
+  100: #ffffff,
+  200: #ffffff,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #f2f2f2,
+  700: #e6e6e6,
+  800: #d9d9d9,
+  900: #cccccc,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffffff,
+  A700: #bfbfbf,
+  contrast: (
+    50: #424242,
+    100: #4d4d4d,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
 );
 
 $primary: mat-palette($app-primary);
@@ -177,11 +177,11 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include component-themes($theme);
 
 .dark-mode {
-    $dark-primary: mat-palette($app-primary-dark);
-    $dark-accent: mat-palette($app-accent);
-    $dark-warn: mat-palette($app-danger);
-    $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+  $dark-primary: mat-palette($app-primary-dark);
+  $dark-accent: mat-palette($app-accent);
+  $dark-warn: mat-palette($app-danger);
+  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
-    @include angular-material-theme($dark-theme);
-    @include component-themes($dark-theme);
+  @include angular-material-theme($dark-theme);
+  @include component-themes($dark-theme);
 }
