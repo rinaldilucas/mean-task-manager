@@ -13,16 +13,16 @@ routes.get('/api/categories', authMiddleware, Controller.findAll);
 
 // CREATE
 routes.post(
-    '/api/categories',
-    check('title', 'Must be at least 2 and lesser than 50 chars long') //
-        .isLength({ min: 2 })
-        .isLength({ max: 50 })
-        .not()
-        .isEmpty()
-        .trim(),
-    verifyValidations,
-    authMiddleware,
-    Controller.create
+  '/api/categories',
+  check('title', 'Must be at least 2 and lesser than 50 chars long') //
+    .isLength({ min: 2 })
+    .isLength({ max: 50 })
+    .not()
+    .isEmpty()
+    .trim(),
+  verifyValidations,
+  authMiddleware,
+  Controller.create,
 );
 
 // DELETE

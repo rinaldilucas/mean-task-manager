@@ -1,83 +1,83 @@
 {
-    "angularCompilerOptions": {
-        "enableI18nLegacyMessageIdFormat": false,
-        "fullTemplateTypeCheck": true,
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true,
-        "strictTemplates": true
-    },
-    "compileOnSave": false,
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": ".",
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "importHelpers": true,
-        "lib": [
-            "es2018",
-            "dom"
-        ],
-        "esModuleInterop": true,
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": false,
-        "noImplicitOverride": true,
-        "noImplicitReturns": false,
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "noPropertyAccessFromIndexSignature": false,
-        "outDir": "./app-dist/out-tsc",
-        "paths": {
-            "@app/*": [
-                "./app/*"
-            ],
-            "@api/*": [
-                "./api/*"
-            ],
-            "@assets/*": [
-                "./app/assets/*"
-            ],
-            "@components/*": [
-                "./app/components/*"
-            ],
-            "@env/*": [
-                "./app/environments/*"
-            ],
-            "@scripts/*": [
-                "./app/scripts/*"
-            ],
-            "@services/*": [
-                "./app/scripts/services/*"
-            ],
-            "@styles/*": [
-                "./app/styles/*"
-            ],
-            "@controllers/*": [
-                "./api/controllers/*"
-            ],
-            "@middlewares/*": [
-                "./api/middlewares/*"
-            ],
-            "@models/*": [
-                "./api/models/*"
-            ],
-            "@routes/*": [
-                "./api/routes/*"
-            ]
-        },
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "target": "ES2021",
-        "useDefineForClassFields": false,
-    },
-    "include": [
-        "./app/",
-        "./api/"
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "es2018",
+      "dom"
     ],
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "outDir": "./app-dist/out-tsc",
+    "paths": {
+      "@app/*": [
+        "./app/*"
+      ],
+      "@api/*": [
+        "./api/*"
+      ],
+      "@assets/*": [
+        "./app/assets/*"
+      ],
+      "@components/*": [
+        "./app/components/*"
+      ],
+      "@env/*": [
+        "./app/environments/*"
+      ],
+      "@scripts/*": [
+        "./app/scripts/*"
+      ],
+      "@services/*": [
+        "./app/scripts/services/*"
+      ],
+      "@styles/*": [
+        "./app/styles/*"
+      ],
+      "@controllers/*": [
+        "./api/controllers/*"
+      ],
+      "@middlewares/*": [
+        "./api/middlewares/*"
+      ],
+      "@models/*": [
+        "./api/models/*"
+      ],
+      "@routes/*": [
+        "./api/routes/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2021",
+    "useDefineForClassFields": false,
+  },
+  "include": [
+    "./app/",
+    "./api/"
+  ],
 }

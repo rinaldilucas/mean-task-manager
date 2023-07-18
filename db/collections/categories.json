@@ -1,58 +1,62 @@
-[{
-  "_id": {
-    "$oid": "646baa3003e1f536fcf9ccc1"
+[
+  {
+    "_id": {
+      "$oid": "646baa3003e1f536fcf9ccc1"
+    },
+    "title": "Financial",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777520636"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777520636"
+      }
+    },
+    "__v": 0
   },
-  "title": "Financial",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
+  {
+    "_id": {
+      "$oid": "646baa3903e1f536fcf9ccc7"
+    },
+    "title": "Studies",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777529515"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777529515"
+      }
+    },
+    "__v": 0
   },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777520636"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777520636"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa3903e1f536fcf9ccc7"
-  },
-  "title": "Studies",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777529515"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777529515"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa3a03e1f536fcf9ccc9"
-  },
-  "title": "Personal",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777530550"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777530550"
-    }
-  },
-  "__v": 0
-}]
+  {
+    "_id": {
+      "$oid": "646baa3a03e1f536fcf9ccc9"
+    },
+    "title": "Personal",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777530550"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777530550"
+      }
+    },
+    "__v": 0
+  }
+]

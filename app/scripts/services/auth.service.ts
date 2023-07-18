@@ -19,7 +19,7 @@ import { SharedService } from '@services/shared.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly url = environment.baseUri + '/auth';
-  menuEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  emitterMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
   sidebarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private accessToken!: string;
@@ -129,7 +129,7 @@ export class AuthService {
 
       this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
       this.startRefreshTokenTimerAsync(result);
-      this.menuEmitter.emit(true);
+      this.emitterMenu.emit(true);
       setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
       return true;
     } else {
@@ -239,7 +239,7 @@ export class AuthService {
     this.clearAuthData();
     this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
     this.router.navigate(['']);
-    this.menuEmitter.emit(false);
+    this.emitterMenu.emit(false);
     this.sidebarEmitter.emit(false);
   }
 }

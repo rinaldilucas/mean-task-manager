@@ -1,190 +1,198 @@
-[{
-  "_id": {
-    "$oid": "646baa4503e1f536fcf9ccd1"
+[
+  {
+    "_id": {
+      "$oid": "646baa4503e1f536fcf9ccd1"
+    },
+    "status": "inProgress",
+    "title": "Finish Berserk Manga",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1689130800000"
+      }
+    },
+    "category": "Personal",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1683913541716"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777553277"
+      }
+    },
+    "__v": 0
   },
-  "status": "inProgress",
-  "title": "Finish Berserk Manga",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1689130800000"
-    }
+  {
+    "_id": {
+      "$oid": "646baa4d03e1f536fcf9ccd8"
+    },
+    "status": "toDo",
+    "title": "Buy groceries",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1684810800000"
+      }
+    },
+    "category": "Personal",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1682876749469"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684856752974"
+      }
+    },
+    "__v": 0
   },
-  "category": "Personal",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
+  {
+    "_id": {
+      "$oid": "646baa5c03e1f536fcf9cce3"
+    },
+    "status": "toDo",
+    "title": "Finish API documentation",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1687402800000"
+      }
+    },
+    "category": "Studies",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777564438"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777564438"
+      }
+    },
+    "__v": 0
   },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1683913541716"
-    }
+  {
+    "_id": {
+      "$oid": "646baa6f03e1f536fcf9ccea"
+    },
+    "status": "toDo",
+    "title": "Buy S&P 500 stocks",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1686884400000"
+      }
+    },
+    "category": "Financial",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777583476"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777583476"
+      }
+    },
+    "__v": 0
   },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777553277"
-    }
+  {
+    "_id": {
+      "$oid": "646baa8003e1f536fcf9ccf1"
+    },
+    "status": "toDo",
+    "title": "Build gym app",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1691636400000"
+      }
+    },
+    "category": "Studies",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777600069"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777600069"
+      }
+    },
+    "__v": 0
   },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa4d03e1f536fcf9ccd8"
+  {
+    "_id": {
+      "$oid": "646baa9103e1f536fcf9ccf8"
+    },
+    "status": "toDo",
+    "title": "Update Curriculum Vitae",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1686106800000"
+      }
+    },
+    "category": "Personal",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777617428"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777617428"
+      }
+    },
+    "__v": 0
   },
-  "status": "toDo",
-  "title": "Buy groceries",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1684810800000"
-    }
-  },
-  "category": "Personal",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1682876749469"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684856752974"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa5c03e1f536fcf9cce3"
-  },
-  "status": "toDo",
-  "title": "Finish API documentation",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1687402800000"
-    }
-  },
-  "category": "Studies",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777564438"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777564438"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa6f03e1f536fcf9ccea"
-  },
-  "status": "toDo",
-  "title": "Buy S&P 500 stocks",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1686884400000"
-    }
-  },
-  "category": "Financial",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777583476"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777583476"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa8003e1f536fcf9ccf1"
-  },
-  "status": "toDo",
-  "title": "Build gym app",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1691636400000"
-    }
-  },
-  "category": "Studies",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777600069"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777600069"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baa9103e1f536fcf9ccf8"
-  },
-  "status": "toDo",
-  "title": "Update Curriculum Vitae",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1686106800000"
-    }
-  },
-  "category": "Personal",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777617428"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777617428"
-    }
-  },
-  "__v": 0
-},{
-  "_id": {
-    "$oid": "646baaaf03e1f536fcf9ccff"
-  },
-  "status": "toDo",
-  "title": "Create LinkedIn post",
-  "description": "",
-  "date": {
-    "$date": {
-      "$numberLong": "1684983600000"
-    }
-  },
-  "category": "Personal",
-  "userId": {
-    "$oid": "646d96ecc09cdb2e9c4b327e"
-  },
-  "createdAt": {
-    "$date": {
-      "$numberLong": "1684777647861"
-    }
-  },
-  "updatedAt": {
-    "$date": {
-      "$numberLong": "1684777647861"
-    }
-  },
-  "__v": 0
-}]
+  {
+    "_id": {
+      "$oid": "646baaaf03e1f536fcf9ccff"
+    },
+    "status": "toDo",
+    "title": "Create LinkedIn post",
+    "description": "",
+    "date": {
+      "$date": {
+        "$numberLong": "1684983600000"
+      }
+    },
+    "category": "Personal",
+    "userId": {
+      "$oid": "646d96ecc09cdb2e9c4b327e"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1684777647861"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1684777647861"
+      }
+    },
+    "__v": 0
+  }
+]

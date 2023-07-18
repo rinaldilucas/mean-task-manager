@@ -119,7 +119,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
 
     this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
-    this.taskService.taskEmitter.emit(task);
+    this.taskService.emitterTask.emit(task);
     this.form.reset();
     this.close();
   }
@@ -150,9 +150,9 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
   }
 
   ngAfterViewInit(): void {
-    this.addSubscription(this.categoryTrigger.panelClosingActions.subscribe(() => {
+    this.subs.sink = this.categoryTrigger.panelClosingActions.subscribe(() => {
       if (this.categoryTrigger.activeOption) { this.form.controls.category.setValue(this.categoryTrigger.activeOption.value); }
-    }));
+    });
   }
 
   dismissModalAndNavigate(path: string): void {

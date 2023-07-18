@@ -47,14 +47,14 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     this.isLogged = this.authService.getIsAuthenticated();
     this.isSidebarIsOpened = this.isLogged;
 
-    this.addSubscription(this.authService.menuEmitter.subscribe((result: boolean) => {
+    this.subs.sink = this.authService.emitterMenu.subscribe((result: boolean) => {
       this.isLogged = result;
       this.changeDetector.markForCheck();
-    }));
-    this.addSubscription(this.authService.sidebarEmitter.subscribe(() => {
+    });
+    this.subs.sink = this.authService.sidebarEmitter.subscribe(() => {
       this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
       this.changeDetector.markForCheck();
-    }));
+    });
 
     const darkClassName = 'dark-mode';
     const previousTheme = localStorage.getItem('theme') as string;
@@ -63,7 +63,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
       this.toggleTheme = new FormControl(true);
     }
 
-    this.addSubscription(this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
+    this.subs.sink = this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
       if (enableDarkMode) {
         document.body.classList.add(darkClassName);
         localStorage.setItem('theme', darkClassName);
@@ -71,7 +71,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
         document.body.classList.remove(darkClassName);
         localStorage.removeItem('theme');
       }
-    }));
+    });
   }
 
   logout(): void {

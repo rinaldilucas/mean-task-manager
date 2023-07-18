@@ -1,5 +1,5 @@
 export interface UserInterface {
-    email: string;
-    password: string;
-    role: string;
+  email: string;
+  password: string;
+  role: string;
 }

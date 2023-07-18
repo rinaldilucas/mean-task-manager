@@ -70,15 +70,15 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
     this.disposeServicesOnDestroy = true;
 
-    this.addSubscription(this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions)));
-    this.addSubscription(this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[] }) => {
+    this.subs.sink = this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
+    this.subs.sink = this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[] }) => {
       this.paginator.pageSize = options.pageSize;
       this.paginator.pageSizeOptions = options.pageSizeOptions;
-    }));
-    this.addSubscription(this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value)));
+    });
+    this.subs.sink = this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value));
 
     this.refreshAsync();
-    this.addSubscription(this.taskService.taskEmitter.subscribe(() => this.refreshAsync()));
+    this.subs.sink = this.taskService.emitterTask.subscribe(() => this.refreshAsync());
   }
 
   add(): void {
@@ -107,7 +107,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change-error', success: false });
 
     this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change', success: true });
-    this.taskService.taskEmitter.emit();
+    this.taskService.emitterTask.emit();
     this.changeDetector.markForCheck();
   }
 
@@ -116,7 +116,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     if (error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
 
     this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-success', success: true });
-    this.taskService.taskEmitter.emit();
+    this.taskService.emitterTask.emit();
     this.changeDetector.markForCheck();
   }
 
@@ -176,7 +176,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
   updateTitle(): void {
     this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-    this.sharedService.titleEmitter.pipe(take(1)).subscribe(() => this.updateTitle());
+    this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 
   confirmDelete(task: ITask): void {

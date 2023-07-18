@@ -14,62 +14,62 @@ import categoryRoutes from '@routes/category.routes';
 import taskRoutes from '@routes/task.routes';
 
 class App {
-    express: express.Application;
+  express: express.Application;
 
-    constructor () {
-        this.express = express();
+  constructor() {
+    this.express = express();
 
-        this.middlewares();
-        this.database();
-        this.routes();
-        dotenv.config();
+    this.middlewares();
+    this.database();
+    this.routes();
+    dotenv.config();
+  }
+
+  private middlewares(): void {
+    this.express.use(bodyParser.json());
+    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(cors());
+    this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+    const args = process.argv;
+
+    if (args.includes('--prod=true')) {
+      this.express.use(express.static(path.join(__dirname, 'app-dist')));
+      this.express.use('/', express.static(path.join(__dirname, 'app-dist')));
+    }
+  }
+
+  private database(): void {
+    const args = process.argv;
+    let database;
+
+    if (args.includes('--prod=true')) {
+      database = DatabaseConfig.urlProd;
+      console.log('Using production connection string.');
+    } else {
+      database = DatabaseConfig.url;
+      console.log('Using local connection string.');
     }
 
-    private middlewares (): void {
-        this.express.use(bodyParser.json());
-        this.express.use(bodyParser.urlencoded({ extended: false }));
-        this.express.use(cors());
-        this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    mongoose
+      .connect(database, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      })
+      .then(() => console.log('Successfully connected to MongoDB.'))
+      .catch((error) => {
+        console.log(`Could not connect to MongoDB. Error: ${error}`);
+        process.exit();
+      });
+  }
 
-        const args = process.argv;
-
-        if (args.includes('--prod=true')) {
-            this.express.use(express.static(path.join(__dirname, 'app-dist')));
-            this.express.use('/', express.static(path.join(__dirname, 'app-dist')));
-        }
-    }
-
-    private database (): void {
-        const args = process.argv;
-        let database;
-
-        if (args.includes('--prod=true')) {
-            database = DatabaseConfig.urlProd;
-            console.log('Using production connection string.');
-        } else {
-            database = DatabaseConfig.url;
-            console.log('Using local connection string.');
-        }
-
-        mongoose
-            .connect(database, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useFindAndModify: false,
-                useCreateIndex: true
-            })
-            .then(() => console.log('Successfully connected to MongoDB.'))
-            .catch((error) => {
-                console.log(`Could not connect to MongoDB. Error: ${error}`);
-                process.exit();
-            });
-    }
-
-    private routes (): void {
-        this.express.use(authRoutes);
-        this.express.use(taskRoutes);
-        this.express.use(categoryRoutes);
-    }
+  private routes(): void {
+    this.express.use(authRoutes);
+    this.express.use(taskRoutes);
+    this.express.use(categoryRoutes);
+  }
 }
 
 export default new App().express;

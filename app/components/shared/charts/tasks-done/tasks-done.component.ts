@@ -60,7 +60,7 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
   }
 
   verifyResolutions(): void {
-    this.addSubscription(this.media.asObservable().subscribe((change: MediaChange[]) => {
+    this.subs.sink = this.media.asObservable().subscribe((change: MediaChange[]) => {
       if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
         (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
         (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
@@ -75,6 +75,6 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
 
       this.baseChart.chart.options = this.chartOptions;
       this.baseChart.chart.update();
-    }));
+    });
   }
 }

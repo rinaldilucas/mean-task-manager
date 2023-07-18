@@ -1,3 +1,3 @@
 export interface CategoryInterface {
-    title: string;
+  title: string;
 }
