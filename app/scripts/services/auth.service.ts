@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 import Cookies from 'js-cookie';
-import { Observable, Subject, lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
@@ -26,7 +26,6 @@ export class AuthService {
   private refreshToken!: string;
   private decodedToken!: IJwtToken;
   private loggedUser!: IAuthData;
-  private authStatusListener = new Subject<boolean>();
   private refreshTokenTimeout;
   private isAuthenticated = false;
   private keepUserLoggedIn = false;
@@ -37,7 +36,7 @@ export class AuthService {
     private injector: Injector,
     private router: Router, //
     private http: HttpClient,
-  ) {}
+  ) { }
 
   getKeepUserLoggedIn(): boolean {
     return this.keepUserLoggedIn;
@@ -65,10 +64,6 @@ export class AuthService {
 
   getLoggedUser(): IAuthData {
     return this.loggedUser;
-  }
-
-  getAuthStatusListener(): Observable<boolean> {
-    return this.authStatusListener.asObservable();
   }
 
   authenticate(email: string, password: string, keepUserLoggedIn: boolean): Promise<IQueryResult<IJwtPayload>> {
@@ -124,13 +119,10 @@ export class AuthService {
       const expiresInDuration = result.expiresIn;
       this.isAuthenticated = true;
       this.decodeJwtToken(this.accessToken);
-      this.authStatusListener.next(true);
       const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
 
       this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
       this.startRefreshTokenTimerAsync(result);
-      this.emitterMenu.emit(true);
-      setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
       return true;
     } else {
       return false;
@@ -150,7 +142,8 @@ export class AuthService {
       this.accessToken = authInformation.access;
       this.decodeJwtToken(this.accessToken);
       this.isAuthenticated = true;
-      this.authStatusListener.next(true);
+      this.emitterMenu.emit(true);
+      setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
       return true;
     }
 
@@ -235,7 +228,6 @@ export class AuthService {
     this.stopRefreshTokenTimer();
     this.accessToken = '';
     this.isAuthenticated = false;
-    this.authStatusListener.next(false);
     this.clearAuthData();
     this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
     this.router.navigate(['']);
