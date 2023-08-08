@@ -59,7 +59,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     private sharedService: SharedService,
     private router: Router,
     private titleService: Title,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private dialog: MatDialog,
   ) {
     super();
@@ -175,7 +175,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   updateTitle(): void {
-    this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 

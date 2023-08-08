@@ -53,7 +53,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     });
     this.subs.sink = this.authService.sidebarEmitter.subscribe(() => {
       this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
-      this.changeDetector.markForCheck();
+      this.changeDetector.detectChanges();
     });
 
     const darkClassName = 'dark-mode';

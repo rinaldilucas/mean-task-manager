@@ -8,14 +8,14 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  constructor(private translateService: TranslateService) {
-    const browserLang = this.translateService.getBrowserLang();
-    this.translateService.addLangs(['en-US', 'pt-BR']);
-    this.translateService.setDefaultLang('pt-BR');
+  constructor(private translate: TranslateService) {
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.addLangs(['en-US', 'pt-BR']);
+    this.translate.setDefaultLang('pt-BR');
 
     const language = localStorage.getItem('language') as string;
 
-    if (language) this.translateService.use(language);
-    else this.translateService.use(browserLang.match(/en-US/i) ? browserLang : 'pt-BR');
+    if (language) this.translate.use(language);
+    else this.translate.use(browserLang.match(/en-US/i) ? browserLang : 'pt-BR');
   }
 }

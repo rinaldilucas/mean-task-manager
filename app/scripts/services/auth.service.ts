@@ -109,11 +109,9 @@ export class AuthService {
   authenticateToken(result: IJwtPayload): boolean {
     const access = result.access;
     const refresh = result.refresh;
-    const keepUserLoggedIn = result.keepUserLoggedIn;
-
     this.accessToken = access;
     this.refreshToken = refresh;
-    this.keepUserLoggedIn = keepUserLoggedIn ?? this.keepUserLoggedIn;
+    this.keepUserLoggedIn = result.keepUserLoggedIn || this.keepUserLoggedIn;
 
     if (access) {
       const expiresInDuration = result.expiresIn;
@@ -132,7 +130,7 @@ export class AuthService {
   verifyAuthorization(): boolean {
     const authInformation = this.getAuthData();
 
-    if (!authInformation) { return false; }
+    if (!authInformation) return false;
 
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
@@ -158,9 +156,9 @@ export class AuthService {
     const userRole = Cookies.get('userRole');
     const keepUserLoggedIn = Cookies.get('keepUserLoggedIn') === 'true';
 
-    if (!access || !expirationDate) {
-      return false;
-    }
+    if (!access || !expirationDate) return false;
+
+
 
     return {
       access,

@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
@@ -28,19 +27,21 @@ export class LogInComponent implements OnInit {
     private formBuilder: FormBuilder,
     private titleService: Title,
     private router: Router,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private sharedService: SharedService,
   ) {
     this.form = this.formBuilder.group({
       email: [null,
-        [Validators.required,
+        [
+          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(150),
           Validators.pattern(CustomValidators.emailRegex),
         ],
       ],
       password: [null,
-        [Validators.required,
+        [
+          Validators.required,
           Validators.minLength(8),
           Validators.maxLength(150),
         ]],
@@ -49,8 +50,7 @@ export class LogInComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translateService.get('title.login').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
-
+    this.titleService.setTitle(`${this.translate.instant('title.login')} — Mean Stack Template`);
     if (this.authService.getKeepUserLoggedIn()) {
       this.form.controls.keepUserLogged.setValue(true);
     } else {

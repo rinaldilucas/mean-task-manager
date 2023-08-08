@@ -4,7 +4,6 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Label, SingleDataSet } from 'ng2-charts';
-import { take } from 'rxjs';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { EStatus } from '@scripts/models/enum/status.enum';
@@ -32,7 +31,7 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
   };
 
   constructor(
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private media: MediaObserver,
   ) {
     super();
@@ -43,7 +42,7 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
   }
 
   async refreshAsync(): Promise<ITask | void> {
-    this.translateService.get('statistics.tasks-done').pipe(take(1)).subscribe((text: string) => { (this.chartOptions.title as ChartTitleOptions).text = text; });
+    (this.chartOptions.title as ChartTitleOptions).text = this.translate.instant('statistics.tasks-done');
     this.verifyResolutions();
 
     this.chartData = [];
@@ -51,11 +50,11 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
 
     if (this.tasks.length) {
       this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
-      this.translateService.get('statistics.status.to-do').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
       this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
-      this.translateService.get('statistics.status.progress').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
       this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
-      this.translateService.get('statistics.status.done').pipe(take(1)).subscribe((text: string) => { this.chartLabels.push(text); });
+      this.chartLabels.push(this.translate.instant('statistics.status.to-do'));
+      this.chartLabels.push(this.translate.instant('statistics.status.progress'));
+      this.chartLabels.push(this.translate.instant('statistics.status.done'));
     }
   }
 

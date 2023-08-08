@@ -31,10 +31,10 @@ export class SettingsComponent implements OnInit {
   constructor(
     private changeDetector: ChangeDetectorRef, //
     private categoryService: CategoryService,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private titleService: Title,
     private sharedService: SharedService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.updateTitle();
@@ -87,12 +87,12 @@ export class SettingsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.translateService.get('title.settings').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.titleService.setTitle(`${this.translate.instant('title.settings')} — Mean Stack Template`);
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 
   changeLanguage(language: string): void {
-    this.translateService.use(language);
+    this.translate.use(language);
     localStorage.setItem('language', language);
     this.sharedService.handleSnackbarMessages({ translationKey: 'messages.language-changed' });
     this.changeDetector.markForCheck();

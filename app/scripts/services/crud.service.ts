@@ -17,7 +17,7 @@ export class CrudService<T> {
     protected http: HttpClient, //
     private injector: Injector,
     private endpoint: string,
-  ) {}
+  ) { }
 
   findAll(): Observable<IQueryResult<T[]>> {
     return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));

@@ -25,7 +25,7 @@ export class StatisticsComponent implements OnInit {
     private taskService: TaskService,
     private sharedService: SharedService,
     private titleService: Title,
-    private translateService: TranslateService,
+    private translate: TranslateService,
   ) {
   }
 
@@ -44,7 +44,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.translateService.get('title.statistics').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.titleService.setTitle(`${this.translate.instant('title.statistics')} — Mean Stack Template`);
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 }

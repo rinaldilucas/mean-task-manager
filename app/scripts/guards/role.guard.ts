@@ -10,7 +10,7 @@ export class RoleGuard {
     private authService: AuthService, //
     private router: Router,
     private sharedService: SharedService,
-  ) {}
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const currentUser = this.authService.getLoggedUser();

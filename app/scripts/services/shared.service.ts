@@ -24,7 +24,7 @@ export class SharedService {
     private translateService: TranslateService, //
     private snackBar: MatSnackBar,
     private media: MediaObserver,
-  ) {}
+  ) { }
 
   setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
     const dataSource = new TableVirtualScrollDataSource(list);

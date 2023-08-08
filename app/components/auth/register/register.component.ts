@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs/operators';
 import { StatusCode } from 'status-code-enum';
 
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
@@ -29,12 +28,13 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private titleService: Title,
     private router: Router,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private sharedService: SharedService,
   ) {
     this.form = this.formBuilder.group({
       email: [null,
-        [Validators.required,
+        [
+          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(150),
           Validators.pattern(CustomValidators.emailRegex),
@@ -42,7 +42,8 @@ export class RegisterComponent implements OnInit {
         [CustomValidators.checkEmail(this.authService)],
       ],
       password: [null,
-        [Validators.required,
+        [
+          Validators.required,
           Validators.minLength(8),
           Validators.maxLength(150),
           CustomValidators.incremental,
@@ -56,14 +57,14 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translateService.get('title.register').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.titleService.setTitle(`${this.translate.instant('title.register')} — Mean Stack Template`);
   }
 
   async registerAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const user = { ...this.form.value, role: ERole.user } as IUser;
-    const [result, error]:IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.register(user));
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.register(user));
     if (!!error || !result || !result?.success) {
       if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages({ translationKey: 'register.email-error', success: false });
       else return this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-error', success: false });

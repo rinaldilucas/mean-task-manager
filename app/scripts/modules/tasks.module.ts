@@ -17,4 +17,4 @@ import { ConvertDatePipe } from '@scripts/pipes/convertDate.pipe';
   imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule],
   exports: [],
 })
-export class TaskModule {}
+export class TaskModule { }

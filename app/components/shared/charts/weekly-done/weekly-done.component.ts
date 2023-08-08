@@ -4,7 +4,6 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { TranslateService } from '@ngx-translate/core';
 import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Label, MultiDataSet } from 'ng2-charts';
-import { take } from 'rxjs/operators';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { ITask } from '@scripts/models/task.interface';
@@ -48,7 +47,7 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
   };
 
   constructor(
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private media: MediaObserver,
   ) {
     super();
@@ -59,7 +58,7 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
   }
 
   async refresh(): Promise<ITask | void> {
-    this.translateService.get('statistics.tasks-done-weekly').pipe(take(1)).subscribe((text) => { (this.chartOptions.title as any).text = text; });
+    (this.chartOptions.title as any).text = this.translate.instant('statistics.tasks-done-weekly');
     this.verifyResolutions();
 
     const numberOfWeeks = 4;

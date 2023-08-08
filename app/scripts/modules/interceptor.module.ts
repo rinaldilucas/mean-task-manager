@@ -12,4 +12,4 @@ import { TokenInterceptor } from '@app/scripts/interceptors/token.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
 })
-export class InterceptorModule {}
+export class InterceptorModule { }

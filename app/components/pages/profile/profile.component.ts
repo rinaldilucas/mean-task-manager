@@ -27,13 +27,14 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private titleService: Title,
     private formBuilder: FormBuilder,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private router: Router,
     private sharedService: SharedService,
   ) {
     this.form = this.formBuilder.group({
       password: [null,
-        [Validators.required,
+        [
+          Validators.required,
           Validators.minLength(8),
           Validators.maxLength(150),
         ]],
@@ -57,7 +58,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.translateService.get('title.profile').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+    this.titleService.setTitle(`${this.translate.instant('title.profile')} — Mean Stack Template`);
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 }

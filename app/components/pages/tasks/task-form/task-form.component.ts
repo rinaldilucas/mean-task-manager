@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, map, startWith, take } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { ConfirmationDialogComponent } from '@components/shared/dialogs/confirmation-dialog/confirmation-dialog';
@@ -28,7 +28,7 @@ export class TaskFormEntryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
-    private translateService: TranslateService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class TaskFormEntryComponent implements OnInit {
     const config: MatBottomSheetConfig = { data: { task, categories }, disableClose: true };
     const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
     sheetRef.afterDismissed().subscribe(() => {
-      this.translateService.get('title.tasks').pipe(take(1)).subscribe((text: string) => this.titleService.setTitle(`${text} — Mean Stack Template`));
+      this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
       this.router.navigate(['tasks']);
     });
   }
@@ -71,7 +71,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     private router: Router,
     private sharedService: SharedService,
     private titleService: Title,
-    private translateService: TranslateService,
+    private translate: TranslateService,
     private dialog: MatDialog,
     @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] },
   ) {
@@ -83,29 +83,30 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
 
     this.form = this.formBuilder.group({
       _id: [this.bottomsheetData.task._id, null],
-      title: [this.bottomsheetData.task.title,
-        [Validators.required,
+      title: [
+        this.bottomsheetData.task.title,
+        [
+          Validators.required,
           Validators.minLength(2),
           Validators.maxLength(100),
-        ]],
-      description: [this.bottomsheetData.task.description,
-        [Validators.maxLength(300)]],
+        ],
+      ],
+      description: [
+        this.bottomsheetData.task.description,
+        [
+          Validators.maxLength(300)],
+      ],
       date: [this.bottomsheetData.task.date, null],
       category: [this.bottomsheetData.task.category, null],
     });
 
     if (this.isNew) {
-      this.translateService.get('title.add-task').pipe(take(1)).subscribe((text: string) => {
-        this.title = text;
-        this.titleService.setTitle(`${this.title} — Mean Stack Template`);
-      });
+      this.title = this.translate.instant('title.add-task');
     } else {
-      this.translateService.get('title.edit-task').pipe(take(1)).subscribe((text: string) => {
-        this.title = text;
-        this.titleService.setTitle(`${this.title} — Mean Stack Template`);
-      });
+      this.title = this.translate.instant('title.edit-task');
     }
 
+    this.titleService.setTitle(`${this.title} — Mean Stack Template`);
     this.setAutoCompletes();
   }
 
