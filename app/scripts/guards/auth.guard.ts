@@ -7,11 +7,11 @@ import { AuthService } from '@services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve) => {
-      if (this.authService.getIsAuthenticated()) {
+      if (this.authService.verifyAuthorization()) {
         resolve(true);
       } else {
         this.router.navigate(['login']);
@@ -22,7 +22,7 @@ export class AuthGuard {
 
   canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve) => {
-      if (this.authService.getIsAuthenticated()) {
+      if (this.authService.verifyAuthorization()) {
         resolve(true);
       } else {
         this.router.navigate(['login']);
