@@ -4,7 +4,7 @@ var OFF = 0,
 
 module.exports = {
   root: true,
-  ignorePatterns: ['api-dist/*', 'app-dist/*', 'node_modules/*'],
+  ignorePatterns: ['dist/*', 'node_modules/*'],
   overrides: [
     {
       extends: [
