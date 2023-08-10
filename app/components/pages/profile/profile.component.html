@@ -8,7 +8,8 @@
       <form [formGroup]="form" (keyup.enter)="saveAsync()">
         <mat-card-content>
           <mat-form-field class="full-width">
-            <input type="password" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>

@@ -4,7 +4,7 @@ import { Directive, ElementRef } from '@angular/core';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[autocompleteOff]',
 })
-export class AutocompleteOffDirective {
+export class AutoCompleteOffDirective {
   constructor(private element: ElementRef) {
     const w: any = window;
     const isChrome = w.chrome;

@@ -1,18 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { DirectiveModule } from '@app/scripts/modules/directive.module';
 
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@services/auth.service';
-import { SharedService } from '@services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
+import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
+import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, DirectiveModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +27,7 @@ export class ProfileComponent implements OnInit {
   isSaving = false;
   isLoading = true;
   user!: IUser;
+  showPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -60,5 +66,10 @@ export class ProfileComponent implements OnInit {
   updateTitle(): void {
     this.titleService.setTitle(`${this.translate.instant('title.profile')} — Mean Stack Template`);
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+  }
+
+  togglePasswordVisibility(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showPassword = !this.showPassword;
   }
 }

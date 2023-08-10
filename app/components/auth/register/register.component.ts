@@ -1,20 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
+import { ERole } from '@app/scripts/models/enum/role.enum';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
+import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
+import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
-import { ERole } from '@scripts/models/enum/role.enum';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@services/auth.service';
-import { SharedService } from '@services/shared.service';
 
 @Component({
   selector: 'app-register',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, MatAutocompleteModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

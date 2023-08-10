@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LogInComponent } from '@components/auth/login/login.component';
-import { RegisterComponent } from '@components/auth/register/register.component';
-import { EmptyPageComponent } from '@components/pages/empty-page.component';
-import { HomepageComponent } from '@components/pages/home/home.component';
-import { ProfileComponent } from '@components/pages/profile/profile.component';
-import { SettingsComponent } from '@components/pages/settings/settings.component';
-import { StatisticsComponent } from '@components/pages/statistics/statistics.component';
-import { AuthGuard } from '@scripts/guards/auth.guard';
-import { LoggedInAuthGuard } from '@scripts/guards/loggedIn.guard';
-import { RoleGuard } from '@scripts/guards/role.guard';
-import { ERole } from '@scripts/models/enum/role.enum';
+import { LogInComponent } from '@app/components/auth/login/login.component';
+import { RegisterComponent } from '@app/components/auth/register/register.component';
+import { EmptyPageComponent } from '@app/components/pages/empty-page.component';
+import { HomepageComponent } from '@app/components/pages/home/home.component';
+import { ProfileComponent } from '@app/components/pages/profile/profile.component';
+import { SettingsComponent } from '@app/components/pages/settings/settings.component';
+import { StatisticsComponent } from '@app/components/pages/statistics/statistics.component';
+import { AuthGuard } from '@app/scripts/guards/auth.guard';
+import { LoggedInAuthGuard } from '@app/scripts/guards/loggedIn.guard';
+import { RoleGuard } from '@app/scripts/guards/role.guard';
+import { ERole } from '@app/scripts/models/enum/role.enum';
 
 const routes: Routes = [
   { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard], data: { state: 'register' } },
   {
     path: 'tasks',
-    loadChildren: () => import('@scripts/modules/tasks.module').then((module) => module.TaskModule),
+    loadChildren: () => import('@app/scripts/modules/tasks.module').then((module) => module.TaskModule),
     canLoad: [AuthGuard],
   },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },

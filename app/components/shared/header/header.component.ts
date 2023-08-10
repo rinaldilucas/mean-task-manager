@@ -8,7 +8,7 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
-import { AuthService } from '@services/auth.service';
+import { AuthService } from '@app/scripts/services/auth.service';
 
 @Component({
   selector: 'app-header',

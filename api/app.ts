@@ -5,13 +5,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
-import DatabaseConfig from './config/mongodb.config';
-import swaggerDocs from './swagger.json';
 
 // Import routes
-import authRoutes from '@routes/auth.routes';
-import categoryRoutes from '@routes/category.routes';
-import taskRoutes from '@routes/task.routes';
+import DatabaseConfig from '@api/config/mongodb.config';
+import swaggerDocs from '@api/swagger.json';
+
+import authRoutes from '@api/routes/auth.routes';
+import categoryRoutes from '@api/routes/category.routes';
+import taskRoutes from '@api/routes/task.routes';
 
 class App {
   express: express.Application;

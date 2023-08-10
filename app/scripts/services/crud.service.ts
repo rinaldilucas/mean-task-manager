@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
+import { Injector } from '@angular/core';
 
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Injector } from '@angular/core';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { AuthService } from '@services/auth.service';
-import { SharedService } from '@services/shared.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 export class CrudService<T> {
   protected sharedService = this.injector.get(SharedService);

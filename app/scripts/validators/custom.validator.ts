@@ -2,9 +2,9 @@ import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup } from '@angu
 
 import { debounceTime, first, map, switchMap } from 'rxjs';
 
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { IUser } from '@scripts/models/user.interface';
-import { AuthService } from '@services/auth.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IUser } from '@app/scripts/models/user.interface';
+import { AuthService } from '@app/scripts/services/auth.service';
 
 export class CustomValidators {
   static emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';

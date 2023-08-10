@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { StatusCode } from 'status-code-enum';
 
+import { User as Model } from '@api/models/user.model';
 import jwtService from '@api/services/jwt.service';
 import { add as addToBlacklist } from '@api/services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
-import { User as Model } from '@models/user.model';
 
 class AuthController {
   async authenticate(request: Request, response: Response): Promise<Response | undefined> {

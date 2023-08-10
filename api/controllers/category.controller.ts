@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
+import { Category as Model } from '@api/models/category.model';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
-import { Category as Model } from '@models/category.model';
 
 class CategoryController {
   async findAll(request: Request, response: Response): Promise<Response | any> {

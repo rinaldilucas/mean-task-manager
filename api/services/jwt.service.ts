@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { add as addToBlacklist } from '@api/services/redis.service';
 
 class JwtService {

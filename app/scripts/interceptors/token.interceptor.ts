@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
 
-import { AuthService } from '@services/auth.service';
+import { AuthService } from '@app/scripts/services/auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

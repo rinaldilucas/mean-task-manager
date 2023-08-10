@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '@services/auth.service';
+import { AuthService } from '@app/scripts/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoggedInAuthGuard {

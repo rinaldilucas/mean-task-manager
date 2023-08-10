@@ -13,8 +13,7 @@ const SchemaModel = new Schema({
   },
   category: { type: SchemaTypes.String, ref: 'Category' },
   userId: { type: SchemaTypes.ObjectId, ref: 'User', required: true },
-},
-{ timestamps: true },
+}, { timestamps: true },
 );
 
 export const Task: Model<Interface> = model<Interface>('Task', SchemaModel);

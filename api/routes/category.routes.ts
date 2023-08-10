@@ -1,17 +1,16 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import authMiddleware from '@middlewares/auth.middleware';
-import { verifyValidations } from '@middlewares/validator.middleware';
-
-import Controller from '@controllers/category.controller';
+import Controller from '@api/controllers/category.controller';
+import authMiddleware from '@api/middlewares/auth.middleware';
+import { verifyValidations } from '@api/middlewares/validator.middleware';
 
 const routes = Router();
 
-// FIND ALL
+// find all
 routes.get('/api/categories', authMiddleware, Controller.findAll);
 
-// CREATE
+// create
 routes.post(
   '/api/categories',
   check('title', 'Must be at least 2 and lesser than 50 chars long') //
@@ -25,7 +24,7 @@ routes.post(
   Controller.create,
 );
 
-// DELETE
+// delete
 routes.delete('/api/categories/:_id', authMiddleware, Controller.remove);
 
 export default routes;

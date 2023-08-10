@@ -1,17 +1,16 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import authMiddleware from '@middlewares/auth.middleware';
-import { verifyValidations } from '@middlewares/validator.middleware';
-
-import Controller from '@controllers/task.controller';
+import Controller from '@api/controllers/task.controller';
+import authMiddleware from '@api/middlewares/auth.middleware';
+import { verifyValidations } from '@api/middlewares/validator.middleware';
 
 const routes = Router();
 
-// FIND ALL
+// find all
 routes.get('/api/tasks', authMiddleware, Controller.findAll);
 
-// CREATE
+// create
 routes.post(
   '/api/tasks',
   check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
@@ -21,13 +20,13 @@ routes.post(
   Controller.create,
 );
 
-// UPDATE
+// update
 routes.put('/api/tasks', authMiddleware, Controller.update);
 
-// DELETE
+// delete
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
 
-// GET BY ID
+// get by id
 routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
 
 export default routes;

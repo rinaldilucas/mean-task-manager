@@ -1,4 +1,4 @@
-import { ERole } from '@scripts/models/enum/role.enum';
+import { ERole } from '@app/scripts/models/enum/role.enum';
 
 export interface IAuthData {
   userId: string;

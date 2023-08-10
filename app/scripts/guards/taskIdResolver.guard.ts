@@ -4,9 +4,9 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { map, of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { ITask } from '@scripts/models/task.interface';
-import { TaskService } from '@services/task.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskIdResolverGuard {

@@ -26,8 +26,7 @@ const SchemaModel = new Schema({
     default: 'user',
     required: true,
   },
-},
-{ timestamps: true },
+}, { timestamps: true },
 );
 
 export const User: Model<Interface> = model<Interface>('User', SchemaModel);

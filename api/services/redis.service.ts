@@ -1,8 +1,8 @@
 import { createHash } from 'crypto';
 import jwt from 'jsonwebtoken';
-
 import { promisify } from 'util';
-import redis from '../utils/redis.handler';
+
+import redis from '@api/utils/redis.handler';
 
 const existsAsync = promisify(redis.exists).bind(redis);
 const setAsync = promisify(redis.set).bind(redis);

@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
+import { Task as Model } from '@api/models/task.model';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
-import { Task as Model } from '@models/task.model';
 
 class TaskController {
   async findAll(request: Request, response: Response): Promise<Response | any> {

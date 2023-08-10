@@ -12,12 +12,12 @@ import { debounceTime, lastValueFrom, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
-import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
-import { EStatus } from '@scripts/models/enum/status.enum';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { ITask } from '@scripts/models/task.interface';
-import { SharedService } from '@services/shared.service';
-import { TaskService } from '@services/task.service';
+import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
+import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -68,7 +68,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   ngOnInit(): void {
     this.updateTitle();
     this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
-    this.disposeServicesOnDestroy = true;
+    this.removeSubscriptionsFromService = true;
 
     this.subs.sink = this.sharedService.tableColumnListener.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
     this.subs.sink = this.sharedService.pageSizeListener.subscribe((options: { pageSize: number, pageSizeOptions: number[] }) => {

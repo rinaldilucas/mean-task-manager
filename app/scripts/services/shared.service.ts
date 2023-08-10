@@ -10,8 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, Subscription, take, throwError } from 'rxjs';
 
-import { IColumnsOptions } from '@scripts/models/columnsOptions.interface';
-import { ITask } from '@scripts/models/task.interface';
+import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
+import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
@@ -113,7 +113,7 @@ export class SharedService {
     }
   }
 
-  static disposeSubscriptions(): void {
+  static removeSubscriptions(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

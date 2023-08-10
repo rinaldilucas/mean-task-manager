@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import refreshMiddleware from '@middlewares/refresh.middleware';
-import { bruteforce } from '@middlewares/security.middleware';
-import { verifyValidations } from '@middlewares/validator.middleware';
-
-import Controller from '@controllers/auth.controller';
+import Controller from '@api/controllers/auth.controller';
+import refreshMiddleware from '@api/middlewares/refresh.middleware';
+import { bruteforce } from '@api/middlewares/security.middleware';
+import { verifyValidations } from '@api/middlewares/validator.middleware';
 
 const routes = Router();
 
-// AUTHENTICATE
+// authenticate
 routes.post(
   '/api/auth/authenticate',
   check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
@@ -19,7 +18,7 @@ routes.post(
   Controller.authenticate,
 );
 
-// REGISTER
+// register
 routes.post(
   '/api/auth/register', //
   check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
@@ -28,10 +27,10 @@ routes.post(
   Controller.register,
 );
 
-// GET BY EMAIL
+// get by email
 routes.get('/api/auth/email-exists/:email', Controller.checkIfEmailExists);
 
-// CHANGE PASSWORD
+// change password
 routes.put(
   '/api/auth/changePassword', //
   check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
@@ -39,10 +38,10 @@ routes.put(
   Controller.changePassword,
 );
 
-// REFRESH TOKEN
+// refresh token
 routes.post('/api/auth/refresh', refreshMiddleware, Controller.refreshToken);
 
-// LOGOUT
+// logout
 routes.post('/api/auth/logout', Controller.logout);
 
 export default routes;

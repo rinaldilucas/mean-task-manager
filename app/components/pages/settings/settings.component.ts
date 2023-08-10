@@ -1,19 +1,23 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Title } from '@angular/platform-browser';
 
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
 
-import { ICategory } from '@scripts/models/category.interface';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { CategoryService } from '@services/category.service';
-import { SharedService } from '@services/shared.service';
+import { CommonModule } from '@angular/common';
+import { ICategory } from '@app/scripts/models/category.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
+import { CategoryService } from '@app/scripts/services/category.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-settings',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

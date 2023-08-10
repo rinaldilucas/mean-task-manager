@@ -4,9 +4,9 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { ITask } from '@scripts/models/task.interface';
-import { CrudService } from '@services/crud.service';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { ITask } from '@app/scripts/models/task.interface';
+import { CrudService } from '@app/scripts/services/crud.service';
 
 const endpoint = environment.baseUri + '/tasks';
 

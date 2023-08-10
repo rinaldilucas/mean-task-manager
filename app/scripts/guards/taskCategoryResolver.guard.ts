@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
-import { ICategory } from '@scripts/models/category.interface';
-import { IQueryResult } from '@scripts/models/queryResult.interface';
-import { CategoryService } from '@services/category.service';
+import { ICategory } from '@app/scripts/models/category.interface';
+import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { CategoryService } from '@app/scripts/services/category.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskCategoryResolverGuard {
