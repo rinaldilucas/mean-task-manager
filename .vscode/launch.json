@@ -1,24 +1,11 @@
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "chrome",
-			"request": "launch",
-			"name": "Debug Client",
-			"url": "http://localhost:4200",
-			"webRoot": "${workspaceFolder}"
-		},
-		{
-			"command": "yarn dev",
-			"name": "Run all w/ API debug",
-			"request": "launch",
-			"type": "node-terminal"
-		},
-		{
-			"command": "yarn debug:api",
-			"name": "Debug API",
-			"request": "launch",
-			"type": "node-terminal"
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "yarn debug:api",
+      "name": "Debug API",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+  ]
 }
