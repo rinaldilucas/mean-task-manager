@@ -2,7 +2,7 @@ import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup } from '@angu
 
 import { debounceTime, first, map, switchMap } from 'rxjs';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 

@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/conf
 import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
@@ -117,7 +117,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     task.status = this.isNew ? EStatus.toDo : task.status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
-    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
 
     this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
     this.taskService.emitterTask.emit(task);

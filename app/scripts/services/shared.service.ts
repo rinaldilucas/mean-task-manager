@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, Subscription, take, throwError } from 'rxjs';
 
-import { IColumnsOptions } from '@app/scripts/models/columnsOptions.interface';
+import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })

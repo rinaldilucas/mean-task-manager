@@ -9,7 +9,7 @@ import { lastValueFrom, take } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
 import { ICategory } from '@app/scripts/models/category.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
 
   async refreshAsync(): Promise<void> {
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAll()));
-    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
 
     this.categories = result.data;
     this.isLoading = false;
@@ -61,7 +61,7 @@ export class SettingsComponent implements OnInit {
     const category = { title: value } as ICategory;
 
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
-    if (!!error || !result || !result?.success) {
+    if (!result || !result.success || error) {
       this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';

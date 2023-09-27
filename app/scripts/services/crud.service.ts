@@ -5,7 +5,7 @@ import { Injector } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 

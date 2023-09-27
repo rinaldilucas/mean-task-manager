@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TasksDoneComponent } from '@app/components/shared/charts/tasks-done/tasks-done.component';
 import { WeeklyDoneComponent } from '@app/components/shared/charts/weekly-done/weekly-done.component';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { SharedService } from '@app/scripts/services/shared.service';
@@ -42,7 +42,7 @@ export class StatisticsComponent implements OnInit {
 
   async refreshAsync(): Promise<void> {
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll()));
-    if (!!error || !result || !result?.success) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
 
     this.tasks = result.data;
     this.isLoading = false;

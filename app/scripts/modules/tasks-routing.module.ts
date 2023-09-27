@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TaskFormEntryComponent } from '@app/components/pages/tasks/task-form/task-form.component';
-import { TaskListComponent } from '@app/components/pages/tasks/task-list/task-list.component';
-import { TaskCategoryResolverGuard } from '@app/scripts/guards/taskCategoryResolver.guard';
-import { TaskIdResolverGuard } from '@app/scripts/guards/taskIdResolver.guard';
+import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
+import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
+import { TaskCategoryResolverGuard } from '@app/scripts/guards/task-category-resolver.guard';
+import { TaskIdResolverGuard } from '@app/scripts/guards/task-id-resolver.guard';
 
 const routes: Routes = [
   {

@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { map, of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { TaskService } from '@app/scripts/services/task.service';
 

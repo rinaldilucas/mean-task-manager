@@ -8,11 +8,11 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { IAuthData } from '@app/scripts/models/authData.interface';
+import { IAuthData } from '@app/scripts/models/auth-data.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
 import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IJwtPayload } from '@app/scripts/models/jwtpayload.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 
@@ -199,7 +199,7 @@ export class AuthService {
       this.refreshTokenTimeout = setTimeout(async () => {
         const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.generateRefreshToken());
 
-        if (!!error || !result || !result?.success) { this.logoutAsync(); }
+        if (!result || !result.success || error) { this.logoutAsync(); }
       }, timeout);
     } else {
       setTimeout(() => this.logoutAsync(), timeout);

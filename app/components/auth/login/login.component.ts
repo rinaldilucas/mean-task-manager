@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IJwtPayload } from '@app/scripts/models/jwtPayload.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IJwtPayload } from '@app/scripts/models/jwtpayload.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AuthService } from '@app/scripts/services/auth.service';
@@ -69,7 +69,7 @@ export class LogInComponent implements OnInit {
     const user = { ...this.form.value } as IUser;
     const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.authService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
 
-    if (!!error || !result || !result?.success) {
+    if (!result || !result.success || error) {
       if (error.status === StatusCode.ClientErrorUnauthorized) {
         this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
         return;

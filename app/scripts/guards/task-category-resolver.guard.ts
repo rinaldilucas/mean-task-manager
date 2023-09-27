@@ -4,7 +4,7 @@ import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { ICategory } from '@app/scripts/models/category.interface';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { CategoryService } from '@app/scripts/services/category.service';
 
 @Injectable({ providedIn: 'root' })

@@ -4,7 +4,7 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
 import { environment } from '@app/environments/environment';
-import { IQueryResult } from '@app/scripts/models/queryResult.interface';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { CrudService } from '@app/scripts/services/crud.service';
 
