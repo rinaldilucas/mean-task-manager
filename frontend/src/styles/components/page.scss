@@ -1,0 +1,91 @@
+@import "@angular/material/theming";
+
+.page {
+  display: flex;
+  position: relative;
+  height: 100%;
+  min-height: calc(100vh - 2rem);
+
+  @include media(">=desktop") {
+    justify-content: center;
+    margin: vw(80) 0 0 !important;
+    height: calc(6.3rem + #{$header-size});
+  }
+
+  &__wrapper {
+    margin: vw(40) vw(20);
+    width: 100%;
+    max-width: vw(1000);
+    min-height: calc(100% - 2rem);
+  }
+
+  &__content {
+    position: relative;
+    height: 100%;
+
+    &::after {
+      position: absolute;
+      top: vw(-10);
+      left: 0;
+      transform: scale(0.95);
+      z-index: 0;
+      border-radius: vw(10);
+      background-color: mat-color($app-background, 50) !important;
+      width: 100%;
+      height: vw(30);
+      content: "";
+
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 50) !important;
+      }
+    }
+
+    &--empty {
+      height: 100%;
+
+      @include media(">=desktop") {
+        height: 90%;
+      }
+    }
+
+    &-wrapper {
+      position: relative;
+      z-index: 1;
+      background-color: mat-color($app-background, 100);
+      padding: vw(50) vw(40);
+      height: 100%;
+      box-sizing: border-box;
+
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 100) !important;
+      }
+
+      @include media(">=desktop") {
+        padding: vw(70) vw(50);
+      }
+    }
+  }
+
+  section {
+    margin-bottom: vw(38);
+    border-bottom: 1px solid mat-color($app-primary, 200);
+    padding-bottom: vw(24);
+
+    .dark-mode & {
+      border-bottom: 1px solid mat-contrast($app-primary, 200);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+
+    button {
+      margin-right: vw(18);
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

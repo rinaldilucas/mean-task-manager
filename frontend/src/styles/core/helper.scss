@@ -1,0 +1,73 @@
+/* ============================================== */
+/* ================== helpers =================== */
+/* ============================================== */
+
+.hide {
+  display: none;
+}
+
+.clear {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.split {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  @include media("<desktop") {
+    justify-content: space-around;
+  }
+
+  @include media(">=desktop") {
+    justify-content: space-between;
+  }
+}
+
+/* ============================================= */
+/* =============== hide classes ================ */
+/* ============================================= */
+
+@include media(">mobile") {
+  .only-mobile {
+    display: none;
+  }
+}
+
+@include media("<=mobile", ">=desktop") {
+  .only-tablet {
+    display: none;
+  }
+}
+
+@include media("<desktop") {
+  .only-desktop {
+    display: none;
+  }
+}
+
+@include media("<tablet") {
+  .only-tablet-desktop {
+    display: none;
+  }
+}
+
+@include media(">=desktop") {
+  .only-mobile-tablet {
+    display: none;
+  }
+}
+
+/* ============================================= */
+/* ================== layout =================== */
+/* ============================================= */
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 48%;
+}

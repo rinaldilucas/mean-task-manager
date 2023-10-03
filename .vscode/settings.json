@@ -8,12 +8,4 @@
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": true
-  },
-  "i18n-ally.localesPaths": [
-    "app/assets/i18n"
-  ],
-  "editor.formatOnSave": true
 }

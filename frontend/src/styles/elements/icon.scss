@@ -1,0 +1,18 @@
+.icon {
+  opacity: 0.15;
+  padding: vw(10);
+  font-size: vw(45) !important;
+
+  &--big {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: vw(85) !important;
+    height: vw(85) !important;
+    font-size: vw(70) !important;
+
+    @include media(">=desktop") {
+      font-size: vw(100) !important;
+    }
+  }
+}

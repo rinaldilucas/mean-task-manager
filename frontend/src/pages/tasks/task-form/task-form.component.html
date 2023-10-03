@@ -1,0 +1,51 @@
+<div class="form-modal">
+  <div class="form-modal__header">
+    <div class="form-modal__header-wrapper">
+      <button type="button" mat-fab color="primary" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <h2 class="form-modal__header-title">{{ title }}</h2>
+      <div class="form-header">
+        <button type="submit" mat-fab color="primary" [disabled]="!this.form.dirty || !this.form.valid" (click)="saveAsync()">
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-modal__body">
+    <form [formGroup]="form" class="form-modal__body-wrapper" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" cdkFocusInitial />
+          <mat-hint align="end">{{ taskTitle.value.length || 0 }}/100</mat-hint>
+          <mat-error *ngIf="form.get('title')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
+          <mat-error *ngIf="form.get('title')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 2 } }} </mat-error>
+          <mat-error *ngIf="form.get('title')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 100 } }} </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <textarea #taskDescription maxlength="300" formControlName="description" rows="2" matInput placeholder="{{ 'input.description' | translate }}"></textarea>
+          <mat-hint align="end">{{ taskDescription.value.length || 0 }}/300</mat-hint>
+          <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 300 } }} </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ "input.choose-due-date" | translate }}</mat-label>
+          <input formControlName="date" matInput (focus)="picker.open()" [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input #category type="text" formControlName="category" matInput placeholder="{{ 'input.category' | translate }}" [matAutocomplete]="categoriesAutocomplete" />
+          <mat-autocomplete #categoriesAutocomplete="matAutocomplete">
+            <mat-option *ngFor="let option of categoriesFilteredOptions | async" [value]="option.title">
+              {{ option.title }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </mat-card-content>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,219 @@
+.list {
+  height: 100%;
+
+  @include media(">=desktop") {
+    align-items: start !important;
+    margin: 0 !important;
+  }
+
+  @include media(">=common-desktop") {
+    margin: vw(35) 0 0 !important;
+  }
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: vw(1000);
+    height: 100%;
+
+    @include media(">=desktop") {
+      margin: vw(40);
+      height: unset;
+    }
+
+    &::before {
+      position: absolute;
+      top: vw(-10);
+      left: 0;
+      transform: scale(0.95);
+      z-index: 0;
+      border-radius: vw(10);
+      background-color: mat-color($app-background, 50) !important;
+      width: 100%;
+      height: vw(30);
+      content: "";
+
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 50) !important;
+      }
+    }
+  }
+
+  &__add {
+    position: absolute !important;
+    bottom: vw(20);
+    left: vw(20);
+    z-index: 20;
+
+    @include media(">=desktop") {
+      right: vw(30);
+      bottom: vw(30);
+      left: unset;
+      margin-left: auto;
+    }
+  }
+
+  &__header {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+    margin: 0 0 vw(2);
+    margin-left: 0;
+    box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
+    background-color: mat-color($app-background, 100);
+    padding: vw(25) 0 vw(15);
+    height: vw(160);
+    font-size: vw(22);
+
+    @include media(">=desktop") {
+      flex-direction: row;
+      justify-content: unset;
+      padding: vw(15) 0;
+      height: vw(76);
+    }
+
+    .dark-mode & {
+      background-color: mat-contrast($app-background, 100) !important;
+    }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      margin-top: vw(20);
+      font-size: vw(34);
+      justify-self: center;
+
+      @include media(">=desktop") {
+        flex: 1 1 0%;
+        margin: vw(20) 0 0 vw(48);
+      }
+    }
+
+    &-search {
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: vw(8);
+      padding: 0 vw(10) 0 vw(20);
+      padding-right: vw(20);
+      width: 90%;
+      box-sizing: border-box;
+      place-content: center flex-end;
+
+      @include media(">=desktop") {
+        margin-top: unset;
+        margin-right: vw(20);
+        width: unset;
+      }
+
+      .mat-form-field {
+        width: 100% !important;
+      }
+
+      .mat-form-field-wrapper {
+        padding-bottom: 0 !important;
+      }
+
+      .mat-form-field-underline {
+        bottom: vw(8) !important;
+      }
+    }
+  }
+
+  &__body {
+    background-color: mat-color($app-background, 100);
+
+    @include media(">=desktop") {
+      height: vw(387);
+    }
+
+    @include media(">=common-desktop") {
+      height: vw(557);
+    }
+
+    @include media("<=desktop") {
+      height: calc(100vh - (0.6rem + 0.6rem + 1.6rem + 0.4rem));
+    }
+
+    &--empty {
+      height: calc(100% - (1.4rem + 0.6rem));
+
+      @include media(">=desktop") {
+        height: calc(3.87rem);
+      }
+
+      @include media(">=common-desktop") {
+        height: calc(5rem + 0.6rem);
+      }
+    }
+
+    &--placeholder {
+      height: 100%;
+
+      @include media(">=common-desktop") {
+        height: calc(5rem + 0.6rem);
+      }
+    }
+
+    .dark-mode & {
+      background-color: mat-contrast($app-background, 50) !important;
+    }
+
+    &-title {
+      margin: 0 !important;
+      font-size: vw(18) !important;
+    }
+
+    &-actions {
+      height: vw(45);
+    }
+
+    &-table {
+      height: 100%;
+
+      @include media(">=desktop") {
+        height: vw(327);
+      }
+
+      @include media(">=common-desktop") {
+        height: vw(497);
+      }
+
+      table {
+        width: 100%;
+
+        @include media("<=desktop") {
+          padding-right: vw(15);
+          padding-left: vw(15);
+        }
+      }
+    }
+
+    .table {
+      height: 100%;
+    }
+
+    h2 {
+      margin: 0;
+      line-height: vw(22);
+      font-size: vw(18);
+    }
+
+    p {
+      margin: 0;
+      font-size: vw(12);
+    }
+
+    .mat-column-actions {
+      flex: 0 0 16%;
+    }
+
+    mat-paginator {
+      height: vw(60);
+    }
+  }
+}

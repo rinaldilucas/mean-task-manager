@@ -1,0 +1,17 @@
+/* ============================================== */
+/* ================== mixins ==================== */
+/* ============================================== */
+
+@mixin transition($second) {
+  transition: $second ease-in-out;
+}
+
+/* ============================================== */
+/* ================== fonts ===================== */
+/* ============================================== */
+
+@mixin font($font-name, $font-size: 1.8rem, $line-height: 2.2rem) {
+  line-height: $line-height;
+  font-family: $font-name, "Verdana", "sans-serif";
+  font-size: $font-size;
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": [
+      "jest"
+    ]
+  },
+  "files": [
+    "app/main.ts",
+    "app/polyfills.ts"
+  ],
+  "include": [
+    "app/**/*.d.ts"
+  ]
+}

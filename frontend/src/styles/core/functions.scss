@@ -1,0 +1,39 @@
+/* ============================================== */
+/* ================ functions =================== */
+/* ============================================== */
+
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function desktop-vw($pixel: 0, $base: false) {
+  @if $base {
+    $base: $convert-base;
+  } @else {
+    $base: 100;
+  }
+
+  @return ((strip-unit($pixel) / strip-unit($layout-desktop)) * $base) * 1vw;
+}
+
+@function mobile-vw($pixel: 0, $base: false) {
+  @if $base {
+    $base: $convert-base;
+  } @else {
+    $base: 100;
+  }
+
+  @return ((strip-unit($pixel) / strip-unit($layout-mobile)) * $base) * 1vw;
+}
+
+@function fixed-vw($pixel: 0) {
+  @return (strip-unit($pixel) * ($convert-base / 100)) * 1px;
+}
+
+@function vw($pixel: 0) {
+  @return (strip-unit($pixel) / ($convert-base / 10)) * 1rem;
+}

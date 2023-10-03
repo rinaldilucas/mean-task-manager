@@ -1,0 +1,20 @@
+.scrollbar {
+  // sass-lint:disable no-misspelled-properties
+  scrollbar-color: mat-color($primary, 500) !important; // firefox
+  // sass-lint:disable no-misspelled-properties
+  scrollbar-width: vw(6) !important; // firefox
+
+  // sass-lint:disable no-vendor-prefixes
+  ::-webkit-scrollbar {
+    width: vw(10);
+
+    &-thumb {
+      background: mat-color($primary, 500);
+
+      &:hover {
+        border-radius: 99px;
+        background: mat-color($primary, 600);
+      }
+    }
+  }
+}
