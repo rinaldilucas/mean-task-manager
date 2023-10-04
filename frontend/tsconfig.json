@@ -29,13 +29,13 @@
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "./dist/app/out-tsc",
+    "outDir": "./dist",
     "paths": {
-      "@api/*": [
-        "./api/*"
+      "@root/*": [
+        "./*"
       ],
       "@app/*": [
-        "./app/*"
+        "./src/*"
       ]
     },
     "resolveJsonModule": true,
@@ -46,8 +46,8 @@
     "target": "ES2021",
     "useDefineForClassFields": false
   },
-  "include": [
-    "./app/",
-    "./api/"
-  ]
+  "files": [
+    "./main.ts",
+    "./polyfills.ts"
+  ],
 }

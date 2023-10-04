@@ -7,14 +7,14 @@ import Cookies from 'js-cookie';
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { environment } from '@app/environments/environment';
 import { IAuthData } from '@app/scripts/models/auth-data.interface';
 import { ERole } from '@app/scripts/models/enum/role.enum';
-import { IJwtToken } from '@app/scripts/models/jwtToken.interface';
-import { IJwtPayload } from '@app/scripts/models/jwtpayload.interface';
+import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
+import { IJwtToken } from '@app/scripts/models/jwt-token.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { environment } from '@root/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

@@ -1,0 +1,27 @@
+{
+  "type": "stylesheet",
+  "content": [
+    {
+      "type": "multilineComment",
+      "content": "test*/E:enabled/*test*/{/*test*/p/*test*/:/*test*/v/*test*/}/*test*/",
+      "syntax": "sass",
+      "start": {
+        "line": 1,
+        "column": 1
+      },
+      "end": {
+        "line": 1,
+        "column": 70
+      }
+    }
+  ],
+  "syntax": "sass",
+  "start": {
+    "line": 1,
+    "column": 1
+  },
+  "end": {
+    "line": 1,
+    "column": 70
+  }
+}

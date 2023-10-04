@@ -1,0 +1,53 @@
+{
+  "type": "uri",
+  "content": [
+    {
+      "type": "space",
+      "content": "\n  ",
+      "syntax": "scss",
+      "start": {
+        "line": 1,
+        "column": 5
+      },
+      "end": {
+        "line": 2,
+        "column": 2
+      }
+    },
+    {
+      "type": "raw",
+      "content": "http://test.com",
+      "syntax": "scss",
+      "start": {
+        "line": 2,
+        "column": 3
+      },
+      "end": {
+        "line": 2,
+        "column": 17
+      }
+    },
+    {
+      "type": "space",
+      "content": "\n",
+      "syntax": "scss",
+      "start": {
+        "line": 2,
+        "column": 18
+      },
+      "end": {
+        "line": 2,
+        "column": 18
+      }
+    }
+  ],
+  "syntax": "scss",
+  "start": {
+    "line": 1,
+    "column": 1
+  },
+  "end": {
+    "line": 3,
+    "column": 1
+  }
+}

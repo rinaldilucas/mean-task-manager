@@ -23,7 +23,7 @@ import { InterceptorModule } from '@app/scripts/modules/interceptor.module';
 
 export class WebpackTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
-    return from(import(`../../assets/i18n/${lang}.json`));
+    return from(import(`../../../assets/i18n/${lang}.json`));
   }
 }
 

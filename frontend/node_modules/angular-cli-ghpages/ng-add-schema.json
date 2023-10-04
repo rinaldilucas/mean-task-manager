@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "angular-cli-ghpages-ng-add-schematic",
+  "title": "angular-cli-ghpages ng-add schematic",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The project for which the deploy config should be added"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

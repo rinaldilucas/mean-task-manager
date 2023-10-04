@@ -41,7 +41,6 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "4.7.4"
   },
-  "main": "index.js",
   "scripts": {
     "build": "babel . --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
     "debug": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",

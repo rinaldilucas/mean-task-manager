@@ -7,31 +7,31 @@
 /* ============================================== */
 /* ================== core  ===================== */
 /* ============================================== */
-@import "./app/styles/core/constants";
-@import "./app/styles/core/theme";
-@import "./app/styles/core/config";
-@import "./app/styles/core/functions";
-@import "./app/styles/core/layout";
-@import "./app/styles/core/helper";
-@import "./app/styles/core/mixins";
-@import "./app/styles/core/accessibility";
-@import "./app/styles/core/material";
+@import "./core/constants";
+@import "./core/theme";
+@import "./core/config";
+@import "./core/functions";
+@import "./core/layout";
+@import "./core/helper";
+@import "./core/mixins";
+@import "./core/accessibility";
+@import "./core/material";
 
 /* ============================================== */
 /* ================ components ================== */
 /* ============================================== */
 
-@import "./app/styles/components/header";
-@import "./app/styles/components/form";
-@import "./app/styles/components/form-modal";
-@import "./app/styles/components/list";
-@import "./app/styles/components/page";
-@import "./app/styles/components/chart";
+@import "./components/header";
+@import "./components/form";
+@import "./components/form-modal";
+@import "./components/list";
+@import "./components/page";
+@import "./components/chart";
 
 /* ============================================== */
 /* ================= elements =================== */
 /* ============================================== */
-@import "./app/styles/elements/loader";
-@import "./app/styles/elements/buttons";
-@import "./app/styles/elements/icon";
-@import "./app/styles/elements/scrollbar";
+@import "./elements/loader";
+@import "./elements/buttons";
+@import "./elements/icon";
+@import "./elements/scrollbar";

@@ -1,0 +1,27 @@
+{
+  "type": "value",
+  "content": [
+    {
+      "type": "color",
+      "content": "F0f0C0",
+      "syntax": "sass",
+      "start": {
+        "line": 1,
+        "column": 1
+      },
+      "end": {
+        "line": 1,
+        "column": 7
+      }
+    }
+  ],
+  "syntax": "sass",
+  "start": {
+    "line": 1,
+    "column": 1
+  },
+  "end": {
+    "line": 1,
+    "column": 7
+  }
+}

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { IJwtPayload } from '@app/scripts/models/jwtpayload.interface';
+import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
