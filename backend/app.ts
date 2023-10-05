@@ -30,13 +30,13 @@ class App {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(cors());
-    this.express.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
     const args = process.argv;
 
     if (args.includes('--prod=true')) {
-      this.express.use(express.static(path.join(__dirname, 'dist/app')));
-      this.express.use('/', express.static(path.join(__dirname, 'dist/app')));
+      this.express.use(express.static(path.join(__dirname, '../frontend/dist')));
+      this.express.use('/', express.static(path.join(__dirname, '../frontend/dist')));
     }
   }
 

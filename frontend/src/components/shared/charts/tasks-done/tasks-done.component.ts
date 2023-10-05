@@ -7,7 +7,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, ChartsModule, Label, SingleDataSet } from 'ng2-charts';
 
-import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { ITask } from '@app/scripts/models/task.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';

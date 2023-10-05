@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LogInComponent } from '@app/components/auth/login/login.component';
 import { RegisterComponent } from '@app/components/auth/register/register.component';
-import { EmptyPageComponent } from '@app/pages/empty-page.component';
+import { EmptyPageComponent } from '@app/pages/empty-page/empty-page.component';
 import { HomepageComponent } from '@app/pages/home/home.component';
 import { ProfileComponent } from '@app/pages/profile/profile.component';
 import { SettingsComponent } from '@app/pages/settings/settings.component';

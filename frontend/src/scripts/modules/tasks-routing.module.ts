@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
 import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
-import { TaskCategoryResolverGuard } from '@app/scripts/guards/task-category-resolver.guard';
-import { TaskIdResolverGuard } from '@app/scripts/guards/task-id-resolver.guard';
+import { TaskCategoryResolverGuard } from '@app/scripts/resolvers/task-category.resolver';
+import { TaskIdResolverGuard } from '@app/scripts/resolvers/task-id.resolver';
 
 const routes: Routes = [
   {

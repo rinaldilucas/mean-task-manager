@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
-import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@app/scripts/services/auth.service';
 

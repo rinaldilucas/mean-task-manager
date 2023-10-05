@@ -26,7 +26,7 @@
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "./dist/app/out-tsc",
+    "outDir": "./dist",
     "paths": {
       "@root/*": [
         "./*"

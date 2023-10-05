@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, map, startWith } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
-import { Unsubscriber } from '@app/components/shared/unsubscriber.component';
+import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';

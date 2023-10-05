@@ -1,5 +1,0 @@
-@mixin keyframes($foo) {
-  @keyframes #{$foo} {
-    @content;
-  }
-}

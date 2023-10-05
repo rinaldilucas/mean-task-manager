@@ -215,7 +215,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/flex-layout@14.0.0-beta.40":
+"@angular/flex-layout@^14.0.0-beta.40":
   version "14.0.0-beta.40"
   resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-14.0.0-beta.40.tgz#ec3c09389f5ae277d09aebcb2a0c8bf7c1329967"
   integrity sha512-lYi2BKovNk5u2wmj/AMIMqfUzCBEt99Wu/Gfa+1mUIlw3voKCmIsV2XYBhX4adRdD+dRagY3Opger43JR7PXEw==

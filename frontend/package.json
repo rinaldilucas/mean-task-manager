@@ -11,7 +11,7 @@
     "@angular/compiler": "^14.0.0",
     "@angular/compiler-cli": "14",
     "@angular/core": "^14.0.0",
-    "@angular/flex-layout": "14.0.0-beta.40",
+    "@angular/flex-layout": "^14.0.0-beta.40",
     "@angular/forms": "^14.0.0",
     "@angular/material": "^14.0.0",
     "@angular/material-moment-adapter": "^14.0.0",

@@ -10,7 +10,7 @@ import { TaskFormBottomSheetComponent } from '@app/pages/tasks/task-form/task-fo
 import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { TaskRoutingModule } from '@app/scripts/modules/tasks-routing.module';
-import { ConvertDatePipe } from '@app/scripts/pipes/convertDate.pipe';
+import { ConvertDatePipe } from '@app/scripts/pipes/convert-date.pipe';
 
 @NgModule({
   declarations: [TaskFormBottomSheetComponent, TaskListComponent, ConvertDatePipe],
