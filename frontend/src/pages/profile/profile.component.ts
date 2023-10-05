@@ -12,7 +12,7 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -56,9 +56,9 @@ export class ProfileComponent implements OnInit {
 
     const password = this.form.controls.password.value;
     const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.changePassword(this.authService.getUserId(), password));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'profile.edit-error', error: true });
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'profile.edit-success' });
+    this.sharedService.handleSnackbars({ translationKey: 'profile.edit-success' });
     this.form.reset();
     this.router.navigate(['tasks']);
   }

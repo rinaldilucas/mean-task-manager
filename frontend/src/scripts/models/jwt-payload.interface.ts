@@ -1,4 +1,3 @@
-import { ERole } from '@app/scripts/models/enum/role.enum';
 
 export interface IJwtPayload {
   access: string;
@@ -6,6 +5,5 @@ export interface IJwtPayload {
   expiresIn: number;
   expirationDate: Date;
   userId: string;
-  userRole: ERole;
   keepUserLoggedIn: boolean;
 }

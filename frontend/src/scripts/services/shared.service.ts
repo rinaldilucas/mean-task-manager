@@ -2,13 +2,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { Observable, Subscription, take, throwError } from 'rxjs';
+import { Observable, Subscription, lastValueFrom, take, throwError } from 'rxjs';
 
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { ITask } from '@app/scripts/models/task.interface';
@@ -21,15 +22,18 @@ export class SharedService {
   static subscriptions: Subscription[] = [];
 
   constructor(
-    private translateService: TranslateService, //
+    private translateService: TranslateService,
     private snackBar: MatSnackBar,
     private media: MediaObserver,
+    private dialog: MatDialog,
   ) { }
 
   setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
     const dataSource = new TableVirtualScrollDataSource(list);
-    if (sort) dataSource.sort = sort;
-    if (paginator) dataSource.paginator = paginator;
+    if (sort)
+      dataSource.sort = sort;
+    if (paginator)
+      dataSource.paginator = paginator;
 
     return dataSource;
   }
@@ -100,8 +104,35 @@ export class SharedService {
     }));
   }
 
-  handleSnackbarMessages({ translationKey, success = true }): void {
-    this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: success ? 5000 : 8000 }));
+  static removeSubscriptions(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  handleSnackbars({ translationKey, error = false, customDuration, queuedMessage: queuedTranslationKey }: { translationKey: string, error?: boolean, customDuration?: number, queuedMessage?: string }): void {
+    this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => {
+      const duration = customDuration ? customDuration : error ? 8000 : 5000;
+      this.snackBar.open(text, undefined, { duration }).afterDismissed().subscribe(() => {
+        if (queuedTranslationKey)
+          this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
+      });
+    });
+  }
+
+  async handleDialogs({ component, options, width, minWidth, height, minHeight, disableClose }: { component: any; options?: any; minWidth?: string; width?: string; minHeight?: string; height?: string; disableClose?: boolean }): Promise<any> {
+    const dialogRef = this.dialog.open(component, {
+      width: width || '500px',
+      minWidth: minWidth || undefined,
+      height: height || 'auto',
+      minHeight: minHeight || undefined,
+      disableClose: disableClose || false,
+      data: options || null,
+    });
+
+    return await lastValueFrom(dialogRef.afterClosed()).then(res => {
+      if (!res) return false;
+
+      return res;
+    })
   }
 
   async handlePromises(promise: Promise<any>): Promise<Promise<any>> {
@@ -111,9 +142,5 @@ export class SharedService {
     } catch (error) {
       return [null, error];
     }
-  }
-
-  static removeSubscriptions(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

@@ -15,8 +15,8 @@ import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
+import { TaskService } from '@root/src/scripts/services/task.service';
 
 @Component({
   template: '',
@@ -24,7 +24,7 @@ import { TaskService } from '@app/scripts/services/task.service';
 })
 export class TaskFormEntryComponent implements OnInit {
   constructor(
-    private bottomSheet: MatBottomSheet, //
+    private bottomSheet: MatBottomSheet,
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
@@ -76,10 +76,6 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] },
   ) {
     super();
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.isNew = !this.bottomsheetData.task?._id;
 
     this.form = this.formBuilder.group({
       _id: [this.bottomsheetData.task._id, null],
@@ -99,13 +95,11 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
       date: [this.bottomsheetData.task.date, null],
       category: [this.bottomsheetData.task.category, null],
     });
+  }
 
-    if (this.isNew) {
-      this.title = this.translate.instant('title.add-task');
-    } else {
-      this.title = this.translate.instant('title.edit-task');
-    }
-
+  async ngOnInit(): Promise<void> {
+    this.isNew = !this.bottomsheetData.task?._id;
+    this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
     this.titleService.setTitle(`${this.title} — Mean Stack Template`);
     this.setAutoCompletes();
   }
@@ -117,30 +111,25 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     task.status = this.isNew ? EStatus.toDo : task.status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-error', success: false } : { translationKey: 'task-form.edit-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
 
-    this.sharedService.handleSnackbarMessages(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
+    this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
     this.taskService.emitterTask.emit(task);
     this.form.reset();
     this.close();
   }
 
-  close(): void {
+  async close(): Promise<void> {
     if (this.form.dirty) {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        data: { title: 'task-form.confirmation-title', message: 'task-form.confirmation-message', action: 'task-form.confirmation-discard' },
-      });
-      dialogRef.afterClosed().subscribe((result: boolean) => {
-        if (result) this.dismissModalAndNavigate('tasks');
-      });
+      const res = await this.sharedService.handleDialogs({ component: ConfirmationDialogComponent, options: { title: 'task-form.confirmation-title', message: 'task-form.confirmation-message', action: 'task-form.confirmation-discard' }, })
+      if (res) this.dismissModalAndNavigate('tasks');
     } else {
       this.dismissModalAndNavigate('tasks');
     }
   }
 
   setAutoCompletes(): void {
-    this.categoriesFilteredOptions = this.form.controls.category
-      .valueChanges
+    this.categoriesFilteredOptions = this.form.controls.category.valueChanges
       .pipe(
         startWith(''),
         map((value) => {
@@ -152,7 +141,9 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
 
   ngAfterViewInit(): void {
     this.subs.sink = this.categoryTrigger.panelClosingActions.subscribe(() => {
-      if (this.categoryTrigger.activeOption) { this.form.controls.category.setValue(this.categoryTrigger.activeOption.value); }
+      if (this.categoryTrigger.activeOption) {
+        this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
+      }
     });
   }
 

@@ -13,8 +13,8 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 @Component({
   selector: 'app-log-in',
   standalone: true,
@@ -71,21 +71,21 @@ export class LogInComponent implements OnInit {
 
     if (!result || !result.success || error) {
       if (error.status === StatusCode.ClientErrorUnauthorized) {
-        this.sharedService.handleSnackbarMessages({ translationKey: 'login.credentials-error', success: false });
+        this.sharedService.handleSnackbars({ translationKey: 'login.credentials-error', error: true });
         return;
       }
       if (error.status === StatusCode.ClientErrorTooManyRequests) {
-        this.sharedService.handleSnackbarMessages({ translationKey: 'login.too-many-requests-error', success: false });
+        this.sharedService.handleSnackbars({ translationKey: 'login.too-many-requests-error', error: true });
         return;
       }
-      this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
     }
 
     if (result && this.authService.authenticateToken(result.data[0])) {
-      this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-success' });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-success' });
       this.router.navigate(['tasks']);
     } else {
-      this.sharedService.handleSnackbarMessages({ translationKey: 'login.authentication-error', success: false });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
     }
   }
 

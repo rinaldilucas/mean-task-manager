@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 
 import { SubSink } from 'subsink';
 
-import { SharedService } from '@app/scripts/services/shared.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 
 @Component({
   selector: 'app-unsubscriber',

@@ -3,6 +3,7 @@
   "license": "MIT",
   "name": "mean-stack-template",
   "scripts": {
+    "install": "cd ./backend && yarn install && cd ../frontend && yarn install",
     "build": "yarn build:api && yarn build:client",
     "build:api": "cd ./backend && yarn build",
     "build:client": "cd ./frontend && yarn build",

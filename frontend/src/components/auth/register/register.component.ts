@@ -13,8 +13,8 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 
 @Component({
   selector: 'app-register',
@@ -71,11 +71,11 @@ export class RegisterComponent implements OnInit {
     const user = { ...this.form.value, role: ERole.user } as IUser;
     const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.authService.register(user));
     if (!result || !result.success || error) {
-      if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbarMessages({ translationKey: 'register.email-error', success: false });
-      else return this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-error', success: false });
+      if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbars({ translationKey: 'register.email-error', error: true });
+      else return this.sharedService.handleSnackbars({ translationKey: 'register.create-error', error: true });
     }
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'register.create-success' });
+    this.sharedService.handleSnackbars({ translationKey: 'register.create-success' });
     this.router.navigate(['login']);
   }
 

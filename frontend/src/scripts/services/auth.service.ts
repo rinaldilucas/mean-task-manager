@@ -3,7 +3,6 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import Cookies from 'js-cookie';
 import { Observable, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -13,6 +12,7 @@ import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IJwtToken } from '@app/scripts/models/jwt-token.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
+import { CookiesService } from '@app/scripts/services/cookies.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { environment } from '@root/environments/environment';
 
@@ -31,10 +31,11 @@ export class AuthService {
   private keepUserLoggedIn = false;
 
   protected sharedService = this.injector.get(SharedService);
+  protected cookiesService = this.injector.get(CookiesService);
 
   constructor(
     private injector: Injector,
-    private router: Router, //
+    private router: Router,
     private http: HttpClient,
   ) { }
 
@@ -149,46 +150,37 @@ export class AuthService {
   }
 
   getAuthData(): IJwtPayload | false {
-    const access = Cookies.get('access');
-    const refresh = Cookies.get('refresh');
-    const expirationDate = Cookies.get('expiration');
-    const userId = Cookies.get('userId');
-    const userRole = Cookies.get('userRole');
-    const keepUserLoggedIn = Cookies.get('keepUserLoggedIn') === 'true';
+    const access = this.cookiesService.getItem('access');
+    const refresh = this.cookiesService.getItem('refresh') as string;
+    const expirationDate = this.cookiesService.getItem('expiration');
+    const userId = this.cookiesService.getItem('userId') as string;
+    const keepUserLoggedIn = this.cookiesService.getItem('keepUserLoggedIn') === 'true';
 
     if (!access || !expirationDate) return false;
-
-
 
     return {
       access,
       refresh,
       expirationDate: new Date(expirationDate),
       userId,
-      userRole,
       expiresIn: 0,
       keepUserLoggedIn,
     };
   }
 
   private saveAuthData(access: string, refresh: string, expirationDate: Date, userId: string, keepUserLogged: boolean): void {
-    const options = {
-      secure: true,
-      sameSite: 'strict',
-    };
-
-    Cookies.set('access', access, options);
-    Cookies.set('refresh', refresh, options);
-    Cookies.set('expiration', expirationDate.toISOString(), options);
-    Cookies.set('userId', userId, options);
-    Cookies.set('keepUserLogged', String(keepUserLogged), options);
+    this.cookiesService.setItem('access', access);
+    this.cookiesService.setItem('refresh', refresh);
+    this.cookiesService.setItem('expiration', expirationDate.toISOString());
+    this.cookiesService.setItem('userId', userId);
+    this.cookiesService.setItem('keepUserLogged', String(keepUserLogged));
   }
 
   private clearAuthData(): void {
-    Cookies.remove('access');
-    Cookies.remove('refresh');
-    Cookies.remove('expiration');
-    Cookies.remove('userId');
+    this.cookiesService.removeItem('access');
+    this.cookiesService.removeItem('refresh');
+    this.cookiesService.removeItem('expiration');
+    this.cookiesService.removeItem('userId');
   }
 
   private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
@@ -227,7 +219,7 @@ export class AuthService {
     this.accessToken = '';
     this.isAuthenticated = false;
     this.clearAuthData();
-    this.sharedService.handleSnackbarMessages({ translationKey: 'login.logout-success', success: true });
+    this.sharedService.handleSnackbars({ translationKey: 'login.logout-success' });
     this.router.navigate(['']);
     this.emitterMenu.emit(false);
     this.sidebarEmitter.emit(false);

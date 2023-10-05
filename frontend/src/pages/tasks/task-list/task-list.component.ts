@@ -16,8 +16,8 @@ import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { SharedService } from '@app/scripts/services/shared.service';
-import { TaskService } from '@app/scripts/services/task.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
+import { TaskService } from '@root/src/scripts/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -91,7 +91,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
   async refreshAsync(): Promise<void> {
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll({ pageSize: this.pageSize })));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.tasks = result.data;
     this.pageCount = result.totalCount;
@@ -104,18 +104,18 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     task.status = status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.status-change-error', error: true });
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.status-change', success: true });
+    this.sharedService.handleSnackbars({ translationKey: 'task-list.status-change' });
     this.taskService.emitterTask.emit();
     this.changeDetector.markForCheck();
   }
 
   async removeAsync(task: ITask): Promise<void> {
     const [, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
-    if (error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-error', success: false });
+    if (error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-error', error: true });
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.remove-success', success: true });
+    this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-success' });
     this.taskService.emitterTask.emit();
     this.changeDetector.markForCheck();
   }
@@ -127,7 +127,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.pageSize = event.pageSize;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.tasks = result.data;
     this.pageCount = result.totalCount;
@@ -143,7 +143,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.columnDirection = event.direction;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.paginator.pageIndex = 0;
     this.tasks = result.data;
@@ -163,7 +163,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       const searchTerm = text.trim().toLowerCase();
 
       const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
-      if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'task-list.refresh-error', success: false });
+      if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
       this.paginator.pageIndex = 0;
       this.tasks = result.data;

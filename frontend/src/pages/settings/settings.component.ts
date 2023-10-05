@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
-import { CategoryService } from '@app/scripts/services/category.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { CategoryService } from '@root/src/scripts/services/category.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 
 @Component({
   selector: 'app-settings',
@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
   categories: ICategory[] = [];
 
   constructor(
-    private changeDetector: ChangeDetectorRef, //
+    private changeDetector: ChangeDetectorRef,
     private categoryService: CategoryService,
     private translate: TranslateService,
     private titleService: Title,
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
 
   async refreshAsync(): Promise<void> {
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.findAll()));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbarMessages({ translationKey: 'settings.get-error', success: false });
+    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
 
     this.categories = result.data;
     this.isLoading = false;
@@ -62,13 +62,13 @@ export class SettingsComponent implements OnInit {
 
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
     if (!result || !result.success || error) {
-      this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-error', success: false });
+      this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-error', error: true });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
       return;
     }
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-create-success' });
+    this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-success' });
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0]);
@@ -77,12 +77,12 @@ export class SettingsComponent implements OnInit {
   async removeCategoryAsync(category: ICategory): Promise<void> {
     const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
     if (error) {
-      this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-error', success: false });
+      this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-error', error: true });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
     }
 
-    this.sharedService.handleSnackbarMessages({ translationKey: 'settings.category-remove-success' });
+    this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     const index = this.categories.indexOf(category);
@@ -98,7 +98,7 @@ export class SettingsComponent implements OnInit {
   changeLanguage(language: string): void {
     this.translate.use(language);
     localStorage.setItem('language', language);
-    this.sharedService.handleSnackbarMessages({ translationKey: 'messages.language-changed' });
+    this.sharedService.handleSnackbars({ translationKey: 'messages.language-changed' });
     this.changeDetector.markForCheck();
     this.sharedService.emitterTitle.emit();
   }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { TaskService } from '@app/scripts/services/task.service';
+import { TaskService } from '@root/src/scripts/services/task.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskIdResolverGuard {

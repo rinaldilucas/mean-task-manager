@@ -7,14 +7,14 @@ import { catchError } from 'rxjs/operators';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
-import { SharedService } from '@app/scripts/services/shared.service';
+import { SharedService } from '@root/src/scripts/services/shared.service';
 
 export class CrudService<T> {
   protected sharedService = this.injector.get(SharedService);
   protected authService = this.injector.get(AuthService);
 
   constructor(
-    protected http: HttpClient, //
+    protected http: HttpClient,
     private injector: Injector,
     private endpoint: string,
   ) { }
