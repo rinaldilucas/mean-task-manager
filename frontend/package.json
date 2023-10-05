@@ -54,10 +54,11 @@
     "typescript": "4.7.4"
   },
   "scripts": {
-    "build": "ng build --configuration production --base-href=/mean-stack-template/",
-    "debug": "ng build --configuration development --watch",
-    "deploy": "ng deploy --base-href=/mean-stack-template/ && rm -rd ./dist",
-    "dev": "ng serve --o",
+    "install": "yarn install",
+    "build": "yarn install && ng build --configuration production --base-href=/mean-stack-template/",
+    "debug": "yarn install && ng build --configuration development --watch",
+    "deploy": "yarn install && ng deploy --base-href=/mean-stack-template/ && rm -rd ./dist",
+    "dev": "yarn install && ng serve --o",
     "lint": "ng lint --fix && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
     "lint:types": "tsc --noemit",
     "lint:sass-fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
