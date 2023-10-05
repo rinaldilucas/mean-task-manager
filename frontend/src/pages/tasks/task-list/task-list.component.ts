@@ -179,12 +179,18 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
   }
 
-  confirmDelete(task: ITask): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: 'task-list.confirmation-title', message: 'task-list.confirmation-message', action: 'task-list.confirmation-delete' },
-    });
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if (result) { this.removeAsync(task); }
-    });
+  async confirmDelete(task: ITask): Promise<void> {
+    const res = await this.sharedService.handleDialogs(
+      {
+        component: ConfirmationDialogComponent,
+        options: {
+          title: 'task-form.confirmation-title',
+          message: 'task-form.confirmation-message',
+          action: 'task-form.confirmation-discard',
+        },
+      })
+
+    if (res)
+      this.removeAsync(task);;
   }
 }

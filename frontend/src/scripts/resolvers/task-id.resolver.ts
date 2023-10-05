@@ -9,7 +9,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 import { TaskService } from '@root/src/scripts/services/task.service';
 
 @Injectable({ providedIn: 'root' })
-export class TaskIdResolverGuard {
+export class TaskIdResolver {
   constructor(private taskService: TaskService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<ITask> {

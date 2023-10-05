@@ -8,7 +8,7 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { CategoryService } from '@root/src/scripts/services/category.service';
 
 @Injectable({ providedIn: 'root' })
-export class TaskCategoryResolverGuard {
+export class TaskCategoryResolver {
   constructor(private categoryService: CategoryService) { }
 
   resolve(): Observable<ICategory[][]> {

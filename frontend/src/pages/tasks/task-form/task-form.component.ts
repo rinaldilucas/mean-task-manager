@@ -121,8 +121,18 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
 
   async close(): Promise<void> {
     if (this.form.dirty) {
-      const res = await this.sharedService.handleDialogs({ component: ConfirmationDialogComponent, options: { title: 'task-form.confirmation-title', message: 'task-form.confirmation-message', action: 'task-form.confirmation-discard' }, })
-      if (res) this.dismissModalAndNavigate('tasks');
+      const res = await this.sharedService.handleDialogs(
+        {
+          component: ConfirmationDialogComponent,
+          options: {
+            title: 'task-form.confirmation-title',
+            message: 'task-form.confirmation-message',
+            action: 'task-form.confirmation-discard'
+          },
+        })
+
+      if (res)
+        this.dismissModalAndNavigate('tasks');
     } else {
       this.dismissModalAndNavigate('tasks');
     }
