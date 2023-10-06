@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, View
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +12,8 @@ import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/conf
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
-import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
+import { IQueryResult } from '@root/src/scripts/models/query-result.interface';
 import { SharedService } from '@root/src/scripts/services/shared.service';
 import { TaskService } from '@root/src/scripts/services/task.service';
 
@@ -36,8 +35,8 @@ export class TaskFormEntryComponent implements OnInit {
   }
 
   open(): void {
-    const task = this.route.snapshot.data.task as ITask;
-    const categories = this.route.snapshot.data.categories as ITask;
+    const task = this.route.snapshot.data.taskData.task as ITask;
+    const categories = this.route.snapshot.data.taskData.categories as ICategory;
 
     const config: MatBottomSheetConfig = { data: { task, categories }, disableClose: true };
     const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
@@ -61,6 +60,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
   form!: FormGroup;
 
   isNew = !this.bottomsheetData?.task._id;
+  task = this.bottomsheetData.task;
   categories = this.bottomsheetData.categories;
   categoriesFilteredOptions!: Observable<ICategory[]>;
 
@@ -72,15 +72,14 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     private sharedService: SharedService,
     private titleService: Title,
     private translate: TranslateService,
-    private dialog: MatDialog,
     @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] },
   ) {
     super();
 
     this.form = this.formBuilder.group({
-      _id: [this.bottomsheetData.task._id, null],
+      _id: [this.task._id, null],
       title: [
-        this.bottomsheetData.task.title,
+        this.task.title,
         [
           Validators.required,
           Validators.minLength(2),
@@ -88,17 +87,16 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
         ],
       ],
       description: [
-        this.bottomsheetData.task.description,
+        this.task.description,
         [
           Validators.maxLength(300)],
       ],
-      date: [this.bottomsheetData.task.date, null],
-      category: [this.bottomsheetData.task.category, null],
+      date: [this.task.date, null],
+      category: [this.task.category, null],
     });
   }
 
   async ngOnInit(): Promise<void> {
-    this.isNew = !this.bottomsheetData.task?._id;
     this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
     this.titleService.setTitle(`${this.title} — Mean Stack Template`);
     this.setAutoCompletes();
@@ -151,9 +149,8 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
 
   ngAfterViewInit(): void {
     this.subs.sink = this.categoryTrigger.panelClosingActions.subscribe(() => {
-      if (this.categoryTrigger.activeOption) {
+      if (this.categoryTrigger.activeOption)
         this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
-      }
     });
   }
 

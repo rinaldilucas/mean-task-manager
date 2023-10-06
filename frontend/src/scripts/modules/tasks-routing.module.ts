@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TaskFormEntryComponent } from '@app/pages/tasks/task-form/task-form.component';
 import { TaskListComponent } from '@app/pages/tasks/task-list/task-list.component';
-import { TaskCategoryResolver } from '@app/scripts/resolvers/task-category.resolver';
-import { TaskIdResolver } from '@app/scripts/resolvers/task-id.resolver';
+import { TaskResolver } from '@app/scripts/resolvers/task.resolver';
 
 const routes: Routes = [
   {
@@ -14,12 +13,12 @@ const routes: Routes = [
       {
         path: 'add',
         component: TaskFormEntryComponent,
-        resolve: { task: TaskIdResolver, categories: TaskCategoryResolver }
+        resolve: { taskData: TaskResolver }
       },
       {
         path: 'edit/:id',
         component: TaskFormEntryComponent,
-        resolve: { task: TaskIdResolver, categories: TaskCategoryResolver }
+        resolve: { taskData: TaskResolver }
       },
     ],
   },
