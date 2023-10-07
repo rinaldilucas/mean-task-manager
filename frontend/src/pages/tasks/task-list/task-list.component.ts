@@ -180,7 +180,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   async confirmDelete(task: ITask): Promise<void> {
-    const res = await this.sharedService.handleDialogs(
+    const dialogRef = await this.sharedService.handleDialogs(
       {
         component: ConfirmationDialogComponent,
         options: {
@@ -188,9 +188,10 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
           message: 'task-form.confirmation-message',
           action: 'task-form.confirmation-discard',
         },
+        disableClose: true
       })
 
-    if (res)
-      this.removeAsync(task);;
+    if (dialogRef)
+      this.removeAsync(task);
   }
 }

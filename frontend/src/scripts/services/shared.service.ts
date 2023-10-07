@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,6 +27,7 @@ export class SharedService {
     private snackBar: MatSnackBar,
     private media: MediaObserver,
     private dialog: MatDialog,
+    private bottomSheet: MatBottomSheet,
   ) { }
 
   setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
@@ -133,6 +135,19 @@ export class SharedService {
 
       return res;
     })
+  }
+
+  async handleSheets({ component, options, disableClose }: { component: any; options?: any; disableClose?: boolean }): Promise<any> {
+    const sheetRef = this.bottomSheet.open(component, {
+      disableClose: disableClose || false,
+      data: options || null,
+    });
+
+    return await lastValueFrom(sheetRef.afterDismissed()).then(res => {
+      if (!res) return false;
+
+      return res;
+    });
   }
 
   async handlePromises(promise: Promise<any>): Promise<Promise<any>> {

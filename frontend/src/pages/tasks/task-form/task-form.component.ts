@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,27 +23,30 @@ import { TaskService } from '@root/src/scripts/services/task.service';
 })
 export class TaskFormEntryComponent implements OnInit {
   constructor(
-    private bottomSheet: MatBottomSheet,
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
     private translate: TranslateService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
     this.open();
   }
 
-  open(): void {
+  async open(): Promise<void> {
     const task = this.route.snapshot.data.taskData.task as ITask;
     const categories = this.route.snapshot.data.taskData.categories as ICategory;
 
-    const config: MatBottomSheetConfig = { data: { task, categories }, disableClose: true };
-    const sheetRef = this.bottomSheet.open(TaskFormBottomSheetComponent, config);
-    sheetRef.afterDismissed().subscribe(() => {
-      this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
-      this.router.navigate(['tasks']);
-    });
+    await this.sharedService.handleSheets(
+      {
+        component: TaskFormBottomSheetComponent,
+        options: { task, categories },
+        disableClose: true,
+      })
+
+    this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
+    this.router.navigate(['tasks']);
   }
 }
 @Component({
@@ -119,7 +122,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
 
   async close(): Promise<void> {
     if (this.form.dirty) {
-      const res = await this.sharedService.handleDialogs(
+      const dialogRef = await this.sharedService.handleDialogs(
         {
           component: ConfirmationDialogComponent,
           options: {
@@ -129,7 +132,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
           },
         })
 
-      if (res)
+      if (dialogRef)
         this.dismissModalAndNavigate('tasks');
     } else {
       this.dismissModalAndNavigate('tasks');
