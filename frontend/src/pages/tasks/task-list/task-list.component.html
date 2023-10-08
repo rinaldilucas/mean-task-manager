@@ -163,6 +163,6 @@
   </div>
 </div>
 
-<app-bottom-sheet>
+<app-bottom-sheet urlPathRegex="\/((new|edit)\/[a-zA-Z0-9]{8}(\/.*)?)" urlPathReplace="/$1">
   <router-outlet></router-outlet>
 </app-bottom-sheet>

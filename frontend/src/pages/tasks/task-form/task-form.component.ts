@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Title } from '@angular/platform-browser';
@@ -44,7 +44,6 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     private titleService: Title,
     private translate: TranslateService,
     private route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef,
   ) {
     super();
 

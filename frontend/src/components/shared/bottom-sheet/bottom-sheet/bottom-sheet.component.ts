@@ -11,6 +11,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class BottomSheetComponent implements OnInit {
   @Input() disableClose = true;
   @Input() autoFocus = true;
+  @Input() urlPathRegex!: string;
+  @Input() urlPathReplace = '';
+  @Input() panelClass!: string;
   @Input() useRouterOutlet = true;
   close = new EventEmitter<boolean>();
   data: any;
@@ -23,7 +26,6 @@ export class BottomSheetComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
     if (this.useRouterOutlet) {
       this.router.events.subscribe(ev => {
         if (ev instanceof NavigationEnd)
@@ -42,8 +44,6 @@ export class BottomSheetComponent implements OnInit {
 
     this.data = this.route.snapshot.children[0]?.data?.resolverData;
 
-    debugger;
-
     const component: any = this.useRouterOutlet ? this.activatedRoute.snapshot.children[0].routeConfig?.component : componentType;
     const sheetRef = this.bottomSheet.open(component, {
       disableClose: this.disableClose,
@@ -61,6 +61,12 @@ export class BottomSheetComponent implements OnInit {
     sheetRef.afterOpened().subscribe(() => {
       if ((sheetRef.instance as any).setData)
         (sheetRef.instance as any).setData(this.data);
+    });
+
+    sheetRef.afterDismissed().subscribe(() => {
+      const regex = new RegExp(this.urlPathRegex);
+      const url = this.router.url.replace(regex, this.urlPathReplace || '');
+      this.router.navigateByUrl(url);
     });
   }
 }
