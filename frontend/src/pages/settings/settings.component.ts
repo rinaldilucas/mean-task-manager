@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
-import { CategoryService } from '@root/src/scripts/services/category.service';
-import { SharedService } from '@root/src/scripts/services/shared.service';
+import { CategoryService } from '@app/scripts/services/category.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-settings',

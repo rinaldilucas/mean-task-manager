@@ -5,8 +5,8 @@ import { Observable, catchError } from 'rxjs';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
+import { CrudService } from '@app/scripts/services/crud.service';
 import { environment } from '@root/environments/environment';
-import { CrudService } from '@root/src/scripts/services/crud.service';
 
 const endpoint = environment.baseUri + '/tasks';
 

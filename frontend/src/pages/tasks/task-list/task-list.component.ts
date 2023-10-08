@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Title } from '@angular/platform-browser';
@@ -16,8 +15,8 @@ import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { SharedService } from '@root/src/scripts/services/shared.service';
-import { TaskService } from '@root/src/scripts/services/task.service';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -60,7 +59,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     private router: Router,
     private titleService: Title,
     private translate: TranslateService,
-    private dialog: MatDialog,
   ) {
     super();
   }
@@ -82,7 +80,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   add(): void {
-    this.router.navigate(['tasks/add']);
+    this.router.navigate(['tasks/new']);
   }
 
   edit(id: string): void {
@@ -180,7 +178,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   async confirmDelete(task: ITask): Promise<void> {
-    const dialogRef = await this.sharedService.handleDialogs(
+    const dialogRes = await this.sharedService.handleDialogs(
       {
         component: ConfirmationDialogComponent,
         options: {
@@ -191,7 +189,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
         disableClose: true
       })
 
-    if (dialogRef)
+    if (dialogRes)
       this.removeAsync(task);
   }
 }

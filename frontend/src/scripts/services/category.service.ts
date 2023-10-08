@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 
 import { ICategory } from '@app/scripts/models/category.interface';
+import { CrudService } from '@app/scripts/services/crud.service';
 import { environment } from '@root/environments/environment';
-import { CrudService } from '@root/src/scripts/services/crud.service';
 
 const endpoint = environment.baseUri + '/categories';
 
