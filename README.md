@@ -9,13 +9,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/rinaldilucas/mean-stack-template">
-    <img src="./app/assets/images/_readme/logo.png" alt="Logo">
+    <img src="./frontend/assets/images/_readme/logo.png" alt="Logo">
   </a>
 
   <h3 align="center">MEAN Stack Crud Template</h3>
 
   <p align="center">
-    Project built using Angular, NodeJS, Express.js<br> and MongoDB with Angular Material to jumpstart your studies!
+    Project built using Angular, NodeJS, Express.js<br> and MongoDB with Angular Material to jump start your studies!
     <br />
     <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
     <br />
@@ -76,7 +76,7 @@ I built this project to make a cool template for those who wants to learn the ME
 - JWT implementation with refresh token using Redis and cookies on strict mode
 - Blacklist of access/refresh token
 - Authentication and role guard
-- Multiple examples of syncronous custom validators
+- Multiple examples of synchronous custom validators
 - Custom async validator to check already registered user
 - Register with strong password validator
 - Password encryption using bcrypt with salt rounds
@@ -90,12 +90,12 @@ I built this project to make a cool template for those who wants to learn the ME
 - API documentation using Swagger
 - Handler of promises and errors using destructuring
 - Improved http security using HttpParams
-- Unsubscriber component with subsink to facilitate the manuvering of unsubcribres
+- Unsubscriber component with subsink to facilitate the maneuvering of unsubscribes
 - Shared CRUD service, allowing services to inherit its operations
 - Custom pipes to convert date to selected language
 - Custom directive to prevent form autofill
-- Dark mode persistent trought browser cookies
-- SCSS algorythm which uses rem unit to maintain aspect ratio
+- Dark mode using browser cookies
+- SCSS algorithm which uses rem unit to maintain aspect ratio
 - Stylesheets written using BEM methodology
 - Custom SCSS structure to improve reusability
 - Material components are overwritten to support rem unit and improve mobile/table compatibility coding less
@@ -135,8 +135,8 @@ After cloning the project, you need to do a few things to be able to run it.
 You need to have the following requirements:
 
 - mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
-- node 16.14 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
-- redis <a target="_blank" href="https://redis.io/download/">(download here for linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
+- node 16.20.1 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
+- redis <a target="_blank" href="https://redis.io/download/">(download here for Linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
 
 - yarn
 
@@ -183,7 +183,7 @@ _More scripts at package.json_
 
 ## Usage
 
-You can import the Insomnia routes via file `./api/db/routes-collection.json` and import the mongodb collections via file `./api/db/collections`. <br>Below are the implemented routes: you also can view them inside `./api/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
+You can import the Insomnia routes via file `./backend/db/routes-collection.json` and import the mongodb collections via file `./backend/db/collections`. <br>Below are the implemented routes: you also can view them inside `./backend/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
 
 ```js
 -------------------------------
@@ -229,9 +229,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
+3. Commit your Changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -290,4 +290,4 @@ It helps me a lot to continue developing open source codes.
 [license-url]: https://github.com/rinaldilucas/mean-stack-template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rinaldilucas/
-[project-screenshot]: ./app/assets/images/_readme/screenshot.gif
+[project-screenshot]: ./frontend/assets/images/_readme/screenshot.gif

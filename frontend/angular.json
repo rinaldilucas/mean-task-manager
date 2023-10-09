@@ -83,18 +83,6 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy"
         },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "configurations": {
-            "production": {
-              "devServerTarget": "default:serve:production"
-            }
-          },
-          "options": {
-            "devServerTarget": "default:serve",
-            "protractorConfig": "e2e/protractor.conf.js"
-          }
-        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
