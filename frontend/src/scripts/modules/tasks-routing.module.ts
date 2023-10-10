@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: TaskListComponent,
     children: [
-      { path: 'add', component: TaskFormComponent, canDeactivate: [CanDeactivateGuard], resolve: { taskData: TaskResolver } },
+      { path: 'new', component: TaskFormComponent, canDeactivate: [CanDeactivateGuard], resolve: { taskData: TaskResolver } },
       { path: 'edit/:id', component: TaskFormComponent, canDeactivate: [CanDeactivateGuard], resolve: { taskData: TaskResolver } },
     ],
   },

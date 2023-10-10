@@ -112,7 +112,7 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
 
     this.form = this.formBuilder.group({
       _id: [this.task._id, null],
-      title: [this.task.title, [Validators.required, Validators.minLength(2), Validators.maxLength(100)],],
+      title: [this.task.title, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       description: [this.task.description, [Validators.maxLength(300)]],
       date: [this.task.date, null],
       category: [this.task.category, null],
@@ -157,7 +157,7 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
         startWith(''),
         map((value) => {
           const filterValue = value?.toString().toLowerCase();
-          return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue));
+          return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
         }),
       );
   }

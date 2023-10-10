@@ -10,11 +10,10 @@
     "debug:api": "cd ./backend && yarn debug",
     "debug:clint": "cd ./frontend && yarn debug",
     "deploy": "cd ./frontend && yarn deploy",
-    "dev": "run-p dev:client dev:api",
     "dev:api": "cd ./backend && yarn dev",
     "dev:client": "cd ./frontend && yarn dev",
     "lint": "yarn lint:api && yarn lint:client",
-    "lint:api": "cd ./backend && npx eslint ./ --ext .ts && tsc --noemit",
+    "lint:api": "cd ./backend && yarn lint",
     "lint:client": "cd ./frontend && yarn lint"
   }
 }

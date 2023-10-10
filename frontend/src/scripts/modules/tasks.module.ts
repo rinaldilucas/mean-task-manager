@@ -28,7 +28,7 @@ import { ConvertDatePipe } from '@app/scripts/pipes/convert-date.pipe';
     AngularMaterialModule,
     TableVirtualScrollModule,
     TranslateModule,
-    CustomComponentsModule
+    CustomComponentsModule,
   ],
 })
 export class TaskModule { }

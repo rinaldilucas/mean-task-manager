@@ -12,16 +12,16 @@ import { TaskService } from '@app/scripts/services/task.service';
 
 export const TaskResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const taskService = inject(TaskService);
-  const categories = inject(CategoryService);
+  const categoryService = inject(CategoryService);
 
   let $tasks = of({} as ITask);
   if (route.params.id)
     $tasks = taskService.get(route.params.id).pipe(map((result: IQueryResult<ITask>) => result.data[0]));
 
-  const $categories = categories.findAll().pipe(map((result: IQueryResult<ICategory[]>) => result.data));
+  const $categories = categoryService.findAll().pipe(map((result: IQueryResult<ICategory[]>) => result.data));
 
   switch (state.url) {
     default:
       return combineLatest([$tasks, $categories]).pipe(map(([task, categories]) => ({ task, categories })));
   }
-}
+};

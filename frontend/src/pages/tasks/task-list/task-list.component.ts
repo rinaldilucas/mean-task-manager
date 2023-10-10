@@ -76,7 +76,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   add(): void {
-    this.router.navigate(['tasks/add']);
+    this.router.navigate(['tasks/new']);
   }
 
   edit(id: string): void {
@@ -184,8 +184,8 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
           message: 'task-form.confirmation-message',
           action: 'task-form.confirmation-discard',
         },
-        disableClose: true
-      })
+        disableClose: true,
+      });
 
     if (dialogRef)
       this.removeAsync(task);

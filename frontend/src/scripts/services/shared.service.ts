@@ -135,7 +135,7 @@ export class SharedService {
       panelClass: 'bottom-sheet-container',
     });
 
-    return await lastValueFrom(dialogRef.afterClosed());
+    return lastValueFrom(dialogRef.afterClosed());
   }
 
   async handleSheets({ component, options, disableClose }: { component: any; options?: any; disableClose?: boolean }): Promise<any> {
@@ -144,7 +144,7 @@ export class SharedService {
       data: options || null,
     });
 
-    return await lastValueFrom(sheetRef.afterDismissed());
+    return lastValueFrom(sheetRef.afterDismissed());
   }
 
   async handlePromises(promise: Promise<any>): Promise<Promise<any>> {

@@ -2,6 +2,12 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
