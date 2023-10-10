@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CustomComponentsModule } from './custom-components.module';
+import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';

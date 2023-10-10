@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === StatusCode.ClientErrorUnauthorized) {
-          if (request.url.search(loginRoute) === -1) { this.authService.logoutAsync(); }
+          if (request.url.search(loginRoute) === -1) this.authService.logoutAsync();
         }
 
         return throwError(error);

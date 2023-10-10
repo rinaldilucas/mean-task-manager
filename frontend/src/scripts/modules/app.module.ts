@@ -20,7 +20,6 @@ import { HeaderComponent } from '@app/components/shared/header/header.component'
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AppRoutingModule } from '@app/scripts/modules/app-routing.module';
 import { InterceptorModule } from '@app/scripts/modules/interceptor.module';
-import { CustomComponentsModule } from './custom-components.module';
 
 export class WebpackTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -50,7 +49,6 @@ registerLocaleData(localePt, 'pt-BR');
     ChartsModule,
     TableVirtualScrollModule,
     InterceptorModule,
-    CustomComponentsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
