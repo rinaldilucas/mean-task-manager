@@ -1,9 +1,7 @@
 <div class="page-container">
   <div class="page">
     <div class="page__wrapper mat-elevation-z1">
-      <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
-        <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
-      </div>
+      <app-loader class="centered" [isLoading]="isLoading"></app-loader>
       <div class="page__content" *ngIf="!isLoading">
         <div class="page__content-wrapper">
           <section>

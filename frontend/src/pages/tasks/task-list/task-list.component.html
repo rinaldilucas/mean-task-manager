@@ -18,9 +18,7 @@
       </div>
 
       <div class="list__body mat-elevation-z1" [class.list__body--empty]="tasks.length === 0">
-        <div *ngIf="isLoading" class="loader" fxLayoutAlign="center center">
-          <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
-        </div>
+        <app-loader class="centered" [isLoading]="isLoading"></app-loader>
 
         <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--placeholder" fxLayout="column" fxLayoutAlign="center center">
           <div>

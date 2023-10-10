@@ -10,13 +10,14 @@ import { CommonModule } from '@angular/common';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
+import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, CustomComponentsModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

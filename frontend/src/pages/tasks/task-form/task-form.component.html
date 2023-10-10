@@ -14,9 +14,7 @@
   </div>
 
   <div class="form-modal__body">
-    <div *ngIf="isLoading" class="loader">
-      <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
-    </div>
+    <app-loader class="centered" [isLoading]="isLoading"></app-loader>
 
     <form [formGroup]="form" *ngIf="!isLoading" class="form-modal__body-wrapper" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
       <mat-card-content>
