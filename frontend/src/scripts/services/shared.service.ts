@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
+import { Title } from '@angular/platform-browser';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
@@ -17,11 +18,11 @@ import { ITask } from '@app/scripts/models/task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
-  emitterTitle: EventEmitter<string> = new EventEmitter<string>();
-  emitterForm: EventEmitter<any> = new EventEmitter<any>();
-  emitterFormSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
-  tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
-  pageSizeListener: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
+  onTitleChange: EventEmitter<string> = new EventEmitter<string>();
+  onFormDirtyChange: EventEmitter<any> = new EventEmitter<any>();
+  onFormSubmitChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  onTableColumnChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+  onPageSizeChange: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
   static subscriptions: Subscription[] = [];
 
   constructor(
@@ -30,6 +31,7 @@ export class SharedService {
     private media: MediaObserver,
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet,
+    private titleService: Title,
   ) { }
 
   setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
@@ -65,12 +67,11 @@ export class SharedService {
   }
 
   isValidForm(form: FormGroup<string>): boolean {
-    if (!form.valid) {
-      this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
-      this.highlightRequiredInput(form);
-      return false;
-    }
-    return true;
+    if (form.valid) return true;
+
+    this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+    this.highlightRequiredInput(form);
+    return false;
   }
 
   highlightRequiredInput(form: FormGroup<string>): void {
@@ -103,8 +104,8 @@ export class SharedService {
         pageSizeOptions = [5, 15, 30];
       }
 
-      this.tableColumnListener.emit(columnOptions);
-      this.pageSizeListener.emit({ pageSize, pageSizeOptions });
+      this.onTableColumnChange.emit(columnOptions);
+      this.onPageSizeChange.emit({ pageSize, pageSizeOptions });
     }));
   }
 
@@ -134,9 +135,7 @@ export class SharedService {
       panelClass: 'bottom-sheet-container',
     });
 
-    return await lastValueFrom(dialogRef.afterClosed()).then(res => {
-      return { dialogRef, result: res };
-    })
+    return await lastValueFrom(dialogRef.afterClosed());
   }
 
   async handleSheets({ component, options, disableClose }: { component: any; options?: any; disableClose?: boolean }): Promise<any> {
@@ -145,11 +144,7 @@ export class SharedService {
       data: options || null,
     });
 
-    return await lastValueFrom(sheetRef.afterDismissed()).then(res => {
-      if (!res) return false;
-
-      return res;
-    });
+    return await lastValueFrom(sheetRef.afterDismissed());
   }
 
   async handlePromises(promise: Promise<any>): Promise<Promise<any>> {
@@ -159,5 +154,9 @@ export class SharedService {
     } catch (error) {
       return [null, error];
     }
+  }
+
+  handleTitle(title: string): void {
+    this.titleService.setTitle(`${title} — Mean Stack Template`);
   }
 }

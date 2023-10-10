@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DirectiveModule } from '@app/scripts/modules/directive.module';
 
@@ -31,19 +30,13 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private titleService: Title,
     private formBuilder: FormBuilder,
     private translate: TranslateService,
     private router: Router,
     private sharedService: SharedService,
   ) {
     this.form = this.formBuilder.group({
-      password: [null,
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(150),
-        ]],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
     });
   }
 
@@ -64,8 +57,8 @@ export class ProfileComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.titleService.setTitle(`${this.translate.instant('title.profile')} — Mean Stack Template`);
-    this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+    this.sharedService.handleTitle(this.translate.instant('title.profile'));
+    this.sharedService.onTitleChange.pipe(take(1)).subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.profile')));
   }
 
   togglePasswordVisibility(event: MouseEvent): void {

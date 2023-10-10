@@ -21,7 +21,6 @@ import { AngularMaterialModule } from '@app/scripts/modules/angular-material.mod
 })
 export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
   @Input() tasks!: ITask[];
-
   @ViewChild(BaseChartDirective) baseChart!: BaseChartDirective;
 
   chartType: ChartType = 'line';

@@ -2,11 +2,10 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, H
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, take } from 'rxjs';
 
 import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/discard-changes-dialog/discard-changes-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -22,17 +21,17 @@ import { TaskService } from '@app/scripts/services/task.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boolean> {
+export class TaskFormComponent extends Unsubscriber implements OnDeactivate, CanDeactivate<boolean> {
   isFormSubmitted = false;
-  form!: FormGroup;
+  isFormDirty = false;
 
   constructor(
     private route: ActivatedRoute,
-    private titleService: Title,
     private translate: TranslateService,
     private sharedService: SharedService,
     private matBottomSheet: MatBottomSheet,
   ) {
+    super();
     this.open();
   }
 
@@ -40,32 +39,25 @@ export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boole
     const task = this.route.snapshot.data.taskData.task as ITask;
     const categories = this.route.snapshot.data.taskData.categories as ICategory;
 
-    this.sharedService.emitterForm.subscribe((form: FormGroup) => this.form = form);
-    this.sharedService.emitterFormSubmit.subscribe((isFormSubmitted: boolean) => this.isFormSubmitted = isFormSubmitted);
+    this.subs.sink = this.sharedService.onFormDirtyChange.subscribe((isFormDirty: boolean) => this.isFormDirty = isFormDirty);
+    this.subs.sink = this.sharedService.onFormSubmitChange.subscribe((isFormSubmitted: boolean) => this.isFormSubmitted = isFormSubmitted);
 
     await this.sharedService.handleSheets({
-      component: TaskFormBottomSheetComponent,
+      component: TaskFormSheetComponent,
       options: { task, categories },
       disableClose: true,
     });
 
-    this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
+    this.sharedService.handleTitle(this.translate.instant('title.tasks'));
   }
 
-  @HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.dirty) return false;
-
-    return true;
-  }
-
-  async onDeactivate(): Promise<any> {
-    if (this.form?.pristine || this.isFormSubmitted) {
+  async onDeactivate(): Promise<boolean> {
+    if (!this.isFormDirty || this.isFormSubmitted) {
       this.matBottomSheet.dismiss();
       return true;
     }
 
-    const dialogRes: { dialogRef, result: boolean } = await this.sharedService.handleDialogs({
+    const dialogRes = await this.sharedService.handleDialogs({
       component: DiscardChangesDialogComponent,
       options: {
         title: 'task-form.confirmation-title',
@@ -74,9 +66,18 @@ export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boole
       },
     });
 
-    if (!dialogRes.result) return false;
+    if (dialogRes) {
+      this.matBottomSheet.dismiss();
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-    this.matBottomSheet.dismiss();
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.isFormDirty) return false;
+
     return true;
   }
 }
@@ -86,7 +87,7 @@ export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boole
   styleUrls: ['./task-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit, AfterViewInit {
+export class TaskFormSheetComponent extends Unsubscriber implements OnInit, AfterViewInit {
   @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
   title!: string;
@@ -103,7 +104,6 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     private formBuilder: FormBuilder,
     private router: Router,
     private sharedService: SharedService,
-    private titleService: Title,
     private translate: TranslateService,
     private cdRef: ChangeDetectorRef,
     @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] },
@@ -118,13 +118,12 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
       category: [this.task.category, null],
     });
 
-    this.sharedService.emitterForm.emit(this.form);
-    this.form.valueChanges.subscribe(() => this.sharedService.emitterForm.emit(this.form));
+    this.subs.sink = this.form.valueChanges.pipe(take(1)).subscribe(() => this.sharedService.onFormDirtyChange.emit(this.form.dirty));
   }
 
   ngOnInit(): void {
     this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
-    this.titleService.setTitle(`${this.title} — Mean Stack Template`);
+    this.sharedService.handleTitle(this.title);
     this.setAutoCompletes();
   }
 
@@ -143,8 +142,8 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     }
 
     this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
-    this.taskService.emitterTask.emit(task);
-    this.sharedService.emitterFormSubmit.emit(true);
+    this.taskService.onTaskChange.emit(task);
+    this.sharedService.onFormSubmitChange.emit(true);
     this.close();
   }
 

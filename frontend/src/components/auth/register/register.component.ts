@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -31,38 +30,19 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private titleService: Title,
     private router: Router,
     private translate: TranslateService,
     private sharedService: SharedService,
   ) {
     this.form = this.formBuilder.group({
-      email: [null,
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(150),
-          Validators.pattern(CustomValidators.emailRegex),
-        ],
-        [CustomValidators.checkEmail(this.authService)],
-      ],
-      password: [null,
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(150),
-          CustomValidators.incremental,
-          CustomValidators.sequential,
-          CustomValidators.capitalized,
-          CustomValidators.number,
-          CustomValidators.specialCharacters,
-        ]],
+      email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150), Validators.pattern(CustomValidators.emailRegex)], [CustomValidators.checkEmail(this.authService)]],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150), CustomValidators.incremental, CustomValidators.sequential, CustomValidators.capitalized, CustomValidators.number, CustomValidators.specialCharacters]],
       confirmPassword: [null, [Validators.required, CustomValidators.equalsTo('password')]],
     });
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${this.translate.instant('title.register')} — Mean Stack Template`);
+    this.sharedService.handleTitle(this.translate.instant('title.register'));
   }
 
   async registerAsync(): Promise<void> {

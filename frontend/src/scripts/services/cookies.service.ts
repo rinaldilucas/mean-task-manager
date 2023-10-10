@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 
 @Injectable({ providedIn: 'root' })
 export class CookiesService {
-
   setItem(key: string, value: string) {
     const options = {
       secure: true,

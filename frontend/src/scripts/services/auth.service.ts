@@ -19,8 +19,8 @@ import { environment } from '@root/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly url = environment.baseUri + '/auth';
-  emitterMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
-  sidebarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  onMenuChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  onSidebarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private accessToken!: string;
   private refreshToken!: string;
@@ -141,8 +141,8 @@ export class AuthService {
       this.accessToken = authInformation.access;
       this.decodeJwtToken(this.accessToken);
       this.isAuthenticated = true;
-      this.emitterMenu.emit(true);
-      setTimeout(() => { this.sidebarEmitter.emit(true); }, 750);
+      this.onMenuChange.emit(true);
+      setTimeout(() => { this.onSidebarChange.emit(true); }, 750);
       return true;
     }
 
@@ -221,7 +221,7 @@ export class AuthService {
     this.clearAuthData();
     this.sharedService.handleSnackbars({ translationKey: 'login.logout-success' });
     this.router.navigate(['']);
-    this.emitterMenu.emit(false);
-    this.sidebarEmitter.emit(false);
+    this.onMenuChange.emit(false);
+    this.onSidebarChange.emit(false);
   }
 }

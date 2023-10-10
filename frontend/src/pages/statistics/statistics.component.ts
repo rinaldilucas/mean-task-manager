@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
@@ -32,7 +31,6 @@ export class StatisticsComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private taskService: TaskService,
     private sharedService: SharedService,
-    private titleService: Title,
     private translate: TranslateService,
   ) { }
 
@@ -51,7 +49,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.titleService.setTitle(`${this.translate.instant('title.statistics')} — Mean Stack Template`);
-    this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+    this.sharedService.handleTitle(this.translate.instant('title.statistics'));
+    this.sharedService.onTitleChange.pipe(take(1)).subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.statistics')));
   }
 }

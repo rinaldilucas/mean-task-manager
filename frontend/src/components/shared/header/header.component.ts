@@ -47,11 +47,11 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     this.isLogged = this.authService.getIsAuthenticated();
     this.isSidebarIsOpened = this.isLogged;
 
-    this.subs.sink = this.authService.emitterMenu.subscribe((result: boolean) => {
+    this.subs.sink = this.authService.onMenuChange.subscribe((result: boolean) => {
       this.isLogged = result;
       this.changeDetector.markForCheck();
     });
-    this.subs.sink = this.authService.sidebarEmitter.subscribe(() => {
+    this.subs.sink = this.authService.onSidebarChange.subscribe(() => {
       this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
       this.changeDetector.detectChanges();
     });

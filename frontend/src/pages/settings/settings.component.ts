@@ -2,7 +2,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Title } from '@angular/platform-browser';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
@@ -36,7 +35,6 @@ export class SettingsComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private categoryService: CategoryService,
     private translate: TranslateService,
-    private titleService: Title,
     private sharedService: SharedService,
   ) { }
 
@@ -91,8 +89,8 @@ export class SettingsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.titleService.setTitle(`${this.translate.instant('title.settings')} — Mean Stack Template`);
-    this.sharedService.emitterTitle.pipe(take(1)).subscribe(() => this.updateTitle());
+    this.sharedService.handleTitle(this.translate.instant('title.settings'));
+    this.sharedService.onTitleChange.pipe(take(1)).subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.settings')));
   }
 
   changeLanguage(language: string): void {
@@ -100,6 +98,6 @@ export class SettingsComponent implements OnInit {
     localStorage.setItem('language', language);
     this.sharedService.handleSnackbars({ translationKey: 'messages.language-changed' });
     this.changeDetector.markForCheck();
-    this.sharedService.emitterTitle.emit();
+    this.sharedService.onTitleChange.emit();
   }
 }

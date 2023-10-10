@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -13,12 +14,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomepageComponent implements OnInit {
-  title!: string;
-
-  constructor(private titleService: Title, private translate: TranslateService) { }
+  constructor(
+    private translate: TranslateService,
+    private sharedService: SharedService,
+  ) { }
 
   ngOnInit(): void {
-    this.title = this.translate.instant('title.home');
-    this.titleService.setTitle(`${this.title} — Mean Stack Template`);
+    this.sharedService.handleTitle(this.translate.instant('title.home'));
   }
 }
