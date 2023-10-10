@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { debounceTime, lastValueFrom, take } from 'rxjs';
 
-import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
+import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/discard-changes-dialog/discard-changes-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
@@ -29,20 +29,11 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  columnOptions: IColumnsOptions = {
-    lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
-    mdColumns: ['date', 'title', 'description', 'status', 'actions'],
-    smColumns: ['date', 'title', 'status', 'actions-mobile'],
-    xsColumns: ['date', 'title', 'status', 'actions-mobile'],
-  };
-
-  displayedColumns: string[] = this.columnOptions.lgColumns;
-
-  search = new FormControl();
-  searchedTasks: ITask[] = [];
   isLoading = true;
   isSearching = false;
 
+  search = new FormControl();
+  searchedTasks: ITask[] = [];
   tasksDataSource = new TableVirtualScrollDataSource<ITask>();
   tasks: ITask[] = [];
   status = EStatus;
@@ -52,6 +43,13 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   pageSizeOptions = [5, 15, 30];
   columnFilter = '';
   columnDirection = '';
+  columnOptions: IColumnsOptions = {
+    lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
+    mdColumns: ['date', 'title', 'description', 'status', 'actions'],
+    smColumns: ['date', 'title', 'status', 'actions-mobile'],
+    xsColumns: ['date', 'title', 'status', 'actions-mobile'],
+  };
+  displayedColumns: string[] = this.columnOptions.lgColumns;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -182,7 +180,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   async confirmDelete(task: ITask): Promise<void> {
     const dialogRef = await this.sharedService.handleDialogs(
       {
-        component: ConfirmationDialogComponent,
+        component: DiscardChangesDialogComponent,
         options: {
           title: 'task-form.confirmation-title',
           message: 'task-form.confirmation-message',

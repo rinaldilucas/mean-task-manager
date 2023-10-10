@@ -8,13 +8,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 
 @Component({
-  selector: 'app-confirmation-dialog',
+  selector: 'app-discard-changes-dialog',
   standalone: true,
   imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './confirmation-dialog.html',
+  templateUrl: './discard-changes-dialog.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfirmationDialogComponent {
+export class DiscardChangesDialogComponent {
   constructor(
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: { title: string, message: string, action: string },

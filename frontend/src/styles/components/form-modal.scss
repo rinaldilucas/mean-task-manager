@@ -11,13 +11,12 @@
     box-shadow: 0 vw(3) vw(5) rgba(0, 0, 0, 0.15);
     padding: vw(7);
     height: vw(60);
-    place-content: center space-between;
 
     &-wrapper {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      place-items: center;
+      justify-content: center;
     }
 
     h2 {
@@ -31,7 +30,7 @@
     display: flex;
     margin-top: vw(50);
     height: calc(100% - 0.74rem);
-    place-items: center;
+    justify-content: center;
 
     &-wrapper {
       padding: vw(25) vw(75) vw(75);

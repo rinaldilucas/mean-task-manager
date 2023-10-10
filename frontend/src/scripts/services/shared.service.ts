@@ -18,7 +18,8 @@ import { ITask } from '@app/scripts/models/task.interface';
 @Injectable({ providedIn: 'root' })
 export class SharedService {
   emitterTitle: EventEmitter<string> = new EventEmitter<string>();
-  emitterFormDirty: EventEmitter<any> = new EventEmitter<any>();
+  emitterForm: EventEmitter<any> = new EventEmitter<any>();
+  emitterFormSubmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
   pageSizeListener: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
   static subscriptions: Subscription[] = [];
