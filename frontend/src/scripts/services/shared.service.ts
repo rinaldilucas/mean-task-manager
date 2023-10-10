@@ -18,6 +18,7 @@ import { ITask } from '@app/scripts/models/task.interface';
 @Injectable({ providedIn: 'root' })
 export class SharedService {
   emitterTitle: EventEmitter<string> = new EventEmitter<string>();
+  emitterFormDirty: EventEmitter<any> = new EventEmitter<any>();
   tableColumnListener: EventEmitter<string[]> = new EventEmitter<string[]>();
   pageSizeListener: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
   static subscriptions: Subscription[] = [];
@@ -128,12 +129,12 @@ export class SharedService {
       minHeight: minHeight || undefined,
       disableClose: disableClose || false,
       data: options || null,
+      autoFocus: true,
+      panelClass: 'bottom-sheet-container',
     });
 
     return await lastValueFrom(dialogRef.afterClosed()).then(res => {
-      if (!res) return false;
-
-      return res;
+      return { dialogRef, result: res };
     })
   }
 

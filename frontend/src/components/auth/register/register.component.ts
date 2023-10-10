@@ -13,8 +13,8 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AuthService } from '@app/scripts/services/auth.service';
+import { SharedService } from '@app/scripts/services/shared.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
-import { SharedService } from '@root/src/scripts/services/shared.service';
 
 @Component({
   selector: 'app-register',

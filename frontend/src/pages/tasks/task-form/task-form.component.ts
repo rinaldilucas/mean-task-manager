@@ -1,36 +1,38 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, map, startWith } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
+import { OnDeactivate } from '@app/scripts/guards/can-deactivate.guard';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
-import { IQueryResult } from '@root/src/scripts/models/query-result.interface';
-import { SharedService } from '@root/src/scripts/services/shared.service';
-import { TaskService } from '@root/src/scripts/services/task.service';
+import { SharedService } from '@app/scripts/services/shared.service';
+import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormEntryComponent implements OnInit {
+export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boolean> {
+  isFormValueChanged = false;
+  form!: FormGroup;
+
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
     private translate: TranslateService,
     private sharedService: SharedService,
-  ) { }
-
-  ngOnInit(): void {
+    private matBottomSheet: MatBottomSheet,
+  ) {
     this.open();
   }
 
@@ -38,15 +40,48 @@ export class TaskFormEntryComponent implements OnInit {
     const task = this.route.snapshot.data.taskData.task as ITask;
     const categories = this.route.snapshot.data.taskData.categories as ICategory;
 
-    await this.sharedService.handleSheets(
-      {
-        component: TaskFormBottomSheetComponent,
-        options: { task, categories },
-        disableClose: true,
-      })
+    this.sharedService.emitterFormDirty.subscribe((formData) => {
+      this.form = formData.form;
+      this.isFormValueChanged = formData.touched;
+    });
+
+    await this.sharedService.handleSheets({
+      component: TaskFormBottomSheetComponent,
+      options: { task, categories },
+      disableClose: true,
+    });
 
     this.titleService.setTitle(`${this.translate.instant('title.tasks')} — Mean Stack Template`);
-    this.router.navigate(['tasks']);
+  }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.form.dirty) return false;
+
+    return true;
+  }
+
+  async onDeactivate(): Promise<any> {
+    if (!this.form?.dirty || (this.form.dirty && this.isFormValueChanged)) {
+      this.matBottomSheet.dismiss();
+      return true;
+    }
+
+    const dialogRes: { dialogRef, result: boolean } = await this.sharedService.handleDialogs({
+      component: ConfirmationDialogComponent,
+      options: {
+        title: 'task-form.confirmation-title',
+        message: 'task-form.confirmation-message',
+        action: 'task-form.confirmation-discard',
+      },
+    });
+
+    if (dialogRes.result) {
+      this.matBottomSheet.dismiss();
+      return true;
+    } {
+      return false;
+    }
   }
 }
 @Component({
@@ -59,7 +94,7 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
   @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
   title!: string;
-  isSaving = false;
+  isLoading = false;
   form!: FormGroup;
 
   isNew = !this.bottomsheetData?.task._id;
@@ -70,7 +105,6 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
   constructor(
     private taskService: TaskService,
     private formBuilder: FormBuilder,
-    private bottomSheetRef: MatBottomSheetRef<TaskFormBottomSheetComponent>,
     private router: Router,
     private sharedService: SharedService,
     private titleService: Title,
@@ -92,11 +126,15 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
       description: [
         this.task.description,
         [
-          Validators.maxLength(300)],
+          Validators.maxLength(300)
+        ],
       ],
       date: [this.task.date, null],
       category: [this.task.category, null],
     });
+
+    this.sharedService.emitterFormDirty.emit(this.form);
+    this.form.valueChanges.subscribe(() => { this.sharedService.emitterFormDirty.emit({ form: this.form, touched: true }) });
   }
 
   async ngOnInit(): Promise<void> {
@@ -112,31 +150,20 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
     task.status = this.isNew ? EStatus.toDo : task.status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
+    if (!result || !result.success || error) {
+      this.isLoading = false;
+      return this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
+    }
+    this.isLoading = false;
 
     this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
     this.taskService.emitterTask.emit(task);
-    this.form.reset();
     this.close();
   }
 
   async close(): Promise<void> {
-    if (this.form.dirty) {
-      const dialogRef = await this.sharedService.handleDialogs(
-        {
-          component: ConfirmationDialogComponent,
-          options: {
-            title: 'task-form.confirmation-title',
-            message: 'task-form.confirmation-message',
-            action: 'task-form.confirmation-discard'
-          },
-        })
-
-      if (dialogRef)
-        this.dismissModalAndNavigate('tasks');
-    } else {
-      this.dismissModalAndNavigate('tasks');
-    }
+    this.isLoading = false;
+    this.router.navigate([this.router.url.replace(/(\/new\/?|\/edit\/?).*/gi, '')]);
   }
 
   setAutoCompletes(): void {
@@ -155,11 +182,5 @@ export class TaskFormBottomSheetComponent extends Unsubscriber implements OnInit
       if (this.categoryTrigger.activeOption)
         this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
     });
-  }
-
-  dismissModalAndNavigate(path: string): void {
-    this.bottomSheetRef.dismiss();
-    this.form.reset();
-    this.router.navigate([path]);
   }
 }
