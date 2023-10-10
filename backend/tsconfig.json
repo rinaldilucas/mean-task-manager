@@ -2,8 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "types": [
-      "node",
-      "babel__core"
+      "node"
     ],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",

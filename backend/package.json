@@ -34,6 +34,7 @@
     "@typescript-eslint/parser": "5.43.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.28.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "nodemon": "^2.0.4",
     "sucrase": "^3.24.0",
     "tsconfig-paths": "^4.2.0",
@@ -45,7 +46,7 @@
     "build": "babel ./ --extensions \".ts\" --out-dir dist --copy-files --no-copy-ignored",
     "debug": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",
     "dev": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",
-    "lint": "npx eslint ./ --ext .ts && yarn lint:types",
+    "lint": "npx eslint ./ --fix --ext .ts && yarn lint:types",
     "lint:types": "tsc --noemit"
   }
 }

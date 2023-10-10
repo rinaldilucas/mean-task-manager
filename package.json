@@ -14,7 +14,7 @@
     "dev:api": "cd ./backend && yarn dev",
     "dev:client": "cd ./frontend && yarn dev",
     "lint": "yarn lint:api && yarn lint:client",
-    "lint:api": "cd ./backend && npx eslint ./api --ext .ts && tsc --noemit",
+    "lint:api": "cd ./backend && npx eslint ./ --ext .ts && tsc --noemit",
     "lint:client": "cd ./frontend && yarn lint"
   }
 }

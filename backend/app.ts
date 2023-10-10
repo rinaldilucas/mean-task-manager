@@ -86,7 +86,7 @@ app.listen(process.env.SERVER_PORT, () => {
 app.use((_request: Request, _response: Response, next: NextFunction) => {
   next(createError(404, "This route don't exist.", {
     expose: false,
-  }))
+  }));
 });
 
 // Error handler

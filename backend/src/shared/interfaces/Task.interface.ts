@@ -1,4 +1,4 @@
-import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { EStatus } from '@api/shared/enum/status.enum';
 
 export interface TaskInterface {
   title: string;
