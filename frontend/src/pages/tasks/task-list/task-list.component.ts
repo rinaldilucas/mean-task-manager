@@ -95,6 +95,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {
+    this.isLoading = true;
     task.status = status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
@@ -106,6 +107,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   async removeAsync(task: ITask): Promise<void> {
+    this.isLoading = true;
     const [, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
     if (error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-error', error: true });
 
