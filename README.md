@@ -63,49 +63,58 @@
 
 I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
 
+Built with using yarn, with
+
+### Backend
+
 - Node.js API written with TypeScript
-- Built with yarn as package manager
-- Multilingual features implemented in both the client-side and API responses
-- Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
-- Routed bottom sheet example implemented using only one component
-- Virtual scrolling feature implemented on tables
-- Charts using chart.js library
-- Angular routing animations using dynamic params
-- Search and ordering features via the database to minimize request size
-- AJAX requests used for pagination and search
+- Search, ordering and pagination integrate with frontend to shorten response sizes
 - JWT implementation with refresh token using Redis and cookies on strict mode
 - Blacklist of access/refresh token
-- Authentication and role guard
-- Multiple examples of synchronous custom validators
-- Custom async validator to check already registered user
-- Register with strong password validator
 - Password encryption using bcrypt with salt rounds
 - Authentication with brute force prevention using ExpressBrute
-- Example using resolver guard to retrieve data
-- Interceptor modules added to verify bearer token, errors, and headers language
-- Error handlers implemented throughout the project to improve readability and correctly throw HTTP errors and messages when necessary, making it easier to plug-in frontend, backend or database individually
-- Front-end validation on requests and inputs
+- Error handling to maintain error readability
 - Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
 - Database and model validation using mongoose
 - API documentation using Swagger
+- ESlint rules focused on backend
+- Multiple scripts to facilitate development, builds and deployment
+
+### Frontend
+
+- Multilingual features implemented in both the client-side and API responses
+- Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
+- Routed bottom sheet example implemented using only one component
+- Virtual scrolling with pagination, ordering and search integrated with api to shorten response sizes
+- Charts using chart.js library
+- Angular routing animations using dynamic params
+- Authentication and role guard
+- Deactivate guard to prevent the user of discarding changes
+- Multiple examples of synchronous custom validators
+- Multiple handlers to ease the use of dialogs, bottomsheets, snackbars and more
+- Custom async validator to check already registered user
+- Registering using password techniques
+- Example using functional resolvers
+- Interceptor modules added to verify bearer token, errors, and headers language
+- Front-end validation on requests and inputs
 - Handler of promises and errors using destructuring
 - Improved http security using HttpParams
 - Unsubscriber component with subsink to facilitate the maneuvering of unsubscribes
-- Shared CRUD service, allowing services to inherit its operations
-- Custom pipes to convert date to selected language
-- Custom directive to prevent form autofill
+- CRUD operations built using POO paradigms, allowing services to inherit its operations
+- Example of custom pipes to convert date to selected language
+- Example of custom directive to prevent form autofill
 - Dark mode using browser cookies
 - SCSS algorithm which uses rem unit to maintain aspect ratio
 - Stylesheets written using BEM methodology
 - Custom SCSS structure to improve reusability
 - Material components are overwritten to support rem unit and improve mobile/table compatibility coding less
 - Improved readability on media queries using include-media library
-- Helper query interface to maneuver http responses
-- Custom ESLint rules implemented which work both on the client-side and API
-- Keyboard accessibility, ARIA and accessible HTML ESLint rules
+- ESlint rules focused on frontend, like keyboard accessibility, ARIA and accessible HTML
+- Input validators with multilingual features added
 - Implementation of sass-lint which guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 - Prettier rules implemented to improve code readability
-- Input validators with multilingual features added
+- Multiple scripts to facilitate development, builds and deployment
+- Custom folder structure organized by responsibility
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -117,10 +126,11 @@ This section shows what technologies are used in this particular project.
 - [NodeJS](https://nodejs.org/en/)
 - [MongoDB](https://www.mongodb.com/)
 - [Express.js](https://expressjs.com/)
+- [Angular Material](https://material.angular.io/)
 - [Redis](https://redis.io/)
 - [Swagger](https://swagger.io/)
 - [Chart.js](https://www.chartjs.org/)
-- [Angular Material](https://material.angular.io/)
+- [yarn](https://www.yarnpkg.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
