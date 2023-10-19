@@ -61,9 +61,9 @@
 
 </div>
 
-I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!<br><br>It has really cool features like:
+I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!
 
-Built with using yarn, with
+Here are some of the features:
 
 ### Backend
 
@@ -79,6 +79,7 @@ Built with using yarn, with
 - API documentation using Swagger
 - ESlint rules focused on backend
 - Multiple scripts to facilitate development, builds and deployment
+- And more
 
 ### Frontend
 
@@ -115,6 +116,7 @@ Built with using yarn, with
 - Prettier rules implemented to improve code readability
 - Multiple scripts to facilitate development, builds and deployment
 - Custom folder structure organized by responsibility
+- And more
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -130,7 +132,7 @@ This section shows what technologies are used in this particular project.
 - [Redis](https://redis.io/)
 - [Swagger](https://swagger.io/)
 - [Chart.js](https://www.chartjs.org/)
-- [yarn](https://www.yarnpkg.com/)
+- [Yarn](https://www.yarnpkg.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
