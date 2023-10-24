@@ -20,7 +20,7 @@
     <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rinaldilucas.github.io/mean-stack-template/">View App (without backend)</a>
+    <a href="https://rinaldilucas.github.io/mean-stack-template/">Open (without backend)</a>
     · 
     <a href="#donations">Donate</a>       
   </p>
@@ -242,7 +242,7 @@ Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
-3. Commit your Changes (`git commit -m 'Add some amazing feature'`)
+3. Commit your Changes (`git commit -m 'feat: add some amazing feature'`)
 4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
