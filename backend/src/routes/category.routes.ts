@@ -7,8 +7,8 @@ import { verifyValidations } from '@api/middlewares/validator.middleware';
 
 const routes = Router();
 
-// find all
-routes.get('/api/categories', authMiddleware, Controller.findAll);
+// get all
+routes.get('/api/categories', authMiddleware, Controller.getAll);
 
 // create
 routes.post(

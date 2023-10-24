@@ -544,7 +544,7 @@
         "description": "Generate a refresh token to user",
         "operationId": "refreshToken",
         "requestBody": {
-          "description": "Refresh token to be genereated",
+          "description": "Refresh token to be generated",
           "required": true,
           "content": {
             "application/json": {

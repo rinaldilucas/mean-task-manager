@@ -7,7 +7,7 @@ import { Category as Model } from '@api/models/category.model';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class CategoryController {
-  async findAll(request: Request, response: Response): Promise<Response | any> {
+  async getAll(request: Request, response: Response): Promise<Response | any> {
     const language = request.headers.language;
     const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
 

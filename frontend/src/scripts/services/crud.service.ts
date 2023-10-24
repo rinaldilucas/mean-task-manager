@@ -19,7 +19,7 @@ export class CrudService<T> {
     private endpoint: string,
   ) { }
 
-  findAll(): Observable<IQueryResult<T[]>> {
+  getAll(): Observable<IQueryResult<T[]>> {
     return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));
   }
 

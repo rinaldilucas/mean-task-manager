@@ -18,7 +18,7 @@ export const TaskResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot, stat
   if (route.params.id)
     $tasks = taskService.get(route.params.id).pipe(map((result: IQueryResult<ITask>) => result.data[0]));
 
-  const $categories = categoryService.findAll().pipe(map((result: IQueryResult<ICategory[]>) => result.data));
+  const $categories = categoryService.getAll().pipe(map((result: IQueryResult<ICategory[]>) => result.data));
 
   switch (state.url) {
     default:

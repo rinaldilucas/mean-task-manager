@@ -7,8 +7,11 @@ import { verifyValidations } from '@api/middlewares/validator.middleware';
 
 const routes = Router();
 
-// find all
-routes.get('/api/tasks', authMiddleware, Controller.findAll);
+// get all
+routes.get('/api/tasks', authMiddleware, Controller.getAll);
+
+// get by id
+routes.get('/api/tasks/:_id', authMiddleware, Controller.getOne);
 
 // create
 routes.post(
@@ -25,8 +28,5 @@ routes.put('/api/tasks', authMiddleware, Controller.update);
 
 // delete
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);
-
-// get by id
-routes.get('/api/tasks/:_id', authMiddleware, Controller.findOne);
 
 export default routes;

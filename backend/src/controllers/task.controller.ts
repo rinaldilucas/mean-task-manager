@@ -7,7 +7,7 @@ import { Task as Model } from '@api/models/task.model';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class TaskController {
-  async findAll(request: Request, response: Response): Promise<Response | any> {
+  async getAll(request: Request, response: Response): Promise<Response | any> {
     const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
     const language = request.headers.language;
     const pageIndex = Number(request.query.pageIndex) ?? 1;
@@ -67,6 +67,19 @@ class TaskController {
     });
   }
 
+  async getOne(request: Request, response: Response): Promise<Response | undefined> {
+    const language = request.headers.language;
+
+    const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
+    if (error) return;
+    if (!data) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+    }
+
+    return responseSuccess(response, data, StatusCode.SuccessOK);
+  }
+
   async create(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
@@ -118,19 +131,6 @@ class TaskController {
     }
 
     return responseSuccess(response, data, StatusCode.SuccessNoContent);
-  }
-
-  async findOne(request: Request, response: Response): Promise<Response | undefined> {
-    const language = request.headers.language;
-
-    const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
-    if (error) return;
-    if (!data) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
-      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
-    }
-
-    return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 }
 

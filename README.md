@@ -213,20 +213,20 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 -------------------------------
 -------- [TASK ROUTES] --------
 -------------------------------
-[GET] localhost:3000/api/tasks?pageSize&searchTerm&pageIndex&sortFilter&sortDirection&startDate&finalDate -> 'findAll'
+[GET] localhost:3000/api/tasks?pageSize&searchTerm&pageIndex&sortFilter&sortDirection&startDate&finalDate -> 'getAll'
+[GET] localhost:3000/api/tasks/{id} -> 'getOne'
 [POST] localhost:3000/api/tasks -> 'create'
-[PUT] localhost:3000/api/tasks -> 'update'
-[DELETE] localhost:3000/api/tasks/:_id -> 'remove'
-[GET] localhost:3000/api/tasks/:_id -> 'findOne'
+[PUT] localhost:3000/api/tasks/{id} -> 'update'
+[DELETE] localhost:3000/api/tasks/{id}-> 'remove'
 ```
 
 ```js
 -------------------------------
 ------ [CATEGORY ROUTES] ------
 -------------------------------
-[GET] localhost:3000/api/categories -> 'findAll'
+[GET] localhost:3000/api/categories -> 'getAll'
 [POST] localhost:3000/api/categories -> 'create'
-[DELETE] localhost:3000/api/categories/:_id -> 'remove'
+[DELETE] localhost:3000/api/categories/{id} -> 'remove'
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

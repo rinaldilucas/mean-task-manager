@@ -40,7 +40,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   async refreshAsync(): Promise<void> {
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.findAll()));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll()));
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.tasks = result.data;

@@ -21,7 +21,7 @@ export class TaskService extends CrudService<ITask> {
     super(http, injector, endpoint);
   }
 
-  override findAll({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection, startDate, finalDate }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; startDate?: Date, finalDate?: Date } = {}): Observable<IQueryResult<ITask[]>> {
+  override getAll({ pageSize, searchTerm, pageIndex = 0, sortFilter, sortDirection, startDate, finalDate }: { pageSize?: number; searchTerm?: string; pageIndex?: number; sortFilter?: string; sortDirection?: string; startDate?: Date, finalDate?: Date } = {}): Observable<IQueryResult<ITask[]>> {
     let params = new HttpParams();
     if (sortFilter) { params = params.set('sortFilter', sortFilter).set('sortDirection', sortDirection as string); }
     if (pageSize) params = params.set('pageSize', pageSize);
