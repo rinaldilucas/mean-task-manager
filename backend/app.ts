@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
@@ -27,6 +28,7 @@ class App {
   }
 
   private middlewares(): void {
+    this.express.use(compression());
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(cors());
