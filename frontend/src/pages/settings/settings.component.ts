@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -31,15 +31,22 @@ export class SettingsComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   categoryControl = new FormControl();
   categories: ICategory[] = [];
+  form!: FormGroup;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private categoryService: CategoryService,
     private translate: TranslateService,
     private sharedService: SharedService,
-  ) { }
+    private formBuilder: FormBuilder,
+  ) {
+    this.form = this.formBuilder.group({
+      languageOptions: ['1'],
+    });
+  }
 
   ngOnInit(): void {
+    this.verifyLanguage();
     this.updateTitle();
     this.refreshAsync();
   }
@@ -100,5 +107,15 @@ export class SettingsComponent implements OnInit {
     this.sharedService.handleSnackbars({ translationKey: 'messages.language-changed' });
     this.changeDetector.markForCheck();
     this.sharedService.onTitleChange.emit();
+  }
+
+  verifyLanguage(): void {
+    const language = localStorage.getItem('language') ?? 'en-US';
+
+    if (language === 'en-US') {
+      this.form.get('languageOptions')?.setValue('1');
+    } else {
+      this.form.get('languageOptions')?.setValue('2');
+    }
   }
 }

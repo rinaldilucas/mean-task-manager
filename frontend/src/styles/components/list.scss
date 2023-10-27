@@ -1,5 +1,8 @@
 .list {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @include media(">=desktop") {
     align-items: start !important;

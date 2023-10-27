@@ -77,3 +77,17 @@
 .half-width {
   width: 48%;
 }
+
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--column {
+    flex-direction: column;
+  }
+
+  &--row {
+    flex-direction: row;
+  }
+}

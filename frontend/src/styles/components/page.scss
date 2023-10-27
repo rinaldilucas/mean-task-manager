@@ -23,31 +23,6 @@
     position: relative;
     height: 100%;
 
-    &::after {
-      position: absolute;
-      top: vw(-10);
-      left: 0;
-      transform: scale(0.95);
-      z-index: 0;
-      border-radius: vw(10);
-      background-color: mat-color($app-background, 50) !important;
-      width: 100%;
-      height: vw(30);
-      content: "";
-
-      .dark-mode & {
-        background-color: mat-contrast($app-background, 50) !important;
-      }
-    }
-
-    &--empty {
-      height: 100%;
-
-      @include media(">=desktop") {
-        height: 90%;
-      }
-    }
-
     &-wrapper {
       position: relative;
       z-index: 1;
@@ -62,6 +37,31 @@
 
       @include media(">=desktop") {
         padding: vw(70) vw(50);
+      }
+    }
+
+    &--empty {
+      height: 100%;
+
+      @include media(">=desktop") {
+        height: 90%;
+      }
+    }
+
+    &::after {
+      position: absolute;
+      top: vw(-10);
+      left: 0;
+      transform: scale(0.95);
+      z-index: 0;
+      border-radius: vw(10);
+      background-color: mat-color($app-background, 50) !important;
+      width: 100%;
+      height: vw(30);
+      content: "";
+
+      .dark-mode & {
+        background-color: mat-contrast($app-background, 50) !important;
       }
     }
   }
