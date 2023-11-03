@@ -14,6 +14,8 @@
     "dev:client": "cd ./frontend && yarn dev",
     "lint": "yarn lint:api && yarn lint:client",
     "lint:api": "cd ./backend && yarn lint",
-    "lint:client": "cd ./frontend && yarn lint"
+    "lint:client": "cd ./frontend && yarn lint",
+    "start:client": "cd ./frontend && yarn start",
+    "start:api": "cd ./backend && yarn start"
   }
 }
