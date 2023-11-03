@@ -45,7 +45,7 @@
   "name": "mean-stack-template-api",
   "scripts": {
     "build": "babel ./ --extensions \".ts\" --out-dir dist && cp .env dist && cp swagger.json dist",
-    "build:server": "babel ./ --extensions \".ts\" --prod=true --out-dir dist && cp swagger.json dist",
+    "build:server": "babel ./ --extensions \".ts\" --out-dir dist && cp swagger.json dist",
     "debug": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",
     "deploy": "yarn build",
     "dev": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",
