@@ -3,19 +3,22 @@
   "license": "MIT",
   "name": "mean-stack-template",
   "scripts": {
-    "install-deps": "cd ./backend && yarn && cd ../frontend && yarn",
+    "install-deps": "yarn install-deps:api && yarn install-deps:client",
+    "install-deps:api": "cd ./backend && yarn",
+    "install-deps:client": "cd ./frontend && yarn",
     "build": "yarn build:api && yarn build:client",
     "build:api": "cd ./backend && yarn build",
     "build:client": "cd ./frontend && yarn build",
     "debug:api": "cd ./backend && yarn debug",
     "debug:clint": "cd ./frontend && yarn debug",
-    "deploy": "cd ./frontend && yarn deploy",
+    "deploy": "yarn deploy:client",
+    "deploy:client": "cd ./frontend && yarn deploy",
     "dev:api": "cd ./backend && yarn dev",
     "dev:client": "cd ./frontend && yarn dev",
     "lint": "yarn lint:api && yarn lint:client",
     "lint:api": "cd ./backend && yarn lint",
     "lint:client": "cd ./frontend && yarn lint",
-    "start:client": "cd ./frontend && yarn start",
-    "start:api": "cd ./backend && yarn start"
+    "start:api": "cd ./backend && yarn start",
+    "start:client": "cd ./frontend && yarn start"
   }
 }
