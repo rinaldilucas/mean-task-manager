@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import createError from 'http-errors';
 import mongoose from 'mongoose';
-import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 
 import databaseConfig from '@root/config/mongodb.config';
@@ -33,13 +32,6 @@ class App {
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(cors());
     this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-    const args = process.argv;
-
-    if (args.includes('--prod=true')) {
-      this.express.use(express.static(path.join(__dirname, '../frontend/dist')));
-      this.express.use('/', express.static(path.join(__dirname, '../frontend/dist')));
-    }
   }
 
   private database(): void {
