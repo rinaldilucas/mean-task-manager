@@ -7,7 +7,7 @@
     "install-deps:api": "cd ./backend && yarn",
     "install-deps:client": "cd ./frontend && yarn",
     "build": "yarn build:api && yarn build:client",
-    "build:api": "cd ./backend && yarn build",
+    "build:api": "cd ./backend && yarn build:server",
     "build:client": "cd ./frontend && yarn build",
     "debug:api": "cd ./backend && yarn debug",
     "debug:clint": "cd ./frontend && yarn debug",
