@@ -7,7 +7,6 @@ import createError from 'http-errors';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 
-import databaseConfig from '@root/config/mongodb.config';
 import swaggerDocs from '@root/swagger.json';
 
 import authRoutes from '@api/routes/auth.routes';
@@ -18,12 +17,12 @@ class App {
   express: express.Application;
 
   constructor() {
+    dotenv.config();
     this.express = express();
 
     this.middlewares();
     this.database();
     this.routes();
-    dotenv.config();
   }
 
   private middlewares(): void {
@@ -36,13 +35,11 @@ class App {
 
   private database(): void {
     const args = process.argv;
-    let database;
+    let database = process.env.MONGODB_HOST as string;
 
     if (args.includes('--prod=true')) {
-      database = databaseConfig.urlProd;
       console.log('Using production connection string.');
     } else {
-      database = databaseConfig.url;
       console.log('Using local connection string.');
     }
 

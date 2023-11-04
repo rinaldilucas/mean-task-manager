@@ -20,7 +20,7 @@
     <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rinaldilucas.github.io/mean-stack-template/">Open (without backend)</a>
+    <a href="https://rinaldilucas.github.io/mean-stack-template/">View App</a>
     · 
     <a href="#donations">Donate</a>       
   </p>
