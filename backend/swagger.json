@@ -21,6 +21,10 @@
     {
       "url": "http://localhost:3000/api",
       "description": "Local server"
+    },
+    {
+      "url": "https://meanstack-api.onrender.com/api",
+      "description": "Production server"
     }
   ],
   "tags": [

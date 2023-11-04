@@ -66,6 +66,11 @@ class App {
 
 const app = new App().express;
 
+// Redirect to the API documentation
+app.get('/', (_request: Request, response: Response) => {
+  response.redirect('/api-docs');
+});
+
 // Creates server
 app.listen(process.env.SERVER_PORT, () => {
   const host = process.env.SERVER_HOST;
@@ -87,3 +92,4 @@ app.use((error, _request: Request, response: Response) => {
 
   response.status(error.statusCode).send((error as any).message);
 });
+
