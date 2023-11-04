@@ -5,7 +5,6 @@
   align-items: center;
 
   @include media(">=desktop") {
-    align-items: start !important;
     margin: 0 !important;
   }
 
