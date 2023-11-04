@@ -5,6 +5,10 @@ var OFF = 0,
 module.exports = {
   root: true,
   ignorePatterns: ['dist/*', 'node_modules/*'],
+  parserOptions: {
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+  },
   overrides: [
     {
       extends: [

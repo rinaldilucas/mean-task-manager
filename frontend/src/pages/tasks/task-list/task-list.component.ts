@@ -72,7 +72,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.subs.sink = this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value));
 
     this.refreshAsync();
-    this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync());
+    this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync({ showLoading: true }));
   }
 
   add(): void {
@@ -83,7 +83,12 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.router.navigate(['tasks/edit', id]);
   }
 
-  async refreshAsync(): Promise<void> {
+  async refreshAsync({ showLoading = false }: { showLoading?: boolean; } = {}): Promise<void> {
+    if (showLoading) {
+      this.isLoading = true;
+      this.changeDetector.detectChanges();
+    }
+
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize })));
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 

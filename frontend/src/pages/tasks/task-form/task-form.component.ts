@@ -131,6 +131,9 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     if (!this.sharedService.isValidForm(this.form)) return;
     this.isLoading = true;
 
+    this.taskService.onTaskChange.emit();
+    this.sharedService.onFormSubmitChange.emit(true);
+
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
 
@@ -142,8 +145,6 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     }
 
     this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
-    this.taskService.onTaskChange.emit(task);
-    this.sharedService.onFormSubmitChange.emit(true);
     this.close();
   }
 
