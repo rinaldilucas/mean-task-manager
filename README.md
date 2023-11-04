@@ -21,7 +21,9 @@
     <br />
     <br />
     <a href="https://rinaldilucas.github.io/mean-stack-template/">View App</a>
-    · 
+    ·
+    <a href="https://meanstack-api.onrender.com/api-docs">API Docs</a>
+    ·
     <a href="#donations">Donate</a>       
   </p>
 </div>
