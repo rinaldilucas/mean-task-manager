@@ -1,5 +1,5 @@
 
 export const environment = {
-  baseUri: 'http://localhost:3000/api',
+  baseUri: 'https://meanstack-api.onrender.com/api',
   production: true,
 };
