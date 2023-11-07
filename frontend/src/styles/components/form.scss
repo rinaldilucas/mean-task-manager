@@ -1,7 +1,7 @@
 .form {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin-top: vw(45);
 
   @include media(">=desktop") {
