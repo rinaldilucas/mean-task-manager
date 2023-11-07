@@ -4,10 +4,10 @@
     "title": "Angular WebApp"
   },
   "button": {
+    "cancel": "Cancel",
     "register": "Register",
     "save": "Save",
-    "signin": "Login",
-    "cancel": "Cancel"
+    "signin": "Login"
   },
   "error": {
     "email-exists": "E-mail already registered",
