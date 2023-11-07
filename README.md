@@ -26,6 +26,11 @@
     ·
     <a href="#donations">Donate</a>       
   </p>
+  <small>
+    hosted on render.com free tier, so API need a little time to start after accessing
+  </small>
+  <br>
+  <br>
 </div>
 
 <!-- TABLE OF CONTENTS -->
