@@ -6,7 +6,8 @@
   "button": {
     "register": "Registrar",
     "save": "Salvar",
-    "signin": "Entrar"
+    "signin": "Entrar",
+    "cancel": "Cancelar"
   },
   "error": {
     "email-exists": "E-mail já cadastrado",
@@ -106,8 +107,7 @@
     "to-do": "A fazer"
   },
   "task-form": {
-    "confirmation-cancel": "Cancelar",
-    "confirmation-discard": "Descartar",
+    "confirmation-action": "DESCARTAR",
     "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
     "confirmation-title": "Alterações Não Salvas",
     "create-error": "Erro ao adicionar tarefa.",
@@ -117,7 +117,7 @@
     "get-error": "Erro ao buscar tarefa."
   },
   "task-list": {
-    "confirmation-delete": "Remover",
+    "confirmation-action": "REMOVER",
     "confirmation-message": "Tem certeza de que deseja excluir este item?",
     "confirmation-title": "Remover Tarefa",
     "empty": "Sem tarefas.",
