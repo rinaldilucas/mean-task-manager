@@ -40,8 +40,7 @@
 
     @include media(">=desktop") {
       margin: vw(50) 0 0 0;
-      width: vw(440);
-      width: 100%;
+      width: vw(550);
     }
 
     &-wrapper {
@@ -49,7 +48,7 @@
       width: 100%;
 
       @include media(">=desktop") {
-        max-width: vw(440);
+        max-width: vw(550);
         padding: vw(25) vw(75);
       }
     }
