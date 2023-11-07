@@ -17,35 +17,20 @@
     width: 100%;
     max-width: vw(1000);
     min-height: calc(100% - 2rem);
-  }
-
-  &__content {
+    background-color: mat-color($app-background, 100);
     position: relative;
-    height: 100%;
+    display: flex;
 
-    &-wrapper {
-      position: relative;
-      z-index: 1;
-      background-color: mat-color($app-background, 100);
-      padding: vw(50) vw(40);
-      height: 100%;
-      box-sizing: border-box;
+    &--transparent {
+      background-color: transparent !important;
 
-      .dark-mode & {
-        background-color: mat-contrast($app-background, 100) !important;
-      }
-
-      @include media(">=desktop") {
-        padding: vw(70) vw(50);
+      &::after {
+        display: none;
       }
     }
 
-    &--empty {
-      height: 100%;
-
-      @include media(">=desktop") {
-        height: 90%;
-      }
+    .dark-mode & {
+      background-color: mat-contrast($app-background, 100) !important;
     }
 
     &::after {
@@ -62,6 +47,32 @@
 
       .dark-mode & {
         background-color: mat-contrast($app-background, 50) !important;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    &-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: vw(50) vw(40);
+      height: 100%;
+      box-sizing: border-box;
+
+      @include media(">=desktop") {
+        padding: vw(70) vw(50);
+      }
+    }
+
+    &--empty {
+      height: 100%;
+
+      @include media(">=desktop") {
+        height: 90%;
       }
     }
   }

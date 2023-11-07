@@ -66,9 +66,17 @@
     margin-left: 0;
     box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
     background-color: mat-color($app-background, 100);
-    padding: vw(25) 0 vw(15);
-    height: vw(160);
+    padding: vw(35) 0 vw(20);
+    height: vw(80);
     font-size: vw(22);
+
+    &--empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: vw(55);
+      padding: vw(20) 0 vw(20);
+    }
 
     @include media(">=desktop") {
       flex-direction: row;
@@ -84,7 +92,6 @@
     &-title {
       display: flex;
       align-items: center;
-      margin-top: vw(20);
       font-size: vw(34);
       justify-self: center;
 
@@ -138,11 +145,11 @@
     }
 
     @include media("<=desktop") {
-      height: calc(100vh - (0.6rem + 0.6rem + 1.6rem + 0.4rem));
+      height: calc(100vh - 1.95rem);
     }
 
     &--empty {
-      height: calc(100% - (1.4rem + 0.6rem));
+      height: calc(100% - 0.95rem);
 
       @include media(">=desktop") {
         height: calc(3.87rem);

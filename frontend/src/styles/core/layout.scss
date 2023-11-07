@@ -18,7 +18,7 @@ $custom-typography: mat-typography-config(
   $body-2: define-typography-level(0.14rem, 0.2rem, 400),
   $caption: define-typography-level(0.14rem, 0.2rem, 400),
   $button: define-typography-level(0.16rem, 0.28rem, 500),
-  $input: define-typography-level(inherit, 1.125, 400)
+  $input: define-typography-level(inherit, 1.125, 400),
 );
 
 @include media(">=desktop") {
@@ -32,7 +32,7 @@ $custom-typography: mat-typography-config(
     $body-2: define-typography-level(0.14rem, 0.2rem, 400),
     $caption: define-typography-level(0.14rem, 0.2rem, 400),
     $button: define-typography-level(0.16rem, 0.28rem, 500),
-    $input: define-typography-level(inherit, 1.125, 400)
+    $input: define-typography-level(inherit, 1.125, 400),
   );
 }
 

@@ -11,7 +11,7 @@ import { debounceTime, lastValueFrom, take } from 'rxjs';
 import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/discard-changes-dialog/discard-changes-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
-import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { EStatus } from '@app/scripts/models/enums/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
@@ -161,6 +161,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.refreshAsync();
     } else if (text.length > 2) {
       this.isLoading = true;
+      this.isSearching = true;
       const searchTerm = text.trim().toLowerCase();
 
       const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
@@ -185,9 +186,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       {
         component: DiscardChangesDialogComponent,
         options: {
-          title: 'task-form.confirmation-title',
-          message: 'task-form.confirmation-message',
-          action: 'task-form.confirmation-discard',
+          title: 'task-list.confirmation-title',
+          message: 'task-list.confirmation-message',
+          action: 'task-list.confirmation-action',
         },
         disableClose: true,
       });

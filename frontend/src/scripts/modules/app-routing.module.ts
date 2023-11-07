@@ -11,7 +11,7 @@ import { StatisticsComponent } from '@app/pages/statistics/statistics.component'
 import { AuthGuard } from '@app/scripts/guards/auth.guard';
 import { LoggedInAuthGuard } from '@app/scripts/guards/logged-in.guard';
 import { RoleGuard } from '@app/scripts/guards/role.guard';
-import { ERole } from '@app/scripts/models/enum/role.enum';
+import { ERole } from '@app/scripts/models/enums/role.enum';
 
 const routes: Routes = [
   { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },

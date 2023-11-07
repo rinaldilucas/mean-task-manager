@@ -24,7 +24,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" *ngIf="isLogged">
+    <mat-toolbar *ngIf="isLogged" color="primary">
       <div>
         <button type="button" mat-icon-button (keypress)="drawer.toggle()" (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
       </div>
@@ -52,7 +52,7 @@
       </div>
     </mat-toolbar>
 
-    <mat-toolbar color="primary" *ngIf="!isLogged">
+    <mat-toolbar *ngIf="!isLogged" color="primary">
       <h2>
         <a [routerLink]="'/'">{{ "app.title" | translate }}</a>
       </h2>

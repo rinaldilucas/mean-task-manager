@@ -4,21 +4,21 @@
   </button>
 
   <div class="list">
-    <div class="list__wrapper">
-      <div class="list__header">
+    <div class="list__wrapper mat-elevation-z1">
+      <div class="list__header" [class.list__header--empty]="!tasks.length && !this.isSearching">
         <div class="list__header-title">
           <span class="header-title">{{ "title.tasks" | translate }}</span>
         </div>
 
-        <div class="list__header-search" *ngIf="!!tasks.length">
+        <div class="list__header-search" *ngIf="tasks.length || this.isSearching">
           <mat-form-field>
             <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput [formControl]="search" />
           </mat-form-field>
         </div>
       </div>
 
-      <div class="list__body mat-elevation-z1" [class.list__body--empty]="tasks.length === 0">
-        <app-loader class="centered" [isLoading]="isLoading"></app-loader>
+      <div class="list__body" [class.list__body--empty]="tasks.length === 0">
+        <app-loader *ngIf="isLoading" class="table-body-height centered"></app-loader>
 
         <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--placeholder flex-centered flex-centered--column">
           <div>

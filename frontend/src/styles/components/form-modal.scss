@@ -1,5 +1,6 @@
 .form-modal {
-  width: vw(580);
+  max-width: vw(580);
+  width: 100%;
 
   @include media(">=desktop") {
     min-height: vw(650);
@@ -30,13 +31,25 @@
   &__body {
     display: flex;
     justify-content: center;
-    margin-top: vw(50);
+    margin: vw(50) auto;
     height: calc(100% - 0.74rem);
+    min-height: vw(400);
+    display: flex;
+    justify-content: center;
+    width: vw(300);
+
+    @include media(">=desktop") {
+      margin: vw(50) 0 0 0;
+      width: vw(440);
+      width: 100%;
+    }
 
     &-wrapper {
-      padding: vw(25) vw(75) vw(75);
+      max-width: vw(300);
+      width: 100%;
 
       @include media(">=desktop") {
+        max-width: vw(440);
         padding: vw(25) vw(75);
       }
     }

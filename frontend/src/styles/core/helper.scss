@@ -78,6 +78,19 @@
   width: 48%;
 }
 
+.full-height {
+  height: 100%;
+}
+
+.table-body-height {
+  height: calc(100% - (1.6rem / 2));
+}
+
+.flex-top {
+  display: flex;
+  align-items: flex-start;
+}
+
 .flex-centered {
   display: flex;
   align-items: center;

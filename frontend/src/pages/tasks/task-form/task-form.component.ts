@@ -11,7 +11,7 @@ import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/di
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { OnDeactivate } from '@app/scripts/guards/can-deactivate.guard';
 import { ICategory } from '@app/scripts/models/category.interface';
-import { EStatus } from '@app/scripts/models/enum/status.enum';
+import { EStatus } from '@app/scripts/models/enums/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
@@ -62,7 +62,7 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
       options: {
         title: 'task-form.confirmation-title',
         message: 'task-form.confirmation-message',
-        action: 'task-form.confirmation-discard',
+        action: 'task-form.confirmation-action',
       },
     });
 
@@ -131,9 +131,6 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     if (!this.sharedService.isValidForm(this.form)) return;
     this.isLoading = true;
 
-    this.taskService.onTaskChange.emit();
-    this.sharedService.onFormSubmitChange.emit(true);
-
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
 
@@ -143,6 +140,9 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
       this.cdRef.markForCheck();
       return this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
     }
+
+    this.taskService.onTaskChange.emit();
+    this.sharedService.onFormSubmitChange.emit(true);
 
     this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
     this.close();

@@ -6,7 +6,8 @@
   "button": {
     "register": "Register",
     "save": "Save",
-    "signin": "Login"
+    "signin": "Login",
+    "cancel": "Cancel"
   },
   "error": {
     "email-exists": "E-mail already registered",
@@ -106,8 +107,7 @@
     "to-do": "To do"
   },
   "task-form": {
-    "confirmation-cancel": "Cancel",
-    "confirmation-discard": "Discard",
+    "confirmation-action": "DISCARD",
     "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
     "confirmation-title": "Unsaved Changes",
     "create-error": "Error adding the task.",
@@ -117,7 +117,7 @@
     "get-error": "Error retrieving task."
   },
   "task-list": {
-    "confirmation-delete": "Delete",
+    "confirmation-action": "DELETE",
     "confirmation-message": "Are you sure you want to delete this item?",
     "confirmation-title": "Remove Task",
     "empty": "No tasks.",

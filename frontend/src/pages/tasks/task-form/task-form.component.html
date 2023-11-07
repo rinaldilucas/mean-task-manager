@@ -14,7 +14,7 @@
   </div>
 
   <div class="form-modal__body">
-    <app-loader class="centered" [isLoading]="isLoading"></app-loader>
+    <app-loader *ngIf="isLoading" class="centered"></app-loader>
 
     <form [formGroup]="form" *ngIf="!isLoading" class="form-modal__body-wrapper" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="saveAsync()">
       <mat-card-content>
@@ -27,16 +27,16 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <textarea #taskDescription maxlength="300" formControlName="description" rows="2" matInput placeholder="{{ 'input.description' | translate }}"></textarea>
-          <mat-hint align="end">{{ taskDescription.value.length || 0 }}/300</mat-hint>
-          <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 300 } }} </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
           <mat-label>{{ "input.choose-due-date" | translate }}</mat-label>
           <input formControlName="date" matInput (focus)="picker.open()" [matDatepicker]="picker" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <textarea #taskDescription maxlength="300" formControlName="description" rows="2" matInput placeholder="{{ 'input.description' | translate }}"></textarea>
+          <mat-hint align="end">{{ taskDescription.value.length || 0 }}/300</mat-hint>
+          <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 300 } }} </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">

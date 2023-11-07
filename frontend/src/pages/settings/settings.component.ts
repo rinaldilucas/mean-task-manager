@@ -1,4 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -6,8 +7,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
 
-import { CommonModule } from '@angular/common';
 import { ICategory } from '@app/scripts/models/category.interface';
+import { ELanguage } from '@app/scripts/models/enums/language.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
@@ -41,7 +42,7 @@ export class SettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      languageOptions: ['1'],
+      languageOptions: [ELanguage.english],
     });
   }
 
@@ -111,11 +112,12 @@ export class SettingsComponent implements OnInit {
 
   verifyLanguage(): void {
     const language = localStorage.getItem('language') ?? 'en-US';
+    this.translate.use(language);
 
     if (language === 'en-US') {
-      this.form.get('languageOptions')?.setValue('1');
+      this.form.get('languageOptions')?.setValue(ELanguage.english);
     } else {
-      this.form.get('languageOptions')?.setValue('2');
+      this.form.get('languageOptions')?.setValue(ELanguage.portuguese);
     }
   }
 }

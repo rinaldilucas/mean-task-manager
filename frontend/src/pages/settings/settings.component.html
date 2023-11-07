@@ -1,8 +1,8 @@
 <div class="page-container">
   <div class="page">
     <div class="page__wrapper mat-elevation-z1">
-      <app-loader class="centered" [isLoading]="isLoading"></app-loader>
-      <div class="page__content" *ngIf="!isLoading">
+      <app-loader *ngIf="isLoading" class="full-width full-height centered"></app-loader>
+      <div *ngIf="!isLoading" class="page__content">
         <div class="page__content-wrapper">
           <form [formGroup]="form">
             <section>

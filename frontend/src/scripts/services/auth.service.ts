@@ -7,7 +7,7 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { IAuthData } from '@app/scripts/models/auth-data.interface';
-import { ERole } from '@app/scripts/models/enum/role.enum';
+import { ERole } from '@app/scripts/models/enums/role.enum';
 import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IJwtToken } from '@app/scripts/models/jwt-token.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';

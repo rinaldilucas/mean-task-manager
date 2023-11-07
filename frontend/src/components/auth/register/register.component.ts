@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusCode } from 'status-code-enum';
 
-import { ERole } from '@app/scripts/models/enum/role.enum';
+import { ERole } from '@app/scripts/models/enums/role.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
