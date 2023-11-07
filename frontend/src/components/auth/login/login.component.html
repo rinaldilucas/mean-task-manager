@@ -26,7 +26,7 @@
           <mat-checkbox formControlName="keepUserLogged" color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>
         </mat-card-content>
 
-        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!this.form.dirty || !this.form.valid" (click)="loginAsync()">
+        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!form.dirty || !form.valid" (click)="loginAsync()">
           {{ "button.signin" | translate }}
         </button>
       </form>

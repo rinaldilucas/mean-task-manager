@@ -6,7 +6,7 @@
       </button>
       <h2 class="form-modal__header-title">{{ title }}</h2>
       <div class="form-header">
-        <button type="submit" mat-fab color="primary" [disabled]="!this.form.dirty || !this.form.valid" (click)="saveAsync()">
+        <button type="submit" mat-fab color="primary" [disabled]="!form.dirty || !form.valid" (click)="saveAsync()">
           <mat-icon>check</mat-icon>
         </button>
       </div>

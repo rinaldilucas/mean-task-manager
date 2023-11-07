@@ -5,7 +5,7 @@
     background-color: mat-color($app-primary-dark, 700) !important;
   }
 
-  &__left {
+  &__sidenav {
     width: vw(180);
 
     a {
@@ -31,20 +31,24 @@
     }
   }
 
-  &__top {
-    &-right {
+  &__right {
+    display: flex;
+    align-items: center;
+
+    &-wrapper {
       display: flex;
-      align-items: center;
+      align-content: center;
+      margin-right: vw(16);
+
+      mat-icon {
+        margin-right: vw(8);
+      }
     }
   }
 
-  &__darkmode-wrapper {
-    display: flex;
-    align-content: center;
-    margin-right: vw(16);
-
-    mat-icon {
-      margin-right: vw(8);
+  &__logged-out {
+    a {
+      margin-right: vw(6);
     }
   }
 }

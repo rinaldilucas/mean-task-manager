@@ -5,12 +5,12 @@
 
   <div class="list">
     <div class="list__wrapper mat-elevation-z1">
-      <div class="list__header" [class.list__header--empty]="!tasks.length && !this.isSearching">
+      <div class="list__header" [class.list__header--empty]="!tasks.length && !isSearching">
         <div class="list__header-title">
           <span class="header-title">{{ "title.tasks" | translate }}</span>
         </div>
 
-        <div class="list__header-search" *ngIf="(tasks.length || this.isSearching) && !isLoading">
+        <div class="list__header-search" *ngIf="(tasks.length || isSearching) && !isLoading">
           <mat-form-field>
             <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput [formControl]="search" />
           </mat-form-field>
@@ -89,6 +89,7 @@
 
                 <mat-cell mat-cell *matCellDef="let task">
                   <button
+                    [disabled]="task.status === status.toDo"
                     type="button"
                     mat-icon-button
                     matTooltip="{{ 'table.actions.to-do' | translate }}"
@@ -98,6 +99,7 @@
                     <mat-icon>undo</mat-icon>
                   </button>
                   <button
+                    [disabled]="task.status === status.progress"
                     type="button"
                     mat-icon-button
                     matTooltip="{{ 'table.actions.progress' | translate }}"
@@ -107,6 +109,7 @@
                     <mat-icon>360 icon</mat-icon>
                   </button>
                   <button
+                    [disabled]="task.status === status.done"
                     type="button"
                     mat-icon-button
                     matTooltip="{{ 'table.actions.done' | translate }}"
@@ -115,7 +118,13 @@
                   >
                     <mat-icon>check</mat-icon>
                   </button>
-                  <button type="button" mat-icon-button matTooltip="{{ 'table.actions.remove' | translate }}" class="list__body-actions" (click)="confirmDelete(task); $event.stopPropagation()">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matTooltip="{{ 'table.actions.remove' | translate }}"
+                    class="list__body-actions"
+                    (click)="confirmDelete(task); $event.stopPropagation()"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
                 </mat-cell>
