@@ -1,6 +1,8 @@
 <div class="page-container">
   <div class="page">
-    <div class="page__wrapper page__wrapper--transparent">
+    <app-loader *ngIf="isLoading" class="centered"></app-loader>
+
+    <div *ngIf="!isLoading" class="page__wrapper page__wrapper--transparent">
       <div class="flex-top">
         <app-weekly-done *ngIf="tasks && tasks.length > 0" [tasks]="tasks"></app-weekly-done>
         <app-tasks-done *ngIf="tasks && tasks.length > 0" [tasks]="tasks"></app-tasks-done>

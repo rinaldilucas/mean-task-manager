@@ -79,6 +79,7 @@ export class SettingsComponent implements OnInit {
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0]);
+    this.changeDetector.detectChanges();
   }
 
   async removeCategoryAsync(category: ICategory): Promise<void> {

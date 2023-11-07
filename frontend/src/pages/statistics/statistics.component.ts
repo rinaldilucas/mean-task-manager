@@ -11,21 +11,22 @@ import { WeeklyDoneComponent } from '@app/components/shared/charts/weekly-done/w
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
+import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FlexLayoutModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, TasksDoneComponent, WeeklyDoneComponent],
+  imports: [CommonModule, TranslateModule, FlexLayoutModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, TasksDoneComponent, WeeklyDoneComponent, CustomComponentsModule],
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticsComponent implements OnInit {
-  tasks: ITask[] = [];
-
   isLoading = true;
+
+  tasks: ITask[] = [];
 
   constructor(
     private changeDetector: ChangeDetectorRef,

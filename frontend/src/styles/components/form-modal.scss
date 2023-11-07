@@ -30,15 +30,15 @@
 
   &__body {
     display: flex;
+    display: flex;
+    align-items: center;
     justify-content: center;
     justify-content: center;
-    margin: vw(50) auto;
-    width: vw(300);
-    height: calc(100% - 0.74rem);
-    min-height: vw(400);
+    justify-content: center;
+    margin: vw(25) auto;
+    min-height: 40vh;
 
     @include media(">=desktop") {
-      margin: vw(50) 0 0 0;
       width: vw(550);
     }
 
