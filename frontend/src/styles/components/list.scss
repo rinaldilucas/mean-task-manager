@@ -164,7 +164,7 @@
       height: 85%;
 
       @include media(">=common-desktop") {
-        height: calc(5rem + 0.6rem);
+        height: calc(5rem);
       }
     }
 
