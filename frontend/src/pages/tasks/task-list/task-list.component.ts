@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { debounceTime, lastValueFrom, take } from 'rxjs';
 
-import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/discard-changes-dialog/discard-changes-dialog';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { EStatus } from '@app/scripts/models/enums/status.enum';
@@ -16,6 +15,7 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
+import { ConfirmationDialogComponent } from '@root/src/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-task-list',
@@ -184,7 +184,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   async confirmDelete(task: ITask): Promise<void> {
     const dialogRef = await this.sharedService.handleDialogs(
       {
-        component: DiscardChangesDialogComponent,
+        component: ConfirmationDialogComponent,
         options: {
           title: 'task-list.confirmation-title',
           message: 'task-list.confirmation-message',

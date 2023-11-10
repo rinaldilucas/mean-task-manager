@@ -3,11 +3,14 @@
 .page {
   display: flex;
   position: relative;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   min-height: calc(100vh - 2rem);
 
   @include media(">=desktop") {
     justify-content: center;
+    align-items: normal;
     margin: vw(80) 0 0 !important;
     height: calc(6.3rem + #{$header-size});
   }
@@ -86,7 +89,7 @@
     padding-bottom: vw(24);
 
     .dark-mode & {
-      border-bottom: 1px solid mat-contrast($app-primary, 200);
+      border-bottom: 1px solid mat-contrast($app-primary, 400);
     }
 
     &:last-child {

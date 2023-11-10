@@ -260,3 +260,14 @@ mat-header-row {
     }
   }
 }
+
+mat-spinner,
+mat-spinner svg {
+  height: vw(100) !important;
+  width: vw(100) !important;
+}
+
+.mat-checkbox-inner-container {
+  width: vw(15) !important;
+  height: vw(15) !important;
+}

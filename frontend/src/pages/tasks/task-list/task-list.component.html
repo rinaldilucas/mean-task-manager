@@ -18,7 +18,7 @@
       </div>
 
       <div class="list__body" [class.list__body--empty]="tasks.length === 0">
-        <app-loader *ngIf="isLoading" class="loader-container-height centered"></app-loader>
+        <app-loading *ngIf="isLoading" class="loader-container-height centered"></app-loading>
 
         <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--placeholder flex-centered flex-centered--column">
           <div>

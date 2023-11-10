@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ data.title | translate }}</h2>
 <mat-dialog-content>{{ data.message | translate }}</mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button type="button" color="accent" mat-button [mat-dialog-close]="true">{{ data.action | translate }}</button>
   <button type="button" mat-button [mat-dialog-close]="false" cdkFocusInitial>{{ "button.cancel" | translate | uppercase }}</button>
+  <button type="button" color="accent" mat-button [mat-dialog-close]="true">{{ data.action | translate }}</button>
 </mat-dialog-actions>

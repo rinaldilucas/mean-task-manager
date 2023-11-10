@@ -7,7 +7,7 @@ import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, map, startWith, take } from 'rxjs';
 
-import { DiscardChangesDialogComponent } from '@app/components/shared/dialogs/discard-changes-dialog/discard-changes-dialog';
+import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { OnDeactivate } from '@app/scripts/guards/can-deactivate.guard';
 import { ICategory } from '@app/scripts/models/category.interface';
@@ -58,7 +58,7 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
     }
 
     const dialogRes = await this.sharedService.handleDialogs({
-      component: DiscardChangesDialogComponent,
+      component: ConfirmationDialogComponent,
       options: {
         title: 'task-form.confirmation-title',
         message: 'task-form.confirmation-message',

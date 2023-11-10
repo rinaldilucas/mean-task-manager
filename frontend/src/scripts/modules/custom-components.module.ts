@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { LoaderComponent } from '@app/components/shared/loader/loader.component';
+import { LoadingComponent } from '@app/components/shared/loading/loading.component';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 
 @NgModule({
   imports: [CommonModule, AngularMaterialModule],
-  declarations: [LoaderComponent],
-  exports: [LoaderComponent],
+  declarations: [LoadingComponent],
+  exports: [LoadingComponent],
 })
 export class CustomComponentsModule { }
