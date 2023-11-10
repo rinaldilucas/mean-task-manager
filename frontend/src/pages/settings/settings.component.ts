@@ -91,8 +91,6 @@ export class SettingsComponent implements OnInit {
     }
 
     this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
-    this.categoryControl.setValue(null);
-    this.categoryInput.nativeElement.value = '';
     const index = this.categories.indexOf(category);
     this.categories.splice(index, 1);
     this.changeDetector.markForCheck();
