@@ -1,6 +1,6 @@
 {
   "app": {
-    "description": "Mean Stack Template",
+    "description": "Task Manager",
     "title": "Angular WebApp"
   },
   "button": {
@@ -10,6 +10,8 @@
     "signin": "Entrar"
   },
   "error": {
+    
+    
     "email-exists": "E-mail já cadastrado",
     "email-invalid": "Email inválido",
     "has-incremental": "O campo não pode conter mais de {{value}} ocorrências como incremento",
