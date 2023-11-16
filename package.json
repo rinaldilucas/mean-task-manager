@@ -1,7 +1,7 @@
 {
   "author": "Lucas Rinaldi",
   "license": "MIT",
-  "name": "mean-stack-template",
+  "name": "angular14-task-crud-mean",
   "scripts": {
     "install-deps": "yarn install-deps:api && yarn install-deps:client",
     "install-deps:api": "cd ./backend && yarn",

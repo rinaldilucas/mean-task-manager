@@ -46,11 +46,11 @@
     "typescript": "4.7.4"
   },
   "license": "MIT",
-  "name": "mean-stack-template-app",
+  "name": "angular14-task-crud-mean-app",
   "scripts": {
-    "build": "ng build --configuration production --base-href=/mean-stack-template/",
+    "build": "ng build --configuration production --base-href=/angular14-task-crud-mean/",
     "debug": "ng build --configuration development --watch",
-    "deploy": "yarn lint && ng deploy --no-silent --base-href=/mean-stack-template/ && rimraf ./dist",
+    "deploy": "yarn lint && ng deploy --no-silent --base-href=/angular14-task-crud-mean/ && rimraf ./dist",
     "dev": "ng serve --o",
     "lint": "ng lint --fix && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
     "lint:sass": "sass-lint -c .sasslintrc.json -v -q",

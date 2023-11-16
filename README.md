@@ -8,26 +8,26 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/rinaldilucas/mean-stack-template">
+  <a href="https://github.com/rinaldilucas/angular14-task-crud-mean">
     <img src="./frontend/assets/images/_readme/logo.png" alt="Logo">
   </a>
 
-  <h3 align="center">MEAN Stack Crud Template</h3>
+  <h3 align="center">MEAN Stack Task Manager</h3>
 
   <p align="center">
-    Project built using Angular, NodeJS, Express.js<br> and MongoDB with Angular Material to jump start your studies!
+    Project built using Angular, NodeJS, Express.j and MongoDB<br> with Angular Material to jump start your studies!
     <br />
-    <a href="https://github.com/rinaldilucas/mean-stack-template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/rinaldilucas/angular14-task-crud-mean"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rinaldilucas.github.io/mean-stack-template/">View App</a>
+    <a href="https://rinaldilucas.github.io/angular14-task-crud-mean/">View App*</a>
     ·
-    <a href="https://meanstack-api.onrender.com/api-docs">API Docs</a>
+    <a href="https://meanstack-api.onrender.com/api-docs">API Docs*</a>
     ·
     <a href="#donations">Donate</a>       
   </p>
   <small>
-    hosted on render.com free tier, so API need a little time to start after accessing
+    * hosted on render.com free tier, so API need a little time to start after accessing
   </small>
   <br>
   <br>
@@ -40,7 +40,10 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#backend">Backend</a></li>
+        <li><a href="#frontend">Frontend</a></li>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#hosting">Hosting</a></li>
       </ul>
     </li>
     <li>
@@ -64,7 +67,7 @@
 
 <div align="center">
 
-[![Project Screenshot][project-screenshot]](https://rinaldilucas.github.io/mean-stack-template/)
+[![Project Screenshot][project-screenshot]](https://rinaldilucas.github.io/angular14-task-crud-mean)
 
 </div>
 
@@ -143,6 +146,17 @@ This section shows what technologies are used in this particular project.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### Hosting
+
+This section shows what technologies are used in this particular project.
+
+- <strong>MongoDB</strong> hosted on <a href="https://www.mongodb.com/pricing">MongoDB</a> shared cluster
+- <strong>Redis</strong> hosted on <a href="https://render.com/pricing">Redis</a> free tier
+- <strong>NodeJS</strong> hosted on <a href="https://render.com/pricing">NodeJS</a> free tier
+- <strong>Angular</strong> hosted on <a href="https://pages.github.com/">Github Pages</a>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- GETTING STARTED -->
 
 ## Getting Started
@@ -176,7 +190,7 @@ _More scripts at package.json_
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/rinaldilucas/mean-stack-template.git
+   git clone https://github.com/rinaldilucas/angular14-task-crud-mean.git
    ```
 2. Install NPM packages via yarn
    ```sh
@@ -274,7 +288,7 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rinaldilucas/)](https://www.linkedin.com/in/rinaldilucas/)
 [![Telegram Badge](https://img.shields.io/badge/-Telegram-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=telegram&logoColor=white&link=https://t.me/rinaldilucas)](https://t.me/rinaldilucas)
 
-Project Link: [https://github.com/rinaldilucas/mean-stack-template](https://github.com/rinaldilucas/mean-stack-template)
+Project Link: [https://github.com/rinaldilucas/angular14-task-crud-mean](https://github.com/rinaldilucas/angular14-task-crud-mean)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -299,14 +313,14 @@ It helps me a lot to continue developing open source codes.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/rinaldilucas/mean-stack-template.svg?style=for-the-badge
-[contributors-url]: https://github.com/rinaldilucas/mean-stack-template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/rinaldilucas/mean-stack-template.svg?style=for-the-badge
-[forks-url]: https://github.com/rinaldilucas/mean-stack-template/network/members
-[stars-shield]: https://img.shields.io/github/stars/rinaldilucas/mean-stack-template.svg?style=for-the-badge
-[stars-url]: https://github.com/rinaldilucas/mean-stack-template/stargazers
-[license-shield]: https://img.shields.io/github/license/rinaldilucas/mean-stack-template.svg?style=for-the-badge
-[license-url]: https://github.com/rinaldilucas/mean-stack-template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
+[contributors-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
+[forks-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/network/members
+[stars-shield]: https://img.shields.io/github/stars/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
+[stars-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/stargazers
+[license-shield]: https://img.shields.io/github/license/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
+[license-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rinaldilucas/
 [project-screenshot]: ./frontend/assets/images/_readme/screenshot.gif

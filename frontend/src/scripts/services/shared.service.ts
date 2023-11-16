@@ -157,6 +157,6 @@ export class SharedService {
   }
 
   handleTitle(title: string): void {
-    this.titleService.setTitle(`${title} — Mean Stack Template`);
+    this.titleService.setTitle(`${title} — Task Manager`);
   }
 }
