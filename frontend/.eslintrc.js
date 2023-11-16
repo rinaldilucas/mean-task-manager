@@ -14,7 +14,7 @@ module.exports = {
       extends: [
         'plugin:@angular-eslint/recommended',
         'plugin:@angular-eslint/template/process-inline-templates',
-        'airbnb-typescript/base'
+        'airbnb-typescript/base',
       ],
       files: ['*.ts'],
       parserOptions: {
@@ -78,6 +78,14 @@ module.exports = {
         '@angular-eslint/template/accessibility-table-scope': WARN,
         '@angular-eslint/template/no-distracting-elements': WARN,
         '@angular-eslint/template/button-has-type': WARN
+      }
+    },
+    {
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        "prettier/prettier": ["error", { "parser": "angular" }]
       }
     }
   ]

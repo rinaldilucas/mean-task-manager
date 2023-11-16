@@ -22,8 +22,8 @@
           <input type="text" #taskTitle maxlength="100" formControlName="title" matInput placeholder="{{ 'input.title' | translate }}" cdkFocusInitial />
           <mat-hint align="end">{{ taskTitle.value.length || 0 }}/100</mat-hint>
           <mat-error *ngIf="form.get('title')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
-          <mat-error *ngIf="form.get('title')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 2 } }} </mat-error>
-          <mat-error *ngIf="form.get('title')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 100 } }} </mat-error>
+          <mat-error *ngIf="form.get('title')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 2 } }} </mat-error>
+          <mat-error *ngIf="form.get('title')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 100 } }} </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
@@ -36,7 +36,7 @@
         <mat-form-field class="full-width">
           <textarea #taskDescription maxlength="300" formControlName="description" rows="2" matInput placeholder="{{ 'input.description' | translate }}"></textarea>
           <mat-hint align="end">{{ taskDescription.value.length || 0 }}/300</mat-hint>
-          <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 300 } }} </mat-error>
+          <mat-error *ngIf="form.get('description')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 300 } }} </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">

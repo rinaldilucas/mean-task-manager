@@ -11,16 +11,16 @@
             <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial />
             <mat-error *ngIf="form.get('email')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('pattern')"> {{ "error.email-invalid" | translate }} </mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 5 } }} </mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 5 } }} </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width">
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
           </mat-form-field>
 
           <mat-checkbox formControlName="keepUserLogged" color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>

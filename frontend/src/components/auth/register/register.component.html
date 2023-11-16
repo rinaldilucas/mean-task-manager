@@ -11,8 +11,8 @@
             <input formControlName="email" type="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial />
             <mat-error *ngIf="form.get('email')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('pattern')"> {{ "error.email-invalid" | translate }} </mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 5 } }} </mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 5 } }} </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('emailExists')"> {{ "error.email-exists" | translate }} </mat-error>
           </mat-form-field>
 
@@ -20,10 +20,10 @@
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate : { value: 8 } }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate : { value: 150 } }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('hasIncremental')"> {{ "error.has-incremental" | translate : { value: 4 } }} </mat-error>
-            <mat-error *ngIf="form.get('password')?.hasError('hasSequential')"> {{ "error.has-sequential" | translate : { value: 4 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('hasIncremental')"> {{ "error.has-incremental" | translate: { value: 4 } }} </mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('hasSequential')"> {{ "error.has-sequential" | translate: { value: 4 } }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('hasntCapitalized')"> {{ "error.hasnt-capitalized" | translate }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('hasntNumber')"> {{ "error.hasnt-number" | translate }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('hasntSpecialCharacter')"> {{ "error.hasnt-special" | translate }} </mat-error>
