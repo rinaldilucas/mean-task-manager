@@ -22,7 +22,7 @@ export class SharedService {
   onFormDirtyChange: EventEmitter<any> = new EventEmitter<any>();
   onFormSubmitChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   onTableColumnChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-  onPageSizeChange: EventEmitter<{ pageSize: number, pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number, pageSizeOptions: number[] }>();
+  onPageSizeChange: EventEmitter<{ pageSize: number; pageSizeOptions: number[] }> = new EventEmitter<{ pageSize: number; pageSizeOptions: number[] }>();
   static subscriptions: Subscription[] = [];
 
   constructor(
@@ -32,14 +32,12 @@ export class SharedService {
     private dialog: MatDialog,
     private bottomSheet: MatBottomSheet,
     private titleService: Title,
-  ) { }
+  ) {}
 
   setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
     const dataSource = new TableVirtualScrollDataSource(list);
-    if (sort)
-      dataSource.sort = sort;
-    if (paginator)
-      dataSource.paginator = paginator;
+    if (sort) dataSource.sort = sort;
+    if (paginator) dataSource.paginator = paginator;
 
     return dataSource;
   }
@@ -69,7 +67,10 @@ export class SharedService {
   isValidForm(form: FormGroup<string>): boolean {
     if (form.valid) return true;
 
-    this.translateService.get('messages.mandatory-fields').pipe(take(1)).subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
+    this.translateService
+      .get('messages.mandatory-fields')
+      .pipe(take(1))
+      .subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
     this.highlightRequiredInput(form);
     return false;
   }
@@ -86,41 +87,48 @@ export class SharedService {
   }
 
   setTableColumnsAndPagesize(columnOptions: string[], columns: IColumnsOptions, { pageSize = 5, pageSizeOptions = [10, 20, 30] }): void {
-    SharedService.subscriptions.push(this.media.asObservable().subscribe((change: MediaChange[]) => {
-      pageSize = 20;
-      pageSizeOptions = [20];
+    SharedService.subscriptions.push(
+      this.media.asObservable().subscribe((change: MediaChange[]) => {
+        pageSize = 20;
+        pageSizeOptions = [20];
 
-      if (change[0].mqAlias === 'xs') {
-        columnOptions = columns.xsColumns;
-      } else if (change[0].mqAlias === 'sm') {
-        columnOptions = columns.smColumns;
-      } else if (change[0].mqAlias === 'md') {
-        columnOptions = columns.mdColumns;
-        pageSize = 5;
-        pageSizeOptions = [5, 15, 30];
-      } else {
-        columnOptions = columns.lgColumns;
-        pageSize = 5;
-        pageSizeOptions = [5, 15, 30];
-      }
+        if (change[0].mqAlias === 'xs') {
+          columnOptions = columns.xsColumns;
+        } else if (change[0].mqAlias === 'sm') {
+          columnOptions = columns.smColumns;
+        } else if (change[0].mqAlias === 'md') {
+          columnOptions = columns.mdColumns;
+          pageSize = 5;
+          pageSizeOptions = [5, 15, 30];
+        } else {
+          columnOptions = columns.lgColumns;
+          pageSize = 5;
+          pageSizeOptions = [5, 15, 30];
+        }
 
-      this.onTableColumnChange.emit(columnOptions);
-      this.onPageSizeChange.emit({ pageSize, pageSizeOptions });
-    }));
+        this.onTableColumnChange.emit(columnOptions);
+        this.onPageSizeChange.emit({ pageSize, pageSizeOptions });
+      }),
+    );
   }
 
   static removeSubscriptions(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  handleSnackbars({ translationKey, error = false, customDuration, queuedMessage: queuedTranslationKey }: { translationKey: string, error?: boolean, customDuration?: number, queuedMessage?: string }): void {
-    this.translateService.get(translationKey).pipe(take(1)).subscribe((text: string) => {
-      const duration = customDuration ? customDuration : error ? 8000 : 5000;
-      this.snackBar.open(text, undefined, { duration }).afterDismissed().subscribe(() => {
-        if (queuedTranslationKey)
-          this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
+  handleSnackbars({ translationKey, error = false, customDuration, queuedMessage: queuedTranslationKey }: { translationKey: string; error?: boolean; customDuration?: number; queuedMessage?: string }): void {
+    this.translateService
+      .get(translationKey)
+      .pipe(take(1))
+      .subscribe((text: string) => {
+        const duration = customDuration ? customDuration : error ? 8000 : 5000;
+        this.snackBar
+          .open(text, undefined, { duration })
+          .afterDismissed()
+          .subscribe(() => {
+            if (queuedTranslationKey) this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
+          });
       });
-    });
   }
 
   async handleDialogs({ component, options, width, minWidth, height, minHeight, disableClose }: { component: any; options?: any; minWidth?: string; width?: string; minHeight?: string; height?: string; disableClose?: boolean }): Promise<any> {

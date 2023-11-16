@@ -14,21 +14,7 @@ import { TaskRoutingModule } from '@app/scripts/modules/tasks-routing.module';
 import { ConvertDatePipe } from '@app/scripts/pipes/convert-date.pipe';
 
 @NgModule({
-  declarations: [
-    TaskFormSheetComponent,
-    TaskListComponent,
-    ConvertDatePipe,
-  ],
-  imports: [
-    TaskRoutingModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    AngularMaterialModule,
-    TableVirtualScrollModule,
-    TranslateModule,
-    CustomComponentsModule,
-  ],
+  declarations: [TaskFormSheetComponent, TaskListComponent, ConvertDatePipe],
+  imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule, CustomComponentsModule],
 })
-export class TaskModule { }
+export class TaskModule {}

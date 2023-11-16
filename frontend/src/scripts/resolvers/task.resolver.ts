@@ -15,8 +15,7 @@ export const TaskResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot, stat
   const categoryService = inject(CategoryService);
 
   let $tasks = of({} as ITask);
-  if (route.params.id)
-    $tasks = taskService.get(route.params.id).pipe(map((result: IQueryResult<ITask>) => result.data[0]));
+  if (route.params.id) $tasks = taskService.get(route.params.id).pipe(map((result: IQueryResult<ITask>) => result.data[0]));
 
   const $categories = categoryService.getAll().pipe(map((result: IQueryResult<ICategory[]>) => result.data));
 

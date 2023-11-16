@@ -9,4 +9,4 @@ import { AngularMaterialModule } from '@app/scripts/modules/angular-material.mod
   declarations: [LoadingComponent],
   exports: [LoadingComponent],
 })
-export class CustomComponentsModule { }
+export class CustomComponentsModule {}

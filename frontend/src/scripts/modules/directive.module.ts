@@ -7,4 +7,4 @@ import { AutoCompleteOffDirective } from '@app/scripts/directives/autocomplete-o
   imports: [CommonModule],
   declarations: [AutoCompleteOffDirective],
 })
-export class DirectiveModule { }
+export class DirectiveModule {}

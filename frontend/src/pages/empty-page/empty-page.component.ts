@@ -5,4 +5,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyPageComponent { }
+export class EmptyPageComponent {}

@@ -49,7 +49,9 @@ export class CustomValidators {
   static equalsTo(otherField: string): (AbstractControl) => { [key: string]: boolean } | undefined {
     return (formControl: FormControl): { [key: string]: boolean } | undefined => {
       const field = (<FormGroup>formControl.root).get(otherField);
-      if (field?.value !== formControl.value) { return { equalsTo: true }; }
+      if (field?.value !== formControl.value) {
+        return { equalsTo: true };
+      }
     };
   }
 

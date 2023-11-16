@@ -24,7 +24,7 @@ export class StatisticsComponent implements OnInit {
     private taskService: TaskService,
     private sharedService: SharedService,
     private translate: TranslateService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.updateTitle();

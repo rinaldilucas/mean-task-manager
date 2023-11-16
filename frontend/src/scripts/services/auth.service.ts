@@ -37,7 +37,7 @@ export class AuthService {
     private injector: Injector,
     private router: Router,
     private http: HttpClient,
-  ) { }
+  ) {}
 
   getKeepUserLoggedIn(): boolean {
     return this.keepUserLoggedIn;
@@ -96,9 +96,12 @@ export class AuthService {
   generateRefreshToken(): Promise<IQueryResult<IJwtPayload>> {
     const url = `${this.url}/refresh`;
 
-    return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, { ...this.loggedUser, refresh: this.getRefreshToken() })
-      .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authenticateToken(response.data[0])))
-      .pipe(catchError(this.sharedService.errorHandler)));
+    return lastValueFrom(
+      this.http
+        .post<IQueryResult<IJwtPayload>>(url, { ...this.loggedUser, refresh: this.getRefreshToken() })
+        .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authenticateToken(response.data[0])))
+        .pipe(catchError(this.sharedService.errorHandler)),
+    );
   }
 
   logout(token: string): Promise<IQueryResult<IUser>> {
@@ -135,14 +138,18 @@ export class AuthService {
 
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
-    if (!this.refreshTokenTimeout) { this.refreshTokenTimeout = setTimeout(async () => this.logoutAsync(), expiresIn); }
+    if (!this.refreshTokenTimeout) {
+      this.refreshTokenTimeout = setTimeout(async () => this.logoutAsync(), expiresIn);
+    }
 
     if (expiresIn > 0) {
       this.accessToken = authInformation.access;
       this.decodeJwtToken(this.accessToken);
       this.isAuthenticated = true;
       this.onMenuChange.emit(true);
-      setTimeout(() => { this.onSidebarChange.emit(true); }, 750);
+      setTimeout(() => {
+        this.onSidebarChange.emit(true);
+      }, 750);
       return true;
     }
 
@@ -191,7 +198,9 @@ export class AuthService {
       this.refreshTokenTimeout = setTimeout(async () => {
         const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.generateRefreshToken());
 
-        if (!result || !result.success || error) { this.logoutAsync(); }
+        if (!result || !result.success || error) {
+          this.logoutAsync();
+        }
       }, timeout);
     } else {
       setTimeout(() => this.logoutAsync(), timeout);

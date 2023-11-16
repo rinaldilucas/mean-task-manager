@@ -39,8 +39,8 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
     const task = this.route.snapshot.data.taskData.task as ITask;
     const categories = this.route.snapshot.data.taskData.categories as ICategory;
 
-    this.subs.sink = this.sharedService.onFormDirtyChange.subscribe((isFormDirty: boolean) => this.isFormDirty = isFormDirty);
-    this.subs.sink = this.sharedService.onFormSubmitChange.subscribe((isFormSubmitted: boolean) => this.isFormSubmitted = isFormSubmitted);
+    this.subs.sink = this.sharedService.onFormDirtyChange.subscribe((isFormDirty: boolean) => (this.isFormDirty = isFormDirty));
+    this.subs.sink = this.sharedService.onFormSubmitChange.subscribe((isFormSubmitted: boolean) => (this.isFormSubmitted = isFormSubmitted));
 
     await this.sharedService.handleSheets({
       component: TaskFormSheetComponent,
@@ -106,7 +106,7 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     private sharedService: SharedService,
     private translate: TranslateService,
     private cdRef: ChangeDetectorRef,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask, categories: ICategory[] },
+    @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask; categories: ICategory[] },
   ) {
     super();
 
@@ -153,20 +153,18 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
   }
 
   setAutoCompletes(): void {
-    this.categoriesFilteredOptions = this.form.controls.category.valueChanges
-      .pipe(
-        startWith(''),
-        map((value) => {
-          const filterValue = value?.toString().toLowerCase();
-          return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
-        }),
-      );
+    this.categoriesFilteredOptions = this.form.controls.category.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        const filterValue = value?.toString().toLowerCase();
+        return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
+      }),
+    );
   }
 
   ngAfterViewInit(): void {
     this.subs.sink = this.categoryTrigger?.panelClosingActions.subscribe(() => {
-      if (this.categoryTrigger.activeOption)
-        this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
+      if (this.categoryTrigger.activeOption) this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
     });
   }
 }

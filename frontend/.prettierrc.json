@@ -14,5 +14,20 @@
   "singleQuote": false,
   "tabWidth": 2,
   "trailingComma": "all",
-  "useTabs": false
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "printWidth": 200
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "printWidth": 250,
+        "singleQuote": true
+      }
+    }
+  ]
 }

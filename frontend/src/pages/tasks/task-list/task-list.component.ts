@@ -65,7 +65,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.removeSubscriptionsFromService = true;
 
     this.subs.sink = this.sharedService.onTableColumnChange.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
-    this.subs.sink = this.sharedService.onPageSizeChange.subscribe((options: { pageSize: number, pageSizeOptions: number[] }) => {
+    this.subs.sink = this.sharedService.onPageSizeChange.subscribe((options: { pageSize: number; pageSizeOptions: number[] }) => {
       this.paginator.pageSize = options.pageSize;
       this.paginator.pageSizeOptions = options.pageSizeOptions;
     });
@@ -83,7 +83,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.router.navigate(['tasks/edit', id]);
   }
 
-  async refreshAsync({ showLoading = false }: { showLoading?: boolean; } = {}): Promise<void> {
+  async refreshAsync({ showLoading = false }: { showLoading?: boolean } = {}): Promise<void> {
     if (showLoading) {
       this.isLoading = true;
       this.changeDetector.detectChanges();
@@ -127,7 +127,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     const searchTerm = this.search.value ?? null;
     this.pageSize = event.pageSize;
 
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+      lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex, sortFilter: this.columnFilter, sortDirection: this.columnDirection })),
+    );
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.tasks = result.data;
@@ -143,7 +145,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.columnFilter = event.active;
     this.columnDirection = event.direction;
 
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+      lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })),
+    );
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.paginator.pageIndex = 0;
@@ -164,7 +168,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.isSearching = true;
       const searchTerm = text.trim().toLowerCase();
 
-      const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })));
+      const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+        lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize, searchTerm, pageIndex: 0, sortFilter: this.columnFilter, sortDirection: this.columnDirection })),
+      );
       if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
       this.paginator.pageIndex = 0;
@@ -182,18 +188,16 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   async confirmDelete(task: ITask): Promise<void> {
-    const dialogRef = await this.sharedService.handleDialogs(
-      {
-        component: ConfirmationDialogComponent,
-        options: {
-          title: 'task-list.confirmation-title',
-          message: 'task-list.confirmation-message',
-          action: 'task-list.confirmation-action',
-        },
-        disableClose: true,
-      });
+    const dialogRef = await this.sharedService.handleDialogs({
+      component: ConfirmationDialogComponent,
+      options: {
+        title: 'task-list.confirmation-title',
+        message: 'task-list.confirmation-message',
+        action: 'task-list.confirmation-action',
+      },
+      disableClose: true,
+    });
 
-    if (dialogRef)
-      this.removeAsync(task);
+    if (dialogRef) this.removeAsync(task);
   }
 }

@@ -7,7 +7,10 @@ import { AuthService } from '@app/scripts/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve) => {

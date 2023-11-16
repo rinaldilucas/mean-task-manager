@@ -28,20 +28,24 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
     legend: { display: false },
     title: { display: true },
     scales: {
-      yAxes: [{
-        gridLines: { lineWidth: 0.5 },
-        ticks: {
-          display: true,
-          maxTicksLimit: 3,
-          minor: { fontSize: 14 },
+      yAxes: [
+        {
+          gridLines: { lineWidth: 0.5 },
+          ticks: {
+            display: true,
+            maxTicksLimit: 3,
+            minor: { fontSize: 14 },
+          },
         },
-      }],
-      xAxes: [{
-        gridLines: { display: false },
-        ticks: {
-          minor: { fontSize: 14 },
+      ],
+      xAxes: [
+        {
+          gridLines: { display: false },
+          ticks: {
+            minor: { fontSize: 14 },
+          },
         },
-      }],
+      ],
     },
   };
 
@@ -63,13 +67,13 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
     const numberOfWeeks = 4;
     const weekDays = 7;
     const startDate = new Date();
-    startDate.setDate(new Date().getDate() - (weekDays * (numberOfWeeks + 1)));
+    startDate.setDate(new Date().getDate() - weekDays * (numberOfWeeks + 1));
 
     for (let index = 0, j = numberOfWeeks; j > 0; index++, j--) {
       const initialDate = new Date();
-      initialDate.setDate(initialDate.getDate() - (weekDays * (index + 1)));
+      initialDate.setDate(initialDate.getDate() - weekDays * (index + 1));
       const finalDate = new Date();
-      finalDate.setDate(finalDate.getDate() - (weekDays * index));
+      finalDate.setDate(finalDate.getDate() - weekDays * index);
 
       const tasksByInterval = this.tasks.filter((task) => {
         const taskDate = new Date(task.createdAt);
@@ -89,14 +93,22 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
         (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
         (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
         (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-        this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.minor.fontSize = 14; });
-        this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.minor.fontSize = 14; });
+        this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
+          (yAxis as any).ticks.minor.fontSize = 14;
+        });
+        this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
+          (xAxis as any).ticks.minor.fontSize = 14;
+        });
       } else {
         (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
         (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
         (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-        this.chartOptions.scales?.yAxes?.forEach((yAxis) => { (yAxis as any).ticks.minor.fontSize = 14; });
-        this.chartOptions.scales?.xAxes?.forEach((xAxis) => { (xAxis as any).ticks.minor.fontSize = 14; });
+        this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
+          (yAxis as any).ticks.minor.fontSize = 14;
+        });
+        this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
+          (xAxis as any).ticks.minor.fontSize = 14;
+        });
       }
 
       this.baseChart.chart.options = this.chartOptions;

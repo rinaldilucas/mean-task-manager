@@ -7,7 +7,10 @@ import { AuthService } from '@app/scripts/services/auth.service';
 export class LoggedInAuthGuard {
   private authService = this.injector.get(AuthService);
 
-  constructor(private injector: Injector, private router: Router) { }
+  constructor(
+    private injector: Injector,
+    private router: Router,
+  ) {}
 
   canActivate(): void {
     if (this.authService.getIsAuthenticated()) {
