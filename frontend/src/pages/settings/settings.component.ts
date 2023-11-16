@@ -1,24 +1,19 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
 
 import { ICategory } from '@app/scripts/models/category.interface';
 import { ELanguage } from '@app/scripts/models/enums/language.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
-import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
 import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 
 @Component({
   selector: 'app-settings',
-  standalone: true,
-  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, CustomComponentsModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

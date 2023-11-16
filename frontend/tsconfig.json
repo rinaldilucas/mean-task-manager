@@ -31,11 +31,11 @@
     "noUnusedParameters": false,
     "outDir": "./dist",
     "paths": {
-      "@root/*": [
-        "./*"
-      ],
       "@app/*": [
         "./src/*"
+      ],
+      "@root/*": [
+        "./*"
       ]
     },
     "resolveJsonModule": true,

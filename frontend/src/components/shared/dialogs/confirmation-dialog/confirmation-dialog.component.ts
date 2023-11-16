@@ -1,16 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
-import { TranslateModule } from '@ngx-translate/core';
 
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 
 @Component({
   selector: 'app-confirmation-dialog',
-  standalone: true,
-  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule],
   templateUrl: './confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

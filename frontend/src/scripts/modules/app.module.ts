@@ -1,5 +1,5 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localeEn from '@angular/common/locales/en';
 import localePt from '@angular/common/locales/pt';
@@ -16,7 +16,17 @@ import { ChartsModule } from 'ng2-charts';
 import { Observable, from } from 'rxjs';
 
 import { AppComponent } from '@app/components/app.component';
+import { LogInComponent } from '@app/components/auth/login/login.component';
+import { RegisterComponent } from '@app/components/auth/register/register.component';
+import { TasksDoneComponent } from '@app/components/shared/charts/tasks-done/tasks-done.component';
+import { WeeklyDoneComponent } from '@app/components/shared/charts/weekly-done/weekly-done.component';
+import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { HeaderComponent } from '@app/components/shared/header/header.component';
+import { HomepageComponent } from '@app/pages/home/home.component';
+import { ProfileComponent } from '@app/pages/profile/profile.component';
+import { SettingsComponent } from '@app/pages/settings/settings.component';
+import { StatisticsComponent } from '@app/pages/statistics/statistics.component';
+import { AutoCompleteOffDirective } from '@app/scripts/directives/autocomplete-off.directive';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AppRoutingModule } from '@app/scripts/modules/app-routing.module';
 import { InterceptorModule } from '@app/scripts/modules/interceptor.module';
@@ -33,22 +43,37 @@ registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   declarations: [
     AppComponent,
+    AppComponent,
+    AutoCompleteOffDirective,
+    ConfirmationDialogComponent,
     HeaderComponent,
+    HeaderComponent,
+    HomepageComponent,
+    LogInComponent,
+    ProfileComponent,
+    RegisterComponent,
+    SettingsComponent,
+    StatisticsComponent,
+    StatisticsComponent,
+    TasksDoneComponent,
+    WeeklyDoneComponent,
   ],
   imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
     AngularMaterialModule,
-    ScrollingModule,
+    AngularMaterialModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
     ChartsModule,
-    TableVirtualScrollModule,
+    CommonModule,
+    FlexLayoutModule,
+    FormsModule,
+    HttpClientModule,
     InterceptorModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ScrollingModule,
+    TableVirtualScrollModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

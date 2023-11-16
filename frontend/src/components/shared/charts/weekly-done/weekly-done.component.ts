@@ -1,20 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { BaseChartDirective, ChartsModule, Label, MultiDataSet } from 'ng2-charts';
+import { BaseChartDirective, Label, MultiDataSet } from 'ng2-charts';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { ITask } from '@app/scripts/models/task.interface';
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 
 @Component({
   selector: 'app-weekly-done',
-  standalone: true,
-  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, ChartsModule],
   templateUrl: './weekly-done.component.html',
   styleUrls: ['./weekly-done.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

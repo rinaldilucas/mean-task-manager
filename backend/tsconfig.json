@@ -27,11 +27,11 @@
     "noUnusedParameters": false,
     "outDir": "./dist",
     "paths": {
-      "@root/*": [
-        "./*"
-      ],
       "@api/*": [
         "./src/*"
+      ],
+      "@root/*": [
+        "./*"
       ]
     },
     "resolveJsonModule": true,

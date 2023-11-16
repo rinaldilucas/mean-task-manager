@@ -1,21 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ChartLegendLabelOptions, ChartLegendOptions, ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
-import { BaseChartDirective, ChartsModule, Label, SingleDataSet } from 'ng2-charts';
+import { BaseChartDirective, Label, SingleDataSet } from 'ng2-charts';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { EStatus } from '@app/scripts/models/enums/status.enum';
 import { ITask } from '@app/scripts/models/task.interface';
-import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 
 @Component({
   selector: 'app-tasks-done',
-  standalone: true,
-  imports: [CommonModule, TranslateModule, AngularMaterialModule, ReactiveFormsModule, FormsModule, ChartsModule],
   templateUrl: './tasks-done.component.html',
   styleUrls: ['./tasks-done.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
