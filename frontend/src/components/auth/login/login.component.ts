@@ -14,7 +14,6 @@ import { CustomValidators } from '@app/scripts/validators/custom.validator';
 @Component({
   selector: 'app-log-in',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LogInComponent implements OnInit {

@@ -20,7 +20,6 @@ import { TaskService } from '@app/scripts/services/task.service';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent extends Unsubscriber implements OnInit {

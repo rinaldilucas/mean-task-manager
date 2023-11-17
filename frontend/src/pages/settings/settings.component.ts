@@ -15,7 +15,6 @@ import { SharedService } from '@app/scripts/services/shared.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit {
@@ -52,7 +51,7 @@ export class SettingsComponent implements OnInit {
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
 
     this.categories = result.data;
-    this.isLoading = false;
+    this.isLoading = true;
     this.changeDetector.markForCheck();
   }
 

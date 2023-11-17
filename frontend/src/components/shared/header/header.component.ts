@@ -14,7 +14,6 @@ import { AuthService } from '@app/scripts/services/auth.service';
   selector: 'app-header',
   animations: [routerTransition],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends Unsubscriber implements OnInit {

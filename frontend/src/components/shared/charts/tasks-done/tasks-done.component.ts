@@ -12,7 +12,6 @@ import { ITask } from '@app/scripts/models/task.interface';
 @Component({
   selector: 'app-tasks-done',
   templateUrl: './tasks-done.component.html',
-  styleUrls: ['./tasks-done.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksDoneComponent extends Unsubscriber implements OnInit {

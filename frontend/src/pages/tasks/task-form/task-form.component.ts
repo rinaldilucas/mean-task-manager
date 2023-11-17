@@ -84,7 +84,6 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormSheetComponent extends Unsubscriber implements OnInit, AfterViewInit {

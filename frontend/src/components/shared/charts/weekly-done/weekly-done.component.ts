@@ -11,7 +11,6 @@ import { ITask } from '@app/scripts/models/task.interface';
 @Component({
   selector: 'app-weekly-done',
   templateUrl: './weekly-done.component.html',
-  styleUrls: ['./weekly-done.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
