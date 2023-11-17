@@ -22,6 +22,10 @@
     "min-length": "The field length must be lesser than {{value}} characters",
     "required": "Required field"
   },
+  "home": {
+    "description": "developed with Angular 14, NodeJS, Express and MongoDB (MEAN)",
+    "title": "Task Manager"
+  },
   "input": {
     "category": "Category",
     "choose-due-date": "Choose a due date",

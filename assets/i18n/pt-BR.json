@@ -1,7 +1,10 @@
 {
   "app": {
     "description": "Task Manager",
-    "title": "Angular WebApp"
+      "title": "Angular WebApp"
+
+
+
   },
   "button": {
     "cancel": "Cancelar",
@@ -10,8 +13,6 @@
     "signin": "Entrar"
   },
   "error": {
-    
-    
     "email-exists": "E-mail já cadastrado",
     "email-invalid": "Email inválido",
     "has-incremental": "O campo não pode conter mais de {{value}} ocorrências como incremento",
@@ -23,6 +24,10 @@
     "max-length": "O tamanho do campo deve ser maior que {{value}} caracteres",
     "min-length": "O tamanho do campo deve ser menor que {{value}} caracteres",
     "required": "Campo obrigatório"
+  },
+  "home": {
+    "description": "desenvolvido com Angular 14, NodeJS, Express e MongoDB (MEAN)",
+    "title": "Gerenciador de Tarefas"
   },
   "input": {
     "category": "Categoria",
