@@ -31,7 +31,7 @@
     justify-content: center;
     width: vw(220) !important;
     height: vw(220) !important;
-    color: mat-color($primary, 400) !important;
+    color: mat-color($primary, 500) !important;
     font-size: vw(220) !important;
 
     @include media(">=desktop") {

@@ -51,4 +51,12 @@
       margin-right: vw(6);
     }
   }
+
+  &__logo {
+    font-size: vw(22);
+
+    @include media(">=desktop") {
+      font-size: vw(26);
+    }
+  }
 }

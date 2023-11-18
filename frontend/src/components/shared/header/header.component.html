@@ -24,6 +24,14 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+    <mat-toolbar *ngIf="!isLogged" class="header__logged-out" color="primary">
+      <a class="header__logo" [routerLink]="'/'">{{ "app.title" | translate }}</a>
+      <div>
+        <a mat-button routerLink="register">{{ "navigation.register" | translate }}</a>
+        <a mat-raised-button routerLink="login">{{ "navigation.login" | translate }}</a>
+      </div>
+    </mat-toolbar>
+
     <mat-toolbar *ngIf="isLogged" color="primary">
       <button type="button" mat-icon-button (keypress)="drawer.toggle()" (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
@@ -49,15 +57,6 @@
             <a mat-list-item (keypress)="logout()" (click)="logout()"> {{ "navigation.logout" | translate }} </a>
           </mat-nav-list>
         </mat-menu>
-      </div>
-    </mat-toolbar>
-
-    <mat-toolbar *ngIf="!isLogged" class="header__logged-out" color="primary">
-      <a [routerLink]="'/'">{{ "app.title" | translate }}</a>
-
-      <div>
-        <a mat-button routerLink="register">{{ "navigation.register" | translate }}</a>
-        <a mat-raised-button routerLink="login">{{ "navigation.login" | translate }}</a>
       </div>
     </mat-toolbar>
 
