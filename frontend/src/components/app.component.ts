@@ -13,9 +13,14 @@ export class AppComponent {
     this.translate.addLangs(['en-US', 'pt-BR']);
     this.translate.setDefaultLang('en-US');
 
-    const language = localStorage.getItem('language') as string;
+    let language = localStorage.getItem('language') as string;
 
-    if (language) this.translate.use(language);
-    else this.translate.use(browserLang.match(/en-US/i) ? browserLang : 'pt-BR');
+    if (language) {
+      this.translate.use(language);
+    } else {
+      language = browserLang.match(/en-US/i) ? browserLang : 'pt-BR';
+      this.translate.use(language);
+      localStorage.setItem('language', language);
+    }
   }
 }
