@@ -1,10 +1,7 @@
 {
   "app": {
     "description": "Task Manager",
-      "title": "Angular WebApp"
-
-
-
+    "title": "Angular WebApp"
   },
   "button": {
     "cancel": "Cancelar",
