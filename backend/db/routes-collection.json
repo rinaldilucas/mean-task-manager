@@ -1,42 +1,27 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-10-24T23:45:44.681Z",
-  "__export_source": "insomnia.desktop.app:v2023.2.2",
+  "__export_date": "2023-11-18T02:15:55.507Z",
+  "__export_source": "insomnia.desktop.app:v8.4.2",
   "resources": [
     {
-      "_id": "req_87fdf3adf4074c389f9963c74d1f94d7",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1684956528633,
+      "_id": "req_67c2f01dbad34985979186cfef232053",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700273062248,
       "created": 1682360999629,
       "url": "{{ _.baseUrl }}auth/authenticate",
-      "name": "Authenticate",
+      "name": "/auth/authenticate",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "id": "pair_fb0953d13b244ee9bb4ec1b69eeb33d1",
-            "name": "email",
-            "value": "{{ _.email }}",
-            "description": ""
-          },
-          {
-            "id": "pair_f25881f9c36d48e1b5678e598c14cb85",
-            "name": "password",
-            "value": "{{ _.password }}",
-            "description": ""
-          }
+          { "description": "", "id": "pair_fb0953d13b244ee9bb4ec1b69eeb33d1", "name": "email", "value": "{{ _.email }}" },
+          { "description": "", "id": "pair_f25881f9c36d48e1b5678e598c14cb85", "name": "password", "value": "{{ _.password }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971698.0938,
       "isPrivate": false,
@@ -49,74 +34,38 @@
       "_type": "request"
     },
     {
-      "_id": "fld_8e01c33500634b79a30af57867c904c3",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1684945721642,
+      "_id": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22",
+      "modified": 1700260689459,
       "created": 1683041965088,
-      "name": "Auth",
+      "name": "auth",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
       "metaSortKey": -1682531240898.25,
       "_type": "request_group"
     },
+    { "_id": "wrk_66d6a8f4a69c437eb710132ef27d8f22", "parentId": null, "modified": 1700260665327, "created": 1699616311231, "name": "Angular14 Task Crud (MEAN)", "description": "", "scope": "design", "_type": "workspace" },
     {
-      "_id": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "parentId": null,
-      "modified": 1684529878980,
-      "created": 1684529878980,
-      "name": "Mean Stack Template",
-      "description": "",
-      "scope": "design",
-      "_type": "workspace"
-    },
-    {
-      "_id": "req_ca55b34b99494b419526e96de60d18a4",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1684959991037,
+      "_id": "req_2c8a5fcaa4ab4245a1b25060d3d5230b",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700273556346,
       "created": 1682360999628,
       "url": "{{ _.baseUrl }}auth/register",
-      "name": "Register",
+      "name": "/auth/register",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}@gmail.com",
-            "name": "email",
-            "disabled": false,
-            "id": "pair_ee1db2e586f84886bd40a7105d534a39",
-            "type": "text",
-            "multiline": false
-          },
-          {
-            "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}",
-            "name": "username",
-            "disabled": false,
-            "id": "pair_4ca602651c3c4b66baeb79d9d6d9df03"
-          },
-          {
-            "value": "{{ _.role }}",
-            "name": "role",
-            "disabled": false,
-            "id": "pair_647c03b0ab1a40c4b6975785a26f44d7"
-          },
-          {
-            "id": "pair_25d93f33b87348998773b08de9a52507",
-            "name": "password",
-            "value": "{% randomnumber 88888888, 99999999, 8, 0 %}",
-            "description": ""
-          }
+          { "disabled": false, "id": "pair_ee1db2e586f84886bd40a7105d534a39", "multiline": false, "name": "email", "type": "text", "value": "{{ _.email }}" },
+          { "disabled": false, "id": "pair_4ca602651c3c4b66baeb79d9d6d9df03", "name": "username", "value": "Admin" },
+          { "disabled": false, "id": "pair_647c03b0ab1a40c4b6975785a26f44d7", "name": "role", "value": "admin" },
+          { "description": "", "id": "pair_25d93f33b87348998773b08de9a52507", "name": "password", "value": "{{ _.password }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971687.5469,
       "isPrivate": false,
@@ -129,31 +78,17 @@
       "_type": "request"
     },
     {
-      "_id": "req_f77ae22a06c0497f877b0b66ed0da228",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1698191066771,
+      "_id": "req_5afde05002b84ef7a23f0df4640b55a6",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700273211423,
       "created": 1682360999631,
       "url": "{{ _.baseUrl }}auth/emailExists/{{ _.email }}",
-      "name": "Check If Email Exists",
+      "name": "/auth/emailExists/{email}",
       "description": "",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "id": "pair_a6c7341fb14443acadf22e8db05dd762",
-          "name": "email",
-          "value": "auishduisad",
-          "description": ""
-        }
-      ],
-      "headers": [
-        {
-          "id": "pair_ef830376b70044c4be015a0386ce5c42",
-          "name": "",
-          "value": "",
-          "description": ""
-        }
-      ],
+      "parameters": [{ "description": "", "id": "pair_a6c7341fb14443acadf22e8db05dd762", "name": "email", "value": "auishduisad" }],
+      "headers": [{ "description": "", "id": "pair_ef830376b70044c4be015a0386ce5c42", "name": "", "value": "" }],
       "authentication": {},
       "metaSortKey": -1683041971682.2734,
       "isPrivate": false,
@@ -166,38 +101,23 @@
       "_type": "request"
     },
     {
-      "_id": "req_aa615180dd284c459c00a5413d0e9a1c",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1698191070576,
+      "_id": "req_a431c992cc884fa39a443a2659514f13",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700273572917,
       "created": 1682360999624,
       "url": "{{ _.baseUrl }}auth/changePassword",
-      "name": "Change Password",
+      "name": "/auth/changePassword",
       "description": "",
       "method": "PUT",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "id": "pair_96ed21b8b7604d52b3874d923f0ac7de",
-            "name": "_id",
-            "value": "{{ _.userId }}",
-            "description": ""
-          },
-          {
-            "id": "pair_22c7f44d63434397851e9acdd53fa66d",
-            "name": "password",
-            "value": "{{ _.password }}",
-            "description": ""
-          }
+          { "description": "", "id": "pair_96ed21b8b7604d52b3874d923f0ac7de", "name": "_id", "value": "{{ _.userId }}" },
+          { "description": "", "id": "pair_22c7f44d63434397851e9acdd53fa66d", "name": "password", "value": "{{ _.password }}##" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971677,
       "isPrivate": false,
@@ -210,38 +130,23 @@
       "_type": "request"
     },
     {
-      "_id": "req_bd0ea7e6348a47de8d1d85fb5c82739a",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1698191074060,
+      "_id": "req_d4b7548376fd45e194cff1f2d9e0d55d",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700273436944,
       "created": 1683042291639,
       "url": "{{ _.baseUrl }}auth/refresh",
-      "name": "Refresh Token",
+      "name": "/auth/refresh",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "id": "pair_266c6edf4637440cb932f6b5224b7f3f",
-            "name": "refresh",
-            "value": "{{ _.refresh }}",
-            "description": ""
-          },
-          {
-            "id": "pair_037df0c19e994069b4f84807669c9308",
-            "name": "email",
-            "value": "{{ _.email }}",
-            "description": ""
-          }
+          { "description": "", "id": "pair_266c6edf4637440cb932f6b5224b7f3f", "name": "refresh", "value": "{{ _.refresh }}" },
+          { "description": "", "id": "pair_037df0c19e994069b4f84807669c9308", "name": "email", "value": "{{ _.email }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971652,
       "isPrivate": false,
@@ -254,32 +159,17 @@
       "_type": "request"
     },
     {
-      "_id": "req_6f37875779954ed8b543051fd48bc96f",
-      "parentId": "fld_8e01c33500634b79a30af57867c904c3",
-      "modified": 1684950919399,
+      "_id": "req_c1b2275c0219434da4b9a71dae259a5e",
+      "parentId": "fld_66da38be67c64ad7a4ab63bc5ec93057",
+      "modified": 1700261132699,
       "created": 1682392173333,
       "url": "{{ _.baseUrl }}auth/logout",
-      "name": "Logout",
+      "name": "/auth/logout",
       "description": "",
       "method": "POST",
-      "body": {
-        "mimeType": "application/x-www-form-urlencoded",
-        "params": [
-          {
-            "id": "pair_4ba3b400d7aa4158ac947a59987c62c8",
-            "name": "token",
-            "value": "{{ _.token }}",
-            "description": ""
-          }
-        ]
-      },
+      "body": { "mimeType": "application/x-www-form-urlencoded", "params": [{ "description": "", "id": "pair_4ba3b400d7aa4158ac947a59987c62c8", "name": "token", "value": "{{ _.token }}" }] },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971602,
       "isPrivate": false,
@@ -292,71 +182,26 @@
       "_type": "request"
     },
     {
-      "_id": "req_ed5106b8d9c14cda9bafbc431b2806fc",
-      "parentId": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "modified": 1698190257070,
+      "_id": "req_d150f6758f1f48918e1dbdd2e254867a",
+      "parentId": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "modified": 1700261170374,
       "created": 1682361077232,
       "url": "{{ _.baseUrl }}tasks",
-      "name": "Get All",
+      "name": "/tasks",
       "description": "",
       "method": "GET",
       "body": {},
       "parameters": [
-        {
-          "id": "pair_97fbb8a33810492595e8390b4fff8a8c",
-          "name": "sortFilter",
-          "value": "title",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_27f2d020ef904497ab81fa732435bf24",
-          "name": "sortDirection",
-          "value": "asc",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_dd0a8652bc09435699a8f76b39b1eb27",
-          "name": "pageSize",
-          "value": "5",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_6299e20d8d434669abb58db351cc7a21",
-          "name": "pageIndex",
-          "value": "0",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_4efa39afbede4b23a93fe9adc59ca280",
-          "name": "searchTerm",
-          "value": "Update",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_c54c96f1e12d4e719d8270bad9a5c8a0",
-          "name": "startDate",
-          "value": "2023-05-20",
-          "description": "",
-          "disabled": true
-        },
-        {
-          "id": "pair_0f3fa703b734445295f8ec5e10a59dd3",
-          "name": "finalDate",
-          "value": "2023-05-25",
-          "description": "",
-          "disabled": true
-        }
+        { "description": "", "disabled": true, "id": "pair_97fbb8a33810492595e8390b4fff8a8c", "name": "sortFilter", "value": "title" },
+        { "description": "", "disabled": true, "id": "pair_27f2d020ef904497ab81fa732435bf24", "name": "sortDirection", "value": "asc" },
+        { "description": "", "disabled": true, "id": "pair_dd0a8652bc09435699a8f76b39b1eb27", "name": "pageSize", "value": "5" },
+        { "description": "", "disabled": true, "id": "pair_6299e20d8d434669abb58db351cc7a21", "name": "pageIndex", "value": "0" },
+        { "description": "", "disabled": true, "id": "pair_4efa39afbede4b23a93fe9adc59ca280", "name": "searchTerm", "value": "Update" },
+        { "description": "", "disabled": true, "id": "pair_c54c96f1e12d4e719d8270bad9a5c8a0", "name": "startDate", "value": "2023-05-20" },
+        { "description": "", "disabled": true, "id": "pair_0f3fa703b734445295f8ec5e10a59dd3", "name": "finalDate", "value": "2023-05-25" }
       ],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999633,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -368,11 +213,11 @@
       "_type": "request"
     },
     {
-      "_id": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1684945726985,
+      "_id": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22",
+      "modified": 1700260692947,
       "created": 1682361077215,
-      "name": "Tasks",
+      "name": "tasks",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
@@ -380,21 +225,18 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_220f388673714c7786a5168aae4e4f05",
-      "parentId": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "modified": 1698190271633,
+      "_id": "req_14cd3cb46df443908c101ef2ee3108fb",
+      "parentId": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "modified": 1700261198446,
       "created": 1682361077230,
       "url": "{{ _.baseUrl }}tasks/{{ _.taskId }}",
-      "name": "Get One",
+      "name": "/tasks/{id}",
       "description": "",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999630.5,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -406,42 +248,24 @@
       "_type": "request"
     },
     {
-      "_id": "req_8348ec98af804a628444aea01688db06",
-      "parentId": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "modified": 1684960025375,
+      "_id": "req_c6e90d5e28e84234b9b090128977e27b",
+      "parentId": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "modified": 1700273582021,
       "created": 1682361077223,
       "url": "{{ _.baseUrl }}tasks",
-      "name": "Create",
+      "name": "/tasks",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}",
-            "name": "title",
-            "disabled": false,
-            "id": "pair_589a1d8f39084f999fee98b3f5af2755"
-          },
-          {
-            "value": "{{ _.userId }}",
-            "name": "userId",
-            "disabled": false,
-            "id": "pair_e314d76fba5f4c29b33de061b0339a01"
-          }
+          { "disabled": false, "id": "pair_589a1d8f39084f999fee98b3f5af2755", "name": "title", "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}" },
+          { "disabled": false, "id": "pair_e314d76fba5f4c29b33de061b0339a01", "name": "userId", "value": "{{ _.userId }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999628,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -453,50 +277,25 @@
       "_type": "request"
     },
     {
-      "_id": "req_081a9593cfaf45b6958e929bcaea7c92",
-      "parentId": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "modified": 1684960030769,
+      "_id": "req_5335837e87044e8abc0e7336d5f7c4de",
+      "parentId": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "modified": 1700261209689,
       "created": 1682361077221,
       "url": "{{ _.baseUrl }}tasks",
-      "name": "Update",
+      "name": "/tasks",
       "description": "",
       "method": "PUT",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "value": "{{ _.taskId }}",
-            "name": "_id",
-            "disabled": false,
-            "id": "pair_efe68402ed9c461ca26bf805bb3113d3",
-            "type": "text",
-            "multiline": false
-          },
-          {
-            "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}",
-            "name": "title",
-            "disabled": false,
-            "id": "pair_fbeed24f4f164e8f800eca51b1ca5a50"
-          },
-          {
-            "id": "pair_5163c4dfa4ec4a15833b46b474f14ee7",
-            "name": "userId",
-            "value": "{{ _.userId }}",
-            "description": ""
-          }
+          { "disabled": false, "id": "pair_efe68402ed9c461ca26bf805bb3113d3", "multiline": false, "name": "_id", "type": "text", "value": "{{ _.taskId }}" },
+          { "disabled": false, "id": "pair_fbeed24f4f164e8f800eca51b1ca5a50", "name": "title", "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}" },
+          { "description": "", "id": "pair_5163c4dfa4ec4a15833b46b474f14ee7", "name": "userId", "value": "{{ _.userId }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999626,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -508,24 +307,18 @@
       "_type": "request"
     },
     {
-      "_id": "req_20d263f63b554ca69ae19225048a47c4",
-      "parentId": "fld_10c8f84fa0b84670a83a1e946e2fb790",
-      "modified": 1684950890144,
+      "_id": "req_c5a3e79b40ef4e228d8dee65197c4c57",
+      "parentId": "fld_8ef0bad2e7ad401d96ebd3537896f3bb",
+      "modified": 1700273470390,
       "created": 1682361077217,
       "url": "{{ _.baseUrl }}tasks/{{ _.taskId }}",
-      "name": "Remove",
+      "name": "/tasks/{id}",
       "description": "",
       "method": "DELETE",
-      "body": {
-        "params": [],
-        "mimeType": "application/x-www-form-urlencoded"
-      },
+      "body": { "mimeType": "application/x-www-form-urlencoded", "params": [] },
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999624,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -537,21 +330,18 @@
       "_type": "request"
     },
     {
-      "_id": "req_4c68bf6618804e2b9200164dfcc2bc7c",
-      "parentId": "fld_fdb197cea8b84fa0a4d944966e2e1c5b",
-      "modified": 1698190261820,
+      "_id": "req_01946c16a4e14c89a205a8715151ea8f",
+      "parentId": "fld_883c0062a4ff47dba9c8139e8031df60",
+      "modified": 1700261231269,
       "created": 1682361086914,
       "url": "{{ _.baseUrl }}categories",
-      "name": "Get All",
+      "name": "/categories",
       "description": "",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999633,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -563,11 +353,11 @@
       "_type": "request"
     },
     {
-      "_id": "fld_fdb197cea8b84fa0a4d944966e2e1c5b",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1684945728870,
+      "_id": "fld_883c0062a4ff47dba9c8139e8031df60",
+      "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22",
+      "modified": 1700260697672,
       "created": 1682361086897,
-      "name": "Categories",
+      "name": "categories",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
@@ -575,42 +365,24 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_59ba3f1f578f43dab21a0e05c4e64e9d",
-      "parentId": "fld_fdb197cea8b84fa0a4d944966e2e1c5b",
-      "modified": 1684950624825,
+      "_id": "req_e11f03b94f47416596e21531b9835456",
+      "parentId": "fld_883c0062a4ff47dba9c8139e8031df60",
+      "modified": 1700273589718,
       "created": 1682361086912,
       "url": "{{ _.baseUrl }}categories",
-      "name": "Create",
+      "name": "/categories",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
-          {
-            "id": "pair_39e529d3acea4996b8ccbb1650f15380",
-            "name": "title",
-            "value": "{% randomnumber 1, 10000, 8, 0 %}",
-            "description": ""
-          },
-          {
-            "id": "pair_f3f5543f3fcf44faa3266af4acac1361",
-            "name": "userId",
-            "value": "{{ _.userId }}",
-            "description": ""
-          }
+          { "description": "", "id": "pair_39e529d3acea4996b8ccbb1650f15380", "name": "title", "value": "{% faker 'word', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'en' %}" },
+          { "description": "", "id": "pair_f3f5543f3fcf44faa3266af4acac1361", "name": "userId", "value": "{{ _.userId }}" }
         ]
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/x-www-form-urlencoded"
-        }
-      ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999632,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -622,21 +394,18 @@
       "_type": "request"
     },
     {
-      "_id": "req_2a58ef1f9d424537822bc7b0141503d7",
-      "parentId": "fld_fdb197cea8b84fa0a4d944966e2e1c5b",
-      "modified": 1684950756946,
+      "_id": "req_455e863529974b3d89a1f513398394b8",
+      "parentId": "fld_883c0062a4ff47dba9c8139e8031df60",
+      "modified": 1700261792729,
       "created": 1682361086910,
       "url": "{{ _.baseUrl }}categories/{{ _.categoryId }}",
-      "name": "Remove",
+      "name": "/categories/{id}",
       "description": "",
       "method": "DELETE",
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.token }}"
-      },
+      "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999631,
       "isPrivate": false,
       "settingStoreCookies": true,
@@ -648,9 +417,9 @@
       "_type": "request"
     },
     {
-      "_id": "env_20cc4f912eaa44f2a987f735da876ce3",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1682391493998,
+      "_id": "env_de37e8b5e725432a87e3072ac377b072",
+      "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22",
+      "modified": 1700260630102,
       "created": 1659219704851,
       "name": "Base Environment",
       "data": {},
@@ -660,53 +429,36 @@
       "metaSortKey": 1659219704851,
       "_type": "environment"
     },
+    { "_id": "jar_bde24aed28e7567de6307bff5e0cf99c07df397f", "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22", "modified": 1700260644587, "created": 1700260644587, "name": "Default Jar", "cookies": [], "_type": "cookie_jar" },
     {
-      "_id": "jar_6122f82a1f7b4a42b724561e2012a524",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1659219704854,
-      "created": 1659219704854,
-      "name": "Default Jar",
-      "cookies": [],
-      "_type": "cookie_jar"
-    },
-    {
-      "_id": "spc_e21a88729d5e45aab0fb357342ec2890",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1698191129900,
-      "created": 1684529878981,
-      "fileName": "Mean Stack Template",
-      "contents": "{\n  \"openapi\": \"3.0.3\",\n  \"info\": {\n    \"version\": \"1.0.0\",\n    \"title\": \"Mean Stack Template - OpenAPI 3.0\",\n    \"description\": \"Documentation of Mean Stack Template project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey.\",\n    \"contact\": {\n      \"name\": \"Lucas Rinaldi\",\n      \"email\": \"lucasreinaldi@gmail.com\"\n    },\n    \"license\": {\n      \"name\": \"Apache 2.0\",\n      \"url\": \"https://www.apache.org/licenses/LICENSE-2.0.html\"\n    }\n  },\n  \"externalDocs\": {\n    \"description\": \"Find more projects on my Github!\",\n    \"url\": \"https://github.com/rinaldilucas\"\n  },\n  \"servers\": [\n    {\n      \"url\": \"http://localhost:3000/api\",\n      \"description\": \"Local server\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Auth\",\n      \"description\": \"Operations about authentication\"\n    },\n    {\n      \"name\": \"Task\",\n      \"description\": \"Operations about tasks\"\n    },\n    {\n      \"name\": \"Category\",\n      \"description\": \"Operations about categories\"\n    }\n  ],\n  \"components\": {\n    \"schemas\": {\n      \"AuthData\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"access\",\n          \"expiresIn\",\n          \"refresh\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"access\": {\n            \"type\": \"string\"\n          },\n          \"refresh\": {\n            \"type\": \"string\"\n          },\n          \"expiresIn\": {\n            \"type\": \"string\"\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"keepUserLoggedIn\": {\n            \"type\": \"boolean\"\n          }\n        }\n      },\n      \"User\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"email\",\n          \"password\",\n          \"role\"\n        ],\n        \"properties\": {\n          \"role\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"admin\",\n              \"user\"\n            ]\n          },\n          \"email\": {\n            \"type\": \"string\",\n            \"format\": \"email\",\n            \"minLength\": 5,\n            \"maxLength\": 150,\n            \"example\": \"user@gmail.com\"\n          },\n          \"password\": {\n            \"type\": \"string\",\n            \"minLength\": 8,\n            \"maxLength\": 150\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2019-05-17\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Task\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"title\",\n          \"status\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"status\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"toDo\",\n              \"inProgress\",\n              \"done\"\n            ]\n          },\n          \"title\": {\n            \"type\": \"string\",\n            \"minLength\": 2,\n            \"maxLength\": 100\n          },\n          \"description\": {\n            \"type\": \"string\",\n            \"maxLength\": 300\n          },\n          \"date\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"category\": {\n            \"type\": \"string\"\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Category\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"name\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"title\": {\n            \"type\": \"string\",\n            \"minLength\": 2\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Error\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"success\",\n          \"status\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"success\": {\n            \"type\": \"boolean\",\n            \"default\": false\n          },\n          \"status\": {\n            \"type\": \"integer\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"validationErrors\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\"\n            }\n          }\n        }\n      }\n    },\n    \"securitySchemes\": {\n      \"auth\": {\n        \"type\": \"http\",\n        \"scheme\": \"bearer\",\n        \"bearerFormat\": \"JWT\"\n      }\n    }\n  },\n  \"paths\": {\n    \"/auth/authenticate\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Authenticate the user\",\n        \"description\": \"Authenticates the user and retrieve a JWT token\",\n        \"operationId\": \"authenticate\",\n        \"requestBody\": {\n          \"description\": \"User to be authenticated\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"password\": {\n                    \"type\": \"string\",\n                    \"minLength\": 8,\n                    \"maxLength\": 150,\n                    \"example\": \"Userpassword#0\"\n                  },\n                  \"keepUserLoggedIn\": {\n                    \"type\": \"boolean\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"User or password mismatches\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/register\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Register a new user\",\n        \"description\": \"Register a brand new user\",\n        \"operationId\": \"register\",\n        \"requestBody\": {\n          \"description\": \"User to be registered\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"password\": {\n                    \"type\": \"string\",\n                    \"minLength\": 8,\n                    \"maxLength\": 150\n                  },\n                  \"role\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"admin\",\n                      \"user\"\n                    ],\n                    \"example\": \"user\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/User\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"409\": {\n            \"description\": \"User already exists with email\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"ErrorError creating document\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/emailExists/{email}\": {\n      \"get\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Verify if user is registered\",\n        \"description\": \"Returns a boolean if the user is already registered\",\n        \"operationId\": \"getUserByEmail\",\n        \"parameters\": [\n          {\n            \"name\": \"email\",\n            \"in\": \"path\",\n            \"description\": \"Email of user to fetch\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"emailExists\": {\n                            \"type\": \"boolean\"\n                          }\n                        }\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"204\": {\n            \"description\": \"User not registered\"\n          },\n          \"400\": {\n            \"description\": \"User already exists with email\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/changePassword\": {\n      \"put\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Change the password\",\n        \"description\": \"Change the password of the user generating hash\",\n        \"operationId\": \"changePassword\",\n        \"requestBody\": {\n          \"description\": \"User to have the password changed\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/User\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"User not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error updating user\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/auth/refresh\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Generate refresh token\",\n        \"description\": \"Generate a refresh token to user\",\n        \"operationId\": \"refreshToken\",\n        \"requestBody\": {\n          \"description\": \"Refresh token to be generated\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"userId\": {\n                    \"type\": \"string\"\n                  },\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"role\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"admin\",\n                      \"user\"\n                    ]\n                  },\n                  \"expirationDate\": {\n                    \"type\": \"string\",\n                    \"format\": \"date\",\n                    \"example\": \"2023-05-22\"\n                  },\n                  \"refresh\": {\n                    \"type\": \"string\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"object\",\n                      \"required\": [\n                        \"access\",\n                        \"expiresIn\",\n                        \"refresh\",\n                        \"userId\"\n                      ],\n                      \"properties\": {\n                        \"access\": {\n                          \"type\": \"string\"\n                        },\n                        \"refresh\": {\n                          \"type\": \"string\"\n                        },\n                        \"expiresIn\": {\n                          \"type\": \"string\"\n                        },\n                        \"userId\": {\n                          \"type\": \"string\"\n                        }\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"Error refreshing token\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/auth/logout\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Sign out user\",\n        \"description\": \"Sign out user and invalidate token\",\n        \"operationId\": \"logout\",\n        \"requestBody\": {\n          \"description\": \"Sign out user\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"token\": {\n                    \"type\": \"string\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"token\": {\n                      \"type\": \"string\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/tasks\": {\n      \"get\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Returns all tasks\",\n        \"description\": \"Returns all tasks which the user has access to\",\n        \"operationId\": \"getTasks\",\n        \"parameters\": [\n          {\n            \"name\": \"pageSize\",\n            \"in\": \"query\",\n            \"description\": \"Size of the page to be fetched\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\"\n            }\n          },\n          {\n            \"name\": \"searchTerm\",\n            \"in\": \"query\",\n            \"description\": \"Term to be fetch withing the title of the task\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"pageIndex\",\n            \"in\": \"query\",\n            \"description\": \"Index of the page to be fetched\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\"\n            }\n          },\n          {\n            \"name\": \"sortFilter\",\n            \"in\": \"query\",\n            \"description\": \"Field to be sorted\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"sortDirection\",\n            \"in\": \"query\",\n            \"description\": \"Direction of the sort (asc or desc)\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"startDate\",\n            \"in\": \"query\",\n            \"description\": \"Start date to set the date range\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\",\n              \"format\": \"date\",\n              \"example\": \"2023-05-22\"\n            }\n          },\n          {\n            \"name\": \"finalDate\",\n            \"in\": \"query\",\n            \"description\": \"Final date to set the date range\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\",\n              \"format\": \"date\",\n              \"example\": \"2023-05-22\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"500\": {\n            \"description\": \"Error retrieving tasks\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"post\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Creates a new task\",\n        \"description\": \"Creates a new task for the current user. Duplicates are allowed\",\n        \"operationId\": \"createTask\",\n        \"requestBody\": {\n          \"description\": \"Task to add\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Task\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error creating task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"put\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Updates a task\",\n        \"description\": \"Updates a task based on the body of requisition\",\n        \"operationId\": \"updateTask\",\n        \"requestBody\": {\n          \"description\": \"Task to update\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Task\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/tasks/{id}\": {\n      \"get\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Returns a task\",\n        \"description\": \"Returns a task based on a single ID\",\n        \"operationId\": \"getTaskById\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of task to fetch\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"delete\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Removes a task\",\n        \"description\": \"Removes a single task based on the ID supplied\",\n        \"operationId\": \"removeTask\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of task to delete\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"204\": {\n            \"description\": \"Successful response\"\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/categories\": {\n      \"get\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Returns all categories\",\n        \"description\": \"Returns all categories which the user has access to\",\n        \"operationId\": \"getCategories\",\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Category\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"500\": {\n            \"description\": \"Error retrieving categories\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"post\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Creates a new category\",\n        \"description\": \"Creates a new category for the current user. Duplicates are allowed\",\n        \"operationId\": \"createCategory\",\n        \"requestBody\": {\n          \"description\": \"Category to add\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Category\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Category\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error creating category\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/categories/{id}\": {\n      \"delete\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Removes a category\",\n        \"description\": \"Removes a single category based on the ID supplied\",\n        \"operationId\": \"removeCategory\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of category to delete\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"204\": {\n            \"description\": \"Successful response\"\n          },\n          \"404\": {\n            \"description\": \"Category not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing category\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    }\n  }\n}",
+      "_id": "spc_76aadce098dd4bbf8cb5c4596d2a9929",
+      "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22",
+      "modified": 1700260665325,
+      "created": 1699616311234,
+      "fileName": "Angular14 Task Crud (MEAN)",
+      "contents": "{\n  \"openapi\": \"3.0.3\",\n  \"info\": {\n    \"version\": \"1.0.0\",\n    \"title\": \"Mean Stack Template - OpenAPI 3.0\",\n    \"description\": \"Documentation of Mean Stack Template project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey.\",\n    \"contact\": {\n      \"name\": \"Lucas Rinaldi\",\n      \"email\": \"lucasreinaldi@gmail.com\"\n    },\n    \"license\": {\n      \"name\": \"Apache 2.0\",\n      \"url\": \"https://www.apache.org/licenses/LICENSE-2.0.html\"\n    }\n  },\n  \"externalDocs\": {\n    \"description\": \"Find more projects on my Github!\",\n    \"url\": \"https://github.com/rinaldilucas\"\n  },\n  \"servers\": [\n    {\n      \"url\": \"http://localhost:3000/api\",\n      \"description\": \"Local server\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Auth\",\n      \"description\": \"Operations about authentication\"\n    },\n    {\n      \"name\": \"Task\",\n      \"description\": \"Operations about tasks\"\n    },\n    {\n      \"name\": \"Category\",\n      \"description\": \"Operations about categories\"\n    }\n  ],\n  \"components\": {\n    \"schemas\": {\n      \"AuthData\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"access\",\n          \"expiresIn\",\n          \"refresh\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"access\": {\n            \"type\": \"string\"\n          },\n          \"refresh\": {\n            \"type\": \"string\"\n          },\n          \"expiresIn\": {\n            \"type\": \"string\"\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"keepUserLoggedIn\": {\n            \"type\": \"boolean\"\n          }\n        }\n      },\n      \"User\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"email\",\n          \"password\",\n          \"role\"\n        ],\n        \"properties\": {\n          \"role\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"admin\",\n              \"user\"\n            ]\n          },\n          \"email\": {\n            \"type\": \"string\",\n            \"format\": \"email\",\n            \"minLength\": 5,\n            \"maxLength\": 150,\n            \"example\": \"user@gmail.com\"\n          },\n          \"password\": {\n            \"type\": \"string\",\n            \"minLength\": 8,\n            \"maxLength\": 150\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2019-05-17\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Task\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"title\",\n          \"status\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"status\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"toDo\",\n              \"inProgress\",\n              \"done\"\n            ]\n          },\n          \"title\": {\n            \"type\": \"string\",\n            \"minLength\": 2,\n            \"maxLength\": 100\n          },\n          \"description\": {\n            \"type\": \"string\",\n            \"maxLength\": 300\n          },\n          \"date\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"category\": {\n            \"type\": \"string\"\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Category\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"name\",\n          \"userId\"\n        ],\n        \"properties\": {\n          \"title\": {\n            \"type\": \"string\",\n            \"minLength\": 2\n          },\n          \"userId\": {\n            \"type\": \"string\"\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date\",\n            \"example\": \"2023-05-22\"\n          }\n        }\n      },\n      \"Error\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"success\",\n          \"status\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"success\": {\n            \"type\": \"boolean\",\n            \"default\": false\n          },\n          \"status\": {\n            \"type\": \"integer\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"validationErrors\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\"\n            }\n          }\n        }\n      }\n    },\n    \"securitySchemes\": {\n      \"auth\": {\n        \"type\": \"http\",\n        \"scheme\": \"bearer\",\n        \"bearerFormat\": \"JWT\"\n      }\n    }\n  },\n  \"paths\": {\n    \"/auth/authenticate\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Authenticate the user\",\n        \"description\": \"Authenticates the user and retrieve a JWT token\",\n        \"operationId\": \"authenticate\",\n        \"requestBody\": {\n          \"description\": \"User to be authenticated\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"password\": {\n                    \"type\": \"string\",\n                    \"minLength\": 8,\n                    \"maxLength\": 150,\n                    \"example\": \"Userpassword#0\"\n                  },\n                  \"keepUserLoggedIn\": {\n                    \"type\": \"boolean\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"User or password mismatches\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/register\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Register a new user\",\n        \"description\": \"Register a brand new user\",\n        \"operationId\": \"register\",\n        \"requestBody\": {\n          \"description\": \"User to be registered\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"password\": {\n                    \"type\": \"string\",\n                    \"minLength\": 8,\n                    \"maxLength\": 150\n                  },\n                  \"role\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"admin\",\n                      \"user\"\n                    ],\n                    \"example\": \"user\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/User\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"409\": {\n            \"description\": \"User already exists with email\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"ErrorError creating document\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/email-exists/{email}\": {\n      \"get\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Verify if user is registered\",\n        \"description\": \"Returns a boolean if the user is already registered\",\n        \"operationId\": \"getUserByEmail\",\n        \"parameters\": [\n          {\n            \"name\": \"email\",\n            \"in\": \"path\",\n            \"description\": \"Email of user to fetch\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                          \"emailExists\": {\n                            \"type\": \"boolean\"\n                          }\n                        }\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"204\": {\n            \"description\": \"User not registered\"\n          },\n          \"400\": {\n            \"description\": \"User already exists with email\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/auth/changePassword\": {\n      \"put\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Change the password\",\n        \"description\": \"Change the password of the user generating hash\",\n        \"operationId\": \"changePassword\",\n        \"requestBody\": {\n          \"description\": \"User to have the password changed\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/User\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"User not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error updating user\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/auth/refresh\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Generate refresh token\",\n        \"description\": \"Generate a refresh token to user\",\n        \"operationId\": \"refreshToken\",\n        \"requestBody\": {\n          \"description\": \"Refresh token to be generated\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"userId\": {\n                    \"type\": \"string\"\n                  },\n                  \"email\": {\n                    \"type\": \"string\",\n                    \"format\": \"email\",\n                    \"minLength\": 5,\n                    \"maxLength\": 150,\n                    \"example\": \"user@gmail.com\"\n                  },\n                  \"role\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"admin\",\n                      \"user\"\n                    ]\n                  },\n                  \"expirationDate\": {\n                    \"type\": \"string\",\n                    \"format\": \"date\",\n                    \"example\": \"2023-05-22\"\n                  },\n                  \"refresh\": {\n                    \"type\": \"string\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"object\",\n                      \"required\": [\n                        \"access\",\n                        \"expiresIn\",\n                        \"refresh\",\n                        \"userId\"\n                      ],\n                      \"properties\": {\n                        \"access\": {\n                          \"type\": \"string\"\n                        },\n                        \"refresh\": {\n                          \"type\": \"string\"\n                        },\n                        \"expiresIn\": {\n                          \"type\": \"string\"\n                        },\n                        \"userId\": {\n                          \"type\": \"string\"\n                        }\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"Error refreshing token\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/auth/logout\": {\n      \"post\": {\n        \"tags\": [\n          \"Auth\"\n        ],\n        \"summary\": \"Sign out user\",\n        \"description\": \"Sign out user and invalidate token\",\n        \"operationId\": \"logout\",\n        \"requestBody\": {\n          \"description\": \"Sign out user\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"token\": {\n                    \"type\": \"string\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"token\": {\n                      \"type\": \"string\"\n                    }\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/tasks\": {\n      \"get\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Returns all tasks\",\n        \"description\": \"Returns all tasks which the user has access to\",\n        \"operationId\": \"getTasks\",\n        \"parameters\": [\n          {\n            \"name\": \"pageSize\",\n            \"in\": \"query\",\n            \"description\": \"Size of the page to be fetched\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\"\n            }\n          },\n          {\n            \"name\": \"searchTerm\",\n            \"in\": \"query\",\n            \"description\": \"Term to be fetch withing the title of the task\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"pageIndex\",\n            \"in\": \"query\",\n            \"description\": \"Index of the page to be fetched\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\"\n            }\n          },\n          {\n            \"name\": \"sortFilter\",\n            \"in\": \"query\",\n            \"description\": \"Field to be sorted\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"sortDirection\",\n            \"in\": \"query\",\n            \"description\": \"Direction of the sort (asc or desc)\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          },\n          {\n            \"name\": \"startDate\",\n            \"in\": \"query\",\n            \"description\": \"Start date to set the date range\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\",\n              \"format\": \"date\",\n              \"example\": \"2023-05-22\"\n            }\n          },\n          {\n            \"name\": \"finalDate\",\n            \"in\": \"query\",\n            \"description\": \"Final date to set the date range\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\",\n              \"format\": \"date\",\n              \"example\": \"2023-05-22\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"500\": {\n            \"description\": \"Error retrieving tasks\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"post\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Creates a new task\",\n        \"description\": \"Creates a new task for the current user. Duplicates are allowed\",\n        \"operationId\": \"createTask\",\n        \"requestBody\": {\n          \"description\": \"Task to add\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Task\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error creating task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"put\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Updates a task\",\n        \"description\": \"Updates a task based on the body of requisition\",\n        \"operationId\": \"updateTask\",\n        \"requestBody\": {\n          \"description\": \"Task to update\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Task\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/AuthData\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/tasks/{id}\": {\n      \"get\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Returns a task\",\n        \"description\": \"Returns a task based on a single ID\",\n        \"operationId\": \"getTaskById\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of task to fetch\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Task\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"delete\": {\n        \"tags\": [\n          \"Task\"\n        ],\n        \"summary\": \"Removes a task\",\n        \"description\": \"Removes a single task based on the ID supplied\",\n        \"operationId\": \"removeTask\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of task to delete\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"204\": {\n            \"description\": \"Successful response\"\n          },\n          \"404\": {\n            \"description\": \"Task not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing task\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/categories\": {\n      \"get\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Returns all categories\",\n        \"description\": \"Returns all categories which the user has access to\",\n        \"operationId\": \"getCategories\",\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 200\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Category\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"500\": {\n            \"description\": \"Error retrieving categories\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      },\n      \"post\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Creates a new category\",\n        \"description\": \"Creates a new category for the current user. Duplicates are allowed\",\n        \"operationId\": \"createCategory\",\n        \"requestBody\": {\n          \"description\": \"Category to add\",\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"$ref\": \"#/components/schemas/Category\"\n              }\n            }\n          }\n        },\n        \"responses\": {\n          \"201\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"object\",\n                  \"properties\": {\n                    \"success\": {\n                      \"type\": \"boolean\"\n                    },\n                    \"status\": {\n                      \"type\": \"integer\",\n                      \"example\": 201\n                    },\n                    \"data\": {\n                      \"type\": \"array\",\n                      \"items\": {\n                        \"$ref\": \"#/components/schemas/Category\"\n                      }\n                    },\n                    \"totalCount\": {\n                      \"type\": \"integer\",\n                      \"example\": 1\n                    }\n                  }\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error creating category\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    },\n    \"/categories/{id}\": {\n      \"delete\": {\n        \"tags\": [\n          \"Category\"\n        ],\n        \"summary\": \"Removes a category\",\n        \"description\": \"Removes a single category based on the ID supplied\",\n        \"operationId\": \"removeCategory\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"ID of category to delete\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"204\": {\n            \"description\": \"Successful response\"\n          },\n          \"404\": {\n            \"description\": \"Category not found\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          },\n          \"400\": {\n            \"description\": \"Error removing category\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/Error\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"auth\": []\n          }\n        ]\n      }\n    }\n  }\n}",
       "contentType": "yaml",
       "_type": "api_spec"
     },
+    { "_id": "uts_c337108e39634505a09b864393a2510b", "parentId": "wrk_66d6a8f4a69c437eb710132ef27d8f22", "modified": 1700260630123, "created": 1659219704858, "name": "Example Test Suite", "_type": "unit_test_suite" },
     {
-      "_id": "uts_68ddda4322dc4e889666f859e1b720ab",
-      "parentId": "wrk_679bbfd033ba49ffb8d3de93d815a222",
-      "modified": 1659219704858,
-      "created": 1659219704858,
-      "name": "Example Test Suite",
-      "_type": "unit_test_suite"
-    },
-    {
-      "_id": "env_3d2dcca71b9e4f61a23adc72dca4da52",
-      "parentId": "env_20cc4f912eaa44f2a987f735da876ce3",
-      "modified": 1684987291226,
+      "_id": "env_4c585e1410c6470f8896244e87eb7c7f",
+      "parentId": "env_de37e8b5e725432a87e3072ac377b072",
+      "modified": 1700273625843,
       "created": 1682391496874,
       "name": "Development",
       "data": {
         "baseUrl": "127.0.0.1:3000/api/",
-        "userId": "646d96ecc09cdb2e9c4b327e",
         "email": "user@gmail.com",
         "password": "Userpassword#0",
         "role": "user",
-        "token": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'no-history', 60 %}",
-        "refresh": "{% response 'body', 'req_87fdf3adf4074c389f9963c74d1f94d7', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'no-history', 60 %}",
-        "taskId": "{% response 'body', 'req_8348ec98af804a628444aea01688db06', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'no-history', 60 %}",
-        "categoryId": "{% response 'body', 'req_59ba3f1f578f43dab21a0e05c4e64e9d', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', no-history, 60 %}"
+        "token": "{% response 'body', 'req_67c2f01dbad34985979186cfef232053', 'b64::JC5kYXRhWzoxXS5hY2Nlc3M=::46b', 'no-history', 60 %}",
+        "refresh": "{% response 'body', 'req_67c2f01dbad34985979186cfef232053', 'b64::JC5kYXRhWzoxXS5yZWZyZXNo::46b', 'no-history', 60 %}",
+        "userId": "{% response 'body', 'req_67c2f01dbad34985979186cfef232053', 'b64::JC5bInVzZXJJZCJd::46b', 'never', 60 %}",
+        "taskId": "{% response 'body', 'req_c6e90d5e28e84234b9b090128977e27b', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', 'no-history', 60 %}",
+        "categoryId": "{% response 'body', 'req_e11f03b94f47416596e21531b9835456', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', no-history, 60 %}"
       },
-      "dataPropertyOrder": {
-        "&": ["baseUrl", "userId", "email", "password", "role", "token", "refresh", "taskId", "categoryId"]
-      },
+      "dataPropertyOrder": { "&": ["baseUrl", "email", "password", "role", "token", "refresh", "userId", "taskId", "categoryId"] },
       "color": null,
       "isPrivate": false,
       "metaSortKey": 1682391496874,
