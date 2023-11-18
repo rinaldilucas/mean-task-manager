@@ -16,10 +16,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "module": "CommonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -31,12 +28,8 @@
     "noUnusedParameters": false,
     "outDir": "./dist",
     "paths": {
-      "@app/*": [
-        "./src/*"
-      ],
-      "@root/*": [
-        "./*"
-      ]
+      "@app/*": ["./src/*"],
+      "@root/*": ["./*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -46,8 +39,5 @@
     "target": "ES2021",
     "useDefineForClassFields": false
   },
-  "files": [
-    "./main.ts",
-    "./polyfills.ts"
-  ],
+  "files": ["./main.ts", "./polyfills.ts"]
 }

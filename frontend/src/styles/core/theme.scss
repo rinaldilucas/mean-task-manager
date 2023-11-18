@@ -32,8 +32,8 @@ $app-primary: (
     A100: #000000,
     A200: #000000,
     A400: #ffffff,
-    A700: #ffffff
-  )
+    A700: #ffffff,
+  ),
 );
 
 $app-primary-dark: (
@@ -65,8 +65,8 @@ $app-primary-dark: (
     A100: #000000,
     A200: #000000,
     A400: #ffffff,
-    A700: #ffffff
-  )
+    A700: #ffffff,
+  ),
 );
 
 $app-accent: (
@@ -98,8 +98,8 @@ $app-accent: (
     A100: #000000,
     A200: #000000,
     A400: #000000,
-    A700: #000000
-  )
+    A700: #000000,
+  ),
 );
 
 $app-danger: (
@@ -131,8 +131,8 @@ $app-danger: (
     A100: #000000,
     A200: #000000,
     A400: #000000,
-    A700: #000000
-  )
+    A700: #000000,
+  ),
 );
 
 $app-background: (
@@ -164,8 +164,8 @@ $app-background: (
     A100: #000000,
     A200: #000000,
     A400: #000000,
-    A700: #000000
-  )
+    A700: #000000,
+  ),
 );
 
 $primary: mat-palette($app-primary);

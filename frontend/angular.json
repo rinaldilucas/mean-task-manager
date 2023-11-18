@@ -6,9 +6,7 @@
       "enabled": true
     },
     "packageManager": "yarn",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -74,9 +72,7 @@
             "outputPath": "dist",
             "polyfills": "./polyfills.ts",
             "scripts": [],
-            "styles": [
-              "./src/styles/main.scss"
-            ],
+            "styles": ["./src/styles/main.scss"],
             "tsConfig": "tsconfig.json"
           }
         },
@@ -93,10 +89,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "fix": true,
-            "lintFilePatterns": [
-              "./**/*.ts",
-              "./**/*.html"
-            ]
+            "lintFilePatterns": ["./**/*.ts", "./**/*.html"]
           }
         },
         "serve": {

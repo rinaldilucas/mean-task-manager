@@ -89,6 +89,7 @@ Here are some of the features:
 - API documentation using Swagger
 - ESlint rules focused on backend
 - Multiple scripts to facilitate development, builds and deployment
+- Scripts to format, lint, debug, develop, build and deploy
 - And more
 
 ### Frontend
@@ -126,6 +127,7 @@ Here are some of the features:
 - Prettier rules implemented to improve code readability
 - Multiple scripts to facilitate development, builds and deployment
 - Custom folder structure organized by responsibility
+- Scripts to format, lint, debug, develop, build and deploy
 - And more
 
 <p align="right">(<a href="#top">back to top</a>)</p>

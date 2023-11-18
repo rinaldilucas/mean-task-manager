@@ -51,7 +51,7 @@
     "deploy": "yarn build",
     "dev": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register app.ts\" -e ts,json",
     "format": "prettier . \"!dist\" \"!node_modules\" --write .",
-    "lint": "npx eslint ./ --fix --ext .ts && yarn lint:types",
+    "lint": "yarn format && npx eslint ./ --fix --ext .ts && yarn lint:types",
     "lint:types": "tsc --noemit",
     "start": "node dist/app.js --prod=true"
   }

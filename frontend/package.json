@@ -56,7 +56,8 @@
     "debug": "ng build --configuration development --watch",
     "deploy": "yarn lint && ng deploy --no-silent --base-href=/angular14-task-crud-mean/ && rimraf ./dist",
     "dev": "ng serve --o",
-    "lint": "ng lint --fix && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
+    "format": "prettier \"**/*.{scss,json}\" \"!dist\" \"!.angular\" \"!node_modules\" --write .",
+    "lint": "yarn format && ng lint --fix && yarn lint:types && yarn lint:sass-fix && yarn lint:sass",
     "lint:sass": "sass-lint -c .sasslintrc.json -v -q",
     "lint:sass-fix": "sass-lint-auto-fix --config-sass-lint .sasslintrc.json",
     "lint:types": "tsc --noemit"
