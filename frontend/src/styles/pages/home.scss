@@ -29,10 +29,9 @@
   mat-icon {
     display: flex;
     justify-content: center;
-    opacity: 0.6;
     width: vw(220) !important;
     height: vw(220) !important;
-    color: mat-color($accent, 200) !important;
+    color: mat-color($primary, 400) !important;
     font-size: vw(220) !important;
 
     @include media(">=desktop") {
