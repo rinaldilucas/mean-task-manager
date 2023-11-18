@@ -123,7 +123,7 @@ export class SharedService {
       .subscribe((text: string) => {
         const duration = customDuration ? customDuration : error ? 8000 : 5000;
         this.snackBar
-          .open(text, this.translateService.instant('button.dismiss').toUpperCase(), { duration })
+          .open(text, this.translateService.instant('button.dismiss').toUpperCase(), { duration, panelClass: 'accent' })
           .afterDismissed()
           .subscribe(() => {
             if (queuedTranslationKey) this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
@@ -133,7 +133,7 @@ export class SharedService {
 
   async handleDialogs({ component, options, width, minWidth, height, minHeight, disableClose }: { component: any; options?: any; minWidth?: string; width?: string; minHeight?: string; height?: string; disableClose?: boolean }): Promise<any> {
     const dialogRef = this.dialog.open(component, {
-      width: width || '500px',
+      width: width || '5rem',
       minWidth: minWidth || undefined,
       height: height || 'auto',
       minHeight: minHeight || undefined,

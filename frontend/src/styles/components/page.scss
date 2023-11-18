@@ -59,7 +59,11 @@
     }
 
     &--empty {
-      height: 80%;
+      height: 100%;
+
+      @include media(">=desktop") {
+        height: 90%;
+      }
     }
   }
 
