@@ -46,8 +46,8 @@ html {
   @extend .scrollbar;
   max-width: 100vw;
   height: 100%;
-  font-size: mobile-vw($pixel-base + $mobile-factor, true);
   overflow: hidden;
+  font-size: mobile-vw($pixel-base + $mobile-factor, true);
 
   @include media(">=desktop") {
     font-size: fixed-vw($pixel-base);

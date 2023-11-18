@@ -25,8 +25,8 @@
     @extend %backdrop;
 
     @include media(">=desktop") {
-      width: vw(420);
       margin-top: vw(-45);
+      width: vw(420);
     }
 
     mat-card {

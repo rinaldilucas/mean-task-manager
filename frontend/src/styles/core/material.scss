@@ -73,11 +73,11 @@ mat-radio-button {
 }
 
 .mat-toolbar {
-  height: $header-size !important;
-  min-height: $header-size !important;
+  position: relative;
   justify-content: space-between;
   z-index: 2;
-  position: relative;
+  height: $header-size !important;
+  min-height: $header-size !important;
 }
 
 .mat-toolbar-row {

@@ -18,8 +18,8 @@
   }
 
   &__content {
-    height: 100%;
     position: relative;
+    height: 100%;
     @extend %backdrop;
 
     @include media(">=desktop") {
@@ -48,17 +48,17 @@
     justify-content: center;
     z-index: 1;
     margin: 0 0 vw(2);
+    margin-top: 0;
     background-color: mat-color($app-background, 100);
     padding: vw(30) 0 vw(10);
     height: vw(150);
     font-size: vw(22);
     box-sizing: border-box;
-    margin-top: 0;
 
     @include media(">=desktop") {
-      box-sizing: unset;
-      height: vw(80);
       margin-top: vw(20);
+      height: vw(80);
+      box-sizing: unset;
     }
 
     &--empty {
@@ -70,14 +70,14 @@
     }
 
     @include media(">=desktop") {
+      display: flex;
       flex-direction: row;
       justify-content: unset;
+      justify-content: space-between;
       padding: vw(15) 0;
+      padding: vw(35) 0 vw(20);
       height: vw(110);
       box-sizing: border-box;
-      display: flex;
-      justify-content: space-between;
-      padding: vw(35) 0 vw(20);
     }
 
     .dark-mode & {
@@ -161,8 +161,8 @@
       }
 
       table {
-        width: 100%;
         padding: 0 vw(15);
+        width: 100%;
 
         @include media(">=desktop") {
           padding: 0;
