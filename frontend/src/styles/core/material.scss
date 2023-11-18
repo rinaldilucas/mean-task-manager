@@ -92,8 +92,12 @@ mat-radio-button {
 
   @include media("<=desktop") {
     &:last-of-type {
-      flex: 0.5;
+      flex: 0.6;
       padding-right: 0 !important;
+
+      button {
+        margin: auto;
+      }
     }
   }
 }
@@ -270,4 +274,19 @@ mat-spinner svg {
 .mat-checkbox-inner-container {
   width: vw(15) !important;
   height: vw(15) !important;
+}
+
+.mat-menu-content {
+  padding: 8px 4px !important;
+}
+
+.mat-menu-item {
+  line-height: vw(48) !important;
+  height: vw(48) !important;
+  padding: 0 vw(16) !important;
+}
+
+.mat-icon-button {
+  width: vw(40);
+  height: vw(40);
 }

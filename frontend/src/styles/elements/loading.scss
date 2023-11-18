@@ -3,4 +3,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+
+  mat-spinner {
+    zoom: 0.9;
+
+    @include media(">=desktop") {
+      zoom: unset;
+    }
+  }
 }

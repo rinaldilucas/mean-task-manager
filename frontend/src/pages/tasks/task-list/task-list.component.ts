@@ -100,6 +100,8 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
   async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {
     this.isLoading = true;
+    this.changeDetector.detectChanges();
+
     task.status = status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));

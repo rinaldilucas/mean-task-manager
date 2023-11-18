@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit {
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
 
     this.categories = result.data;
-    this.isLoading = true;
+    this.isLoading = false;
     this.changeDetector.markForCheck();
   }
 

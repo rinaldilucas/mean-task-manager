@@ -120,7 +120,7 @@ Here are some of the features:
 - Custom SCSS structure to improve reusability
 - Material components are overwritten to support rem unit and improve mobile/table compatibility coding less
 - Improved readability on media queries using include-media library
-- ESlint rules focused on frontend, like keyboard accessibility, ARIA and accessible HTML
+- ESlint rules focused on frontend, like keyboard accessibility, ARIA, focus and accessible HTML
 - Input validators with multilingual features added
 - Implementation of sass-lint which guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
 - Prettier rules implemented to improve code readability

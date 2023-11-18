@@ -2,6 +2,7 @@ a,
 button {
   &:focus {
     outline: vw(4) dashed mat-color($primary, A100) !important;
+    box-sizing: border-box;
 
     &.contrast {
       outline: vw(4) dashed mat-color($primary, A100) !important;
