@@ -5,6 +5,7 @@
   },
   "button": {
     "cancel": "Cancelar",
+    "dismiss": "Dispensar",
     "register": "Registrar",
     "save": "Salvar",
     "signin": "Entrar"
