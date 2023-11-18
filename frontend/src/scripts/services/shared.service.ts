@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -123,7 +123,7 @@ export class SharedService {
       .subscribe((text: string) => {
         const duration = customDuration ? customDuration : error ? 8000 : 5000;
         this.snackBar
-          .open(text, undefined, { duration })
+          .open(text, this.translateService.instant('button.dismiss').toUpperCase(), { duration })
           .afterDismissed()
           .subscribe(() => {
             if (queuedTranslationKey) this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
@@ -139,7 +139,7 @@ export class SharedService {
       minHeight: minHeight || undefined,
       disableClose: disableClose || false,
       data: options || null,
-      autoFocus: true,
+      autoFocus: false,
       panelClass: 'bottom-sheet-container',
     });
 
@@ -166,5 +166,10 @@ export class SharedService {
 
   handleTitle(title: string): void {
     this.titleService.setTitle(`${title} — Task Manager`);
+  }
+
+  handleLoading({ isLoading, changeDetector }: { isLoading: boolean; changeDetector: ChangeDetectorRef }): boolean {
+    changeDetector.markForCheck();
+    return isLoading;
   }
 }

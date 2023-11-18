@@ -42,7 +42,7 @@
       <div class="header__right">
         <div class="header__right-wrapper">
           <mat-icon>dark_mode</mat-icon>
-          <mat-slide-toggle [formControl]="toggleTheme" color="primary"></mat-slide-toggle>
+          <mat-slide-toggle [formControl]="toggleTheme" color="accent"></mat-slide-toggle>
         </div>
 
         <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
@@ -60,7 +60,7 @@
       </div>
     </mat-toolbar>
 
-    <div class="mat-app-background page-container" [@routerTransition]="{ value: getState(outlet), params: { size: isSidebarIsOpened && isDesktop ? sidebarSize : '0px' } }">
+    <div class="mat-app-background app-container" [@routerTransition]="{ value: getState(outlet), params: { size: isSidebarIsOpened && isDesktop ? sidebarSize : '0px' } }">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </mat-sidenav-content>

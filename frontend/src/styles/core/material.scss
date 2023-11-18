@@ -32,10 +32,6 @@ mat-form-field {
   }
 }
 
-mat-toolbar {
-  justify-content: space-between;
-}
-
 mat-row {
   cursor: pointer;
   padding: vw(12) 0;
@@ -79,6 +75,9 @@ mat-radio-button {
 .mat-toolbar {
   height: $header-size !important;
   min-height: $header-size !important;
+  justify-content: space-between;
+  z-index: 2;
+  position: relative;
 }
 
 .mat-toolbar-row {
@@ -274,10 +273,6 @@ mat-spinner svg {
 .mat-checkbox-inner-container {
   width: vw(15) !important;
   height: vw(15) !important;
-}
-
-.mat-menu-content {
-  padding: 8px 4px !important;
 }
 
 .mat-menu-item {

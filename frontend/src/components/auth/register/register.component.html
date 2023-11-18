@@ -31,12 +31,13 @@
 
           <mat-form-field class="full-width">
             <input type="password" formControlName="confirmPassword" matInput placeholder="{{ 'input.confirm-password' | translate }}" />
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('equalsTo')"> {{ "error.match" | translate }} </mat-error>
           </mat-form-field>
         </mat-card-content>
 
-        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!form.dirty || !form.valid" (click)="registerAsync()">
+        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!form.dirty || !form.valid || isLoading" (click)="registerAsync()">
           {{ "button.register" | translate }}
         </button>
       </form>

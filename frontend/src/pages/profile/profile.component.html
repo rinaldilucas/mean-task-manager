@@ -8,7 +8,7 @@
       <form [formGroup]="form" (keyup.enter)="saveAsync()">
         <mat-card-content>
           <mat-form-field class="full-width">
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
@@ -16,7 +16,7 @@
           </mat-form-field>
         </mat-card-content>
 
-        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!form.dirty || !form.valid" (click)="saveAsync()">
+        <button type="button" mat-raised-button color="primary" class="form__button" [disabled]="!form.dirty || !form.valid || isLoading" (click)="saveAsync()">
           {{ "button.save" | translate }}
         </button>
       </form>

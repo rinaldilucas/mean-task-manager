@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: vw(45);
+  margin-top: vw(65);
 
   @include media(">=desktop") {
     align-items: center;
@@ -22,9 +22,11 @@
   &__box {
     position: relative;
     width: vw(330);
+    @extend %backdrop;
 
     @include media(">=desktop") {
       width: vw(420);
+      margin-top: vw(-45);
     }
 
     mat-card {
@@ -43,23 +45,6 @@
 
       .dark-mode & {
         background-color: mat-contrast($app-background, 100) !important;
-      }
-    }
-
-    &::after {
-      position: absolute;
-      top: vw(-10);
-      left: 0;
-      transform: scale(0.95);
-      z-index: 0;
-      border-radius: vw(10);
-      background-color: mat-color($app-background, 50) !important;
-      width: 100%;
-      height: vw(30);
-      content: "";
-
-      .dark-mode & {
-        background-color: mat-contrast($app-background, 50) !important;
       }
     }
   }

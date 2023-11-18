@@ -51,8 +51,7 @@ export class SettingsComponent implements OnInit {
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
 
     this.categories = result.data;
-    this.isLoading = false;
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async saveCategoryAsync(event: MatChipInputEvent): Promise<void> {
@@ -73,7 +72,7 @@ export class SettingsComponent implements OnInit {
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0]);
-    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
   }
 
   async removeCategoryAsync(category: ICategory): Promise<void> {

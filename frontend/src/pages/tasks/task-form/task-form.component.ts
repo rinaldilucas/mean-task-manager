@@ -104,7 +104,7 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     private router: Router,
     private sharedService: SharedService,
     private translate: TranslateService,
-    private cdRef: ChangeDetectorRef,
+    private changeDetector: ChangeDetectorRef,
     @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask; categories: ICategory[] },
   ) {
     super();
@@ -128,16 +128,15 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
 
   async saveAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
-    this.isLoading = true;
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
     if (!result || !result.success || error) {
-      this.isLoading = false;
-      this.cdRef.markForCheck();
-      return this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
+      this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+      this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
     }
 
     this.taskService.onTaskChange.emit();

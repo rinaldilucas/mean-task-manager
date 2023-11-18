@@ -84,8 +84,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
   async refreshAsync({ showLoading = false }: { showLoading?: boolean } = {}): Promise<void> {
     if (showLoading) {
-      this.isLoading = true;
-      this.changeDetector.detectChanges();
+      this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
     }
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize })));
@@ -94,13 +93,12 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.tasks = result.data;
     this.pageCount = result.totalCount;
     this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
-    this.isLoading = false;
-    this.changeDetector.markForCheck();
+
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async changeStatusAsync(task: ITask, status: EStatus): Promise<void> {
-    this.isLoading = true;
-    this.changeDetector.detectChanges();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     task.status = status;
 
@@ -109,21 +107,23 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     this.sharedService.handleSnackbars({ translationKey: 'task-list.status-change' });
     this.taskService.onTaskChange.emit();
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async removeAsync(task: ITask): Promise<void> {
-    this.isLoading = true;
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+
     const [, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
     if (error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-error', error: true });
 
     this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-success' });
     this.taskService.onTaskChange.emit();
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async onPaginateChangeAsync(event: PageEvent): Promise<void> {
-    this.isLoading = true;
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+
     const pageIndex = event.pageIndex;
     const searchTerm = this.search.value ?? null;
     this.pageSize = event.pageSize;
@@ -136,12 +136,11 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.tasks = result.data;
     this.pageCount = result.totalCount;
     this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
-    this.isLoading = false;
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async sortDataAsync(event: Sort): Promise<void> {
-    this.isLoading = true;
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
     const searchTerm = this.search.value ?? null;
     this.columnFilter = event.active;
     this.columnDirection = event.direction;
@@ -155,17 +154,17 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.tasks = result.data;
     this.pageCount = result.totalCount;
     this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
-    this.isLoading = false;
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async filterTasksAsync(text: string): Promise<void> {
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+
     if (text === '') {
       this.search.setValue('');
       this.isSearching = false;
       this.refreshAsync();
     } else if (text.length > 2) {
-      this.isLoading = true;
       this.isSearching = true;
       const searchTerm = text.trim().toLowerCase();
 
@@ -178,8 +177,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.tasks = result.data;
       this.pageCount = result.totalCount;
       this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
-      this.isLoading = false;
-      this.changeDetector.markForCheck();
+      this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
     }
   }
 

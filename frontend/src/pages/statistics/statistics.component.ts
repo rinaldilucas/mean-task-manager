@@ -35,8 +35,7 @@ export class StatisticsComponent implements OnInit {
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
     this.tasks = result.data;
-    this.isLoading = false;
-    this.changeDetector.markForCheck();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   updateTitle(): void {

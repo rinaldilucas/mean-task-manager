@@ -2,14 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: calc(100vh - 0.6rem);
+  overflow: hidden;
 
   @include media(">=desktop") {
-    margin: 0 !important;
-  }
-
-  @include media(">=common-desktop") {
-    margin: vw(35) 0 0 !important;
+    margin: vw(60) vw(40) 0;
+    height: calc(100vh - 0.6rem - 0.8rem);
   }
 
   &__wrapper {
@@ -17,27 +15,15 @@
     width: 100%;
     max-width: vw(1000);
     height: 100%;
+  }
+
+  &__content {
+    height: 100%;
+    position: relative;
+    @extend %backdrop;
 
     @include media(">=desktop") {
-      margin: vw(40);
-      height: unset;
-    }
-
-    &::before {
-      position: absolute;
-      top: vw(-10);
-      left: 0;
-      transform: scale(0.95);
-      z-index: 0;
-      border-radius: vw(10);
-      background-color: mat-color($app-background, 50) !important;
-      width: 100%;
-      height: vw(30);
-      content: "";
-
-      .dark-mode & {
-        background-color: mat-contrast($app-background, 50) !important;
-      }
+      max-height: vw(640);
     }
   }
 
@@ -51,7 +37,6 @@
       right: vw(30);
       bottom: vw(30);
       left: unset;
-      margin-left: auto;
     }
   }
 
@@ -60,29 +45,39 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    z-index: 2;
+    justify-content: center;
+    z-index: 1;
     margin: 0 0 vw(2);
-    margin-left: 0;
-    box-shadow: 0 vw(2) vw(5) rgba(0, 0, 0, 0.15);
     background-color: mat-color($app-background, 100);
-    padding: vw(35) 0 vw(20);
-    height: vw(80);
+    padding: vw(30) 0 vw(10);
+    height: vw(150);
     font-size: vw(22);
+    box-sizing: border-box;
+    margin-top: 0;
+
+    @include media(">=desktop") {
+      box-sizing: unset;
+      height: vw(80);
+      margin-top: vw(20);
+    }
 
     &--empty {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: vw(20) 0 vw(20);
-      height: vw(55);
+      height: vw(120);
     }
 
     @include media(">=desktop") {
       flex-direction: row;
       justify-content: unset;
       padding: vw(15) 0;
-      height: vw(76);
+      height: vw(110);
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      padding: vw(35) 0 vw(20);
     }
 
     .dark-mode & {
@@ -93,11 +88,9 @@
       display: flex;
       align-items: center;
       font-size: vw(34);
-      justify-self: center;
 
       @include media(">=desktop") {
-        flex: 1 1 0%;
-        margin: vw(20) 0 0 vw(48);
+        margin-left: vw(55);
       }
     }
 
@@ -106,7 +99,6 @@
       flex: 0 0 auto;
       flex-direction: row;
       align-items: center;
-      margin-bottom: vw(8);
       padding: 0 vw(10) 0 vw(20);
       padding-right: vw(20);
       width: 90%;
@@ -114,7 +106,6 @@
       place-content: center flex-end;
 
       @include media(">=desktop") {
-        margin-top: unset;
         margin-right: vw(20);
         width: unset;
       }
@@ -135,37 +126,18 @@
 
   &__body {
     background-color: mat-color($app-background, 100);
+    height: calc(100% - 1.35rem - 0.75rem);
 
     @include media(">=desktop") {
-      height: vw(387);
-    }
-
-    @include media(">=common-desktop") {
-      height: vw(560);
-    }
-
-    @include media("<=desktop") {
-      height: calc(100vh - 1.95rem);
+      height: calc(100% - 1.1rem - 2px);
     }
 
     &--empty {
-      height: calc(100% - 0.95rem);
-
-      @include media(">=desktop") {
-        height: calc(3.87rem);
-      }
-
-      @include media(">=common-desktop") {
-        height: calc(5rem + 0.6rem);
-      }
+      height: calc(100% - 1.2rem - 2px);
     }
 
     &--placeholder {
       height: 85%;
-
-      @include media(">=common-desktop") {
-        height: calc(5rem);
-      }
     }
 
     .dark-mode & {
@@ -185,19 +157,15 @@
       height: 100%;
 
       @include media(">=desktop") {
-        height: vw(327);
-      }
-
-      @include media(">=common-desktop") {
-        height: vw(497);
+        height: calc(100% - 0.6rem);
       }
 
       table {
         width: 100%;
+        padding: 0 vw(15);
 
-        @include media("<=desktop") {
-          padding-right: vw(15);
-          padding-left: vw(15);
+        @include media(">=desktop") {
+          padding: 0;
         }
       }
     }

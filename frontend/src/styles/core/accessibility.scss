@@ -1,11 +1,10 @@
 a,
 button {
   &:focus {
-    outline: vw(4) dashed mat-color($primary, A100) !important;
-    box-sizing: border-box;
+    box-shadow: 0 0 0 vw(4) mat-color($primary, A100);
 
     &.contrast {
-      outline: vw(4) dashed mat-color($primary, A100) !important;
+      box-shadow: 0 0 0 vw(4) mat-color($primary, A100);
     }
   }
 }

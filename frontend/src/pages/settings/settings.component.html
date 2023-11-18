@@ -1,43 +1,41 @@
-<div class="page-container">
-  <div class="page">
-    <app-loading *ngIf="isLoading" class="full-width loader-container-height centered"></app-loading>
-    <div *ngIf="!isLoading" class="page__wrapper">
-      <div class="page__content mat-elevation-z1">
-        <div class="page__content-wrapper">
-          <form [formGroup]="form">
-            <section>
-              <h2>{{ "settings.language" | translate }}</h2>
-              <mat-radio-group formControlName="languageOptions">
-                <mat-radio-button (click)="changeLanguage('en-US')" value="1">{{ "settings.english" | translate }}</mat-radio-button>
-                <mat-radio-button (click)="changeLanguage('pt-BR')" value="2">{{ "settings.portuguese" | translate }}</mat-radio-button>
-              </mat-radio-group>
-            </section>
-            <section>
-              <h2>{{ "title.categories" | translate }}</h2>
+<div class="page">
+  <app-loading *ngIf="isLoading" class="full-width loader-container-height centered"></app-loading>
+  <div *ngIf="!isLoading" class="page__wrapper">
+    <div class="page__content mat-elevation-z1">
+      <div class="page__content-wrapper">
+        <form [formGroup]="form">
+          <section>
+            <h2>{{ "settings.language" | translate }}</h2>
+            <mat-radio-group formControlName="languageOptions">
+              <mat-radio-button (click)="changeLanguage('en-US')" value="1">{{ "settings.english" | translate }}</mat-radio-button>
+              <mat-radio-button (click)="changeLanguage('pt-BR')" value="2">{{ "settings.portuguese" | translate }}</mat-radio-button>
+            </mat-radio-group>
+          </section>
+          <section>
+            <h2>{{ "title.categories" | translate }}</h2>
 
-              <mat-form-field class="full-width" appearance="fill">
-                <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>{{ "settings.categories-names" | translate }}</mat-label>
 
-                <mat-chip-list #chipList attr.aria-label="{{ 'settings.category-selection' | translate }}">
-                  <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
-                    {{ category.title }}
-                    <button type="button" matChipRemove>
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  </mat-chip>
-                  <input
-                    placeholder="{{ 'settings.category-label' | translate }}"
-                    #categoryInput
-                    [formControl]="categoryControl"
-                    [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="saveCategoryAsync($event)"
-                  />
-                </mat-chip-list>
-              </mat-form-field>
-            </section>
-          </form>
-        </div>
+              <mat-chip-list #chipList attr.aria-label="{{ 'settings.category-selection' | translate }}">
+                <mat-chip *ngFor="let category of categories" (removed)="removeCategoryAsync(category)">
+                  {{ category.title }}
+                  <button type="button" matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+                <input
+                  placeholder="{{ 'settings.category-label' | translate }}"
+                  #categoryInput
+                  [formControl]="categoryControl"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="saveCategoryAsync($event)"
+                />
+              </mat-chip-list>
+            </mat-form-field>
+          </section>
+        </form>
       </div>
     </div>
   </div>

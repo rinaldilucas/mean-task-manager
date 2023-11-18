@@ -18,7 +18,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
 export class ProfileComponent implements OnInit {
   form: FormGroup;
   isSaving = false;
-  isLoading = true;
+  isLoading = false;
   user!: IUser;
   showPassword = false;
 

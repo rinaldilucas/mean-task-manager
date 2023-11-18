@@ -1,26 +1,14 @@
 .chart {
   position: relative;
-  margin: vw(20) 0;
+  margin-bottom: vw(40);
+  @extend %backdrop;
 
   @include media(">=desktop") {
-    margin: vw(20);
+    margin: 0 vw(20) !important;
   }
 
-  &::after {
-    position: absolute;
-    top: vw(-10);
-    left: 0;
-    transform: scale(0.95);
-    z-index: 0;
-    border-radius: vw(10);
-    background-color: mat-color($app-background, 50) !important;
-    width: 100%;
-    height: vw(30);
-    content: "";
-
-    .dark-mode & {
-      background-color: mat-contrast($app-background, 50) !important;
-    }
+  &--no-margin {
+    margin: 0;
   }
 
   mat-card {
