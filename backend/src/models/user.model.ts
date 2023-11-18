@@ -1,4 +1,4 @@
-import { UserInterface as Interface } from '@api/shared/interfaces/User.interface';
+import { UserInterface as Interface } from '@api/shared/interfaces/user.interface';
 import { Model, Schema, model } from 'mongoose';
 
 const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
