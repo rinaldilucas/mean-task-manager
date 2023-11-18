@@ -27,16 +27,11 @@ routes.post(
   Controller.register,
 );
 
-// get by email
-routes.get('/api/auth/email-exists/:email', Controller.checkIfEmailExists);
+// verify if email is already registered
+routes.get('/api/auth/emailExists/:email', Controller.checkIfEmailExists);
 
 // change password
-routes.put(
-  '/api/auth/changePassword',
-  check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
-  verifyValidations,
-  Controller.changePassword,
-);
+routes.put('/api/auth/changePassword', check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(), verifyValidations, Controller.changePassword);
 
 // refresh token
 routes.post('/api/auth/refresh', refreshMiddleware, Controller.refreshToken);

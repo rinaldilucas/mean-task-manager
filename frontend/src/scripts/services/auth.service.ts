@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
-    const url = `${this.url}/email-exists/${email}`;
+    const url = `${this.url}/emailExists/${email}`;
 
     return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
