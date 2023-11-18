@@ -5,6 +5,6 @@ export interface TaskInterface {
   description?: string;
   date?: Date;
   status: EStatus;
-  category?: string
-  userId: string
+  category?: string;
+  userId: string;
 }

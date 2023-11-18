@@ -705,17 +705,7 @@
         "categoryId": "{% response 'body', 'req_59ba3f1f578f43dab21a0e05c4e64e9d', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', no-history, 60 %}"
       },
       "dataPropertyOrder": {
-        "&": [
-          "baseUrl",
-          "userId",
-          "email",
-          "password",
-          "role",
-          "token",
-          "refresh",
-          "taskId",
-          "categoryId"
-        ]
+        "&": ["baseUrl", "userId", "email", "password", "role", "token", "refresh", "taskId", "categoryId"]
       },
       "color": null,
       "isPrivate": false,

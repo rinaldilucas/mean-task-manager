@@ -228,9 +228,7 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 [PUT] localhost:3000/api/auth/changePassword -> 'changePassword'
 [POST] localhost:3000/api/auth/refresh -> 'refreshToken'
 [POST] localhost:3000/api/auth/logout -> 'logout'
-```
 
-```js
 -------------------------------
 -------- [TASK ROUTES] --------
 -------------------------------
@@ -239,9 +237,7 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 [POST] localhost:3000/api/tasks -> 'create'
 [PUT] localhost:3000/api/tasks/{id} -> 'update'
 [DELETE] localhost:3000/api/tasks/{id}-> 'remove'
-```
 
-```js
 -------------------------------
 ------ [CATEGORY ROUTES] ------
 -------------------------------

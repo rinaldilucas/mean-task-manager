@@ -6,7 +6,9 @@ import redis from '@api/utils/redis.handler';
 
 const existsAsync = promisify(redis.exists).bind(redis);
 const setAsync = promisify(redis.set).bind(redis);
-const generateTokenHash = (token: any): any => { return createHash('sha256').update(token).digest('hex'); };
+const generateTokenHash = (token: any): any => {
+  return createHash('sha256').update(token).digest('hex');
+};
 
 export const add = async (token): Promise<any> => {
   if (token) {

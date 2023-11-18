@@ -12,19 +12,17 @@ class CategoryController {
     const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
 
     const countQuery = (callback): any => {
-      Model.find({ userId })
-        .countDocuments({}, (error, count) => {
-          if (error) callback(error, null);
-          else callback(null, count);
-        });
+      Model.find({ userId }).countDocuments({}, (error, count) => {
+        if (error) callback(error, null);
+        else callback(null, count);
+      });
     };
 
     const retrieveQuery = (callback): any => {
-      Model.find({ userId })
-        .exec((error, documents) => {
-          if (error) callback(error, null);
-          else callback(null, documents);
-        });
+      Model.find({ userId }).exec((error, documents) => {
+        if (error) callback(error, null);
+        else callback(null, documents);
+      });
     };
 
     Async.parallel([countQuery, retrieveQuery], (error: any, results: any) => {

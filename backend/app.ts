@@ -80,9 +80,11 @@ app.listen(process.env.SERVER_PORT, () => {
 
 // 404 Handler
 app.use((_request: Request, _response: Response, next: NextFunction) => {
-  next(createError(404, "This route don't exist.", {
-    expose: false,
-  }));
+  next(
+    createError(404, "This route don't exist.", {
+      expose: false,
+    }),
+  );
 });
 
 // Error handler
@@ -92,4 +94,3 @@ app.use((error, _request: Request, response: Response) => {
 
   response.status(error.statusCode).send((error as any).message);
 });
-

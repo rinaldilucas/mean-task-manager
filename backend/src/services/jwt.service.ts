@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { add as addToBlacklist } from '@api/services/redis.service';
 
 class JwtService {
-  generate(email, userId, role): { access: string, refresh: string } {
+  generate(email, userId, role): { access: string; refresh: string } {
     const access = jwt.sign(
       {
         email,
@@ -39,7 +39,7 @@ class JwtService {
     return { access, refresh };
   }
 
-  async refreshJwt({ email, userId, role, token }): Promise<{ access: string, refresh: string }> {
+  async refreshJwt({ email, userId, role, token }): Promise<{ access: string; refresh: string }> {
     await addToBlacklist(token);
     return this.generate(email, userId, role);
   }

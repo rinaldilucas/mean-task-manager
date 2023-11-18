@@ -45,12 +45,7 @@
     "schemas": {
       "AuthData": {
         "type": "object",
-        "required": [
-          "access",
-          "expiresIn",
-          "refresh",
-          "userId"
-        ],
+        "required": ["access", "expiresIn", "refresh", "userId"],
         "properties": {
           "access": {
             "type": "string"
@@ -71,18 +66,11 @@
       },
       "User": {
         "type": "object",
-        "required": [
-          "email",
-          "password",
-          "role"
-        ],
+        "required": ["email", "password", "role"],
         "properties": {
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "user"
-            ]
+            "enum": ["admin", "user"]
           },
           "email": {
             "type": "string",
@@ -110,19 +98,11 @@
       },
       "Task": {
         "type": "object",
-        "required": [
-          "title",
-          "status",
-          "userId"
-        ],
+        "required": ["title", "status", "userId"],
         "properties": {
           "status": {
             "type": "string",
-            "enum": [
-              "toDo",
-              "inProgress",
-              "done"
-            ]
+            "enum": ["toDo", "inProgress", "done"]
           },
           "title": {
             "type": "string",
@@ -158,10 +138,7 @@
       },
       "Category": {
         "type": "object",
-        "required": [
-          "name",
-          "userId"
-        ],
+        "required": ["name", "userId"],
         "properties": {
           "title": {
             "type": "string",
@@ -184,11 +161,7 @@
       },
       "Error": {
         "type": "object",
-        "required": [
-          "success",
-          "status",
-          "message"
-        ],
+        "required": ["success", "status", "message"],
         "properties": {
           "success": {
             "type": "boolean",
@@ -220,9 +193,7 @@
   "paths": {
     "/auth/authenticate": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Authenticate the user",
         "description": "Authenticates the user and retrieve a JWT token",
         "operationId": "authenticate",
@@ -300,9 +271,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register a new user",
         "description": "Register a brand new user",
         "operationId": "register",
@@ -328,10 +297,7 @@
                   },
                   "role": {
                     "type": "string",
-                    "enum": [
-                      "admin",
-                      "user"
-                    ],
+                    "enum": ["admin", "user"],
                     "example": "user"
                   }
                 }
@@ -394,9 +360,7 @@
     },
     "/auth/emailExists/{email}": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Verify if user is registered",
         "description": "Returns a boolean if the user is already registered",
         "operationId": "getUserByEmail",
@@ -464,9 +428,7 @@
     },
     "/auth/changePassword": {
       "put": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Change the password",
         "description": "Change the password of the user generating hash",
         "operationId": "changePassword",
@@ -541,9 +503,7 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Generate refresh token",
         "description": "Generate a refresh token to user",
         "operationId": "refreshToken",
@@ -567,10 +527,7 @@
                   },
                   "role": {
                     "type": "string",
-                    "enum": [
-                      "admin",
-                      "user"
-                    ]
+                    "enum": ["admin", "user"]
                   },
                   "expirationDate": {
                     "type": "string",
@@ -602,12 +559,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "access",
-                        "expiresIn",
-                        "refresh",
-                        "userId"
-                      ],
+                      "required": ["access", "expiresIn", "refresh", "userId"],
                       "properties": {
                         "access": {
                           "type": "string"
@@ -652,9 +604,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Sign out user",
         "description": "Sign out user and invalidate token",
         "operationId": "logout",
@@ -700,9 +650,7 @@
     },
     "/tasks": {
       "get": {
-        "tags": [
-          "Task"
-        ],
+        "tags": ["Task"],
         "summary": "Returns all tasks",
         "description": "Returns all tasks which the user has access to",
         "operationId": "getTasks",
@@ -823,9 +771,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Task"
-        ],
+        "tags": ["Task"],
         "summary": "Creates a new task",
         "description": "Creates a new task for the current user. Duplicates are allowed",
         "operationId": "createTask",
@@ -888,9 +834,7 @@
         ]
       },
       "put": {
-        "tags": [
-          "Task"
-        ],
+        "tags": ["Task"],
         "summary": "Updates a task",
         "description": "Updates a task based on the body of requisition",
         "operationId": "updateTask",
@@ -965,9 +909,7 @@
     },
     "/tasks/{id}": {
       "get": {
-        "tags": [
-          "Task"
-        ],
+        "tags": ["Task"],
         "summary": "Returns a task",
         "description": "Returns a task based on a single ID",
         "operationId": "getTaskById",
@@ -1040,9 +982,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Task"
-        ],
+        "tags": ["Task"],
         "summary": "Removes a task",
         "description": "Removes a single task based on the ID supplied",
         "operationId": "removeTask",
@@ -1091,9 +1031,7 @@
     },
     "/categories": {
       "get": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "summary": "Returns all categories",
         "description": "Returns all categories which the user has access to",
         "operationId": "getCategories",
@@ -1145,9 +1083,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "summary": "Creates a new category",
         "description": "Creates a new category for the current user. Duplicates are allowed",
         "operationId": "createCategory",
@@ -1212,9 +1148,7 @@
     },
     "/categories/{id}": {
       "delete": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "summary": "Removes a category",
         "description": "Removes a single category based on the ID supplied",
         "operationId": "removeCategory",

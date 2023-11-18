@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import ExpressBrute from 'express-brute';
 import StatusCode from 'status-code-enum';

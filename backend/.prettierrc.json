@@ -6,28 +6,13 @@
   "htmlWhitespaceSensitivity": "css",
   "insertPragma": false,
   "jsxBracketSameLine": false,
-  "printWidth": 180,
+  "printWidth": 250,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "requirePragma": false,
   "semi": true,
-  "singleQuote": false,
+  "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
-  "useTabs": false,
-  "overrides": [
-    {
-      "files": "*.json",
-      "options": {
-        "printWidth": 200
-      }
-    },
-    {
-      "files": "*.ts",
-      "options": {
-        "printWidth": 250,
-        "singleQuote": true
-      }
-    }
-  ]
+  "useTabs": false
 }

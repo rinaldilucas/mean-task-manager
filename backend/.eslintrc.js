@@ -11,12 +11,12 @@ module.exports = {
       files: ['*.ts'],
       parserOptions: {
         tsconfigRootDir: __dirname,
-        sourceType: "module",
+        sourceType: 'module',
         createDefaultProgram: true,
         project: ['./tsconfig.json'],
       },
       rules: {
-        "newline-after-var": OFF,
+        'newline-after-var': OFF,
         '@typescript-eslint/explicit-function-return-type': ERROR,
         '@typescript-eslint/lines-between-class-members': OFF,
         '@typescript-eslint/no-explicit-any': OFF,
@@ -38,7 +38,7 @@ module.exports = {
         'prefer-rest-params': OFF,
         'prefer-spread': OFF,
         semi: [ERROR, 'always'],
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
