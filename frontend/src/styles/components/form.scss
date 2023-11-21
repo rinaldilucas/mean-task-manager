@@ -9,6 +9,7 @@
     justify-content: center;
     margin-top: 0;
     height: calc(100vh - #{$header-size});
+    height: calc(100dvh - #{$header-size});
   }
 
   mat-card-header {

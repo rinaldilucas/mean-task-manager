@@ -73,6 +73,7 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   height: calc(100vh - #{$header-size});
+  height: calc(100dvh - #{$header-size});
 
   @include media(">=desktop") {
     height: unset;

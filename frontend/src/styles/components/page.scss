@@ -6,6 +6,7 @@
   align-items: center;
   margin: vw(65) 0 0 0;
   height: calc(100vh - 0.6rem - 0.8rem);
+  height: calc(100dvh - 0.6rem - 0.8rem);
 
   @include media(">=desktop") {
     margin: vw(80) vw(40) 0;
