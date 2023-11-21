@@ -22,7 +22,7 @@
     <br />
     <a href="https://rinaldilucas.github.io/angular14-task-crud-mean/">View App*</a>
     ·
-    <a href="https://meanstack-api.onrender.com/api-docs">API Docs*</a>
+    <a href="https://angular14mean-api.onrender.com/api-docs">API Docs*</a>
     ·
     <a href="#donations">Donate</a>       
   </p>

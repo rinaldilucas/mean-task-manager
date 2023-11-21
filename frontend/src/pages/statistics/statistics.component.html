@@ -7,10 +7,12 @@
       <app-tasks-done *ngIf="tasks && tasks.length > 0" [tasks]="tasks"></app-tasks-done>
     </div>
     <div *ngIf="tasks.length === 0" class="page__content page__content--empty flex-centered flex-centered--column">
-      <div>
-        <mat-icon class="icon icon--big">sms</mat-icon>
+      <div class="empty-block">
+        <div>
+          <mat-icon class="icon icon--big">sms</mat-icon>
+        </div>
+        <p>{{ "statistics.no-data" | translate }}</p>
       </div>
-      <div>{{ "statistics.no-data" | translate }}</div>
     </div>
   </div>
 </div>

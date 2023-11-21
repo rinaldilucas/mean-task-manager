@@ -23,7 +23,7 @@
       "description": "Local server"
     },
     {
-      "url": "https://meanstack-api.onrender.com/api",
+      "url": "https://angular14mean-api.onrender.com/api",
       "description": "Production server"
     }
   ],

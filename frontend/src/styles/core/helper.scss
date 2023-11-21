@@ -121,6 +121,21 @@
   }
 }
 
+.empty-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-size: vw(14) !important;
+
+    @include media(">=desktop") {
+      margin-top: vw(8);
+    }
+  }
+}
+
 %backdrop::after {
   position: absolute;
   top: vw(-10);

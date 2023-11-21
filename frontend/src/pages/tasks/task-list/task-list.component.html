@@ -17,17 +17,21 @@
         <app-loading *ngIf="isLoading" class="loader-container-height centered"></app-loading>
 
         <div *ngIf="!isLoading && tasks?.length === 0" class="list__body--placeholder flex-centered flex-centered--column">
-          <div>
-            <mat-icon class="icon icon--big">sms</mat-icon>
+          <div class="empty-block">
+            <div>
+              <mat-icon class="icon icon--big">sms</mat-icon>
+            </div>
+            <p>{{ "task-list.empty" | translate }}</p>
           </div>
-          <div>{{ "task-list.empty" | translate }}</div>
         </div>
 
         <div *ngIf="!isLoading && searchedTasks && searchedTasks.length > 0" class="list__body--empty flex-centered flex-centered--column">
-          <div>
-            <mat-icon class="icon icon--big">sms</mat-icon>
+          <div class="empty-block">
+            <div>
+              <mat-icon class="icon icon--big">sms</mat-icon>
+            </div>
+            <p>{{ "task-list.empty-search" | translate }}</p>
           </div>
-          <div>{{ "task-list.empty-search" | translate }}</div>
         </div>
 
         <div [hidden]="isLoading || !tasks.length || searchedTasks.length > 0" class="table">

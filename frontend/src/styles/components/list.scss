@@ -7,7 +7,7 @@
 
   @include media(">=desktop") {
     margin: vw(60) vw(40) 0;
-    height: calc(100vh - 0.6rem - 0.8rem);
+    height: calc(100vh - 0.6rem - 0.6rem);
   }
 
   &__wrapper {
@@ -23,6 +23,7 @@
     @extend %backdrop;
 
     @include media(">=desktop") {
+      margin-top: vw(20);
       max-height: vw(640);
     }
   }
