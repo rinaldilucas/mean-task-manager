@@ -147,9 +147,7 @@ export class AuthService {
       this.decodeJwtToken(this.accessToken);
       this.isAuthenticated = true;
       this.onMenuChange.emit(true);
-      setTimeout(() => {
-        this.onSidebarChange.emit(true);
-      }, 750);
+      setTimeout(() => this.onSidebarChange.emit(true), 750);
       return true;
     }
 
@@ -192,7 +190,8 @@ export class AuthService {
 
   private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
     const jwtToken = jwtPayload;
-    const timeout = jwtToken.expiresIn * 1000;
+    const marginMinutes = 5 * 1000;
+    const timeout = jwtToken.expiresIn * 1000 - marginMinutes;
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
