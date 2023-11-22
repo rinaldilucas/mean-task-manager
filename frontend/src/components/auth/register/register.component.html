@@ -17,8 +17,8 @@
           </mat-form-field>
 
           <mat-form-field class="full-width">
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
-            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'password')">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('minlength')"> {{ "error.min-length" | translate: { value: 8 } }} </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
@@ -30,8 +30,14 @@
           </mat-form-field>
 
           <mat-form-field class="full-width">
-            <input type="password" formControlName="confirmPassword" matInput placeholder="{{ 'input.confirm-password' | translate }}" />
-            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              matInput
+              placeholder="{{ 'input.confirm-password' | translate }}"
+              autocompleteOff
+            />
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'confirmPassword')">{{ showConfirmPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('equalsTo')"> {{ "error.match" | translate }} </mat-error>
           </mat-form-field>

@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   showPassword = false;
+  showConfirmPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -59,8 +60,16 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  togglePasswordVisibility(event: MouseEvent): void {
+  togglePasswordVisibility(event: MouseEvent, method: string): void {
     event.stopPropagation();
-    this.showPassword = !this.showPassword;
+
+    switch (method) {
+      case 'password':
+        this.showPassword = !this.showPassword;
+        break;
+      case 'confirmPassword':
+        this.showConfirmPassword = !this.showConfirmPassword;
+        break;
+    }
   }
 }
