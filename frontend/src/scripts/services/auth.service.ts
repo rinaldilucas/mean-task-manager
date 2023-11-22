@@ -1,24 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, lastValueFrom } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 
 import { IAuthData } from '@app/scripts/models/auth-data.interface';
 import { ERole } from '@app/scripts/models/enums/role.enum';
 import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IJwtToken } from '@app/scripts/models/jwt-token.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
-import { IUser } from '@app/scripts/models/user.interface';
 import { CookiesService } from '@app/scripts/services/cookies.service';
 import { SharedService } from '@app/scripts/services/shared.service';
-import { environment } from '@root/environments/environment';
+import { UserService } from '@app/scripts/services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly url = environment.baseUri + '/auth';
   onMenuChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   onSidebarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -26,17 +21,17 @@ export class AuthService {
   private refreshToken!: string;
   private decodedToken!: IJwtToken;
   private loggedUser!: IAuthData;
-  private refreshTokenTimeout;
+  private refreshTokenTimeout!: NodeJS.Timeout;
   private isAuthenticated = false;
   private keepUserLoggedIn = false;
 
   protected sharedService = this.injector.get(SharedService);
   protected cookiesService = this.injector.get(CookiesService);
+  protected usersService = this.injector.get(UserService);
 
   constructor(
     private injector: Injector,
     private router: Router,
-    private http: HttpClient,
   ) {}
 
   getKeepUserLoggedIn(): boolean {
@@ -65,49 +60,6 @@ export class AuthService {
 
   getLoggedUser(): IAuthData {
     return this.loggedUser;
-  }
-
-  authenticate(email: string, password: string, keepUserLoggedIn: boolean): Promise<IQueryResult<IJwtPayload>> {
-    const credentials = { email, password, keepUserLoggedIn };
-    const url = `${this.url}/authenticate`;
-
-    return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)));
-  }
-
-  register(user: IUser): Promise<IQueryResult<IUser>> {
-    const url = `${this.url}/register`;
-
-    return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
-  }
-
-  checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
-    const url = `${this.url}/emailExists/${email}`;
-
-    return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
-  }
-
-  changePassword(userId: string, password: string): Promise<IQueryResult<IUser>> {
-    const url = `${this.url}/changePassword`;
-    const body = { _id: userId, password };
-
-    return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
-  }
-
-  generateRefreshToken(): Promise<IQueryResult<IJwtPayload>> {
-    const url = `${this.url}/refresh`;
-
-    return lastValueFrom(
-      this.http
-        .post<IQueryResult<IJwtPayload>>(url, { ...this.loggedUser, refresh: this.getRefreshToken() })
-        .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authenticateToken(response.data[0])))
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
-  }
-
-  logout(token: string): Promise<IQueryResult<IUser>> {
-    const url = `${this.url}/logout`;
-
-    return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   authenticateToken(result: IJwtPayload): boolean {
@@ -173,21 +125,6 @@ export class AuthService {
     };
   }
 
-  private saveAuthData(access: string, refresh: string, expirationDate: Date, userId: string, keepUserLogged: boolean): void {
-    this.cookiesService.setItem('access', access);
-    this.cookiesService.setItem('refresh', refresh);
-    this.cookiesService.setItem('expiration', expirationDate.toISOString());
-    this.cookiesService.setItem('userId', userId);
-    this.cookiesService.setItem('keepUserLogged', String(keepUserLogged));
-  }
-
-  private clearAuthData(): void {
-    this.cookiesService.removeItem('access');
-    this.cookiesService.removeItem('refresh');
-    this.cookiesService.removeItem('expiration');
-    this.cookiesService.removeItem('userId');
-  }
-
   private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
     const jwtToken = jwtPayload;
     const marginMinutes = 5 * 1000;
@@ -195,7 +132,7 @@ export class AuthService {
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.generateRefreshToken());
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.usersService.generateRefreshToken());
 
         if (!result || !result.success || error) {
           this.logoutAsync();
@@ -222,7 +159,7 @@ export class AuthService {
   }
 
   async logoutAsync(): Promise<void> {
-    await this.sharedService.handlePromises(this.logout(this.getAccessToken()));
+    await this.sharedService.handlePromises(this.usersService.logout(this.getAccessToken()));
     this.stopRefreshTokenTimer();
     this.accessToken = '';
     this.isAuthenticated = false;
@@ -231,5 +168,20 @@ export class AuthService {
     this.router.navigate(['']);
     this.onMenuChange.emit(false);
     this.onSidebarChange.emit(false);
+  }
+
+  private saveAuthData(access: string, refresh: string, expirationDate: Date, userId: string, keepUserLogged: boolean): void {
+    this.cookiesService.setItem('access', access);
+    this.cookiesService.setItem('refresh', refresh);
+    this.cookiesService.setItem('expiration', expirationDate.toISOString());
+    this.cookiesService.setItem('userId', userId);
+    this.cookiesService.setItem('keepUserLogged', String(keepUserLogged));
+  }
+
+  private clearAuthData(): void {
+    this.cookiesService.removeItem('access');
+    this.cookiesService.removeItem('refresh');
+    this.cookiesService.removeItem('expiration');
+    this.cookiesService.removeItem('userId');
   }
 }

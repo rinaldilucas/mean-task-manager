@@ -15,7 +15,7 @@ export class CrudService<T> {
 
   constructor(
     protected http: HttpClient,
-    private injector: Injector,
+    protected injector: Injector,
     private endpoint: string,
   ) {}
 

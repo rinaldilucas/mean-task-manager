@@ -1,13 +1,42 @@
+import Async from 'async';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { User as Model } from '@api/models/user.model';
 import jwtService from '@api/services/jwt.service';
-import { add as addToBlacklist } from '@api/services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
-class AuthController {
+class UserController {
+  async getAll(request: Request, response: Response): Promise<Response | any> {
+    const language = request.headers.language;
+    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
+
+    const countQuery = (callback): any => {
+      Model.find({ userId }).countDocuments({}, (error, count) => {
+        if (error) callback(error, null);
+        else callback(null, count);
+      });
+    };
+
+    const retrieveQuery = (callback): any => {
+      Model.find({ userId }).exec((error, documents) => {
+        if (error) callback(error, null);
+        else callback(null, documents);
+      });
+    };
+
+    Async.parallel([countQuery, retrieveQuery], (error: any, results: any) => {
+      if (error) {
+        if (language === 'en-US') return responseError(response, error, StatusCode.ServerErrorInternal, `Error finding users. Error: ${error.message}. Document name: {${Model.modelName}}.`);
+        else return responseError(response, error, StatusCode.ServerErrorInternal, `Erro ao buscar usuários. Erro: ${error.message}. Nome do documento: {${Model.modelName}}.`);
+      }
+
+      return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
+    });
+  }
+
   async authenticate(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
@@ -38,7 +67,7 @@ class AuthController {
     return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
   }
 
-  async register(request: Request, response: Response): Promise<Response | undefined> {
+  async create(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
     const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_ROUNDS) || 12));
@@ -67,12 +96,44 @@ class AuthController {
     return responseSuccess(response, data, StatusCode.SuccessCreated);
   }
 
-  async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
-    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
-    if (error) return;
-    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+  async update(request: Request, response: Response): Promise<Response | undefined> {
+    const language = request.headers.language;
 
-    return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.body._id }));
+    if (documentError) return;
+    if (!document) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.body._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.body._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+    }
+
+    const [data, error] = await handlePromises(request, response, Model.updateOne({ _id: request.body._id }, request.body, { new: true }));
+    if (error) return;
+    if (!data || data.n === 0) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
+    }
+
+    return responseSuccess(response, data, StatusCode.SuccessOK);
+  }
+
+  async remove(request: Request, response: Response): Promise<Response | undefined> {
+    const language = request.headers.language;
+
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
+    if (documentError) return;
+    if (!document) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+    }
+
+    const [data, error] = await handlePromises(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
+    if (error) return;
+    if (!data || data.n === 0) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error removing document with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao remover documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
+    }
+
+    return responseSuccess(response, data, StatusCode.SuccessNoContent);
   }
 
   async changePassword(request: Request, response: Response): Promise<Response | undefined> {
@@ -131,6 +192,14 @@ class AuthController {
 
     return responseSuccess(response, {}, StatusCode.SuccessOK);
   }
+
+  async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
+    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
+    if (error) return;
+    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+
+    return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
+  }
 }
 
-export default new AuthController();
+export default new UserController();

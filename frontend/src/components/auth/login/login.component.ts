@@ -10,6 +10,7 @@ import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
+import { UserService } from '@app/scripts/services/user.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
 @Component({
   selector: 'app-log-in',
@@ -26,6 +27,7 @@ export class LogInComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private sharedService: SharedService,
+    private userService: UserService,
   ) {
     this.form = this.formBuilder.group({
       email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150), Validators.pattern(CustomValidators.emailRegex)]],
@@ -48,7 +50,7 @@ export class LogInComponent implements OnInit {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const user = { ...this.form.value } as IUser;
-    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.authService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
+    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
 
     if (!result || !result.success || error) {
       if (error.status === StatusCode.ClientErrorUnauthorized) {
