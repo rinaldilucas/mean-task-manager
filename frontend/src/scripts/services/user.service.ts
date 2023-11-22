@@ -11,7 +11,7 @@ import { CrudService } from '@app/scripts/services/crud.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { environment } from '@root/environments/environment';
 
-const endpoint = environment.baseUri + '/user';
+const endpoint = environment.baseUri + '/users';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends CrudService<IUser> {

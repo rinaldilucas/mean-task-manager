@@ -8,7 +8,7 @@ import { ERole } from '@app/scripts/models/enums/role.enum';
 import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IJwtToken } from '@app/scripts/models/jwt-token.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
-import { CookiesService } from '@app/scripts/services/cookies.service';
+import { CookieService } from '@app/scripts/services/cookie.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { UserService } from '@app/scripts/services/user.service';
 
@@ -26,7 +26,7 @@ export class AuthService {
   private keepUserLoggedIn = false;
 
   protected sharedService = this.injector.get(SharedService);
-  protected cookiesService = this.injector.get(CookiesService);
+  protected cookiesService = this.injector.get(CookieService);
   protected usersService = this.injector.get(UserService);
 
   constructor(
