@@ -1,4 +1,4 @@
 export const environment = {
-  baseUri: 'https://angular14mean-api.onrender.com/api',
+  baseUri: 'https://mean-task-manager.onrender.com/api',
   production: true,
 };

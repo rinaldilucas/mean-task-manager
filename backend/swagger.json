@@ -23,7 +23,7 @@
       "description": "Local server"
     },
     {
-      "url": "https://angular14mean-api.onrender.com/api",
+      "url": "https://mean-task-manager.onrender.com/api",
       "description": "Production server"
     }
   ],

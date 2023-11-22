@@ -43,7 +43,7 @@
     "typescript": "4.7.4"
   },
   "license": "MIT",
-  "name": "angular14-task-crud-mean-api",
+  "name": "mean-task-manager",
   "scripts": {
     "build": "babel ./ --extensions \".ts\" --out-dir dist && cp .env dist && cp swagger.json dist",
     "build:server": "babel ./ --extensions \".ts\" --out-dir dist && cp swagger.json dist",

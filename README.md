@@ -8,7 +8,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/rinaldilucas/angular14-task-crud-mean">
+  <a href="https://github.com/rinaldilucas/mean-task-manager">
     <img src="./frontend/assets/images/_readme/logo.png" alt="Logo">
   </a>
 
@@ -17,12 +17,12 @@
   <p align="center">
     Project built using Angular, NodeJS, Express.j and MongoDB<br> with Angular Material to jump start your studies!
     <br />
-    <a href="https://github.com/rinaldilucas/angular14-task-crud-mean"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/rinaldilucas/mean-task-manager"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rinaldilucas.github.io/angular14-task-crud-mean/">View App*</a>
+    <a href="https://rinaldilucas.github.io/mean-task-manager/">View App*</a>
     ·
-    <a href="https://angular14mean-api.onrender.com/api-docs">API Docs*</a>
+    <a href="https://mean-task-manager.onrender.com/api-docs">API Docs*</a>
     ·
     <a href="#donations">Donate</a>       
   </p>
@@ -67,7 +67,7 @@
 
 <div align="center">
 
-[![Project Screenshot][project-screenshot]](https://rinaldilucas.github.io/angular14-task-crud-mean)
+[![Project Screenshot][project-screenshot]](https://rinaldilucas.github.io/mean-task-manager)
 
 </div>
 
@@ -192,7 +192,7 @@ _More scripts at package.json_
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/rinaldilucas/angular14-task-crud-mean.git
+   git clone https://github.com/rinaldilucas/mean-task-manager.git
    ```
 2. Install NPM packages via yarn
    ```sh
@@ -286,7 +286,7 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rinaldilucas/)](https://www.linkedin.com/in/rinaldilucas/)
 [![Telegram Badge](https://img.shields.io/badge/-Telegram-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=telegram&logoColor=white&link=https://t.me/rinaldilucas)](https://t.me/rinaldilucas)
 
-Project Link: [https://github.com/rinaldilucas/angular14-task-crud-mean](https://github.com/rinaldilucas/angular14-task-crud-mean)
+Project Link: [https://github.com/rinaldilucas/mean-task-manager](https://github.com/rinaldilucas/mean-task-manager)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -311,14 +311,14 @@ It helps me a lot to continue developing open source codes.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
-[contributors-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
-[forks-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/network/members
-[stars-shield]: https://img.shields.io/github/stars/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
-[stars-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/stargazers
-[license-shield]: https://img.shields.io/github/license/rinaldilucas/angular14-task-crud-mean.svg?style=for-the-badge
-[license-url]: https://github.com/rinaldilucas/angular14-task-crud-mean/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/rinaldilucas/mean-task-manager.svg?style=for-the-badge
+[contributors-url]: https://github.com/rinaldilucas/mean-task-manager/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/rinaldilucas/mean-task-manager.svg?style=for-the-badge
+[forks-url]: https://github.com/rinaldilucas/mean-task-manager/network/members
+[stars-shield]: https://img.shields.io/github/stars/rinaldilucas/mean-task-manager.svg?style=for-the-badge
+[stars-url]: https://github.com/rinaldilucas/mean-task-manager/stargazers
+[license-shield]: https://img.shields.io/github/license/rinaldilucas/mean-task-manager.svg?style=for-the-badge
+[license-url]: https://github.com/rinaldilucas/mean-task-manager/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rinaldilucas/
 [project-screenshot]: ./frontend/assets/images/_readme/screenshot.gif
