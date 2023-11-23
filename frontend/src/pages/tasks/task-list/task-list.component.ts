@@ -107,7 +107,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     this.sharedService.handleSnackbars({ translationKey: 'task-list.status-change' });
     this.taskService.onTaskChange.emit();
-    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async removeAsync(task: ITask): Promise<void> {
@@ -118,7 +117,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     this.sharedService.handleSnackbars({ translationKey: 'task-list.remove-success' });
     this.taskService.onTaskChange.emit();
-    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async onPaginateChangeAsync(event: PageEvent): Promise<void> {

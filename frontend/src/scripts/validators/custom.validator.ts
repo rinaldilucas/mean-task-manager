@@ -4,7 +4,7 @@ import { debounceTime, first, map, switchMap } from 'rxjs';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
-import { AuthService } from '@app/scripts/services/auth.service';
+import { UserService } from '@app/scripts/services/user.service';
 
 export class CustomValidators {
   static emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
@@ -55,11 +55,11 @@ export class CustomValidators {
     };
   }
 
-  static checkEmail(authService: AuthService): AsyncValidatorFn {
+  static checkEmail(userService: UserService): AsyncValidatorFn {
     return (control: AbstractControl) => {
       return control.valueChanges.pipe(
         debounceTime(300),
-        switchMap((email: string) => authService.checkIfEmailExists(email)),
+        switchMap((email: string) => userService.checkIfEmailExists(email)),
         map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { emailExists: true } : null)),
         first(),
       );

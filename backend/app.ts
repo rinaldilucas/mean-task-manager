@@ -9,9 +9,9 @@ import swaggerUi from 'swagger-ui-express';
 
 import swaggerDocs from '@root/swagger.json';
 
-import authRoutes from '@api/routes/auth.routes';
 import categoryRoutes from '@api/routes/category.routes';
 import taskRoutes from '@api/routes/task.routes';
+import userRoutes from '@api/routes/user.routes';
 
 class App {
   express: express.Application;
@@ -58,9 +58,9 @@ class App {
   }
 
   private routes(): void {
-    this.express.use(authRoutes);
-    this.express.use(taskRoutes);
     this.express.use(categoryRoutes);
+    this.express.use(taskRoutes);
+    this.express.use(userRoutes);
   }
 }
 

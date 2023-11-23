@@ -24,7 +24,7 @@ routes.post(
 );
 
 // update
-routes.put('/api/tasks', authMiddleware, Controller.update);
+routes.put('/api/tasks/:_id', authMiddleware, Controller.update);
 
 // delete
 routes.delete('/api/tasks/:_id', authMiddleware, Controller.remove);

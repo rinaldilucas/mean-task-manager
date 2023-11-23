@@ -7,7 +7,7 @@
 
       <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="loginAsync()">
         <mat-card-content>
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial />
             <mat-error *ngIf="form.get('email')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('pattern')"> {{ "error.email-invalid" | translate }} </mat-error>
@@ -15,7 +15,7 @@
             <mat-error *ngIf="form.get('email')?.hasError('maxlength')"> {{ "error.max-length" | translate: { value: 150 } }} </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>

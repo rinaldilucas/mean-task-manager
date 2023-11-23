@@ -26,7 +26,6 @@ export default async (request: Request, response: Response, next: NextFunction):
           else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Tipo de token inválido.'));
         }
 
-        request.body.email = decoded.sub;
         return next();
       } catch (error) {
         if (language === 'en-US') return next(responseError(response, error, StatusCode.ClientErrorUnauthorized, 'Invalid jwt token.'));
