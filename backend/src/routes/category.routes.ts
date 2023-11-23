@@ -13,8 +13,7 @@ routes.get('/api/categories', authMiddleware, Controller.getAll);
 // create
 routes.post(
   '/api/categories',
-  check('title', 'Must be at least 2 and lesser than 50 chars long') //
-    .isLength({ min: 2 })
+  check('title', 'Must lesser than 50 chars long') //
     .isLength({ max: 50 })
     .not()
     .isEmpty()

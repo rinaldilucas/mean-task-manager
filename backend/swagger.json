@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "version": "1.0.0",
-    "title": "Mean Stack Template - OpenAPI 3.0",
-    "description": "Documentation of Mean Stack Template project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey.",
+    "title": "Mean Task Manager - OpenAPI 3.0",
+    "description": "Documentation of Mean Task Manager project developed by Lucas Rinaldi. Hope you guys enjoy and that will help you on your study journey.",
     "contact": {
       "name": "Lucas Rinaldi",
       "email": "lucasreinaldi@gmail.com"
@@ -68,10 +68,6 @@
         "type": "object",
         "required": ["email", "password", "role"],
         "properties": {
-          "role": {
-            "type": "string",
-            "enum": ["admin", "user"]
-          },
           "email": {
             "type": "string",
             "format": "email",
@@ -83,6 +79,10 @@
             "type": "string",
             "minLength": 8,
             "maxLength": 150
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "user"]
           },
           "createdAt": {
             "type": "string",
@@ -119,10 +119,12 @@
             "example": "2023-05-22"
           },
           "category": {
-            "type": "string"
+            "type": "string",
+            "example": "Groceries"
           },
           "userId": {
-            "type": "string"
+            "type": "string",
+            "example": "655f5094e2371f34ac529ccc"
           },
           "createdAt": {
             "type": "string",
@@ -335,79 +337,6 @@
             "auth": []
           }
         ]
-      },
-      "put": {
-        "tags": ["User"],
-        "summary": "Updates a user",
-        "description": "Updates a user based on the body of requisition",
-        "operationId": "updateUser",
-        "requestBody": {
-          "description": "User to update",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AuthData"
-                      }
-                    },
-                    "totalCount": {
-                      "type": "integer",
-                      "example": 1
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Error removing user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ]
       }
     },
     "/users/{id}": {
@@ -446,6 +375,90 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/User"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error removing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Updates a user",
+        "description": "Updates a user based on the body of requisition",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AuthData"
                       }
                     },
                     "totalCount": {
@@ -1084,79 +1097,6 @@
             "auth": []
           }
         ]
-      },
-      "put": {
-        "tags": ["Task"],
-        "summary": "Updates a task",
-        "description": "Updates a task based on the body of requisition",
-        "operationId": "updateTask",
-        "requestBody": {
-          "description": "Task to update",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Task"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AuthData"
-                      }
-                    },
-                    "totalCount": {
-                      "type": "integer",
-                      "example": 1
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Task not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Error removing task",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ]
       }
     },
     "/tasks/{id}": {
@@ -1195,6 +1135,90 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Task"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error removing task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Task"],
+        "summary": "Updates a task",
+        "description": "Updates a task based on the body of requisition",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the task to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Task to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AuthData"
                       }
                     },
                     "totalCount": {

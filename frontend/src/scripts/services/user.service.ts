@@ -25,10 +25,10 @@ export class UserService extends CrudService<IUser> {
     return lastValueFrom(this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)));
   }
 
-  register(user: IUser): Promise<IQueryResult<IUser>> {
-    const url = `${endpoint}/register`;
+  checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
+    const url = `${endpoint}/exists/${email}`;
 
-    return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, user).pipe(catchError(this.sharedService.errorHandler)));
+    return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 
   changePassword(userId: string, password: string): Promise<IQueryResult<IUser>> {
@@ -38,7 +38,7 @@ export class UserService extends CrudService<IUser> {
     return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
   }
 
-  generateRefreshToken(): Promise<IQueryResult<IJwtPayload>> {
+  refreshToken(): Promise<IQueryResult<IJwtPayload>> {
     const url = `${endpoint}/refreshToken`;
 
     return lastValueFrom(
@@ -53,11 +53,5 @@ export class UserService extends CrudService<IUser> {
     const url = `${endpoint}/logout`;
 
     return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
-  }
-
-  checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
-    const url = `${endpoint}/exists/${email}`;
-
-    return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 }

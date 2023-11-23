@@ -22,12 +22,11 @@ routes.post(
   check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
   check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
   verifyValidations,
-  authMiddleware,
   Controller.create,
 );
 
 // update
-routes.put('/api/users', authMiddleware, Controller.update);
+routes.put('/api/users/:_id', authMiddleware, Controller.update);
 
 // delete
 routes.delete('/api/users/:_id', authMiddleware, Controller.remove);

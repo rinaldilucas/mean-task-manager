@@ -127,12 +127,12 @@ export class AuthService {
   private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
     const userService = this.injector.get(UserService);
     const jwtToken = jwtPayload;
-    const marginMinutes = 5 * 1000;
+    const marginMinutes = 60 * 1000;
     const timeout = jwtToken.expiresIn * 1000 - marginMinutes;
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(userService.generateRefreshToken());
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(userService.refreshToken());
 
         if (!result || !result.success || error) {
           this.logoutAsync();

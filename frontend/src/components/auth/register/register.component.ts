@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   showPassword = false;
+  pendingValidation = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,6 +36,15 @@ export class RegisterComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150), CustomValidators.incremental, CustomValidators.sequential, CustomValidators.capitalized, CustomValidators.number, CustomValidators.specialCharacters]],
       confirmPassword: [null, [Validators.required, CustomValidators.equalsTo('password')]],
     });
+
+    this.form.statusChanges.subscribe((status) => {
+      if (status === 'PENDING') {
+        this.pendingValidation = true;
+      } else if (this.pendingValidation) {
+        this.pendingValidation = false;
+        this.changeDetector.detectChanges();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -46,7 +56,7 @@ export class RegisterComponent implements OnInit {
     this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     const user = { ...this.form.value, role: ERole.user } as IUser;
-    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.register(user));
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.save(user));
     if (!result || !result.success || error) {
       if (error?.status === StatusCode.ClientErrorConflict) return this.sharedService.handleSnackbars({ translationKey: 'register.email-error', error: true });
       else this.sharedService.handleSnackbars({ translationKey: 'register.create-error', error: true });

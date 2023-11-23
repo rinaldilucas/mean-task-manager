@@ -7,7 +7,7 @@
         </div>
 
         <div class="list__header-search" *ngIf="(tasks.length || isSearching) && !isLoading">
-          <mat-form-field>
+          <mat-form-field color="accent">
             <input matInput placeholder="{{ 'task-list.search' | translate }}..." #searchInput [formControl]="search" />
           </mat-form-field>
         </div>

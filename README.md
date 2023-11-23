@@ -227,7 +227,7 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 [GET] localhost:3000/api/users -> 'getAll'
 [GET] localhost:3000/api/users/{id} -> 'getOne'
 [POST] localhost:3000/api/users -> 'create'
-[PUT] localhost:3000/api/users -> 'update'
+[PUT] localhost:3000/api/users/{id} -> 'update'
 [DELETE] localhost:3000/api/users/{id}-> 'remove'
 [POST] localhost:3000/api/users/authenticate -> 'authenticate'
 [GET] localhost:3000/api/user/exists/{email}/ -> 'checkIfEmailExists'

@@ -7,7 +7,7 @@
 
       <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="registerAsync()">
         <mat-card-content>
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input formControlName="email" type="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial autocompleteOff />
             <mat-error *ngIf="form.get('email')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
             <mat-error *ngIf="form.get('email')?.hasError('pattern')"> {{ "error.email-invalid" | translate }} </mat-error>
@@ -16,7 +16,7 @@
             <mat-error *ngIf="form.get('email')?.hasError('emailExists')"> {{ "error.email-exists" | translate }} </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
@@ -29,7 +29,7 @@
             <mat-error *ngIf="form.get('password')?.hasError('hasntSpecialCharacter')"> {{ "error.hasnt-special" | translate }} </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input type="password" formControlName="confirmPassword" matInput placeholder="{{ 'input.confirm-password' | translate }}" />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
