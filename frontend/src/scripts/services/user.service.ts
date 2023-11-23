@@ -8,15 +8,12 @@ import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 import { CrudService } from '@app/scripts/services/crud.service';
-import { SharedService } from '@app/scripts/services/shared.service';
 import { environment } from '@root/environments/environment';
 
 const endpoint = environment.baseUri + '/users';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends CrudService<IUser> {
-  protected override sharedService = this.injector.get(SharedService);
-
   constructor(http: HttpClient, injector: Injector) {
     super(http, injector, endpoint);
   }

@@ -1,27 +1,26 @@
 import Async from 'async';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { User as Model } from '@api/models/user.model';
 import jwtService from '@api/services/jwt.service';
+import { add as addToBlacklist } from '@api/services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class UserController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
     const language = request.headers.language;
-    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
 
     const countQuery = (callback): any => {
-      Model.find({ userId }).countDocuments({}, (error, count) => {
+      Model.find().countDocuments({}, (error, count) => {
         if (error) callback(error, null);
         else callback(null, count);
       });
     };
 
     const retrieveQuery = (callback): any => {
-      Model.find({ userId }).exec((error, documents) => {
+      Model.find().exec((error, documents) => {
         if (error) callback(error, null);
         else callback(null, documents);
       });
@@ -37,34 +36,17 @@ class UserController {
     });
   }
 
-  async authenticate(request: Request, response: Response): Promise<Response | undefined> {
+  async getOne(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
-    if (documentError) return;
-    if (!document) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
-      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
+    const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
+    if (error) return;
+    if (!data) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
     }
 
-    const [validation, validationError] = await handlePromises(request, response, bcrypt.compare(request.body.password, document.password));
-    if (validationError) return;
-    if (!validation) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
-      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
-    }
-
-    const { access, refresh } = jwtService.generate(document.email, document._id, document.role);
-
-    const jwtPayload = {
-      access,
-      refresh,
-      expiresIn: process.env.JWT_ACCESS_TIME,
-      userId: document._id,
-      keepUserLoggedIn: request.body.keepUserLoggedIn,
-    };
-
-    return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+    return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
   async create(request: Request, response: Response): Promise<Response | undefined> {
@@ -82,8 +64,8 @@ class UserController {
     const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
     if (documentError) return;
     if (document) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.params.email}.`);
-      else return responseError(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.params.email} já existe.`);
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.body.email}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.body.email} já existe.`);
     }
 
     const [data, error] = await handlePromises(request, response, newUser.save());
@@ -134,6 +116,44 @@ class UserController {
     }
 
     return responseSuccess(response, data, StatusCode.SuccessNoContent);
+  }
+
+  async authenticate(request: Request, response: Response): Promise<Response | undefined> {
+    const language = request.headers.language;
+
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
+    if (documentError) return;
+    if (!document) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
+      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
+    }
+
+    const [validation, validationError] = await handlePromises(request, response, bcrypt.compare(request.body.password, document.password));
+    if (validationError) return;
+    if (!validation) {
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
+      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
+    }
+
+    const { access, refresh } = jwtService.generate(document.email, document._id, document.role);
+
+    const jwtPayload = {
+      access,
+      refresh,
+      expiresIn: process.env.JWT_ACCESS_TIME,
+      userId: document._id,
+      keepUserLoggedIn: request.body.keepUserLoggedIn,
+    };
+
+    return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
+  }
+
+  async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
+    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
+    if (error) return;
+    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+
+    return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
   }
 
   async changePassword(request: Request, response: Response): Promise<Response | undefined> {
@@ -191,14 +211,6 @@ class UserController {
     if (addToBlacklistError) return;
 
     return responseSuccess(response, {}, StatusCode.SuccessOK);
-  }
-
-  async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
-    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
-    if (error) return;
-    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
-
-    return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
   }
 }
 

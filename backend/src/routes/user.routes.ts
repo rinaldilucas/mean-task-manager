@@ -13,11 +13,14 @@ const routes = Router();
 // get all
 routes.get('/api/users', authMiddleware, Controller.getAll);
 
+// get by id
+routes.get('/api/users/:_id', authMiddleware, Controller.getOne);
+
 // create
 routes.post(
   '/api/users',
-  check('title', 'Must be at least 2 and lesser than 100 chars long.').isLength({ min: 2 }).isLength({ max: 100 }).not().isEmpty().trim(),
-  check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
+  check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long').isEmail().isLength({ min: 5 }).isLength({ max: 150 }).not().isEmpty().normalizeEmail().trim(),
+  check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
   verifyValidations,
   authMiddleware,
   Controller.create,
@@ -52,13 +55,17 @@ routes.post(
 routes.get('/api/users/exists/:email', Controller.checkIfEmailExists);
 
 // change password
-routes.put('/api/users/changePassword', check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(), verifyValidations, Controller.changePassword);
+routes.put(
+  '/api/users/changePassword', //
+  check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
+  verifyValidations,
+  Controller.changePassword,
+);
 
 // refresh token
-routes.post('/api/users/refresh', refreshMiddleware, Controller.refreshToken);
+routes.post('/api/users/refreshToken', refreshMiddleware, Controller.refreshToken);
 
 // logout
 routes.post('/api/users/logout', Controller.logout);
 
-// todo tirar export default
 export default routes;

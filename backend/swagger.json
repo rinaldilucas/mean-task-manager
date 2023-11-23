@@ -23,14 +23,14 @@
       "description": "Local server"
     },
     {
-      "url": "https://angular14mean-api.onrender.com/api",
+      "url": "https://mean-task-manager.onrender.com/api",
       "description": "Production server"
     }
   ],
   "tags": [
     {
-      "name": "Auth",
-      "description": "Operations about authentication"
+      "name": "User",
+      "description": "Operations about users"
     },
     {
       "name": "Task",
@@ -191,41 +191,12 @@
     }
   },
   "paths": {
-    "/auth/authenticate": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Authenticate the user",
-        "description": "Authenticates the user and retrieve a JWT token",
-        "operationId": "authenticate",
-        "requestBody": {
-          "description": "User to be authenticated",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "minLength": 5,
-                    "maxLength": 150,
-                    "example": "user@gmail.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "maxLength": 150,
-                    "example": "Userpassword#0"
-                  },
-                  "keepUserLoggedIn": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Returns all users",
+        "description": "Returns all users which the user has access to",
+        "operationId": "getUsers",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -244,7 +215,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/AuthData"
+                        "$ref": "#/components/schemas/User"
                       }
                     },
                     "totalCount": {
@@ -256,8 +227,8 @@
               }
             }
           },
-          "401": {
-            "description": "User or password mismatches",
+          "500": {
+            "description": "Error retrieving users",
             "content": {
               "application/json": {
                 "schema": {
@@ -266,12 +237,15 @@
               }
             }
           }
-        }
-      }
-    },
-    "/auth/register": {
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
       "post": {
-        "tags": ["Auth"],
+        "tags": ["User"],
         "summary": "Register a new user",
         "description": "Register a brand new user",
         "operationId": "register",
@@ -355,12 +329,290 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Updates a user",
+        "description": "Updates a user based on the body of requisition",
+        "operationId": "updateUser",
+        "requestBody": {
+          "description": "User to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AuthData"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error removing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Returns a user",
+        "description": "Returns a user based on a single ID",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to fetch",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error removing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Removes a user",
+        "description": "Removes a single user based on the ID supplied",
+        "operationId": "removeUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error removing user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "auth": []
+          }
+        ]
+      }
+    },
+    "/users/authenticate": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Authenticate the user",
+        "description": "Authenticates the user and retrieve a JWT token",
+        "operationId": "authenticate",
+        "requestBody": {
+          "description": "User to be authenticated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "minLength": 5,
+                    "maxLength": 150,
+                    "example": "user@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 150,
+                    "example": "Userpassword#0"
+                  },
+                  "keepUserLoggedIn": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AuthData"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User or password mismatches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
         }
       }
     },
-    "/auth/emailExists/{email}": {
+    "/users/exists/{email}": {
       "get": {
-        "tags": ["Auth"],
+        "tags": ["User"],
         "summary": "Verify if user is registered",
         "description": "Returns a boolean if the user is already registered",
         "operationId": "getUserByEmail",
@@ -426,9 +678,9 @@
         }
       }
     },
-    "/auth/changePassword": {
+    "/users/changePassword": {
       "put": {
-        "tags": ["Auth"],
+        "tags": ["User"],
         "summary": "Change the password",
         "description": "Change the password of the user generating hash",
         "operationId": "changePassword",
@@ -501,9 +753,9 @@
         ]
       }
     },
-    "/auth/refresh": {
+    "/users/refreshToken": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["User"],
         "summary": "Generate refresh token",
         "description": "Generate a refresh token to user",
         "operationId": "refreshToken",
@@ -602,9 +854,9 @@
         ]
       }
     },
-    "/auth/logout": {
+    "/users/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["User"],
         "summary": "Sign out user",
         "description": "Sign out user and invalidate token",
         "operationId": "logout",

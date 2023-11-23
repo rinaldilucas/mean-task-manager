@@ -27,7 +27,6 @@ export class AuthService {
 
   protected sharedService = this.injector.get(SharedService);
   protected cookiesService = this.injector.get(CookieService);
-  protected usersService = this.injector.get(UserService);
 
   constructor(
     private injector: Injector,
@@ -126,13 +125,14 @@ export class AuthService {
   }
 
   private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
+    const userService = this.injector.get(UserService);
     const jwtToken = jwtPayload;
     const marginMinutes = 5 * 1000;
     const timeout = jwtToken.expiresIn * 1000 - marginMinutes;
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.usersService.generateRefreshToken());
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(userService.generateRefreshToken());
 
         if (!result || !result.success || error) {
           this.logoutAsync();
@@ -159,7 +159,8 @@ export class AuthService {
   }
 
   async logoutAsync(): Promise<void> {
-    await this.sharedService.handlePromises(this.usersService.logout(this.getAccessToken()));
+    const userService = this.injector.get(UserService);
+    await this.sharedService.handlePromises(userService.logout(this.getAccessToken()));
     this.stopRefreshTokenTimer();
     this.accessToken = '';
     this.isAuthenticated = false;
