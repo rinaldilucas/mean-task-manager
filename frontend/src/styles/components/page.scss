@@ -4,29 +4,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: vw(65) 0 0 0;
-  height: calc(100vh - 0.6rem - 1.4rem);
-  height: calc(100dvh - 0.6rem - 1.4rem);
-
-  @include media(">=desktop") {
-    margin: vw(80) vw(40) 0;
-  }
+  justify-content: center;
+  height: calc(100vh - $header-height);
+  height: calc(100dvh - $header-height);
 
   &__wrapper {
     display: flex;
     position: relative;
+    margin: vw(40) 0;
     width: 100%;
     max-width: vw(350);
     height: 100%;
-    max-height: vw(640);
     @extend %backdrop;
+    max-height: vw(640);
 
     @include media(">=desktop") {
       max-width: vw(1000);
     }
 
     &--transparent {
-      .page__content {
+      .page__container {
         background-color: transparent !important;
       }
 
@@ -36,7 +33,7 @@
     }
   }
 
-  &__content {
+  &__container {
     position: relative;
     z-index: 1;
     background-color: mat-color($app-background, 100);
@@ -56,14 +53,6 @@
 
       @include media(">=desktop") {
         padding: vw(70) vw(50);
-      }
-    }
-
-    &--empty {
-      height: 100%;
-
-      @include media(">=desktop") {
-        height: 90%;
       }
     }
   }

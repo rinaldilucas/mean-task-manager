@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 0.6rem);
-  height: calc(100dvh - 0.6rem);
+  height: calc(100vh - $header-height);
+  height: calc(100dvh - $header-height);
 
   @include media(">=desktop") {
     flex-direction: row;

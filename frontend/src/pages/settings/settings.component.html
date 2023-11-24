@@ -1,8 +1,8 @@
 <div class="page">
-  <app-loading *ngIf="isLoading" class="full-width loader-container-height centered"></app-loading>
+  <app-loading *ngIf="isLoading" class="full-width centered"></app-loading>
   <div *ngIf="!isLoading" class="page__wrapper">
-    <div class="page__content mat-elevation-z1">
-      <div class="page__content-wrapper">
+    <div class="page__container mat-elevation-z1">
+      <div class="page__container-wrapper">
         <form [formGroup]="form">
           <section>
             <h2>{{ "settings.language" | translate }}</h2>

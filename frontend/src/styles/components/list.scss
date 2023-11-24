@@ -2,29 +2,56 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 0.6rem);
-  height: calc(100dvh - 0.6rem);
-
-  @include media(">=desktop") {
-    margin: vw(60) vw(40) 0;
-    height: calc(100vh - 0.6rem - 1.4rem);
-    height: calc(100dvh - 0.6rem - 1.4rem);
-  }
+  justify-content: center;
+  height: calc(100vh - $header-height);
+  height: calc(100dvh - $header-height);
 
   &__wrapper {
-    width: 100%;
-    max-width: vw(1000);
-    height: 100%;
-  }
-
-  &__content {
+    display: flex;
     position: relative;
+    margin: vw(40) 0;
+    width: 100%;
+    max-width: vw(350);
     height: 100%;
     @extend %backdrop;
+    max-height: vw(640);
 
     @include media(">=desktop") {
-      margin-top: vw(20);
-      max-height: vw(640);
+      max-width: vw(1000);
+    }
+
+    &--transparent {
+      .page__container {
+        background-color: transparent !important;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    background-color: mat-color($app-background, 100);
+    width: 100%;
+    height: 100%;
+
+    .dark-mode & {
+      background-color: mat-contrast($app-background, 50);
+    }
+
+    &-wrapper {
+      position: relative;
+      z-index: 1;
+      padding: vw(50) vw(40);
+      height: 100%;
+      box-sizing: border-box;
+
+      @include media(">=desktop") {
+        padding: vw(70) vw(50);
+      }
     }
   }
 
@@ -44,33 +71,19 @@
   &__header {
     display: flex;
     position: relative;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     z-index: 1;
     margin: 0 0 vw(2);
     margin-top: 0;
     background-color: mat-color($app-background, 100) !important;
-    padding: vw(30) 0 vw(10);
-    height: vw(150);
+    padding: vw(20) 0 vw(20);
+    height: vw(110);
     font-size: vw(22);
     box-sizing: border-box;
 
-    &--empty {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: vw(20) 0 vw(20);
-      height: vw(120);
-    }
-
     @include media(">=desktop") {
-      display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      padding: vw(20) 0 vw(20);
-      height: vw(110);
-      box-sizing: border-box;
     }
 
     .dark-mode & {
@@ -80,11 +93,13 @@
     &-title {
       display: flex;
       align-items: center;
-      font-size: vw(34);
+      margin: 0 0 0 vw(55) !important;
+      font-size: vw(34) !important;
+      font-weight: 400 !important;
+    }
 
-      @include media(">=desktop") {
-        margin-left: vw(55);
-      }
+    &-icons {
+      margin-right: vw(35) !important;
     }
 
     &-search {
@@ -92,15 +107,32 @@
       flex: 0 0 auto;
       flex-direction: row;
       align-items: center;
-      padding: 0 vw(10) 0 vw(20);
-      padding-right: vw(20);
-      width: 90%;
+      padding: 0 vw(10) 0 vw(10);
       box-sizing: border-box;
       place-content: center flex-end;
 
-      @include media(">=desktop") {
-        margin-right: vw(20);
-        width: unset;
+      &-wrapper {
+        position: relative;
+      }
+
+      &-close {
+        position: absolute !important;
+        top: vw(15);
+        right: 0;
+        z-index: 1 !important;
+        zoom: 0.7 !important;
+      }
+
+      &-submit {
+        margin-left: vw(16) !important;
+
+        span {
+          padding: 0 !important;
+        }
+      }
+
+      .dark-mode & {
+        color: $white;
       }
 
       .mat-form-field {
@@ -112,45 +144,37 @@
       }
 
       .mat-form-field-underline {
-        bottom: vw(8) !important;
+        bottom: 0 !important;
       }
     }
   }
 
   &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: mat-color($app-background, 100);
-    height: calc(100% - 1.35rem - 0.75rem);
+    height: calc(100% - $table-header-height - $paginator-height - ($shadow-margin * 2)) !important;
 
     @include media(">=desktop") {
-      height: calc(100% - 1.1rem - 2px) !important;
-    }
-
-    &--empty {
-      height: calc(100% - 1.2rem - 2px);
-    }
-
-    &--placeholder {
-      height: 85%;
+      height: calc(100% - $table-header-height - $shadow-margin) !important;
     }
 
     .dark-mode & {
       background-color: mat-contrast($app-background, 50) !important;
     }
+  }
 
-    &-title {
-      margin: 0 !important;
-      font-size: vw(18) !important;
-    }
+  &__table {
+    width: 100%;
+    height: 100%;
 
-    &-actions {
-      height: vw(45);
-    }
-
-    &-table {
+    &-vscroll {
+      width: 100%;
       height: 100%;
 
       @include media(">=desktop") {
-        height: calc(100% - 0.6rem);
+        height: calc(100% - $header-height);
       }
 
       table {
@@ -163,14 +187,23 @@
       }
     }
 
-    .table {
-      height: 100%;
+    &-header {
+      margin: 0 !important;
+      font-size: vw(16) !important;
+
+      @include media(">=desktop") {
+        font-size: vw(18) !important;
+      }
     }
 
     h2 {
       margin: 0;
       line-height: vw(22);
-      font-size: vw(18);
+      font-size: vw(16);
+
+      @include media(">=desktop") {
+        font-size: vw(18);
+      }
     }
 
     p {
@@ -178,12 +211,8 @@
       font-size: vw(12);
     }
 
-    .mat-column-actions {
-      flex: 0 0 16%;
-    }
-
-    mat-paginator {
-      height: vw(60);
+    &-actions {
+      height: vw(45);
     }
   }
 }

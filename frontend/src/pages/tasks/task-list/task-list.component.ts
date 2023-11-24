@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { debounceTime, lastValueFrom, take } from 'rxjs';
+import { lastValueFrom, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -68,7 +68,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.paginator.pageSize = options.pageSize;
       this.paginator.pageSizeOptions = options.pageSizeOptions;
     });
-    this.subs.sink = this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value));
+    // this.subs.sink = this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value));
 
     this.refreshAsync();
     this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync({ showLoading: true }));
@@ -159,10 +159,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     if (text === '') {
-      this.search.setValue('');
       this.isSearching = false;
       this.refreshAsync();
-    } else if (text.length > 2) {
+    } else {
       this.isSearching = true;
       const searchTerm = text.trim().toLowerCase();
 
@@ -177,6 +176,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
       this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
     }
+    this.search.setValue('');
   }
 
   updateTitle(): void {

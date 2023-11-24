@@ -88,10 +88,6 @@
   height: 100%;
 }
 
-.loader-container-height {
-  height: 85%;
-}
-
 .table-body-height {
   height: calc(100% - (1.6rem / 2));
 }
@@ -118,21 +114,6 @@
 
   &--row {
     flex-direction: row;
-  }
-}
-
-.empty-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  p {
-    font-size: vw(14) !important;
-
-    @include media(">=desktop") {
-      margin-top: vw(8);
-    }
   }
 }
 

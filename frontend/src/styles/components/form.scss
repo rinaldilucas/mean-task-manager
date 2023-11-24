@@ -1,15 +1,19 @@
 .form {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: vw(65);
+  height: calc(100vh - $header-height);
+  height: calc(100dvh - $header-height);
 
-  @include media(">=desktop") {
-    align-items: center;
-    justify-content: center;
-    margin-top: 0;
-    height: calc(100vh - #{$header-size});
-    height: calc(100dvh - #{$header-size});
+  &__wrapper {
+    display: flex;
+    position: relative;
+    margin: vw(40) 0;
+    width: 100%;
+    max-width: vw(350);
+    height: 100%;
+    max-height: vw(640);
   }
 
   mat-card-header {
@@ -22,11 +26,13 @@
 
   &__box {
     position: relative;
-    width: vw(330);
+    margin-bottom: $header-height;
     @extend %backdrop;
+    width: vw(330);
 
     @include media(">=desktop") {
       margin-top: vw(-45);
+      margin-bottom: 0;
       width: vw(420);
     }
 

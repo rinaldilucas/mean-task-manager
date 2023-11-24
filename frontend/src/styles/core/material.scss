@@ -76,13 +76,13 @@ mat-radio-button {
   position: relative;
   justify-content: space-between;
   z-index: 2;
-  height: $header-size !important;
-  min-height: $header-size !important;
+  height: $header-height !important;
+  min-height: $header-height !important;
 }
 
 .mat-toolbar-row {
-  height: $header-size !important;
-  min-height: $header-size !important;
+  height: $header-height !important;
+  min-height: $header-height !important;
 }
 
 .mat-cell {
@@ -99,6 +99,10 @@ mat-radio-button {
       }
     }
   }
+}
+
+mat-paginator {
+  height: vw(60);
 }
 
 .mat-paginator-page-size {
@@ -284,4 +288,15 @@ mat-spinner svg {
 .mat-icon-button {
   width: vw(40);
   height: vw(40);
+}
+
+.mat-column-actions {
+  flex: 0 0 16%;
+  padding-left: vw(4);
+}
+
+.mat-cell:last-of-type {
+  @include media("<=desktop") {
+    padding: 0 vw(6) !important;
+  }
 }
