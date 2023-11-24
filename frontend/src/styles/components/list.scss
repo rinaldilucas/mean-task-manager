@@ -4,16 +4,14 @@
   align-items: center;
   height: calc(100vh - 0.6rem);
   height: calc(100dvh - 0.6rem);
-  overflow: hidden;
 
   @include media(">=desktop") {
     margin: vw(60) vw(40) 0;
-    height: calc(100vh - 0.6rem - 0.6rem);
-    height: calc(100dvh - 0.6rem - 0.6rem);
+    height: calc(100vh - 0.6rem - 1.4rem);
+    height: calc(100dvh - 0.6rem - 1.4rem);
   }
 
   &__wrapper {
-    position: relative;
     width: 100%;
     max-width: vw(1000);
     height: 100%;

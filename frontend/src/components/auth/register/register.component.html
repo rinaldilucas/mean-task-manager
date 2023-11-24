@@ -16,7 +16,7 @@
             <mat-error *ngIf="form.get('email')?.hasError('emailExists')"> {{ "error.email-exists" | translate }} </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="{{ 'input.password' | translate }}" autocompleteOff />
             <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'password')">{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')"> {{ "error.required" | translate }} </mat-error>
@@ -29,7 +29,7 @@
             <mat-error *ngIf="form.get('password')?.hasError('hasntSpecialCharacter')"> {{ "error.hasnt-special" | translate }} </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" color="accent">
             <input
               [type]="showConfirmPassword ? 'text' : 'password'"
               formControlName="confirmPassword"

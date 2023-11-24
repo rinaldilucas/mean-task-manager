@@ -13,7 +13,7 @@ import categoryRoutes from '@api/routes/category.routes';
 import taskRoutes from '@api/routes/task.routes';
 import userRoutes from '@api/routes/user.routes';
 
-class App {
+class Server {
   express: express.Application;
 
   constructor() {
@@ -64,22 +64,22 @@ class App {
   }
 }
 
-const app = new App().express;
+const server = new Server().express;
 
 // Redirect to the API documentation
-app.get('/', (_request: Request, response: Response) => {
+server.get('/', (_request: Request, response: Response) => {
   response.redirect('/api-docs');
 });
 
 // Creates server
-app.listen(process.env.SERVER_PORT, () => {
+server.listen(process.env.SERVER_PORT, () => {
   const host = process.env.SERVER_HOST;
   const port = process.env.SERVER_PORT;
   console.log('App listening at http://%s:%s.', host, port);
 });
 
 // 404 Handler
-app.use((_request: Request, _response: Response, next: NextFunction) => {
+server.use((_request: Request, _response: Response, next: NextFunction) => {
   next(
     createError(404, "This route don't exist.", {
       expose: false,
@@ -88,7 +88,7 @@ app.use((_request: Request, _response: Response, next: NextFunction) => {
 });
 
 // Error handler
-app.use((error, _request: Request, response: Response) => {
+server.use((error, _request: Request, response: Response) => {
   console.error((error as any).message);
   if (!error.statusCode) error.statusCode = 500;
 

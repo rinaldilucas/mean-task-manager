@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
 
   isLoading = true;
   isSearching = false;
+  isProcessing = false;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   categoryControl = new FormControl();
@@ -58,6 +59,7 @@ export class SettingsComponent implements OnInit {
     const value = (event.value || '').trim();
     if (!value) return;
 
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
     const category = { title: value } as ICategory;
 
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
@@ -72,10 +74,12 @@ export class SettingsComponent implements OnInit {
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0]);
-    this.changeDetector.markForCheck();
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async removeCategoryAsync(category: ICategory): Promise<void> {
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+
     const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
     if (error) {
       this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-error', error: true });
@@ -86,7 +90,7 @@ export class SettingsComponent implements OnInit {
     this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
     const index = this.categories.indexOf(category);
     this.categories.splice(index, 1);
-    this.changeDetector.markForCheck();
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   updateTitle(): void {

@@ -163,18 +163,18 @@ class UserController {
     const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
     const newBody = { ...request.body, password: hashPass };
 
-    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.body._id }));
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.body._id}. Document name: {${Model.modelName}}.`);
-      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.body._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorNotFound, `Document not found with id ${request.params._id}. Document name: {${Model.modelName}}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorNotFound, `Documento de id ${request.params._id} não encontrada. Nome do documento: {${Model.modelName}}.`);
     }
 
-    const [data, error] = await handlePromises(request, response, Model.updateOne({ _id: request.body._id }, newBody, { new: true }));
+    const [data, error] = await handlePromises(request, response, Model.updateOne({ _id: request.params._id }, newBody, { new: true }));
     if (error) return;
     if (!data || data.n === 0) {
-      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.body._id}.`);
-      else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.body._id}. Nome do documento: {${Model.modelName}}.`);
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Erro ao atualizar documento de id ${request.params._id}. Nome do documento: {${Model.modelName}}.`);
     }
 
     return responseSuccess(response, data, StatusCode.SuccessOK);

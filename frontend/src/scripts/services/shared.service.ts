@@ -15,6 +15,7 @@ import { Observable, Subscription, lastValueFrom, take, throwError } from 'rxjs'
 
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { ITask } from '@app/scripts/models/task.interface';
+import { IUser } from '@app/scripts/models/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
@@ -168,8 +169,14 @@ export class SharedService {
     this.titleService.setTitle(`${title} — Task Manager`);
   }
 
-  handleLoading({ isLoading, changeDetector }: { isLoading: boolean; changeDetector: ChangeDetectorRef }): boolean {
-    changeDetector.markForCheck();
+  handleLoading({ isLoading, changeDetector, detectChanges }: { isLoading: boolean; changeDetector: ChangeDetectorRef; detectChanges?: boolean }): boolean {
+    if (!detectChanges) changeDetector.markForCheck();
+    else changeDetector.detectChanges();
+
     return isLoading;
+  }
+
+  isUserType(obj: any): obj is IUser {
+    return obj && typeof obj === 'object' && 'password' in obj;
   }
 }

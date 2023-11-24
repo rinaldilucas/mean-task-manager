@@ -35,15 +35,16 @@ export class CrudService<T> {
   }
 
   private create(record: T): Promise<IQueryResult<T>> {
-    if (!!record['userId']) record['userId'] = this.authService.getUserId();
-
+    if (!this.sharedService.isUserType(record)) {
+      record['userId'] = this.authService.getUserId();
+    }
     return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   private update(record: T): Promise<IQueryResult<T>> {
-    if (!!record['userId']) record['userId'] = this.authService.getUserId();
+    const url = `${this.endpoint}/${record['_id']}`;
 
-    return lastValueFrom(this.http.put<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
+    return lastValueFrom(this.http.put<IQueryResult<T>>(url, record).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   remove(record: T | string): Promise<IQueryResult<T>> {

@@ -161,6 +161,21 @@
           }
         }
       },
+      "MongoResponse": {
+        "type": "object",
+        "required": ["n", "nModified", "ok"],
+        "properties": {
+          "n": {
+            "type": "integer"
+          },
+          "nModified": {
+            "type": "integer"
+          },
+          "ok": {
+            "type": "integer"
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "required": ["success", "status", "message"],
@@ -435,7 +450,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/MongoResponse"
               }
             }
           }
@@ -691,19 +706,37 @@
         }
       }
     },
-    "/users/changePassword": {
+    "/users/changePassword/{id}": {
       "put": {
         "tags": ["User"],
         "summary": "Change the password",
         "description": "Change the password of the user generating hash",
         "operationId": "changePassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "User to have the password changed",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 150
+                  }
+                }
               }
             }
           }
@@ -726,7 +759,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/AuthData"
+                        "$ref": "#/components/schemas/MongoResponse"
                       }
                     },
                     "totalCount": {
@@ -780,25 +813,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "minLength": 5,
-                    "maxLength": 150,
-                    "example": "user@gmail.com"
-                  },
-                  "role": {
-                    "type": "string",
-                    "enum": ["admin", "user"]
-                  },
-                  "expirationDate": {
-                    "type": "string",
-                    "format": "date",
-                    "example": "2023-05-22"
-                  },
                   "refresh": {
                     "type": "string"
                   }
@@ -1195,7 +1209,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "$ref": "#/components/schemas/MongoResponse"
               }
             }
           }
@@ -1310,6 +1324,17 @@
         "tags": ["Category"],
         "summary": "Returns all categories",
         "description": "Returns all categories which the user has access to",
+        "parameters": [
+          {
+            "name": "onlyMine",
+            "in": "query",
+            "description": "Boolean to fetch only the selected data",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "operationId": "getCategories",
         "responses": {
           "200": {

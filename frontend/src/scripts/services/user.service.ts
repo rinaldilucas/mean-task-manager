@@ -32,8 +32,8 @@ export class UserService extends CrudService<IUser> {
   }
 
   changePassword(userId: string, password: string): Promise<IQueryResult<IUser>> {
-    const url = `${endpoint}/changePassword`;
-    const body = { _id: userId, password };
+    const url = `${endpoint}/changePassword/${userId}`;
+    const body = { password };
 
     return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
   }

@@ -55,9 +55,10 @@ routes.get('/api/users/exists/:email', Controller.checkIfEmailExists);
 
 // change password
 routes.put(
-  '/api/users/changePassword', //
+  '/api/users/changePassword/:_id', //
   check('password', 'Must be at least 8 and lesser than 150 chars long').isLength({ min: 8 }).isLength({ max: 150 }).not().isEmpty().trim(),
   verifyValidations,
+  authMiddleware,
   Controller.changePassword,
 );
 
