@@ -87,7 +87,7 @@
     "portuguese": "Português"
   },
   "statistics": {
-    "no-data": "Sem dados <br>para exibir gráficos.",
+    "no-data": "Sem dados para <br>exibir gráficos.",
     "status": {
       "done": "Feito",
       "progress": "Em progresso",
