@@ -24,41 +24,45 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar *ngIf="!isLogged" class="header__logged-out" color="primary">
-      <a class="header__logo" [routerLink]="'/'">{{ "app.title" | translate }}</a>
-      <div>
-        <a mat-button routerLink="register">{{ "navigation.register" | translate }}</a>
-        <a mat-raised-button routerLink="login">{{ "navigation.login" | translate }}</a>
-      </div>
-    </mat-toolbar>
+    <header>
+      <mat-toolbar color="primary">
+        <ng-container *ngIf="!isLogged; else loggedTemplate">
+          <a class="header__logo" [routerLink]="'/'">{{ "app.title" | translate }}</a>
+          <div>
+            <a mat-button routerLink="register">{{ "navigation.register" | translate }}</a>
+            <a mat-raised-button routerLink="login">{{ "navigation.login" | translate }}</a>
+          </div>
+        </ng-container>
 
-    <mat-toolbar *ngIf="isLogged" color="primary">
-      <button type="button" mat-icon-button (keypress)="drawer.toggle()" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
+        <ng-template #loggedTemplate>
+          <button type="button" mat-icon-button (keypress)="drawer.toggle()" (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
 
-      <div class="only-desktop">{{ time | date: "HH:mm" }}</div>
+          <div class="only-desktop">{{ time | date: "HH:mm" }}</div>
 
-      <div class="header__right">
-        <div class="header__right-wrapper">
-          <mat-icon>dark_mode</mat-icon>
-          <mat-slide-toggle [formControl]="toggleTheme" color="accent"></mat-slide-toggle>
-        </div>
+          <div class="header__right">
+            <div class="header__right-wrapper">
+              <mat-icon>dark_mode</mat-icon>
+              <mat-slide-toggle [formControl]="toggleTheme" color="accent"></mat-slide-toggle>
+            </div>
 
-        <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
-          <mat-icon>account_circle</mat-icon>
-        </button>
+            <button [matMenuTriggerFor]="userMenu" type="button" mat-icon-button>
+              <mat-icon>account_circle</mat-icon>
+            </button>
 
-        <mat-menu #userMenu="matMenu">
-          <mat-nav-list>
-            <a mat-list-item [routerLink]="['/profile/']"> {{ "navigation.profile" | translate }} </a>
-          </mat-nav-list>
-          <mat-nav-list>
-            <a mat-list-item (keypress)="logout()" (click)="logout()"> {{ "navigation.logout" | translate }} </a>
-          </mat-nav-list>
-        </mat-menu>
-      </div>
-    </mat-toolbar>
+            <mat-menu #userMenu="matMenu">
+              <mat-nav-list>
+                <a mat-list-item [routerLink]="['/profile/']">{{ "navigation.profile" | translate }}</a>
+              </mat-nav-list>
+              <mat-nav-list>
+                <a mat-list-item (keypress)="logout()" (click)="logout()">{{ "navigation.logout" | translate }}</a>
+              </mat-nav-list>
+            </mat-menu>
+          </div>
+        </ng-template>
+      </mat-toolbar>
+    </header>
 
     <div class="mat-app-background app-container" [@routerTransition]="{ value: getState(outlet), params: { size: isSidebarIsOpened && isDesktop ? sidebarSize : '0px' } }">
       <router-outlet #outlet="outlet"></router-outlet>
