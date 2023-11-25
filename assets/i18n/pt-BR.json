@@ -5,7 +5,6 @@
   },
   "button": {
     "cancel": "Cancelar",
-    "clear": "Limpar",
     "dismiss": "Dispensar",
     "register": "Registrar",
     "save": "Salvar",
@@ -87,7 +86,7 @@
     "portuguese": "Português"
   },
   "statistics": {
-    "no-data": "Sem dados para <br>exibir gráficos.",
+    "no-data": "Sem dados para exibir gráficos.",
     "status": {
       "done": "Feito",
       "progress": "Em progresso",
