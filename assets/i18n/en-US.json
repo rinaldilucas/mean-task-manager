@@ -5,6 +5,7 @@
   },
   "button": {
     "cancel": "Cancel",
+    "clear": "Clear",
     "dismiss": "Dismiss",
     "register": "Register",
     "save": "Save",
