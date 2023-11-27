@@ -12,6 +12,7 @@ import { AuthGuard } from '@app/scripts/guards/auth.guard';
 import { LoggedInAuthGuard } from '@app/scripts/guards/logged-in.guard';
 import { RoleGuard } from '@app/scripts/guards/role.guard';
 import { ERole } from '@app/scripts/models/enums/role.enum';
+import { CategoryResolver } from '@app/scripts/resolvers/category.resolver';
 
 const routes: Routes = [
   { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { state: 'profile' } },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' } },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' }, resolve: { categoryData: CategoryResolver } },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: EmptyPageComponent },
 ];

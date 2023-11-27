@@ -5,7 +5,7 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, map, startWith, take } from 'rxjs';
+import { Observable, lastValueFrom, map, startWith, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -14,6 +14,7 @@ import { ICategory } from '@app/scripts/models/category.interface';
 import { EStatus } from '@app/scripts/models/enums/status.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
+import { CategoryService } from '@app/scripts/services/category.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { TaskService } from '@app/scripts/services/task.service';
 
@@ -21,7 +22,7 @@ import { TaskService } from '@app/scripts/services/task.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormComponent extends Unsubscriber implements OnDeactivate, CanDeactivate<boolean> {
+export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate, CanDeactivate<boolean> {
   isFormSubmitted = false;
   isFormDirty = false;
 
@@ -36,15 +37,11 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
   }
 
   async open(): Promise<void> {
-    const task = this.route.snapshot.data.taskData.task as ITask;
-    const categories = this.route.snapshot.data.taskData.categories as ICategory;
-
-    this.subs.sink = this.sharedService.onFormDirtyChange.subscribe((isFormDirty: boolean) => (this.isFormDirty = isFormDirty));
-    this.subs.sink = this.sharedService.onFormSubmitChange.subscribe((isFormSubmitted: boolean) => (this.isFormSubmitted = isFormSubmitted));
+    const id = this.route.snapshot.params.id as string;
 
     await this.sharedService.handleSheets({
-      component: TaskFormSheetComponent,
-      options: { task, categories },
+      component: TaskFormComponent,
+      options: { id },
       disableClose: true,
     });
 
@@ -86,16 +83,16 @@ export class TaskFormComponent extends Unsubscriber implements OnDeactivate, Can
   templateUrl: './task-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormSheetComponent extends Unsubscriber implements OnInit, AfterViewInit {
+export class TaskFormComponent extends Unsubscriber implements OnInit, AfterViewInit {
   @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
   title!: string;
-  isLoading = false;
+  isLoading = true;
   form!: FormGroup;
 
-  isNew = !this.bottomsheetData?.task._id;
-  task = this.bottomsheetData.task;
-  categories = this.bottomsheetData.categories;
+  isNew = !this.bottomsheetData?.id;
+  task!: ITask;
+  categories!: ICategory[];
   categoriesFilteredOptions!: Observable<ICategory[]>;
 
   constructor(
@@ -105,25 +102,47 @@ export class TaskFormSheetComponent extends Unsubscriber implements OnInit, Afte
     private sharedService: SharedService,
     private translate: TranslateService,
     private changeDetector: ChangeDetectorRef,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { task: ITask; categories: ICategory[] },
+    private categoryService: CategoryService,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public bottomsheetData: { id: string },
   ) {
     super();
 
     this.form = this.formBuilder.group({
-      _id: [this.task._id, null],
-      title: [this.task.title, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      description: [this.task.description, [Validators.maxLength(300)]],
-      date: [this.task.date, null],
-      category: [this.task.category, null],
+      _id: [null, null],
+      title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      description: [null, [Validators.maxLength(300)]],
+      date: [null, null],
+      category: [null, null],
     });
 
     this.subs.sink = this.form.valueChanges.pipe(take(1)).subscribe(() => this.sharedService.onFormDirtyChange.emit(this.form.dirty));
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
     this.sharedService.handleTitle(this.title);
+
+    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
+    if (!result || !result.success || error) {
+      this.sharedService.handleSnackbars({ translationKey: 'task-form.categories-error', error: true });
+      return;
+    }
+
+    this.categories = result.data;
+
+    if (!this.isNew) {
+      const [result2, error2]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.get(this.bottomsheetData.id)));
+      if (!result || !result.success || error2) {
+        this.sharedService.handleSnackbars({ translationKey: 'task-form.task-error', error: true });
+        return;
+      }
+
+      this.task = result2.data[0];
+      this.form.patchValue(this.task);
+    }
+
     this.setAutoCompletes();
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async saveAsync(): Promise<void> {

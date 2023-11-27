@@ -10,33 +10,17 @@
           </button>
           <mat-menu #searchMenu="matMenu">
             <div class="list__header-search">
-              <div class="list__header-search-wrapper">
-                <mat-form-field color="accent">
-                  <input
-                    color="primary"
-                    matInput
-                    placeholder="{{ 'task-list.search' | translate }}..."
-                    #searchInput
-                    [formControl]="search"
-                    (click)="$event.stopPropagation()"
-                    (keyup.enter)="filterTasksAsync(searchInput.value)"
-                  />
-                </mat-form-field>
-                <button
-                  type="button"
-                  class="list__header-search-close"
-                  mat-icon-button
-                  mat-button
-                  *ngIf="searchInput.value || tasks.length === 0"
-                  matSuffix
-                  (click)="$event.stopPropagation(); filterTasksAsync('')"
-                >
-                  <mat-icon>close</mat-icon>
-                </button>
-              </div>
-              <button type="button" class="list__header-search-submit" mat-icon-button mat-mini-fab color="primary" (click)="filterTasksAsync(searchInput.value)">
-                <mat-icon>check</mat-icon>
-              </button>
+              <mat-form-field color="accent">
+                <input
+                  color="primary"
+                  matInput
+                  placeholder="{{ 'task-list.search' | translate }}..."
+                  #searchInput
+                  [formControl]="search"
+                  (keyup.enter)="filterTasksAsync(searchInput.value)"
+                />
+                <mat-icon (click)="filterTasksAsync('')" matSuffix>close</mat-icon>
+              </mat-form-field>
             </div>
           </mat-menu>
         </div>

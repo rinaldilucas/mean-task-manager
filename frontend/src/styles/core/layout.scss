@@ -83,11 +83,11 @@ a {
 
   @include media(">=desktop") {
     margin-top: vw(-35);
-    zoom: unset;
+    transform: scale(1);
   }
 
   mat-spinner {
-    zoom: 0.9;
+    transform: scale(0.9);
   }
 }
 

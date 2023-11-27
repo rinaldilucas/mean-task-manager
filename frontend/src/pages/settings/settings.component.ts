@@ -6,6 +6,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
 
+import { ActivatedRoute } from '@angular/router';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { ELanguage } from '@app/scripts/models/enums/language.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
@@ -35,6 +36,7 @@ export class SettingsComponent implements OnInit {
     private translate: TranslateService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
   ) {
     this.form = this.formBuilder.group({
       languageOptions: [ELanguage.english],
@@ -48,6 +50,9 @@ export class SettingsComponent implements OnInit {
   }
 
   async refreshAsync(): Promise<void> {
+    const categories = this.route.snapshot.data.categoryData.categories as ICategory;
+    console.log(categories);
+
     const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
 
