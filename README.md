@@ -106,7 +106,7 @@ Here are some of the features:
 - Multiple handlers to ease the use of dialogs, bottomsheets, snackbars and more
 - Custom async validator to check already registered user
 - Registering using password techniques
-- Example using functional resolvers
+- Example using functional resolvers with loading on routes
 - Interceptor modules added to verify bearer token, errors, and headers language
 - Front-end validation on requests and inputs
 - Handler of promises and errors using destructuring
@@ -172,7 +172,6 @@ You need to have the following requirements:
 - mongodb <a target="_blank" href="https://www.mongodb.com/try/download/community/">(download here)</a>
 - node 16.20.1 <a target="_blank" href="https://nodejs.org/en/download/">(download here)</a>
 - redis <a target="_blank" href="https://redis.io/download/">(download here for Linux)</a> or <a target="_blank" href="https://github.com/tporadowski/redis/releases">(download here for windows)</a>
-
 - yarn
 
   ```sh
@@ -234,7 +233,6 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 [PUT] localhost:3000/api/users/changePassword/{id} -> 'changePassword'
 [POST] localhost:3000/api/users/refreshToken -> 'refreshToken'
 [POST] localhost:3000/api/users/logout -> 'logout'
-
 
 -------------------------------
 -------- [TASK ROUTES] --------

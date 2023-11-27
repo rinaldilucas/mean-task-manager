@@ -117,6 +117,10 @@
   }
 }
 
+.absolute {
+  position: absolute !important;
+}
+
 %backdrop::after {
   position: absolute;
   top: vw(-10);

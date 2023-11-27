@@ -62,6 +62,7 @@
           </div>
         </ng-template>
       </mat-toolbar>
+      <mat-progress-bar *ngIf="isLoading" class="absolute" color="accent" mode="indeterminate"></mat-progress-bar>
     </header>
 
     <div class="mat-app-background app-container" [@routerTransition]="{ value: getState(outlet), params: { size: isSidebarIsOpened && isDesktop ? sidebarSize : '0px' } }">

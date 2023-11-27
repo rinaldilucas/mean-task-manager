@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 import { TranslateService } from '@ngx-translate/core';
-import { lastValueFrom, take } from 'rxjs';
+import { take } from 'rxjs';
 
 import { ActivatedRoute } from '@angular/router';
 import { ICategory } from '@app/scripts/models/category.interface';
@@ -21,7 +21,7 @@ import { SharedService } from '@app/scripts/services/shared.service';
 export class SettingsComponent implements OnInit {
   @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
 
-  isLoading = true;
+  isLoading = false;
   isSearching = false;
   isProcessing = false;
 
@@ -46,18 +46,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.verifyLanguage();
     this.updateTitle();
-    this.refreshAsync();
-  }
-
-  async refreshAsync(): Promise<void> {
-    const categories = this.route.snapshot.data.categoryData.categories as ICategory;
-    console.log(categories);
-
-    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'settings.get-error', error: true });
-
-    this.categories = result.data;
-    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async saveCategoryAsync(event: MatChipInputEvent): Promise<void> {

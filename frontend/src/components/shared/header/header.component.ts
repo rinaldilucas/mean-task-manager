@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
@@ -24,6 +24,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
   isDesktop = false;
   isSidebarIsOpened = false;
   sidebarSize = '1.81rem';
+  isLoading = false;
 
   isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
     map((result) => result.matches),
@@ -37,8 +38,28 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     private authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private changeDetector: ChangeDetectorRef,
+    private router: Router,
   ) {
     super();
+
+    this.router.events.subscribe((event: any) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.isLoading = true;
+          break;
+        }
+
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.isLoading = false;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
