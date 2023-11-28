@@ -113,6 +113,7 @@
     "to-do": "A fazer"
   },
   "task-form": {
+    "category-fetch-error": "Erro ao buscar categorias.",
     "confirmation-action": "DESCARTAR",
     "confirmation-message": "Você fez alterações na tarefa. Tem certeza de que deseja sair desta página?",
     "confirmation-title": "Alterações Não Salvas",
@@ -120,7 +121,8 @@
     "create-success": "Tarefa criada com sucesso.",
     "edit-error": "Erro ao editar tarefa.",
     "edit-success": "Tarefa editada com sucesso.",
-    "get-error": "Erro ao buscar tarefa."
+    "get-error": "Erro ao buscar tarefa.",
+    "task-fetch-error": "Erro ao buscar tarefa."
   },
   "task-list": {
     "confirmation-action": "REMOVER",

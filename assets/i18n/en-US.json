@@ -113,6 +113,7 @@
     "to-do": "To do"
   },
   "task-form": {
+    "category-fetch-error": "Error retrieving categories.",
     "confirmation-action": "DISCARD",
     "confirmation-message": "You have made changes to the task. Are you sure you want to leave this page?",
     "confirmation-title": "Unsaved Changes",
@@ -120,7 +121,8 @@
     "create-success": "Task created with success.",
     "edit-error": "Error updating the task.",
     "edit-success": "Task edited with success.",
-    "get-error": "Error retrieving task."
+    "get-error": "Error retrieving task.",
+    "task-fetch-error": "Error retrieving task."
   },
   "task-list": {
     "confirmation-action": "DELETE",
