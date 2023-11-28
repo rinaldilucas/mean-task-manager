@@ -46,7 +46,7 @@
     "logout-success": "Logout com sucesso.",
     "password": "Senha",
     "password-error": "Senhas não conferem.",
-    "remember-me": "Remember me",
+    "remember-me": "Manter conectado",
     "too-many-requests-error": "Muitas tentativas realizadas. Tente novamente mais tarde.",
     "user-error": "Conta não encontrada."
   },
