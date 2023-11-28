@@ -68,7 +68,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.paginator.pageSize = options.pageSize;
       this.paginator.pageSizeOptions = options.pageSizeOptions;
     });
-    // this.subs.sink = this.search.valueChanges.pipe(debounceTime(300)).subscribe(() => this.filterTasksAsync(this.search.value));
 
     this.refreshAsync();
     this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync({ showLoading: true }));
