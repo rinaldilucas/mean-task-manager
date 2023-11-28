@@ -82,8 +82,8 @@ a {
   height: 100%;
 
   @include media(">=desktop") {
-    margin-top: vw(-35);
     transform: scale(1);
+    margin-top: vw(-35);
   }
 
   mat-spinner {
