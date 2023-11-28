@@ -52,9 +52,11 @@
     }
 
     h1 {
+      line-height: vw(48);
       font-size: vw(36);
 
       @include media(">=desktop") {
+        line-height: vw(56);
         font-size: vw(48);
       }
     }
