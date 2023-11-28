@@ -1,11 +1,11 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@app/scripts/services/auth.service';
@@ -42,24 +42,7 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
   ) {
     super();
 
-    this.router.events.subscribe((event: any) => {
-      switch (true) {
-        case event instanceof NavigationStart: {
-          this.isLoading = true;
-          break;
-        }
-
-        case event instanceof NavigationEnd:
-        case event instanceof NavigationCancel:
-        case event instanceof NavigationError: {
-          this.isLoading = false;
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    });
+    this.router.events.subscribe((routerEvent: any) => this.checkRouterEvent(routerEvent));
   }
 
   ngOnInit(): void {
@@ -92,6 +75,16 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
         localStorage.removeItem('theme');
       }
     });
+  }
+
+  checkRouterEvent(routerEvent: RouterEvent): void {
+    if (routerEvent instanceof NavigationStart) {
+      this.isLoading = true;
+    }
+
+    if (routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel || routerEvent instanceof NavigationError) {
+      this.isLoading = false;
+    }
   }
 
   logout(): void {
