@@ -93,13 +93,17 @@
     &-title {
       display: flex;
       align-items: center;
-      margin: 0 0 0 vw(55) !important;
+      margin: 0 0 0 vw(56) !important;
       font-size: vw(34) !important;
       font-weight: 400 !important;
     }
 
     &-icons {
-      margin-right: vw(35) !important;
+      margin-right: vw(28) !important;
+
+      button {
+        margin-left: vw(8);
+      }
     }
 
     &-search {

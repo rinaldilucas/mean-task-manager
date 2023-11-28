@@ -6,7 +6,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
 
-import { ActivatedRoute } from '@angular/router';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { ELanguage } from '@app/scripts/models/enums/language.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
@@ -36,7 +35,6 @@ export class SettingsComponent implements OnInit {
     private translate: TranslateService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
   ) {
     this.form = this.formBuilder.group({
       languageOptions: [ELanguage.english],

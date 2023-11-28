@@ -5,6 +5,9 @@
         <h2 class="list__header-title">{{ "title.tasks" | translate }}</h2>
 
         <div class="list__header-icons">
+          <button type="button" mat-icon-button *ngIf="(tasks.length > 0 || isSearching) && !isLoading" (click)="refreshAsync()">
+            <mat-icon>refresh</mat-icon>
+          </button>
           <button type="button" mat-icon-button [matMenuTriggerFor]="searchMenu" *ngIf="(tasks.length > 0 || isSearching) && !isLoading" (click)="searchInput.focus()">
             <mat-icon>search</mat-icon>
           </button>
@@ -37,7 +40,7 @@
           <app-no-data message="{{ 'task-list.empty-search' | translate }}" icon="sms"></app-no-data>
         </div>
 
-        <div [hidden]="isLoading || !tasks.length || searchedTasks.length > 0" class="list__table">
+        <div *ngIf="!isLoading && tasks.length > 0" class="list__table">
           <cdk-virtual-scroll-viewport *ngIf="tasks && tasks.length > 0" class="list__table-vscroll" tvsItemSize="20">
             <table [hidden]="isLoading || !tasks || !tasks.length" mat-table [dataSource]="tasksDataSource" matSort (matSortChange)="sortDataAsync($event)">
               <ng-container matColumnDef="date">

@@ -63,14 +63,16 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, { pageSize: this.pageSize, pageSizeOptions: this.pageSizeOptions });
     this.removeSubscriptionsFromService = true;
 
+    this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync());
     this.subs.sink = this.sharedService.onTableColumnChange.subscribe((columnOptions: string[]) => (this.displayedColumns = columnOptions));
     this.subs.sink = this.sharedService.onPageSizeChange.subscribe((options: { pageSize: number; pageSizeOptions: number[] }) => {
-      this.paginator.pageSize = options.pageSize;
-      this.paginator.pageSizeOptions = options.pageSizeOptions;
+      if (this.paginator) {
+        this.paginator.pageSize = options.pageSize;
+        this.paginator.pageSizeOptions = options.pageSizeOptions;
+      }
     });
 
     this.refreshAsync();
-    this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync({ showLoading: true }));
   }
 
   add(): void {
@@ -81,10 +83,8 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.router.navigate(['tasks/edit', id]);
   }
 
-  async refreshAsync({ showLoading = false }: { showLoading?: boolean } = {}): Promise<void> {
-    if (showLoading) {
-      this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
-    }
+  async refreshAsync(): Promise<void> {
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize })));
     if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
@@ -169,11 +169,12 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       );
       if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
 
-      this.paginator.pageIndex = 0;
       this.tasks = result.data;
       this.pageCount = result.totalCount;
       this.tasksDataSource = this.sharedService.setDataSource(this.tasks);
       this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+
+      if (this.paginator) this.paginator.pageIndex = 0;
     }
     this.search.setValue('');
   }

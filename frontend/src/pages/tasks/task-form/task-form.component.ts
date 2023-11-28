@@ -122,22 +122,22 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
     this.sharedService.handleTitle(this.title);
 
-    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
-    if (!result || !result.success || error) {
-      this.sharedService.handleSnackbars({ translationKey: 'task-form.categories-error', error: true });
+    const [categoryResult, categoryError]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
+    if (!categoryResult || !categoryResult.success || categoryError) {
+      this.sharedService.handleSnackbars({ translationKey: 'task-form.category-fetch-error', error: true });
       return;
     }
 
-    this.categories = result.data;
+    this.categories = categoryResult.data;
 
     if (!this.isNew) {
-      const [result2, error2]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.get(this.bottomsheetData.id)));
-      if (!result || !result.success || error2) {
-        this.sharedService.handleSnackbars({ translationKey: 'task-form.task-error', error: true });
+      const [taskResult, taskError]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.get(this.bottomsheetData.id)));
+      if (!taskResult || !taskResult.success || taskError) {
+        this.sharedService.handleSnackbars({ translationKey: 'task-form.task-fetch-error', error: true });
         return;
       }
 
-      this.task = result2.data[0];
+      this.task = taskResult.data[0];
       this.form.patchValue(this.task);
     }
 
