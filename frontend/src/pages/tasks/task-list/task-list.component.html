@@ -5,7 +5,7 @@
         <h2 class="list__header-title">{{ "title.tasks" | translate }}</h2>
 
         <div class="list__header-icons">
-          <button type="button" mat-icon-button [matMenuTriggerFor]="searchMenu" [hidden]="(tasks.length > 0 || isSearching) && !isLoading" (click)="searchInput.focus()">
+          <button type="button" mat-icon-button [matMenuTriggerFor]="searchMenu" *ngIf="(tasks.length > 0 || isSearching) && !isLoading" (click)="searchInput.focus()">
             <mat-icon>search</mat-icon>
           </button>
           <mat-menu #searchMenu="matMenu">
@@ -19,8 +19,11 @@
                   [formControl]="search"
                   (keyup.enter)="filterTasksAsync(searchInput.value)"
                 />
-                <mat-icon (click)="filterTasksAsync('')" matSuffix>close</mat-icon>
+                <mat-icon (click)="filterTasksAsync()" matSuffix>close</mat-icon>
               </mat-form-field>
+              <button type="button" class="list__header-search-submit" mat-icon-button mat-mini-fab color="primary" (click)="filterTasksAsync(searchInput.value)">
+                <mat-icon>check</mat-icon>
+              </button>
             </div>
           </mat-menu>
         </div>

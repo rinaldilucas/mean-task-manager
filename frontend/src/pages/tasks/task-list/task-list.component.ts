@@ -155,10 +155,10 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
-  async filterTasksAsync(text: string): Promise<void> {
+  async filterTasksAsync(text?: string): Promise<void> {
     this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
-    if (text === '') {
+    if (!text) {
       this.isSearching = false;
       this.refreshAsync();
     } else {
