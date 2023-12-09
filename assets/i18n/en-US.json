@@ -20,8 +20,8 @@
     "hasnt-number": "The field must contain at least one number",
     "hasnt-special": "Password must contain a special character (@, $, !, &, etc)",
     "match": "Passwords did not match",
-    "max-length": "The field length must be greater than {{value}} characters",
-    "min-length": "The field length must be lesser than {{value}} characters",
+    "max-length": "The field length must be lesser than {{value}} characters",
+    "min-length": "The field length must be greater than {{value}} characters",
     "required": "Required field"
   },
   "home": {

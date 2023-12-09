@@ -20,8 +20,8 @@
     "hasnt-number": "O campo deve conter pelo menos um número",
     "hasnt-special": "A senha deve conter um caractere especial (@, $, !, &, etc)",
     "match": "As senhas não correspondem",
-    "max-length": "O tamanho do campo deve ser maior que {{value}} caracteres",
-    "min-length": "O tamanho do campo deve ser menor que {{value}} caracteres",
+    "max-length": "O tamanho do campo deve ser menor que {{value}} caracteres",
+    "min-length": "O tamanho do campo deve ser maior que {{value}} caracteres",
     "required": "Campo obrigatório"
   },
   "home": {
