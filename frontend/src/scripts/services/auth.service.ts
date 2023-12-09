@@ -87,6 +87,8 @@ export class AuthService {
 
     if (!authInformation) return false;
 
+    // todo: add here
+
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (!this.refreshTokenTimeout) {
