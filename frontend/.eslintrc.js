@@ -4,7 +4,7 @@ var OFF = 0,
 
 module.exports = {
   root: true,
-  ignorePatterns: ['dist/*', 'node_modules/*'],
+  ignorePatterns: ['dist/*', 'node_modules/*', 'src/assets/*', 'qex-dev-lib/*'],
   parserOptions: {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
@@ -23,6 +23,21 @@ module.exports = {
         project: ['tsconfig.json'],
       },
       rules: {
+        'prettier/prettier': [
+          'error',
+          {
+            parser: 'angular',
+            printWidth: 135,
+            arrowParens: 'always',
+            embeddedLanguageFormatting: 'auto',
+            endOfLine: 'auto',
+            htmlWhitespaceSensitivity: 'css',
+            proseWrap: 'preserve',
+            quoteProps: 'consistent',
+            trailingComma: 'all',
+            semi: false,
+          },
+        ],
         '@angular-eslint/directive-selector': [
           'error',
           {
@@ -70,14 +85,12 @@ module.exports = {
         '@angular-eslint/template/no-autofocus': WARN,
         '@angular-eslint/template/mouse-events-have-key-events': WARN,
         '@angular-eslint/template/click-events-have-key-events': WARN,
-        '@angular-eslint/template/accessibility-interactive-supports-focus':
-          OFF,
+        '@angular-eslint/template/accessibility-interactive-supports-focus': OFF,
         '@angular-eslint/template/accessibility-valid-aria': WARN,
         '@angular-eslint/template/accessibility-role-has-required-aria': WARN,
         '@angular-eslint/template/button-has-type': WARN,
         '@angular-eslint/template/accessibility-elements-content': WARN,
-        '@angular-eslint/template/accessibility-label-has-associated-control':
-          WARN,
+        '@angular-eslint/template/accessibility-label-has-associated-control': WARN,
         '@angular-eslint/template/accessibility-table-scope': WARN,
         '@angular-eslint/template/no-distracting-elements': WARN,
         '@angular-eslint/template/button-has-type': WARN,
@@ -88,7 +101,21 @@ module.exports = {
       excludedFiles: ['*inline-template-*.component.html'],
       extends: ['plugin:prettier/recommended'],
       rules: {
-        'prettier/prettier': ['error', { parser: 'angular' }],
+        'prettier/prettier': [
+          'error',
+          {
+            parser: 'angular',
+            printWidth: 135,
+            arrowParens: 'always',
+            embeddedLanguageFormatting: 'auto',
+            endOfLine: 'auto',
+            htmlWhitespaceSensitivity: 'css',
+            proseWrap: 'preserve',
+            quoteProps: 'consistent',
+            trailingComma: 'all',
+            semi: false,
+          },
+        ],
       },
     },
   ],

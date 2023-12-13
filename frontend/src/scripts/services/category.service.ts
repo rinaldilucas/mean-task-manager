@@ -20,8 +20,6 @@ export class CategoryService extends CrudService<ICategory> {
     let params = new HttpParams();
     params = params.append('onlyMine', true);
 
-    return this.http
-      .get<IQueryResult<ICategory[]>>(endpoint, { params })
-      .pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<ICategory[]>>(endpoint, { params }).pipe(catchError(this.sharedService.errorHandler));
   }
 }

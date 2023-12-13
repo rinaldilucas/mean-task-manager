@@ -131,9 +131,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971748.0938,
       "isPrivate": false,
@@ -166,9 +164,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {
         "type": "bearer",
         "prefix": "Bearer",
@@ -238,9 +234,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971698.0938,
       "isPrivate": false,
@@ -310,9 +304,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971677,
       "isPrivate": false,
@@ -345,9 +337,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971652,
       "isPrivate": false,
@@ -380,9 +370,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": {},
       "metaSortKey": -1683041971602,
       "isPrivate": false,
@@ -529,9 +517,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999628,
       "isPrivate": false,
@@ -570,9 +556,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999626,
       "isPrivate": false,
@@ -677,9 +661,7 @@
         ]
       },
       "parameters": [],
-      "headers": [
-        { "name": "Content-Type", "value": "application/x-www-form-urlencoded" }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/x-www-form-urlencoded" }],
       "authentication": { "token": "{{ _.token }}", "type": "bearer" },
       "metaSortKey": -1682360999632,
       "isPrivate": false,
@@ -772,17 +754,7 @@
         "categoryId": "{% response 'body', 'req_e11f03b94f47416596e21531b9835456', 'b64::JC5kYXRhWzoxXS5faWQ=::46b', no-history, 60 %}"
       },
       "dataPropertyOrder": {
-        "&": [
-          "baseUrl",
-          "email",
-          "password",
-          "role",
-          "token",
-          "refresh",
-          "userId",
-          "taskId",
-          "categoryId"
-        ]
+        "&": ["baseUrl", "email", "password", "role", "token", "refresh", "userId", "taskId", "categoryId"]
       },
       "color": null,
       "isPrivate": false,

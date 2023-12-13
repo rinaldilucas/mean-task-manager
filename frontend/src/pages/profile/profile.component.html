@@ -2,9 +2,7 @@
   <div class="form__box">
     <mat-card>
       <mat-card-header>
-        <mat-card-title class="form__title">{{
-          "title.profile" | translate
-        }}</mat-card-title>
+        <mat-card-title class="form__title">{{ "title.profile" | translate }}</mat-card-title>
       </mat-card-header>
 
       <form [formGroup]="form" (keyup.enter)="saveAsync()">

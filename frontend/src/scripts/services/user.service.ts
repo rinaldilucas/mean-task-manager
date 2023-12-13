@@ -18,41 +18,26 @@ export class UserService extends CrudService<IUser> {
     super(http, injector, endpoint);
   }
 
-  authenticate(
-    email: string,
-    password: string,
-    keepUserLoggedIn: boolean,
-  ): Promise<IQueryResult<IJwtPayload>> {
+  authenticate(email: string, password: string, keepUserLoggedIn: boolean): Promise<IQueryResult<IJwtPayload>> {
     const credentials = { email, password, keepUserLoggedIn };
     const url = `${endpoint}/authenticate`;
 
     return lastValueFrom(
-      this.http
-        .post<IQueryResult<IJwtPayload>>(url, credentials)
-        .pipe(catchError(this.sharedService.errorHandler)),
+      this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)),
     );
   }
 
   checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
     const url = `${endpoint}/exists/${email}`;
 
-    return this.http
-      .get<IQueryResult<IUser>>(url)
-      .pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 
-  changePassword(
-    userId: string,
-    password: string,
-  ): Promise<IQueryResult<IUser>> {
+  changePassword(userId: string, password: string): Promise<IQueryResult<IUser>> {
     const url = `${endpoint}/changePassword/${userId}`;
     const body = { password };
 
-    return lastValueFrom(
-      this.http
-        .put<IQueryResult<IUser>>(url, body)
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   refreshToken(): Promise<IQueryResult<IJwtPayload>> {
@@ -64,11 +49,7 @@ export class UserService extends CrudService<IUser> {
           ...this.authService.getLoggedUser(),
           refresh: this.authService.getRefreshToken(),
         })
-        .pipe(
-          tap((response: IQueryResult<IJwtPayload>) =>
-            this.authService.authenticateToken(response.data[0]),
-          ),
-        )
+        .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authService.authenticateToken(response.data[0])))
         .pipe(catchError(this.sharedService.errorHandler)),
     );
   }
@@ -76,10 +57,6 @@ export class UserService extends CrudService<IUser> {
   logout(token: string): Promise<IQueryResult<IUser>> {
     const url = `${endpoint}/logout`;
 
-    return lastValueFrom(
-      this.http
-        .post<IQueryResult<IUser>>(url, { token })
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
   }
 }

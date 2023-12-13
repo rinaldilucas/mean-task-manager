@@ -2,25 +2,13 @@
   <div class="form__box">
     <mat-card>
       <mat-card-header>
-        <mat-card-title class="form__title">{{
-          "title.login" | translate
-        }}</mat-card-title>
+        <mat-card-title class="form__title">{{ "title.login" | translate }}</mat-card-title>
       </mat-card-header>
 
-      <form
-        [formGroup]="form"
-        cdkTrapFocus
-        [cdkTrapFocusAutoCapture]="true"
-        (keyup.enter)="loginAsync()"
-      >
+      <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="loginAsync()">
         <mat-card-content>
           <mat-form-field class="full-width" color="accent">
-            <input
-              formControlName="email"
-              matInput
-              placeholder="{{ 'input.email' | translate }}"
-              cdkFocusInitial
-            />
+            <input formControlName="email" matInput placeholder="{{ 'input.email' | translate }}" cdkFocusInitial />
             <mat-error *ngIf="form.get('email')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>
@@ -56,9 +44,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-checkbox formControlName="keepUserLogged" color="primary">{{
-            "login.remember-me" | translate
-          }}</mat-checkbox>
+          <mat-checkbox formControlName="keepUserLogged" color="primary">{{ "login.remember-me" | translate }}</mat-checkbox>
         </mat-card-content>
 
         <button

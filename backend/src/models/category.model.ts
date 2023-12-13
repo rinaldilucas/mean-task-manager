@@ -9,7 +9,4 @@ const SchemaModel = new Schema(
   { timestamps: true },
 );
 
-export const Category: Model<Interface> = model<Interface>(
-  'Category',
-  SchemaModel,
-);
+export const Category: Model<Interface> = model<Interface>('Category', SchemaModel);

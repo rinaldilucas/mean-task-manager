@@ -35,10 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'tasks',
-    loadChildren: () =>
-      import('@app/scripts/modules/tasks.module').then(
-        (module) => module.TaskModule,
-      ),
+    loadChildren: () => import('@app/scripts/modules/tasks.module').then((module) => module.TaskModule),
     canLoad: [AuthGuard],
   },
   {

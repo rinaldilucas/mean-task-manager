@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -40,12 +35,7 @@ export class RegisterComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: [
         null,
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(150),
-          Validators.pattern(CustomValidators.emailRegex),
-        ],
+        [Validators.required, Validators.minLength(5), Validators.maxLength(150), Validators.pattern(CustomValidators.emailRegex)],
         [CustomValidators.checkEmail(this.userService)],
       ],
       password: [
@@ -61,10 +51,7 @@ export class RegisterComponent implements OnInit {
           CustomValidators.specialCharacters,
         ],
       ],
-      confirmPassword: [
-        null,
-        [Validators.required, CustomValidators.equalsTo('password')],
-      ],
+      confirmPassword: [null, [Validators.required, CustomValidators.equalsTo('password')]],
     });
 
     this.form.statusChanges.subscribe((status) => {
@@ -89,8 +76,7 @@ export class RegisterComponent implements OnInit {
     });
 
     const user = { ...this.form.value, role: ERole.user } as IUser;
-    const [result, error]: IQueryResult<IUser>[] =
-      await this.sharedService.handlePromises(this.userService.save(user));
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.save(user));
     if (!result || !result.success || error) {
       if (error?.status === StatusCode.ClientErrorConflict)
         return this.sharedService.handleSnackbars({

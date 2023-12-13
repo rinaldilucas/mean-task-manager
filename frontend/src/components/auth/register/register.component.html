@@ -2,17 +2,10 @@
   <div class="form__box">
     <mat-card>
       <mat-card-header>
-        <mat-card-title class="form__title">{{
-          "title.register" | translate
-        }}</mat-card-title>
+        <mat-card-title class="form__title">{{ "title.register" | translate }}</mat-card-title>
       </mat-card-header>
 
-      <form
-        [formGroup]="form"
-        cdkTrapFocus
-        [cdkTrapFocusAutoCapture]="true"
-        (keyup.enter)="registerAsync()"
-      >
+      <form [formGroup]="form" cdkTrapFocus [cdkTrapFocusAutoCapture]="true" (keyup.enter)="registerAsync()">
         <mat-card-content>
           <mat-form-field class="full-width" color="accent">
             <input
@@ -48,11 +41,9 @@
               placeholder="{{ 'input.password' | translate }}"
               autocompleteOff
             />
-            <mat-icon
-              matSuffix
-              (click)="togglePasswordVisibility($event, 'password')"
-              >{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon
-            >
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'password')">{{
+              showPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>
@@ -68,17 +59,13 @@
             <mat-error *ngIf="form.get('password')?.hasError('hasSequential')">
               {{ "error.has-sequential" | translate: { value: 4 } }}
             </mat-error>
-            <mat-error
-              *ngIf="form.get('password')?.hasError('hasntCapitalized')"
-            >
+            <mat-error *ngIf="form.get('password')?.hasError('hasntCapitalized')">
               {{ "error.hasnt-capitalized" | translate }}
             </mat-error>
             <mat-error *ngIf="form.get('password')?.hasError('hasntNumber')">
               {{ "error.hasnt-number" | translate }}
             </mat-error>
-            <mat-error
-              *ngIf="form.get('password')?.hasError('hasntSpecialCharacter')"
-            >
+            <mat-error *ngIf="form.get('password')?.hasError('hasntSpecialCharacter')">
               {{ "error.hasnt-special" | translate }}
             </mat-error>
           </mat-form-field>
@@ -91,21 +78,13 @@
               placeholder="{{ 'input.confirm-password' | translate }}"
               autocompleteOff
             />
-            <mat-icon
-              matSuffix
-              (click)="togglePasswordVisibility($event, 'confirmPassword')"
-              >{{
-                showConfirmPassword ? "visibility_off" : "visibility"
-              }}</mat-icon
-            >
-            <mat-error
-              *ngIf="form.get('confirmPassword')?.hasError('required')"
-            >
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'confirmPassword')">{{
+              showConfirmPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+            <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>
-            <mat-error
-              *ngIf="form.get('confirmPassword')?.hasError('equalsTo')"
-            >
+            <mat-error *ngIf="form.get('confirmPassword')?.hasError('equalsTo')">
               {{ "error.match" | translate }}
             </mat-error>
           </mat-form-field>

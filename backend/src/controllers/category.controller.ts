@@ -4,21 +4,12 @@ import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { Category as Model } from '@api/models/category.model';
-import {
-  handlePromises,
-  responseError,
-  responseSuccess,
-} from '@api/utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class CategoryController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
     const language = request.headers.language;
-    const userId = (
-      jwt.verify(
-        (request.headers.authorization as string).split(' ')[1],
-        String(process.env.JWT_KEY),
-      ) as any
-    ).userId;
+    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
     let onlyMine = request.query.onlyMine == 'true' ? true : false;
 
     let findQuery = {} as any;
@@ -56,26 +47,14 @@ class CategoryController {
           );
       }
 
-      return responseSuccess(
-        response,
-        results[1],
-        StatusCode.SuccessOK,
-        results[0],
-      );
+      return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
     });
   }
 
-  async create(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async create(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      new Model(request.body).save(),
-    );
+    const [data, error] = await handlePromises(request, response, new Model(request.body).save());
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
@@ -97,17 +76,10 @@ class CategoryController {
     return responseSuccess(response, data, StatusCode.SuccessCreated);
   }
 
-  async remove(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async remove(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -126,11 +98,7 @@ class CategoryController {
         );
     }
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.deleteOne({ _id: request.params._id }, request.body),
-    );
+    const [data, error] = await handlePromises(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')

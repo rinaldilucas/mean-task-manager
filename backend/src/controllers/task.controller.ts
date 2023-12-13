@@ -4,38 +4,23 @@ import jwt from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { Task as Model } from '@api/models/task.model';
-import {
-  handlePromises,
-  responseError,
-  responseSuccess,
-} from '@api/utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class TaskController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
-    const userId = (
-      jwt.verify(
-        (request.headers.authorization as string).split(' ')[1],
-        String(process.env.JWT_KEY),
-      ) as any
-    ).userId;
+    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
     const language = request.headers.language;
     const pageIndex = Number(request.query.pageIndex) ?? 1;
     const pageSize = Number(request.query.pageSize) ?? 5;
     const searchTerm = request.query.searchTerm;
-    const startDate = request.query.startDate
-      ? new Date((request.query as any).startDate)
-      : null;
-    const finalDate = request.query.finalDate
-      ? new Date((request.query as any).finalDate)
-      : null;
+    const startDate = request.query.startDate ? new Date((request.query as any).startDate) : null;
+    const finalDate = request.query.finalDate ? new Date((request.query as any).finalDate) : null;
 
     const countQuery = (callback): any => {
       const findQuery = { userId } as any;
 
-      if (searchTerm)
-        findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
-      if (startDate && finalDate)
-        findQuery.createdAt = { $gte: startDate, $lte: finalDate };
+      if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+      if (startDate && finalDate) findQuery.createdAt = { $gte: startDate, $lte: finalDate };
 
       Model.find(findQuery)
         .find({ userId })
@@ -47,10 +32,8 @@ class TaskController {
 
     const retrieveQuery = (callback): any => {
       const findQuery = { userId } as any;
-      if (searchTerm)
-        findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
-      if (startDate && finalDate)
-        findQuery.createdAt = { $gte: startDate, $lte: finalDate };
+      if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
+      if (startDate && finalDate) findQuery.createdAt = { $gte: startDate, $lte: finalDate };
 
       const sortQuery = {} as any;
       const sortDirection = request.query.sortDirection;
@@ -94,26 +77,14 @@ class TaskController {
           );
       }
 
-      return responseSuccess(
-        response,
-        results[1],
-        StatusCode.SuccessOK,
-        results[0],
-      );
+      return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
     });
   }
 
-  async getOne(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async getOne(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (error) return;
     if (!data) {
       if (language === 'en-US')
@@ -135,17 +106,10 @@ class TaskController {
     return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
-  async create(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async create(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      new Model(request.body).save(),
-    );
+    const [data, error] = await handlePromises(request, response, new Model(request.body).save());
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
@@ -167,17 +131,10 @@ class TaskController {
     return responseSuccess(response, data, StatusCode.SuccessCreated);
   }
 
-  async update(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async update(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -204,12 +161,7 @@ class TaskController {
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorBadRequest,
-          `Error updating document with id ${request.params._id}.`,
-        );
+        return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
       else
         return responseError(
           response,
@@ -222,17 +174,10 @@ class TaskController {
     return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
-  async remove(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async remove(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -251,11 +196,7 @@ class TaskController {
         );
     }
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.deleteOne({ _id: request.params._id }, request.body),
-    );
+    const [data, error] = await handlePromises(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')

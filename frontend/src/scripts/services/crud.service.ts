@@ -20,17 +20,13 @@ export class CrudService<T> {
   ) {}
 
   getAll(): Observable<IQueryResult<T[]>> {
-    return this.http
-      .get<IQueryResult<T[]>>(this.endpoint)
-      .pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<T[]>>(this.endpoint).pipe(catchError(this.sharedService.errorHandler));
   }
 
   get(id: string): Observable<IQueryResult<T>> {
     const url = `${this.endpoint}/${id}`;
 
-    return this.http
-      .get<IQueryResult<T>>(url)
-      .pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 
   save(record: T): Promise<IQueryResult<T>> {
@@ -42,31 +38,19 @@ export class CrudService<T> {
     if (!this.sharedService.isUserType(record)) {
       record['userId'] = this.authService.getUserId();
     }
-    return lastValueFrom(
-      this.http
-        .post<IQueryResult<T>>(this.endpoint, record)
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return lastValueFrom(this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   private update(record: T): Promise<IQueryResult<T>> {
     const url = `${this.endpoint}/${record['_id']}`;
 
-    return lastValueFrom(
-      this.http
-        .put<IQueryResult<T>>(url, record)
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return lastValueFrom(this.http.put<IQueryResult<T>>(url, record).pipe(catchError(this.sharedService.errorHandler)));
   }
 
   remove(record: T | string): Promise<IQueryResult<T>> {
     const id = typeof record === 'string' ? record : record['_id'];
     const url = `${this.endpoint}/${id}`;
 
-    return lastValueFrom(
-      this.http
-        .delete<IQueryResult<T>>(url)
-        .pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return lastValueFrom(this.http.delete<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler)));
   }
 }

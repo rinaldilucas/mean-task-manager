@@ -32,21 +32,9 @@ export class LogInComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: [
         null,
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(150),
-          Validators.pattern(CustomValidators.emailRegex),
-        ],
+        [Validators.required, Validators.minLength(5), Validators.maxLength(150), Validators.pattern(CustomValidators.emailRegex)],
       ],
-      password: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(150),
-        ],
-      ],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
       keepUserLogged: [false],
     });
   }
@@ -65,14 +53,9 @@ export class LogInComponent implements OnInit {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const user = { ...this.form.value } as IUser;
-    const [result, error]: IQueryResult<IJwtPayload>[] =
-      await this.sharedService.handlePromises(
-        this.userService.authenticate(
-          user.email,
-          user.password,
-          this.form.controls.keepUserLogged.value,
-        ),
-      );
+    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(
+      this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value),
+    );
 
     if (!result || !result.success || error) {
       if (error.status === StatusCode.ClientErrorUnauthorized) {

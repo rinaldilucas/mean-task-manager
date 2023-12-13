@@ -1,12 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -66,10 +59,7 @@ export class SettingsComponent implements OnInit {
     });
     const category = { title: value } as ICategory;
 
-    const [result, error]: IQueryResult<ICategory>[] =
-      await this.sharedService.handlePromises(
-        this.categoryService.save(category),
-      );
+    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
     if (!result || !result.success || error) {
       this.sharedService.handleSnackbars({
         translationKey: 'settings.category-create-error',
@@ -98,10 +88,7 @@ export class SettingsComponent implements OnInit {
       changeDetector: this.changeDetector,
     });
 
-    const [, error]: IQueryResult<ICategory>[] =
-      await this.sharedService.handlePromises(
-        this.categoryService.remove(category._id),
-      );
+    const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
     if (error) {
       this.sharedService.handleSnackbars({
         translationKey: 'settings.category-remove-error',
@@ -126,11 +113,7 @@ export class SettingsComponent implements OnInit {
     this.sharedService.handleTitle(this.translate.instant('title.settings'));
     this.sharedService.onTitleChange
       .pipe(take(1))
-      .subscribe(() =>
-        this.sharedService.handleTitle(
-          this.translate.instant('title.settings'),
-        ),
-      );
+      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.settings')));
   }
 
   changeLanguage(language: string): void {

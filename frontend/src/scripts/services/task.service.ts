@@ -37,21 +37,15 @@ export class TaskService extends CrudService<ITask> {
   } = {}): Observable<IQueryResult<ITask[]>> {
     let params = new HttpParams();
     if (sortFilter) {
-      params = params
-        .set('sortFilter', sortFilter)
-        .set('sortDirection', sortDirection as string);
+      params = params.set('sortFilter', sortFilter).set('sortDirection', sortDirection as string);
     }
     if (pageSize) params = params.set('pageSize', pageSize);
     if (pageIndex) params = params.set('pageIndex', pageIndex);
     if (searchTerm) params = params.set('searchTerm', searchTerm as string);
     if (startDate && finalDate) {
-      params = params
-        .set('startDate', startDate.toISOString())
-        .set('finalDate', finalDate.toISOString());
+      params = params.set('startDate', startDate.toISOString()).set('finalDate', finalDate.toISOString());
     }
 
-    return this.http
-      .get<IQueryResult<ITask[]>>(endpoint, { params })
-      .pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<ITask[]>>(endpoint, { params }).pipe(catchError(this.sharedService.errorHandler));
   }
 }

@@ -3,9 +3,6 @@
   "embeddedLanguageFormatting": "auto",
   "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "css",
-  "proseWrap": "preserve",
-  "quoteProps": "consistent",
-  "trailingComma": "all",
   "overrides": [
     {
       "files": "*.ts",
@@ -19,5 +16,9 @@
         "singleQuote": true
       }
     }
-  ]
+  ],
+  "printWidth": 135,
+  "proseWrap": "preserve",
+  "quoteProps": "consistent",
+  "trailingComma": "all"
 }

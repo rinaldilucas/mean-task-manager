@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -47,14 +41,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   columnFilter = '';
   columnDirection = '';
   columnOptions: IColumnsOptions = {
-    lgColumns: [
-      'date',
-      'title',
-      'description',
-      'status',
-      'category',
-      'actions',
-    ],
+    lgColumns: ['date', 'title', 'description', 'status', 'category', 'actions'],
     mdColumns: ['date', 'title', 'description', 'status', 'actions'],
     smColumns: ['date', 'title', 'status', 'actions-mobile'],
     xsColumns: ['date', 'title', 'status', 'actions-mobile'],
@@ -73,30 +60,22 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
   ngOnInit(): void {
     this.updateTitle();
-    this.sharedService.setTableColumnsAndPagesize(
-      this.displayedColumns,
-      this.columnOptions,
-      {
-        pageSize: this.pageSize,
-        pageSizeOptions: this.pageSizeOptions,
-      },
-    );
+    this.sharedService.setTableColumnsAndPagesize(this.displayedColumns, this.columnOptions, {
+      pageSize: this.pageSize,
+      pageSizeOptions: this.pageSizeOptions,
+    });
     this.removeSubscriptionsFromService = true;
 
-    this.subs.sink = this.taskService.onTaskChange.subscribe(() =>
-      this.refreshAsync(),
-    );
+    this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync());
     this.subs.sink = this.sharedService.onTableColumnChange.subscribe(
       (columnOptions: string[]) => (this.displayedColumns = columnOptions),
     );
-    this.subs.sink = this.sharedService.onPageSizeChange.subscribe(
-      (options: { pageSize: number; pageSizeOptions: number[] }) => {
-        if (this.paginator) {
-          this.paginator.pageSize = options.pageSize;
-          this.paginator.pageSizeOptions = options.pageSizeOptions;
-        }
-      },
-    );
+    this.subs.sink = this.sharedService.onPageSizeChange.subscribe((options: { pageSize: number; pageSizeOptions: number[] }) => {
+      if (this.paginator) {
+        this.paginator.pageSize = options.pageSize;
+        this.paginator.pageSizeOptions = options.pageSizeOptions;
+      }
+    });
 
     this.refreshAsync();
   }
@@ -115,10 +94,9 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       changeDetector: this.changeDetector,
     });
 
-    const [result, error]: IQueryResult<ITask>[] =
-      await this.sharedService.handlePromises(
-        lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize })),
-      );
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+      lastValueFrom(this.taskService.getAll({ pageSize: this.pageSize })),
+    );
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.refresh-error',
@@ -127,11 +105,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     this.tasks = result.data;
     this.pageCount = result.totalCount;
-    this.tasksDataSource = this.sharedService.setDataSource(
-      this.tasks,
-      this.sort,
-      this.paginator,
-    );
+    this.tasksDataSource = this.sharedService.setDataSource(this.tasks, this.sort, this.paginator);
 
     this.isLoading = this.sharedService.handleLoading({
       isLoading: false,
@@ -148,8 +122,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
 
     task.status = status;
 
-    const [result, error]: IQueryResult<ITask>[] =
-      await this.sharedService.handlePromises(this.taskService.save(task));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.status-change-error',
@@ -168,10 +141,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       changeDetector: this.changeDetector,
     });
 
-    const [, error]: IQueryResult<ITask>[] =
-      await this.sharedService.handlePromises(
-        this.taskService.remove(task._id),
-      );
+    const [, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.remove(task._id));
     if (error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.remove-error',
@@ -194,18 +164,17 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     const searchTerm = this.search.value ?? null;
     this.pageSize = event.pageSize;
 
-    const [result, error]: IQueryResult<ITask>[] =
-      await this.sharedService.handlePromises(
-        lastValueFrom(
-          this.taskService.getAll({
-            pageSize: this.pageSize,
-            searchTerm,
-            pageIndex,
-            sortFilter: this.columnFilter,
-            sortDirection: this.columnDirection,
-          }),
-        ),
-      );
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+      lastValueFrom(
+        this.taskService.getAll({
+          pageSize: this.pageSize,
+          searchTerm,
+          pageIndex,
+          sortFilter: this.columnFilter,
+          sortDirection: this.columnDirection,
+        }),
+      ),
+    );
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.refresh-error',
@@ -230,18 +199,17 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.columnFilter = event.active;
     this.columnDirection = event.direction;
 
-    const [result, error]: IQueryResult<ITask>[] =
-      await this.sharedService.handlePromises(
-        lastValueFrom(
-          this.taskService.getAll({
-            pageSize: this.pageSize,
-            searchTerm,
-            pageIndex: 0,
-            sortFilter: this.columnFilter,
-            sortDirection: this.columnDirection,
-          }),
-        ),
-      );
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+      lastValueFrom(
+        this.taskService.getAll({
+          pageSize: this.pageSize,
+          searchTerm,
+          pageIndex: 0,
+          sortFilter: this.columnFilter,
+          sortDirection: this.columnDirection,
+        }),
+      ),
+    );
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.refresh-error',
@@ -271,18 +239,17 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       this.isSearching = true;
       const searchTerm = text.trim().toLowerCase();
 
-      const [result, error]: IQueryResult<ITask>[] =
-        await this.sharedService.handlePromises(
-          lastValueFrom(
-            this.taskService.getAll({
-              pageSize: this.pageSize,
-              searchTerm,
-              pageIndex: 0,
-              sortFilter: this.columnFilter,
-              sortDirection: this.columnDirection,
-            }),
-          ),
-        );
+      const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
+        lastValueFrom(
+          this.taskService.getAll({
+            pageSize: this.pageSize,
+            searchTerm,
+            pageIndex: 0,
+            sortFilter: this.columnFilter,
+            sortDirection: this.columnDirection,
+          }),
+        ),
+      );
       if (!result || !result.success || error)
         return this.sharedService.handleSnackbars({
           translationKey: 'task-list.refresh-error',
@@ -306,9 +273,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
     this.sharedService.handleTitle(this.translate.instant('title.tasks'));
     this.sharedService.onTitleChange
       .pipe(take(1))
-      .subscribe(() =>
-        this.sharedService.handleTitle(this.translate.instant('title.tasks')),
-      );
+      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.tasks')));
   }
 
   async confirmDelete(task: ITask): Promise<void> {

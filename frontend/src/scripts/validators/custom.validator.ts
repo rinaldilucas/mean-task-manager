@@ -1,9 +1,4 @@
-import {
-  AbstractControl,
-  AsyncValidatorFn,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup } from '@angular/forms';
 
 import { debounceTime, first, map, switchMap } from 'rxjs';
 
@@ -14,9 +9,7 @@ import { UserService } from '@app/scripts/services/user.service';
 export class CustomValidators {
   static emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
 
-  static incremental(
-    control: FormControl,
-  ): { [key: string]: boolean } | undefined {
+  static incremental(control: FormControl): { [key: string]: boolean } | undefined {
     const regex = /12345|23456|34567|45678|56789/;
 
     if (control.value && regex.test(control.value)) {
@@ -24,9 +17,7 @@ export class CustomValidators {
     }
   }
 
-  static sequential(
-    control: FormControl,
-  ): { [key: string]: boolean } | undefined {
+  static sequential(control: FormControl): { [key: string]: boolean } | undefined {
     const regex = /(.)\1{4,}/;
 
     if (control.value && regex.test(control.value)) {
@@ -34,9 +25,7 @@ export class CustomValidators {
     }
   }
 
-  static capitalized(
-    control: FormControl,
-  ): { [key: string]: boolean } | undefined {
+  static capitalized(control: FormControl): { [key: string]: boolean } | undefined {
     const regex = /[A-Z]/;
     if (control.value && !regex.test(control.value)) {
       return { hasntCapitalized: true };
@@ -50,21 +39,15 @@ export class CustomValidators {
     }
   }
 
-  static specialCharacters(
-    control: FormControl,
-  ): { [key: string]: boolean } | undefined {
+  static specialCharacters(control: FormControl): { [key: string]: boolean } | undefined {
     const regex = /^(?=.*[\p{P}\p{S}]).+$/u;
     if (control.value && !regex.test(control.value)) {
       return { hasntSpecialCharacter: true };
     }
   }
 
-  static equalsTo(
-    otherField: string,
-  ): (AbstractControl) => { [key: string]: boolean } | undefined {
-    return (
-      formControl: FormControl,
-    ): { [key: string]: boolean } | undefined => {
+  static equalsTo(otherField: string): (AbstractControl) => { [key: string]: boolean } | undefined {
+    return (formControl: FormControl): { [key: string]: boolean } | undefined => {
       const field = (<FormGroup>formControl.root).get(otherField);
       if (field?.value !== formControl.value) {
         return { equalsTo: true };
@@ -77,9 +60,7 @@ export class CustomValidators {
       return control.valueChanges.pipe(
         debounceTime(300),
         switchMap((email: string) => userService.checkIfEmailExists(email)),
-        map((response: IQueryResult<IUser>) =>
-          response?.totalCount > 0 ? { emailExists: true } : null,
-        ),
+        map((response: IQueryResult<IUser>) => (response?.totalCount > 0 ? { emailExists: true } : null)),
         first(),
       );
     };

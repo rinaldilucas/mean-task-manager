@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -58,61 +52,38 @@ export class TasksDoneComponent extends Unsubscriber implements OnInit {
   }
 
   async refreshAsync(): Promise<ITask | void> {
-    (this.chartOptions.title as ChartTitleOptions).text =
-      this.translate.instant('statistics.tasks-done');
+    (this.chartOptions.title as ChartTitleOptions).text = this.translate.instant('statistics.tasks-done');
     this.verifyResolutions();
 
     this.chartData = [];
     this.chartLabels = [];
 
     if (this.tasks.length) {
-      this.chartData.push(
-        this.tasks.filter((task) => task.status === EStatus.toDo).length,
-      );
-      this.chartData.push(
-        this.tasks.filter((task) => task.status === EStatus.progress).length,
-      );
-      this.chartData.push(
-        this.tasks.filter((task) => task.status === EStatus.done).length,
-      );
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.toDo).length);
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.progress).length);
+      this.chartData.push(this.tasks.filter((task) => task.status === EStatus.done).length);
       this.chartLabels.push(this.translate.instant('statistics.status.to-do'));
-      this.chartLabels.push(
-        this.translate.instant('statistics.status.progress'),
-      );
+      this.chartLabels.push(this.translate.instant('statistics.status.progress'));
       this.chartLabels.push(this.translate.instant('statistics.status.done'));
     }
   }
 
   verifyResolutions(): void {
-    this.subs.sink = this.media
-      .asObservable()
-      .subscribe((change: MediaChange[]) => {
-        if (
-          change[0].mqAlias === 'lt-md' ||
-          change[0].mqAlias === 'sm' ||
-          change[0].mqAlias === 'xs'
-        ) {
-          (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
-          (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize =
-            22;
-          (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-          (
-            ((this.chartOptions as ChartOptions).legend as ChartLegendOptions)
-              .labels as ChartLegendLabelOptions
-          ).fontSize = 15;
-        } else {
-          (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
-          (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize =
-            14;
-          (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-          (
-            ((this.chartOptions as ChartOptions).legend as ChartLegendOptions)
-              .labels as ChartLegendLabelOptions
-          ).fontSize = 14;
-        }
+    this.subs.sink = this.media.asObservable().subscribe((change: MediaChange[]) => {
+      if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
+        (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
+        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
+        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
+        (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 15;
+      } else {
+        (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
+        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
+        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
+        (((this.chartOptions as ChartOptions).legend as ChartLegendOptions).labels as ChartLegendLabelOptions).fontSize = 14;
+      }
 
-        this.baseChart.chart.options = this.chartOptions;
-        this.baseChart.chart.update();
-      });
+      this.baseChart.chart.options = this.chartOptions;
+      this.baseChart.chart.update();
+    });
   }
 }

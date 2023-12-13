@@ -19,10 +19,7 @@ routes.get('/api/users/:_id', authMiddleware, Controller.getOne);
 // create
 routes.post(
   '/api/users',
-  check(
-    'email',
-    'Must be a valid email address, with at least 5 and lesser than 150 chars long',
-  )
+  check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long')
     .isEmail()
     .isLength({ min: 5 })
     .isLength({ max: 150 })
@@ -49,10 +46,7 @@ routes.delete('/api/users/:_id', authMiddleware, Controller.remove);
 // authenticate
 routes.post(
   '/api/users/authenticate',
-  check(
-    'email',
-    'Must be a valid email address, with at least 5 and lesser than 150 chars long',
-  )
+  check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long')
     .isEmail()
     .isLength({ min: 5 })
     .isLength({ max: 150 })
@@ -74,10 +68,7 @@ routes.post(
 // register
 routes.post(
   '/api/users/register',
-  check(
-    'email',
-    'Must be a valid email address, with at least 5 and lesser than 150 chars long',
-  )
+  check('email', 'Must be a valid email address, with at least 5 and lesser than 150 chars long')
     .isEmail()
     .isLength({ min: 5 })
     .isLength({ max: 150 })
@@ -113,11 +104,7 @@ routes.put(
 );
 
 // refresh token
-routes.post(
-  '/api/users/refreshToken',
-  refreshMiddleware,
-  Controller.refreshToken,
-);
+routes.post('/api/users/refreshToken', refreshMiddleware, Controller.refreshToken);
 
 // logout
 routes.post('/api/users/logout', Controller.logout);

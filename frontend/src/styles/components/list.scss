@@ -161,9 +161,7 @@
     align-items: center;
     justify-content: center;
     background-color: mat-color($app-background, 100);
-    height: calc(
-      100% - $table-header-height - $paginator-height - ($shadow-margin * 2)
-    ) !important;
+    height: calc(100% - $table-header-height - $paginator-height - ($shadow-margin * 2)) !important;
 
     @include media(">=desktop") {
       height: calc(100% - $table-header-height - $shadow-margin) !important;

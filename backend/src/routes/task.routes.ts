@@ -22,9 +22,7 @@ routes.post(
     .not()
     .isEmpty()
     .trim(),
-  check('description', 'Must be lesser than 300 chars long')
-    .isLength({ max: 300 })
-    .trim(),
+  check('description', 'Must be lesser than 300 chars long').isLength({ max: 300 }).trim(),
   verifyValidations,
   authMiddleware,
   Controller.create,

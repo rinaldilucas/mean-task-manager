@@ -6,13 +6,7 @@
       </button>
       <h2 class="form-modal__header-title">{{ title }}</h2>
       <div class="form-header">
-        <button
-          type="submit"
-          mat-fab
-          color="primary"
-          [disabled]="!form.dirty || !form.valid"
-          (click)="saveAsync()"
-        >
+        <button type="submit" mat-fab color="primary" [disabled]="!form.dirty || !form.valid" (click)="saveAsync()">
           <mat-icon>check</mat-icon>
         </button>
       </div>
@@ -55,16 +49,8 @@
 
         <mat-form-field class="full-width" color="accent">
           <mat-label>{{ "input.choose-due-date" | translate }}</mat-label>
-          <input
-            formControlName="date"
-            matInput
-            (focus)="picker.open()"
-            [matDatepicker]="picker"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
+          <input formControlName="date" matInput (focus)="picker.open()" [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
@@ -77,9 +63,7 @@
             matInput
             placeholder="{{ 'input.description' | translate }}"
           ></textarea>
-          <mat-hint align="end"
-            >{{ taskDescription.value.length || 0 }}/300</mat-hint
-          >
+          <mat-hint align="end">{{ taskDescription.value.length || 0 }}/300</mat-hint>
           <mat-error *ngIf="form.get('description')?.hasError('maxlength')">
             {{ "error.max-length" | translate: { value: 300 } }}
           </mat-error>
@@ -95,10 +79,7 @@
             [matAutocomplete]="categoriesAutocomplete"
           />
           <mat-autocomplete #categoriesAutocomplete="matAutocomplete">
-            <mat-option
-              *ngFor="let option of categoriesFilteredOptions | async"
-              [value]="option.title"
-            >
+            <mat-option *ngFor="let option of categoriesFilteredOptions | async" [value]="option.title">
               {{ option.title }}
             </mat-option>
           </mat-autocomplete>

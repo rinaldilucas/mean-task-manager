@@ -6,11 +6,7 @@ import { StatusCode } from 'status-code-enum';
 import { User as Model } from '@api/models/user.model';
 import jwtService from '@api/services/jwt.service';
 import { add as addToBlacklist } from '@api/services/redis.service';
-import {
-  handlePromises,
-  responseError,
-  responseSuccess,
-} from '@api/utils/http.handler';
+import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class UserController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
@@ -48,26 +44,14 @@ class UserController {
           );
       }
 
-      return responseSuccess(
-        response,
-        results[1],
-        StatusCode.SuccessOK,
-        results[0],
-      );
+      return responseSuccess(response, results[1], StatusCode.SuccessOK, results[0]);
     });
   }
 
-  async getOne(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async getOne(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [data, error] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (error) return;
     if (!data) {
       if (language === 'en-US')
@@ -89,22 +73,11 @@ class UserController {
     return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
-  async create(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async create(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [salt] = await handlePromises(
-      request,
-      response,
-      bcrypt.genSalt(Number(process?.env?.SALT_ROUNDS) || 12),
-    );
-    const [hashPass] = await handlePromises(
-      request,
-      response,
-      bcrypt.hash(request.body.password, salt),
-    );
+    const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process?.env?.SALT_ROUNDS) || 12));
+    const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
 
     const newUser = new Model({
       email: request.body.email,
@@ -112,34 +85,15 @@ class UserController {
       password: hashPass,
     });
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ email: request.body.email }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
     if (documentError) return;
     if (document) {
       if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorConflict,
-          `User already exists with email ${request.body.email}.`,
-        );
-      else
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorConflict,
-          `Usuário de nome ${request.body.email} já existe.`,
-        );
+        return responseError(response, {}, StatusCode.ClientErrorConflict, `User already exists with email ${request.body.email}.`);
+      else return responseError(response, {}, StatusCode.ClientErrorConflict, `Usuário de nome ${request.body.email} já existe.`);
     }
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      newUser.save(),
-    );
+    const [data, error] = await handlePromises(request, response, newUser.save());
     if (error) return;
     if (!data) {
       if (language === 'en-US')
@@ -161,17 +115,10 @@ class UserController {
     return responseSuccess(response, data, StatusCode.SuccessCreated);
   }
 
-  async update(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async update(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -198,12 +145,7 @@ class UserController {
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorBadRequest,
-          `Error updating document with id ${request.params._id}.`,
-        );
+        return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
       else
         return responseError(
           response,
@@ -216,17 +158,10 @@ class UserController {
     return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
-  async remove(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async remove(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -245,11 +180,7 @@ class UserController {
         );
     }
 
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.deleteOne({ _id: request.params._id }, request.body),
-    );
+    const [data, error] = await handlePromises(request, response, Model.deleteOne({ _id: request.params._id }, request.body));
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
@@ -271,33 +202,14 @@ class UserController {
     return responseSuccess(response, data, StatusCode.SuccessNoContent);
   }
 
-  async authenticate(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async authenticate(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ email: request.body.email }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ email: request.body.email }));
     if (documentError) return;
     if (!document) {
-      if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Mismatch credentials.',
-        );
-      else
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Erro de credencial.',
-        );
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
+      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
     }
 
     const [validation, validationError] = await handlePromises(
@@ -307,27 +219,11 @@ class UserController {
     );
     if (validationError) return;
     if (!validation) {
-      if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Mismatch credentials.',
-        );
-      else
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Erro de credencial.',
-        );
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Mismatch credentials.');
+      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro de credencial.');
     }
 
-    const { access, refresh } = jwtService.generate(
-      document.email,
-      document._id,
-      document.role,
-    );
+    const { access, refresh } = jwtService.generate(document.email, document._id, document.role);
 
     const jwtPayload = {
       access,
@@ -340,49 +236,22 @@ class UserController {
     return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
   }
 
-  async checkIfEmailExists(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
-    const [data, error] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ email: request.params.email }),
-    );
+  async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
+    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
     if (error) return;
-    if (!data)
-      return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
 
-    return responseSuccess(
-      response,
-      { emailExists: true },
-      StatusCode.SuccessOK,
-    );
+    return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
   }
 
-  async changePassword(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async changePassword(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
-    const [salt] = await handlePromises(
-      request,
-      response,
-      bcrypt.genSalt(Number(process.env.SALT_ROUNDS)),
-    );
-    const [hashPass] = await handlePromises(
-      request,
-      response,
-      bcrypt.hash(request.body.password, salt),
-    );
+    const [salt] = await handlePromises(request, response, bcrypt.genSalt(Number(process.env.SALT_ROUNDS)));
+    const [hashPass] = await handlePromises(request, response, bcrypt.hash(request.body.password, salt));
     const newBody = { ...request.body, password: hashPass };
 
-    const [document, documentError] = await handlePromises(
-      request,
-      response,
-      Model.findOne({ _id: request.params._id }),
-    );
+    const [document, documentError] = await handlePromises(request, response, Model.findOne({ _id: request.params._id }));
     if (documentError) return;
     if (!document) {
       if (language === 'en-US')
@@ -409,12 +278,7 @@ class UserController {
     if (error) return;
     if (!data || data.n === 0) {
       if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorBadRequest,
-          `Error updating document with id ${request.params._id}.`,
-        );
+        return responseError(response, {}, StatusCode.ClientErrorBadRequest, `Error updating document with id ${request.params._id}.`);
       else
         return responseError(
           response,
@@ -427,10 +291,7 @@ class UserController {
     return responseSuccess(response, data, StatusCode.SuccessOK);
   }
 
-  async refreshToken(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async refreshToken(request: Request, response: Response): Promise<Response | undefined> {
     const language = request.headers.language;
 
     const { access, refresh } = await jwtService.refreshJwt({
@@ -441,20 +302,8 @@ class UserController {
     });
 
     if (!access || !refresh) {
-      if (language === 'en-US')
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Error refreshing token.',
-        );
-      else
-        return responseError(
-          response,
-          {},
-          StatusCode.ClientErrorUnauthorized,
-          'Erro ao atualizar token.',
-        );
+      if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Error refreshing token.');
+      else return responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Erro ao atualizar token.');
     }
 
     const jwtPayload = {
@@ -467,16 +316,9 @@ class UserController {
     return responseSuccess(response, jwtPayload, StatusCode.SuccessOK);
   }
 
-  async logout(
-    request: Request,
-    response: Response,
-  ): Promise<Response | undefined> {
+  async logout(request: Request, response: Response): Promise<Response | undefined> {
     const token = request.body.token;
-    const [, addToBlacklistError] = await handlePromises(
-      request,
-      response,
-      addToBlacklist(token),
-    );
+    const [, addToBlacklistError] = await handlePromises(request, response, addToBlacklist(token));
     if (addToBlacklistError) return;
 
     return responseSuccess(response, {}, StatusCode.SuccessOK);

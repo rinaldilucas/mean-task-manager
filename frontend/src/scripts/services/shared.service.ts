@@ -11,13 +11,7 @@ import { Title } from '@angular/platform-browser';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import {
-  Observable,
-  Subscription,
-  lastValueFrom,
-  take,
-  throwError,
-} from 'rxjs';
+import { Observable, Subscription, lastValueFrom, take, throwError } from 'rxjs';
 
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
 import { ITask } from '@app/scripts/models/task.interface';
@@ -47,11 +41,7 @@ export class SharedService {
     private titleService: Title,
   ) {}
 
-  setDataSource(
-    list: ITask[],
-    sort?: MatSort,
-    paginator?: MatPaginator,
-  ): TableVirtualScrollDataSource<ITask> {
+  setDataSource(list: ITask[], sort?: MatSort, paginator?: MatPaginator): TableVirtualScrollDataSource<ITask> {
     const dataSource = new TableVirtualScrollDataSource(list);
     if (sort) dataSource.sort = sort;
     if (paginator) dataSource.paginator = paginator;
@@ -87,9 +77,7 @@ export class SharedService {
     this.translateService
       .get('messages.mandatory-fields')
       .pipe(take(1))
-      .subscribe((text: string) =>
-        this.snackBar.open(text, undefined, { duration: 8000 }),
-      );
+      .subscribe((text: string) => this.snackBar.open(text, undefined, { duration: 8000 }));
     this.highlightRequiredInput(form);
     return false;
   }
@@ -98,9 +86,7 @@ export class SharedService {
     form.markAllAsTouched();
     for (const input of Object.keys(form.controls)) {
       if (!form.get(input)?.valid) {
-        const invalidControl = document.querySelector(
-          `[formcontrolname="${input}"]`,
-        );
+        const invalidControl = document.querySelector(`[formcontrolname="${input}"]`);
         (invalidControl as HTMLInputElement).focus();
         break;
       }
@@ -158,11 +144,7 @@ export class SharedService {
       .subscribe((text: string) => {
         const duration = customDuration ? customDuration : error ? 8000 : 5000;
         this.snackBar
-          .open(
-            text,
-            this.translateService.instant('button.dismiss').toUpperCase(),
-            { duration, panelClass: 'accent' },
-          )
+          .open(text, this.translateService.instant('button.dismiss').toUpperCase(), { duration, panelClass: 'accent' })
           .afterDismissed()
           .subscribe(() => {
             if (queuedTranslationKey)
@@ -205,15 +187,7 @@ export class SharedService {
     return lastValueFrom(dialogRef.afterClosed());
   }
 
-  async handleSheets({
-    component,
-    options,
-    disableClose,
-  }: {
-    component: any;
-    options?: any;
-    disableClose?: boolean;
-  }): Promise<any> {
+  async handleSheets({ component, options, disableClose }: { component: any; options?: any; disableClose?: boolean }): Promise<any> {
     const sheetRef = this.bottomSheet.open(component, {
       disableClose: disableClose || false,
       data: options || null,

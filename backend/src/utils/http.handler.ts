@@ -53,17 +53,12 @@ export const responseError = (
   });
 };
 
-export const handlePromises = async (
-  request: Request,
-  response: Response,
-  promise: any,
-): Promise<any> => {
+export const handlePromises = async (request: Request, response: Response, promise: any): Promise<any> => {
   try {
     const data = await promise;
     return [data, null];
   } catch (error) {
-    if (request.headers.language === 'en-US')
-      responseError(response, error, StatusCode.ServerErrorInternal);
+    if (request.headers.language === 'en-US') responseError(response, error, StatusCode.ServerErrorInternal);
     else responseError(response, error, StatusCode.ServerErrorInternal);
     return [null, error];
   }

@@ -32,14 +32,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
   ) {
     this.form = this.formBuilder.group({
-      password: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(150),
-        ],
-      ],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
     });
   }
 
@@ -51,10 +44,9 @@ export class ProfileComponent implements OnInit {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const password = this.form.controls.password.value;
-    const [result, error]: IQueryResult<IUser>[] =
-      await this.sharedService.handlePromises(
-        this.userService.changePassword(this.authService.getUserId(), password),
-      );
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(
+      this.userService.changePassword(this.authService.getUserId(), password),
+    );
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'profile.edit-error',
@@ -72,9 +64,7 @@ export class ProfileComponent implements OnInit {
     this.sharedService.handleTitle(this.translate.instant('title.profile'));
     this.sharedService.onTitleChange
       .pipe(take(1))
-      .subscribe(() =>
-        this.sharedService.handleTitle(this.translate.instant('title.profile')),
-      );
+      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.profile')));
   }
 
   togglePasswordVisibility(event: MouseEvent): void {

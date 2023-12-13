@@ -5,12 +5,7 @@
         <h2 class="list__header-title">{{ "title.tasks" | translate }}</h2>
 
         <div class="list__header-icons">
-          <button
-            type="button"
-            mat-icon-button
-            *ngIf="(tasks.length > 0 || isSearching) && !isLoading"
-            (click)="refreshAsync()"
-          >
+          <button type="button" mat-icon-button *ngIf="(tasks.length > 0 || isSearching) && !isLoading" (click)="refreshAsync()">
             <mat-icon>refresh</mat-icon>
           </button>
           <button
@@ -33,9 +28,7 @@
                   [formControl]="search"
                   (keyup.enter)="filterTasksAsync(searchInput.value)"
                 />
-                <mat-icon (click)="filterTasksAsync()" matSuffix
-                  >close</mat-icon
-                >
+                <mat-icon (click)="filterTasksAsync()" matSuffix>close</mat-icon>
               </mat-form-field>
             </div>
           </mat-menu>
@@ -43,38 +36,18 @@
       </div>
 
       <div class="list__body">
-        <app-loading
-          *ngIf="isLoading"
-          class="centered"
-          icon="sms"
-        ></app-loading>
+        <app-loading *ngIf="isLoading" class="centered" icon="sms"></app-loading>
 
-        <div
-          *ngIf="!isLoading && tasks?.length === 0"
-          class="full-height flex-centered flex-centered--column"
-        >
-          <app-no-data
-            message="{{ 'task-list.empty' | translate }}"
-            icon="sms"
-          ></app-no-data>
+        <div *ngIf="!isLoading && tasks?.length === 0" class="full-height flex-centered flex-centered--column">
+          <app-no-data message="{{ 'task-list.empty' | translate }}" icon="sms"></app-no-data>
         </div>
 
-        <div
-          *ngIf="!isLoading && searchedTasks && searchedTasks.length > 0"
-          class="full-height flex-centered flex-centered--column"
-        >
-          <app-no-data
-            message="{{ 'task-list.empty-search' | translate }}"
-            icon="sms"
-          ></app-no-data>
+        <div *ngIf="!isLoading && searchedTasks && searchedTasks.length > 0" class="full-height flex-centered flex-centered--column">
+          <app-no-data message="{{ 'task-list.empty-search' | translate }}" icon="sms"></app-no-data>
         </div>
 
         <div *ngIf="!isLoading && tasks.length > 0" class="list__table">
-          <cdk-virtual-scroll-viewport
-            *ngIf="tasks && tasks.length > 0"
-            class="list__table-vscroll"
-            tvsItemSize="20"
-          >
+          <cdk-virtual-scroll-viewport *ngIf="tasks && tasks.length > 0" class="list__table-vscroll" tvsItemSize="20">
             <table
               [hidden]="isLoading || !tasks || !tasks.length"
               mat-table
@@ -102,9 +75,7 @@
                     {{ "table.title" | translate }}
                   </h3>
                 </mat-cell>
-                <mat-cell mat-cell *matCellDef="let task">{{
-                  task.title
-                }}</mat-cell>
+                <mat-cell mat-cell *matCellDef="let task">{{ task.title }}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="description">
@@ -113,9 +84,7 @@
                     {{ "table.description" | translate }}
                   </h3>
                 </mat-cell>
-                <mat-cell mat-cell *matCellDef="let task">{{
-                  task.description
-                }}</mat-cell>
+                <mat-cell mat-cell *matCellDef="let task">{{ task.description }}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="status">
@@ -146,9 +115,7 @@
                     {{ "table.category" | translate }}
                   </h3>
                 </mat-cell>
-                <mat-cell mat-cell *matCellDef="let task">{{
-                  task.category
-                }}</mat-cell>
+                <mat-cell mat-cell *matCellDef="let task">{{ task.category }}</mat-cell>
               </ng-container>
 
               <ng-container matColumnDef="actions">
@@ -161,10 +128,7 @@
                     mat-icon-button
                     matTooltip="{{ 'table.actions.to-do' | translate }}"
                     class="list__table-actions"
-                    (click)="
-                      changeStatusAsync(task, status.toDo);
-                      $event.stopPropagation()
-                    "
+                    (click)="changeStatusAsync(task, status.toDo); $event.stopPropagation()"
                   >
                     <mat-icon>undo</mat-icon>
                   </button>
@@ -174,10 +138,7 @@
                     mat-icon-button
                     matTooltip="{{ 'table.actions.progress' | translate }}"
                     class="list__table-actions"
-                    (click)="
-                      changeStatusAsync(task, status.progress);
-                      $event.stopPropagation()
-                    "
+                    (click)="changeStatusAsync(task, status.progress); $event.stopPropagation()"
                   >
                     <mat-icon>360 icon</mat-icon>
                   </button>
@@ -187,10 +148,7 @@
                     mat-icon-button
                     matTooltip="{{ 'table.actions.done' | translate }}"
                     class="list__table-actions"
-                    (click)="
-                      changeStatusAsync(task, status.done);
-                      $event.stopPropagation()
-                    "
+                    (click)="changeStatusAsync(task, status.done); $event.stopPropagation()"
                   >
                     <mat-icon>check</mat-icon>
                   </button>
@@ -210,12 +168,7 @@
                 <mat-cell mat-header-cell *matHeaderCellDef></mat-cell>
 
                 <mat-cell mat-cell *matCellDef="let task">
-                  <button
-                    type="button"
-                    mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    (click)="$event.stopPropagation()"
-                  >
+                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
@@ -244,11 +197,7 @@
                       >
                         <span>{{ "table.actions.done" | translate }}</span>
                       </button>
-                      <button
-                        type="button"
-                        mat-menu-item
-                        (click)="confirmDelete(task)"
-                      >
+                      <button type="button" mat-menu-item (click)="confirmDelete(task)">
                         <span>{{ "table.actions.remove" | translate }}</span>
                       </button>
                     </ng-template>
@@ -256,23 +205,13 @@
                 </mat-cell>
               </ng-container>
 
-              <mat-header-row
-                mat-header-row
-                *matHeaderRowDef="displayedColumns; sticky: true"
-              ></mat-header-row>
+              <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 
-              <mat-row
-                mat-row
-                *matRowDef="let task; columns: displayedColumns"
-                (click)="edit(task._id); $event.stopPropagation()"
-              >
+              <mat-row mat-row *matRowDef="let task; columns: displayedColumns" (click)="edit(task._id); $event.stopPropagation()">
               </mat-row>
             </table>
           </cdk-virtual-scroll-viewport>
-          <div
-            [hidden]="isLoading || (tasks && tasks.length === 0)"
-            class="list__table-paginator"
-          >
+          <div [hidden]="isLoading || (tasks && tasks.length === 0)" class="list__table-paginator">
             <mat-paginator
               [length]="pageCount"
               [pageSizeOptions]="pageSizeOptions"
@@ -285,16 +224,8 @@
     </div>
   </div>
 
-  <button
-    type="button"
-    class="list__add"
-    color="primary"
-    mat-fab
-    (click)="add()"
-  >
-    <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}"
-      >add</mat-icon
-    >
+  <button type="button" class="list__add" color="primary" mat-fab (click)="add()">
+    <mat-icon matTooltip="{{ 'task-list.title-tooltip' | translate }}">add</mat-icon>
   </button>
 </div>
 
