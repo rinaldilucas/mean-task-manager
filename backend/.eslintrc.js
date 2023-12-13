@@ -7,7 +7,7 @@ module.exports = {
   ignorePatterns: ['dist/*', 'node_modules/*'],
   overrides: [
     {
-      extends: ['airbnb-typescript/base'],
+      extends: ['airbnb-typescript/base', 'plugin:prettier/recommended'],
       files: ['*.ts'],
       parserOptions: {
         tsconfigRootDir: __dirname,
