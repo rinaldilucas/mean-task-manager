@@ -16,6 +16,21 @@ module.exports = {
         project: ['./tsconfig.json'],
       },
       rules: {
+        'prettier/prettier': [
+          'error',
+          {
+            printWidth: 135,
+            arrowParens: 'always',
+            embeddedLanguageFormatting: 'auto',
+            endOfLine: 'auto',
+            htmlWhitespaceSensitivity: 'css',
+            printWidth: 135,
+            proseWrap: 'preserve',
+            quoteProps: 'consistent',
+            singleQuote: true,
+            trailingComma: 'all',
+          },
+        ],
         'newline-after-var': OFF,
         '@typescript-eslint/explicit-function-return-type': ERROR,
         '@typescript-eslint/lines-between-class-members': OFF,

@@ -26,7 +26,6 @@ module.exports = {
         'prettier/prettier': [
           'error',
           {
-            parser: 'angular',
             printWidth: 135,
             arrowParens: 'always',
             embeddedLanguageFormatting: 'auto',
@@ -35,7 +34,6 @@ module.exports = {
             proseWrap: 'preserve',
             quoteProps: 'consistent',
             trailingComma: 'all',
-            semi: false,
           },
         ],
         '@angular-eslint/directive-selector': [
@@ -113,7 +111,6 @@ module.exports = {
             proseWrap: 'preserve',
             quoteProps: 'consistent',
             trailingComma: 'all',
-            semi: false,
           },
         ],
       },
