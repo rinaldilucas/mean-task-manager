@@ -1,7 +1,19 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheet,
+} from '@angular/material/bottom-sheet';
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -22,7 +34,10 @@ import { TaskService } from '@app/scripts/services/task.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate, CanDeactivate<boolean> {
+export class TaskFormEntryComponent
+  extends Unsubscriber
+  implements OnDeactivate, CanDeactivate<boolean>
+{
   isFormSubmitted = false;
   isFormDirty = false;
 
@@ -83,8 +98,12 @@ export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate
   templateUrl: './task-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormComponent extends Unsubscriber implements OnInit, AfterViewInit {
-  @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
+export class TaskFormComponent
+  extends Unsubscriber
+  implements OnInit, AfterViewInit
+{
+  @ViewChild('category', { read: MatAutocompleteTrigger })
+  categoryTrigger!: MatAutocompleteTrigger;
 
   title!: string;
   isLoading = true;
@@ -109,31 +128,56 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
 
     this.form = this.formBuilder.group({
       _id: [null, null],
-      title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      title: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+        ],
+      ],
       description: [null, [Validators.maxLength(300)]],
       date: [null, null],
       category: [null, null],
     });
 
-    this.subs.sink = this.form.valueChanges.pipe(take(1)).subscribe(() => this.sharedService.onFormDirtyChange.emit(this.form.dirty));
+    this.subs.sink = this.form.valueChanges
+      .pipe(take(1))
+      .subscribe(() =>
+        this.sharedService.onFormDirtyChange.emit(this.form.dirty),
+      );
   }
 
   async ngOnInit(): Promise<void> {
-    this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
+    this.title = this.isNew
+      ? this.translate.instant('title.add-task')
+      : this.translate.instant('title.edit-task');
     this.sharedService.handleTitle(this.title);
 
-    const [categoryResult, categoryError]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(lastValueFrom(this.categoryService.getAll()));
+    const [categoryResult, categoryError]: IQueryResult<ICategory>[] =
+      await this.sharedService.handlePromises(
+        lastValueFrom(this.categoryService.getAll()),
+      );
     if (!categoryResult || !categoryResult.success || categoryError) {
-      this.sharedService.handleSnackbars({ translationKey: 'task-form.category-fetch-error', error: true });
+      this.sharedService.handleSnackbars({
+        translationKey: 'task-form.category-fetch-error',
+        error: true,
+      });
       return;
     }
 
     this.categories = categoryResult.data;
 
     if (!this.isNew) {
-      const [taskResult, taskError]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.get(this.bottomsheetData.id)));
+      const [taskResult, taskError]: IQueryResult<ITask>[] =
+        await this.sharedService.handlePromises(
+          lastValueFrom(this.taskService.get(this.bottomsheetData.id)),
+        );
       if (!taskResult || !taskResult.success || taskError) {
-        this.sharedService.handleSnackbars({ translationKey: 'task-form.task-fetch-error', error: true });
+        this.sharedService.handleSnackbars({
+          translationKey: 'task-form.task-fetch-error',
+          error: true,
+        });
         return;
       }
 
@@ -142,46 +186,72 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     }
 
     this.setAutoCompletes();
-    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+    this.isLoading = this.sharedService.handleLoading({
+      isLoading: false,
+      changeDetector: this.changeDetector,
+    });
   }
 
   async saveAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
-    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+    this.isLoading = this.sharedService.handleLoading({
+      isLoading: true,
+      changeDetector: this.changeDetector,
+    });
 
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
 
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
+    const [result, error]: IQueryResult<ITask>[] =
+      await this.sharedService.handlePromises(this.taskService.save(task));
     if (!result || !result.success || error) {
-      this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
-      this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true });
+      this.isLoading = this.sharedService.handleLoading({
+        isLoading: false,
+        changeDetector: this.changeDetector,
+      });
+      this.sharedService.handleSnackbars(
+        this.isNew
+          ? { translationKey: 'task-form.create-error' }
+          : { translationKey: 'task-form.edit-error', error: true },
+      );
     }
 
     this.taskService.onTaskChange.emit();
     this.sharedService.onFormSubmitChange.emit(true);
 
-    this.sharedService.handleSnackbars(this.isNew ? { translationKey: 'task-form.create-success' } : { translationKey: 'task-form.edit-success' });
+    this.sharedService.handleSnackbars(
+      this.isNew
+        ? { translationKey: 'task-form.create-success' }
+        : { translationKey: 'task-form.edit-success' },
+    );
     this.close();
   }
 
   async close(): Promise<void> {
-    this.router.navigate([this.router.url.replace(/(\/new\/?|\/edit\/?).*/gi, '')]);
+    this.router.navigate([
+      this.router.url.replace(/(\/new\/?|\/edit\/?).*/gi, ''),
+    ]);
   }
 
   setAutoCompletes(): void {
-    this.categoriesFilteredOptions = this.form.controls.category.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const filterValue = value?.toString().toLowerCase();
-        return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
-      }),
-    );
+    this.categoriesFilteredOptions =
+      this.form.controls.category.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const filterValue = value?.toString().toLowerCase();
+          return this.categories.filter((option) =>
+            option.title.toLowerCase().includes(filterValue as string),
+          );
+        }),
+      );
   }
 
   ngAfterViewInit(): void {
     this.subs.sink = this.categoryTrigger?.panelClosingActions.subscribe(() => {
-      if (this.categoryTrigger.activeOption) this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
+      if (this.categoryTrigger.activeOption)
+        this.form.controls.category.setValue(
+          this.categoryTrigger.activeOption.value,
+        );
     });
   }
 }

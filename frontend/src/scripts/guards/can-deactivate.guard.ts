@@ -9,7 +9,9 @@ export interface OnDeactivate {
 
 @Injectable({ providedIn: 'root' })
 export class CanDeactivateGuard implements CanDeactivate<OnDeactivate> {
-  canDeactivate(component: OnDeactivate): Observable<boolean> | Promise<boolean> | boolean {
+  canDeactivate(
+    component: OnDeactivate,
+  ): Observable<boolean> | Promise<boolean> | boolean {
     return component.onDeactivate ? component.onDeactivate() : true;
   }
 }

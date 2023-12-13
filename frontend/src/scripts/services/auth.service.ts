@@ -72,9 +72,17 @@ export class AuthService {
       const expiresInDuration = result.expiresIn;
       this.isAuthenticated = true;
       this.decodeJwtToken(this.accessToken);
-      const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
+      const expirationDate = new Date(
+        new Date().getTime() + expiresInDuration * 1000,
+      );
 
-      this.saveAuthData(access, refresh, expirationDate, this.loggedUser.userId, this.keepUserLoggedIn);
+      this.saveAuthData(
+        access,
+        refresh,
+        expirationDate,
+        this.loggedUser.userId,
+        this.keepUserLoggedIn,
+      );
       this.startRefreshTokenTimerAsync(result);
       return true;
     } else {
@@ -90,7 +98,10 @@ export class AuthService {
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (!this.refreshTokenTimeout) {
-      this.refreshTokenTimeout = setTimeout(async () => this.logoutAsync(), expiresIn);
+      this.refreshTokenTimeout = setTimeout(
+        async () => this.logoutAsync(),
+        expiresIn,
+      );
     }
 
     if (expiresIn > 0) {
@@ -110,7 +121,8 @@ export class AuthService {
     const refresh = this.cookiesService.getItem('refresh') as string;
     const expirationDate = this.cookiesService.getItem('expiration');
     const userId = this.cookiesService.getItem('userId') as string;
-    const keepUserLoggedIn = this.cookiesService.getItem('keepUserLoggedIn') === 'true';
+    const keepUserLoggedIn =
+      this.cookiesService.getItem('keepUserLoggedIn') === 'true';
 
     if (!access || !expirationDate) return false;
 
@@ -124,7 +136,9 @@ export class AuthService {
     };
   }
 
-  private async startRefreshTokenTimerAsync(jwtPayload: IJwtPayload): Promise<void> {
+  private async startRefreshTokenTimerAsync(
+    jwtPayload: IJwtPayload,
+  ): Promise<void> {
     const userService = this.injector.get(UserService);
     const jwtToken = jwtPayload;
     const marginMinutes = 60 * 1000;
@@ -132,7 +146,8 @@ export class AuthService {
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(userService.refreshToken());
+        const [result, error]: IQueryResult<IJwtPayload>[] =
+          await this.sharedService.handlePromises(userService.refreshToken());
 
         if (!result || !result.success || error) {
           this.logoutAsync();
@@ -160,18 +175,28 @@ export class AuthService {
 
   async logoutAsync(): Promise<void> {
     const userService = this.injector.get(UserService);
-    await this.sharedService.handlePromises(userService.logout(this.getAccessToken()));
+    await this.sharedService.handlePromises(
+      userService.logout(this.getAccessToken()),
+    );
     this.stopRefreshTokenTimer();
     this.accessToken = '';
     this.isAuthenticated = false;
     this.clearAuthData();
-    this.sharedService.handleSnackbars({ translationKey: 'login.logout-success' });
+    this.sharedService.handleSnackbars({
+      translationKey: 'login.logout-success',
+    });
     this.router.navigate(['']);
     this.onMenuChange.emit(false);
     this.onSidebarChange.emit(false);
   }
 
-  private saveAuthData(access: string, refresh: string, expirationDate: Date, userId: string, keepUserLogged: boolean): void {
+  private saveAuthData(
+    access: string,
+    refresh: string,
+    expirationDate: Date,
+    userId: string,
+    keepUserLogged: boolean,
+  ): void {
     this.cookiesService.setItem('access', access);
     this.cookiesService.setItem('refresh', refresh);
     this.cookiesService.setItem('expiration', expirationDate.toISOString());

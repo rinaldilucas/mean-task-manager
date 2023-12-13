@@ -15,23 +15,62 @@ import { ERole } from '@app/scripts/models/enums/role.enum';
 import { CategoryResolver } from '@app/scripts/resolvers/category.resolver';
 
 const routes: Routes = [
-  { path: 'home', component: HomepageComponent, canActivate: [LoggedInAuthGuard], data: { state: 'home' } },
-  { path: 'login', component: LogInComponent, canActivate: [LoggedInAuthGuard], data: { state: 'login' } },
-  { path: 'register', component: RegisterComponent, canActivate: [LoggedInAuthGuard], data: { state: 'register' } },
+  {
+    path: 'home',
+    component: HomepageComponent,
+    canActivate: [LoggedInAuthGuard],
+    data: { state: 'home' },
+  },
+  {
+    path: 'login',
+    component: LogInComponent,
+    canActivate: [LoggedInAuthGuard],
+    data: { state: 'login' },
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [LoggedInAuthGuard],
+    data: { state: 'register' },
+  },
   {
     path: 'tasks',
-    loadChildren: () => import('@app/scripts/modules/tasks.module').then((module) => module.TaskModule),
+    loadChildren: () =>
+      import('@app/scripts/modules/tasks.module').then(
+        (module) => module.TaskModule,
+      ),
     canLoad: [AuthGuard],
   },
-  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: { state: 'statistics' } },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { state: 'profile' } },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard, RoleGuard], data: { expectedRole: ERole.user, state: 'settings' }, resolve: { categoryData: CategoryResolver } },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
+    canActivate: [AuthGuard],
+    data: { state: 'statistics' },
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: { state: 'profile' },
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: ERole.user, state: 'settings' },
+    resolve: { categoryData: CategoryResolver },
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: EmptyPageComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false, scrollPositionRestoration: 'enabled' })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: false,
+      scrollPositionRestoration: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

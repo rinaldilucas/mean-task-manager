@@ -1,11 +1,24 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterEvent,
+  RouterOutlet,
+} from '@angular/router';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
 import { routerTransition } from '@app/scripts/animations/router.animations';
 import { AuthService } from '@app/scripts/services/auth.service';
@@ -26,13 +39,15 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
   sidebarSize = '1.81rem';
   isLoading = false;
 
-  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.WebLandscape).pipe(
-    map((result) => result.matches),
-    shareReplay(),
-    tap((result: boolean) => {
-      this.isDesktop = result;
-    }),
-  );
+  isDesktop$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.WebLandscape)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay(),
+      tap((result: boolean) => {
+        this.isDesktop = result;
+      }),
+    );
 
   constructor(
     private authService: AuthService,
@@ -42,7 +57,9 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
   ) {
     super();
 
-    this.router.events.subscribe((routerEvent: any) => this.checkRouterEvent(routerEvent));
+    this.router.events.subscribe((routerEvent: any) =>
+      this.checkRouterEvent(routerEvent),
+    );
   }
 
   ngOnInit(): void {
@@ -50,10 +67,12 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
     this.isLogged = this.authService.getIsAuthenticated();
     this.isSidebarIsOpened = this.isLogged;
 
-    this.subs.sink = this.authService.onMenuChange.subscribe((result: boolean) => {
-      this.isLogged = result;
-      this.changeDetector.markForCheck();
-    });
+    this.subs.sink = this.authService.onMenuChange.subscribe(
+      (result: boolean) => {
+        this.isLogged = result;
+        this.changeDetector.markForCheck();
+      },
+    );
     this.subs.sink = this.authService.onSidebarChange.subscribe(() => {
       this.isSidebarIsOpened = !!(this.isDesktop && this.isLogged);
       this.changeDetector.markForCheck();
@@ -66,15 +85,17 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
       this.toggleTheme = new FormControl(true);
     }
 
-    this.subs.sink = this.toggleTheme.valueChanges.subscribe((enableDarkMode) => {
-      if (enableDarkMode) {
-        document.body.classList.add(darkClassName);
-        localStorage.setItem('theme', darkClassName);
-      } else {
-        document.body.classList.remove(darkClassName);
-        localStorage.removeItem('theme');
-      }
-    });
+    this.subs.sink = this.toggleTheme.valueChanges.subscribe(
+      (enableDarkMode) => {
+        if (enableDarkMode) {
+          document.body.classList.add(darkClassName);
+          localStorage.setItem('theme', darkClassName);
+        } else {
+          document.body.classList.remove(darkClassName);
+          localStorage.removeItem('theme');
+        }
+      },
+    );
   }
 
   checkRouterEvent(routerEvent: RouterEvent): void {
@@ -82,7 +103,11 @@ export class HeaderComponent extends Unsubscriber implements OnInit {
       this.isLoading = true;
     }
 
-    if (routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel || routerEvent instanceof NavigationError) {
+    if (
+      routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError
+    ) {
       this.isLoading = false;
     }
   }

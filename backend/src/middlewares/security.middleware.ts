@@ -4,11 +4,26 @@ import StatusCode from 'status-code-enum';
 
 import { responseError } from '@api/utils/http.handler';
 
-const failCallback = (request: Request, response: Response): Response<any, Record<string, any>> => {
+const failCallback = (
+  request: Request,
+  response: Response,
+): Response<any, Record<string, any>> => {
   const language = request.headers.language;
 
-  if (language === 'en-US') return responseError(response, {}, StatusCode.ClientErrorTooManyRequests, 'Too many attempts to login.');
-  else return responseError(response, {}, StatusCode.ClientErrorTooManyRequests, 'Muitas tentativas de login.');
+  if (language === 'en-US')
+    return responseError(
+      response,
+      {},
+      StatusCode.ClientErrorTooManyRequests,
+      'Too many attempts to login.',
+    );
+  else
+    return responseError(
+      response,
+      {},
+      StatusCode.ClientErrorTooManyRequests,
+      'Muitas tentativas de login.',
+    );
 };
 
 const store = new ExpressBrute.MemoryStore();

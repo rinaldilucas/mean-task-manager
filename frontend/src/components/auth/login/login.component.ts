@@ -30,8 +30,23 @@ export class LogInComponent implements OnInit {
     private userService: UserService,
   ) {
     this.form = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(150), Validators.pattern(CustomValidators.emailRegex)]],
-      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(150)]],
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(150),
+          Validators.pattern(CustomValidators.emailRegex),
+        ],
+      ],
+      password: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(150),
+        ],
+      ],
       keepUserLogged: [false],
     });
   }
@@ -50,25 +65,46 @@ export class LogInComponent implements OnInit {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const user = { ...this.form.value } as IUser;
-    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value));
+    const [result, error]: IQueryResult<IJwtPayload>[] =
+      await this.sharedService.handlePromises(
+        this.userService.authenticate(
+          user.email,
+          user.password,
+          this.form.controls.keepUserLogged.value,
+        ),
+      );
 
     if (!result || !result.success || error) {
       if (error.status === StatusCode.ClientErrorUnauthorized) {
-        this.sharedService.handleSnackbars({ translationKey: 'login.credentials-error', error: true });
+        this.sharedService.handleSnackbars({
+          translationKey: 'login.credentials-error',
+          error: true,
+        });
         return;
       }
       if (error.status === StatusCode.ClientErrorTooManyRequests) {
-        this.sharedService.handleSnackbars({ translationKey: 'login.too-many-requests-error', error: true });
+        this.sharedService.handleSnackbars({
+          translationKey: 'login.too-many-requests-error',
+          error: true,
+        });
         return;
       }
-      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
+      this.sharedService.handleSnackbars({
+        translationKey: 'login.authentication-error',
+        error: true,
+      });
     }
 
     if (result && this.authService.authenticateToken(result.data[0])) {
-      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-success' });
+      this.sharedService.handleSnackbars({
+        translationKey: 'login.authentication-success',
+      });
       this.router.navigate(['tasks']);
     } else {
-      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
+      this.sharedService.handleSnackbars({
+        translationKey: 'login.authentication-error',
+        error: true,
+      });
     }
   }
 

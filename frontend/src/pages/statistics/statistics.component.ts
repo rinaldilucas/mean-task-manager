@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, take } from 'rxjs';
@@ -31,15 +36,31 @@ export class StatisticsComponent implements OnInit {
   }
 
   async refreshAsync(): Promise<void> {
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll()));
-    if (!result || !result.success || error) return this.sharedService.handleSnackbars({ translationKey: 'task-list.refresh-error', error: true });
+    const [result, error]: IQueryResult<ITask>[] =
+      await this.sharedService.handlePromises(
+        lastValueFrom(this.taskService.getAll()),
+      );
+    if (!result || !result.success || error)
+      return this.sharedService.handleSnackbars({
+        translationKey: 'task-list.refresh-error',
+        error: true,
+      });
 
     this.tasks = result.data;
-    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+    this.isLoading = this.sharedService.handleLoading({
+      isLoading: false,
+      changeDetector: this.changeDetector,
+    });
   }
 
   updateTitle(): void {
     this.sharedService.handleTitle(this.translate.instant('title.statistics'));
-    this.sharedService.onTitleChange.pipe(take(1)).subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.statistics')));
+    this.sharedService.onTitleChange
+      .pipe(take(1))
+      .subscribe(() =>
+        this.sharedService.handleTitle(
+          this.translate.instant('title.statistics'),
+        ),
+      );
   }
 }

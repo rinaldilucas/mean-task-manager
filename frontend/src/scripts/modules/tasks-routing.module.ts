@@ -10,8 +10,16 @@ const routes: Routes = [
     path: '',
     component: TaskListComponent,
     children: [
-      { path: 'new', component: TaskFormEntryComponent, canDeactivate: [CanDeactivateGuard] },
-      { path: 'edit/:id', component: TaskFormEntryComponent, canDeactivate: [CanDeactivateGuard] },
+      {
+        path: 'new',
+        component: TaskFormEntryComponent,
+        canDeactivate: [CanDeactivateGuard],
+      },
+      {
+        path: 'edit/:id',
+        component: TaskFormEntryComponent,
+        canDeactivate: [CanDeactivateGuard],
+      },
     ],
   },
 ];

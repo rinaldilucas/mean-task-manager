@@ -37,7 +37,7 @@ module.exports = {
         'no-useless-constructor': OFF,
         'prefer-rest-params': OFF,
         'prefer-spread': OFF,
-        semi: [ERROR, 'always'],
+        'semi': [ERROR, 'always'],
       },
     },
   ],

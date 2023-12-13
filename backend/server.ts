@@ -30,7 +30,11 @@ class Server {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(cors());
-    this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    this.express.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocs),
+    );
   }
 
   private database(): void {

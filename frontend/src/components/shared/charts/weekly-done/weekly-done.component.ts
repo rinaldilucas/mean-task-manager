@@ -1,8 +1,19 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { TranslateService } from '@ngx-translate/core';
-import { ChartOptions, ChartTitleOptions, ChartTooltipOptions, ChartType } from 'chart.js';
+import {
+  ChartOptions,
+  ChartTitleOptions,
+  ChartTooltipOptions,
+  ChartType,
+} from 'chart.js';
 import { BaseChartDirective, Label, MultiDataSet } from 'ng2-charts';
 
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -60,7 +71,9 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
   }
 
   async refresh(): Promise<ITask | void> {
-    (this.chartOptions.title as any).text = this.translate.instant('statistics.tasks-done-weekly');
+    (this.chartOptions.title as any).text = this.translate.instant(
+      'statistics.tasks-done-weekly',
+    );
     this.verifyResolutions();
 
     const numberOfWeeks = 4;
@@ -80,38 +93,54 @@ export class WeeklyDoneComponent extends Unsubscriber implements OnInit {
       });
 
       this.chartData.push(tasksByInterval.length as any);
-      this.chartLabels.push(`${finalDate.getDate().toLocaleString('default', { minimumIntegerDigits: 2, useGrouping: false })}/${(finalDate.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`);
+      this.chartLabels.push(
+        `${finalDate.getDate().toLocaleString('default', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}/${(finalDate.getMonth() + 1).toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}`,
+      );
     }
     this.chartData.reverse();
     this.chartLabels.reverse();
   }
 
   verifyResolutions(): void {
-    this.subs.sink = this.media.asObservable().subscribe((change: MediaChange[]) => {
-      if (change[0].mqAlias === 'lt-md' || change[0].mqAlias === 'sm' || change[0].mqAlias === 'xs') {
-        (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
-        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 22;
-        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
-        this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
-          (yAxis as any).ticks.minor.fontSize = 14;
-        });
-        this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
-          (xAxis as any).ticks.minor.fontSize = 14;
-        });
-      } else {
-        (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
-        (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize = 14;
-        (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
-        this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
-          (yAxis as any).ticks.minor.fontSize = 14;
-        });
-        this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
-          (xAxis as any).ticks.minor.fontSize = 14;
-        });
-      }
+    this.subs.sink = this.media
+      .asObservable()
+      .subscribe((change: MediaChange[]) => {
+        if (
+          change[0].mqAlias === 'lt-md' ||
+          change[0].mqAlias === 'sm' ||
+          change[0].mqAlias === 'xs'
+        ) {
+          (this.chartOptions.title as ChartTitleOptions).fontSize = 20;
+          (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize =
+            22;
+          (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 22;
+          this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
+            (yAxis as any).ticks.minor.fontSize = 14;
+          });
+          this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
+            (xAxis as any).ticks.minor.fontSize = 14;
+          });
+        } else {
+          (this.chartOptions.title as ChartTitleOptions).fontSize = 16;
+          (this.chartOptions.tooltips as ChartTooltipOptions).titleFontSize =
+            14;
+          (this.chartOptions.tooltips as ChartTooltipOptions).bodyFontSize = 14;
+          this.chartOptions.scales?.yAxes?.forEach((yAxis) => {
+            (yAxis as any).ticks.minor.fontSize = 14;
+          });
+          this.chartOptions.scales?.xAxes?.forEach((xAxis) => {
+            (xAxis as any).ticks.minor.fontSize = 14;
+          });
+        }
 
-      this.baseChart.chart.options = this.chartOptions;
-      this.baseChart.chart.update();
-    });
+        this.baseChart.chart.options = this.chartOptions;
+        this.baseChart.chart.update();
+      });
   }
 }

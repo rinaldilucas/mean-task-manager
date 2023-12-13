@@ -15,6 +15,16 @@ import { ConvertDatePipe } from '@app/scripts/pipes/convert-date.pipe';
 
 @NgModule({
   declarations: [TaskFormComponent, TaskListComponent, ConvertDatePipe],
-  imports: [TaskRoutingModule, CommonModule, FormsModule, ReactiveFormsModule, FlexLayoutModule, AngularMaterialModule, TableVirtualScrollModule, TranslateModule, CustomComponentsModule],
+  imports: [
+    TaskRoutingModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    AngularMaterialModule,
+    TableVirtualScrollModule,
+    TranslateModule,
+    CustomComponentsModule,
+  ],
 })
 export class TaskModule {}

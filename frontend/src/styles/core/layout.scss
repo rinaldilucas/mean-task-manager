@@ -4,8 +4,20 @@
 /* ========== material layout overrides ========= */
 /* ============================================== */
 
-@function define-typography-level($font-size, $line-height: $font-size, $font-weight: 400, $font-family: null, $letter-spacing: normal) {
-  @return (font-size: $font-size, line-height: $line-height, font-weight: $font-weight, font-family: $font-family, letter-spacing: $letter-spacing);
+@function define-typography-level(
+  $font-size,
+  $line-height: $font-size,
+  $font-weight: 400,
+  $font-family: null,
+  $letter-spacing: normal
+) {
+  @return (
+    font-size: $font-size,
+    line-height: $line-height,
+    font-weight: $font-weight,
+    font-family: $font-family,
+    letter-spacing: $letter-spacing
+  );
 }
 
 $custom-typography: mat-typography-config(

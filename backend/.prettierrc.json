@@ -1,18 +1,10 @@
 {
   "arrowParens": "always",
-  "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",
   "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "css",
-  "insertPragma": false,
-  "jsxBracketSameLine": false,
-  "printWidth": 250,
   "proseWrap": "preserve",
-  "quoteProps": "as-needed",
-  "requirePragma": false,
-  "semi": true,
+  "quoteProps": "consistent",
   "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "useTabs": false
+  "trailingComma": "all"
 }

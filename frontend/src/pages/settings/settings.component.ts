@@ -1,5 +1,12 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -53,49 +60,85 @@ export class SettingsComponent implements OnInit {
     const value = (event.value || '').trim();
     if (!value) return;
 
-    this.isProcessing = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+    this.isProcessing = this.sharedService.handleLoading({
+      isLoading: true,
+      changeDetector: this.changeDetector,
+    });
     const category = { title: value } as ICategory;
 
-    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
+    const [result, error]: IQueryResult<ICategory>[] =
+      await this.sharedService.handlePromises(
+        this.categoryService.save(category),
+      );
     if (!result || !result.success || error) {
-      this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-error', error: true });
+      this.sharedService.handleSnackbars({
+        translationKey: 'settings.category-create-error',
+        error: true,
+      });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
       return;
     }
 
-    this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-success' });
+    this.sharedService.handleSnackbars({
+      translationKey: 'settings.category-create-success',
+    });
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0]);
-    this.isProcessing = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+    this.isProcessing = this.sharedService.handleLoading({
+      isLoading: false,
+      changeDetector: this.changeDetector,
+    });
   }
 
   async removeCategoryAsync(category: ICategory): Promise<void> {
-    this.isProcessing = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
+    this.isProcessing = this.sharedService.handleLoading({
+      isLoading: true,
+      changeDetector: this.changeDetector,
+    });
 
-    const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
+    const [, error]: IQueryResult<ICategory>[] =
+      await this.sharedService.handlePromises(
+        this.categoryService.remove(category._id),
+      );
     if (error) {
-      this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-error', error: true });
+      this.sharedService.handleSnackbars({
+        translationKey: 'settings.category-remove-error',
+        error: true,
+      });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
     }
 
-    this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
+    this.sharedService.handleSnackbars({
+      translationKey: 'settings.category-remove-success',
+    });
     const index = this.categories.indexOf(category);
     this.categories.splice(index, 1);
-    this.isProcessing = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+    this.isProcessing = this.sharedService.handleLoading({
+      isLoading: false,
+      changeDetector: this.changeDetector,
+    });
   }
 
   updateTitle(): void {
     this.sharedService.handleTitle(this.translate.instant('title.settings'));
-    this.sharedService.onTitleChange.pipe(take(1)).subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.settings')));
+    this.sharedService.onTitleChange
+      .pipe(take(1))
+      .subscribe(() =>
+        this.sharedService.handleTitle(
+          this.translate.instant('title.settings'),
+        ),
+      );
   }
 
   changeLanguage(language: string): void {
     this.translate.use(language);
     localStorage.setItem('language', language);
-    this.sharedService.handleSnackbars({ translationKey: 'messages.language-changed' });
+    this.sharedService.handleSnackbars({
+      translationKey: 'messages.language-changed',
+    });
     this.changeDetector.markForCheck();
     this.sharedService.onTitleChange.emit();
   }
