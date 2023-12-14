@@ -51,7 +51,6 @@
     "build": "babel ./ --extensions \".ts\" --out-dir dist && cp .env dist && cp swagger.json dist",
     "build:server": "babel ./ --extensions \".ts\" --out-dir dist && cp swagger.json dist",
     "debug": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register server.ts\" -e ts,json",
-    "deploy": "yarn build",
     "dev": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register server.ts\" -e ts,json",
     "format": "prettier . \"!dist\" \"!node_modules\" --write .",
     "lint": "yarn format && npx eslint ./ --fix --ext .ts && yarn lint:types",
