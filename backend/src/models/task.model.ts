@@ -1,5 +1,6 @@
-import { TaskInterface as Interface } from '@api/shared/interfaces/task.interface';
 import { Model, Schema, SchemaTypes, model } from 'mongoose';
+
+import { TaskInterface as Interface } from '@api/shared/interfaces/task.interface';
 
 const SchemaModel = new Schema(
   {

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { check } from 'express-validator';
 
 import Controller from '@api/controllers/user.controller';

@@ -1,5 +1,6 @@
-import { CategoryInterface as Interface } from '@api/shared/interfaces/category.interface';
 import { Model, Schema, SchemaTypes, model } from 'mongoose';
+
+import { CategoryInterface as Interface } from '@api/shared/interfaces/category.interface';
 
 const SchemaModel = new Schema(
   {

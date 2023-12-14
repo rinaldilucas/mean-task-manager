@@ -17,7 +17,7 @@ module.exports = {
       },
       rules: {
         'prettier/prettier': [
-          'error',
+          'warn',
           {
             printWidth: 135,
             arrowParens: 'always',

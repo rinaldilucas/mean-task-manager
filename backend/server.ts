@@ -7,11 +7,10 @@ import createError from 'http-errors';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 
-import swaggerDocs from '@root/swagger.json';
-
 import categoryRoutes from '@api/routes/category.routes';
 import taskRoutes from '@api/routes/task.routes';
 import userRoutes from '@api/routes/user.routes';
+import swaggerDocs from '@root/swagger.json';
 
 class Server {
   express: express.Application;
