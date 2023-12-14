@@ -11,8 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ChartsModule } from 'ng2-charts';
+import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { Observable, from } from 'rxjs';
 
 import { AppComponent } from '@app/components/app.component';
@@ -29,8 +29,8 @@ import { StatisticsComponent } from '@app/pages/statistics/statistics.component'
 import { AutoCompleteOffDirective } from '@app/scripts/directives/autocomplete-off.directive';
 import { AngularMaterialModule } from '@app/scripts/modules/angular-material.module';
 import { AppRoutingModule } from '@app/scripts/modules/app-routing.module';
+import { CustomComponentsModule } from '@app/scripts/modules/custom-components.module';
 import { InterceptorModule } from '@app/scripts/modules/interceptor.module';
-import { CustomComponentsModule } from './custom-components.module';
 
 export class WebpackTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {

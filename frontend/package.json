@@ -39,6 +39,7 @@
     "@angular-eslint/eslint-plugin-template": "^14.0.0",
     "@angular-eslint/template-parser": "14.0.0",
     "@angular/compiler-cli": "14",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "angular-cli-ghpages": "1.0.6",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",

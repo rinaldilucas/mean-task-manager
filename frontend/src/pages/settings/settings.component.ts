@@ -2,11 +2,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { ActivatedRoute } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
 
-import { ActivatedRoute } from '@angular/router';
 import { ICategory } from '@app/scripts/models/category.interface';
 import { ELanguage } from '@app/scripts/models/enums/language.enum';
 import { IQueryResult } from '@app/scripts/models/query-result.interface';

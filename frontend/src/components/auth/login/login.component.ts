@@ -12,6 +12,7 @@ import { AuthService } from '@app/scripts/services/auth.service';
 import { SharedService } from '@app/scripts/services/shared.service';
 import { UserService } from '@app/scripts/services/user.service';
 import { CustomValidators } from '@app/scripts/validators/custom.validator';
+
 @Component({
   selector: 'app-log-in',
   templateUrl: './login.component.html',

@@ -24,7 +24,7 @@ module.exports = {
       },
       rules: {
         'prettier/prettier': [
-          'error',
+          'warn',
           {
             printWidth: 135,
             arrowParens: 'always',
@@ -100,7 +100,7 @@ module.exports = {
       extends: ['plugin:prettier/recommended'],
       rules: {
         'prettier/prettier': [
-          'error',
+          'warn',
           {
             parser: 'angular',
             printWidth: 135,
