@@ -7,6 +7,7 @@ module.exports = {
   ignorePatterns: ['dist/*', 'node_modules/*'],
   overrides: [
     {
+      plugins: ['path'],
       extends: ['airbnb-typescript/base', 'plugin:prettier/recommended'],
       files: ['*.ts'],
       parserOptions: {
@@ -16,6 +17,13 @@ module.exports = {
         project: ['./tsconfig.json'],
       },
       rules: {
+        'path/no-relative-imports': [
+          'warn',
+          {
+            maxDepth: 0,
+            suggested: false,
+          },
+        ],
         'prettier/prettier': [
           'warn',
           {

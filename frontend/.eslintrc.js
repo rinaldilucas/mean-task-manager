@@ -4,13 +4,14 @@ var OFF = 0,
 
 module.exports = {
   root: true,
-  ignorePatterns: ['dist/*', 'node_modules/*', 'src/assets/*', 'qex-dev-lib/*'],
+  ignorePatterns: ['dist/*', 'node_modules/*', 'src/assets/*'],
   parserOptions: {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
   },
   overrides: [
     {
+      plugins: ['path'],
       extends: [
         'plugin:@angular-eslint/recommended',
         'plugin:@angular-eslint/template/process-inline-templates',
@@ -23,6 +24,13 @@ module.exports = {
         project: ['tsconfig.json'],
       },
       rules: {
+        'path/no-relative-imports': [
+          'warn',
+          {
+            maxDepth: 0,
+            suggested: false,
+          },
+        ],
         'prettier/prettier': [
           'warn',
           {
