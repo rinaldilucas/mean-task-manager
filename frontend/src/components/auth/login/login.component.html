@@ -30,9 +30,9 @@
               matInput
               placeholder="{{ 'input.password' | translate }}"
             />
-            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">{{
-              showPassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event)">
+              {{ showPassword ? "visibility_off" : "visibility" }}
+            </mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>

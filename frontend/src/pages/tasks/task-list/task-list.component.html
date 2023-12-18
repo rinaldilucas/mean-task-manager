@@ -207,8 +207,11 @@
 
               <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
 
-              <mat-row mat-row *matRowDef="let task; columns: displayedColumns" (click)="edit(task._id); $event.stopPropagation()">
-              </mat-row>
+              <mat-row
+                mat-row
+                *matRowDef="let task; columns: displayedColumns"
+                (click)="edit(task._id); $event.stopPropagation()"
+              ></mat-row>
             </table>
           </cdk-virtual-scroll-viewport>
           <div [hidden]="isLoading || (tasks && tasks.length === 0)" class="list__table-paginator">

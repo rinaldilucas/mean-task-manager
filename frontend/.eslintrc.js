@@ -34,11 +34,11 @@ module.exports = {
         'prettier/prettier': [
           'warn',
           {
-            printWidth: 135,
             arrowParens: 'always',
             embeddedLanguageFormatting: 'auto',
             endOfLine: 'auto',
-            htmlWhitespaceSensitivity: 'css',
+            htmlWhitespaceSensitivity: 'ignore',
+            printWidth: 135,
             proseWrap: 'preserve',
             quoteProps: 'consistent',
             trailingComma: 'all',
@@ -60,7 +60,6 @@ module.exports = {
             style: 'kebab-case',
           },
         ],
-        'newline-after-var': OFF,
         '@typescript-eslint/explicit-function-return-type': ERROR,
         '@typescript-eslint/lines-between-class-members': OFF,
         '@typescript-eslint/no-explicit-any': OFF,
@@ -110,12 +109,12 @@ module.exports = {
         'prettier/prettier': [
           'warn',
           {
-            parser: 'angular',
-            printWidth: 135,
             arrowParens: 'always',
             embeddedLanguageFormatting: 'auto',
             endOfLine: 'auto',
-            htmlWhitespaceSensitivity: 'css',
+            htmlWhitespaceSensitivity: 'ignore',
+            parser: 'angular',
+            printWidth: 135,
             proseWrap: 'preserve',
             quoteProps: 'consistent',
             trailingComma: 'all',

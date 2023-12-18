@@ -41,9 +41,9 @@
               placeholder="{{ 'input.password' | translate }}"
               autocompleteOff
             />
-            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'password')">{{
-              showPassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'password')">
+              {{ showPassword ? "visibility_off" : "visibility" }}
+            </mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>
@@ -78,9 +78,9 @@
               placeholder="{{ 'input.confirm-password' | translate }}"
               autocompleteOff
             />
-            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'confirmPassword')">{{
-              showConfirmPassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
+            <mat-icon matSuffix (click)="togglePasswordVisibility($event, 'confirmPassword')">
+              {{ showConfirmPassword ? "visibility_off" : "visibility" }}
+            </mat-icon>
             <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">
               {{ "error.required" | translate }}
             </mat-error>

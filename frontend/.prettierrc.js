@@ -2,7 +2,7 @@ module.exports = {
   arrowParens: 'always',
   embeddedLanguageFormatting: 'auto',
   endOfLine: 'auto',
-  htmlWhitespaceSensitivity: 'css',
+  htmlWhitespaceSensitivity: 'ignore',
   importOrder: ['^@angular/(.*)$', '^(?!(?:@angular/|(@app/.+|@root/.+|[./].*))).+$', '^(@app/.+|@root/.+|[./].*)$'],
   importOrderParserPlugins: ['typescript', 'decorators-legacy'],
   importOrderSeparation: true,

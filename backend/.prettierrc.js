@@ -2,7 +2,7 @@ module.exports = {
   arrowParens: 'always',
   embeddedLanguageFormatting: 'auto',
   endOfLine: 'auto',
-  htmlWhitespaceSensitivity: 'css',
+  htmlWhitespaceSensitivity: 'ignore',
   importOrder: ['^(?!(@api/.+|@root/.+|[./].*)$).*', '^(@api/.+|@root/.+|[./].*)$'],
   importOrderParserPlugins: ['typescript', 'decorators-legacy'],
   importOrderSeparation: true,
@@ -11,6 +11,6 @@ module.exports = {
   printWidth: 135,
   proseWrap: 'preserve',
   quoteProps: 'consistent',
-  trailingComma: 'all',
   singleQuote: true,
+  trailingComma: 'all',
 };
