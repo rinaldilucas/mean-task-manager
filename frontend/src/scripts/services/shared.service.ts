@@ -3,7 +3,7 @@ import { ChangeDetectorRef, EventEmitter, Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -103,11 +103,11 @@ export class SharedService {
         pageSize = 20;
         pageSizeOptions = [20];
 
-        if (change[0].mqAlias === 'xs') {
+        if (change[0]?.mqAlias === 'xs') {
           columnOptions = columns.xsColumns;
-        } else if (change[0].mqAlias === 'sm') {
+        } else if (change[0]?.mqAlias === 'sm') {
           columnOptions = columns.smColumns;
-        } else if (change[0].mqAlias === 'md') {
+        } else if (change[0]?.mqAlias === 'md') {
           columnOptions = columns.mdColumns;
           pageSize = 5;
           pageSizeOptions = [5, 15, 30];
@@ -182,7 +182,7 @@ export class SharedService {
       data: options || null,
       autoFocus: false,
       panelClass: 'bottom-sheet-container',
-    });
+    } as MatDialogConfig);
 
     return lastValueFrom(dialogRef.afterClosed());
   }

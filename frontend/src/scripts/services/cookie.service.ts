@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import Cookies from 'js-cookie';
+import Cookies, { CookieAttributes } from 'js-cookie';
 
 @Injectable({ providedIn: 'root' })
 export class CookieService {
   setItem(key: string, value: string): void {
-    const options = {
+    const options: CookieAttributes = {
       secure: true,
       sameSite: 'strict',
     };
@@ -13,15 +13,11 @@ export class CookieService {
     Cookies.set(key, value, options);
   }
 
-  getItem(key: string): string | null {
+  getItem(key: string): string | undefined {
     return Cookies.get(key);
   }
 
   removeItem(key: string): void {
     Cookies.remove(key);
-  }
-
-  clearLocalStorage(): void {
-    Cookies.remove();
   }
 }

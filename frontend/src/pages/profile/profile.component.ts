@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   async saveAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
 
-    const password = this.form.controls.password.value;
+    const password = this.form.controls.password?.value;
     const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(
       this.userService.changePassword(this.authService.getUserId(), password),
     );

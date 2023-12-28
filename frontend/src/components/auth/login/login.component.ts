@@ -44,9 +44,9 @@ export class LogInComponent implements OnInit {
     this.sharedService.handleTitle(this.translate.instant('title.login'));
 
     if (this.authService.getKeepUserLoggedIn()) {
-      this.form.controls.keepUserLogged.setValue(true);
+      this.form.controls.keepUserLogged?.setValue(true);
     } else {
-      this.form.controls.keepUserLogged.setValue(false);
+      this.form.controls.keepUserLogged?.setValue(false);
     }
   }
 
@@ -55,18 +55,18 @@ export class LogInComponent implements OnInit {
 
     const user = { ...this.form.value } as IUser;
     const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(
-      this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged.value),
+      this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged?.value),
     );
 
     if (!result || !result.success || error) {
-      if (error.status === StatusCode.ClientErrorUnauthorized) {
+      if (error?.status === StatusCode.ClientErrorUnauthorized) {
         this.sharedService.handleSnackbars({
           translationKey: 'login.credentials-error',
           error: true,
         });
         return;
       }
-      if (error.status === StatusCode.ClientErrorTooManyRequests) {
+      if (error?.status === StatusCode.ClientErrorTooManyRequests) {
         this.sharedService.handleSnackbars({
           translationKey: 'login.too-many-requests-error',
           error: true,
@@ -79,7 +79,7 @@ export class LogInComponent implements OnInit {
       });
     }
 
-    if (result && this.authService.authenticateToken(result.data[0])) {
+    if (result && this.authService.authenticateToken(result.data[0] as IJwtPayload)) {
       this.sharedService.handleSnackbars({
         translationKey: 'login.authentication-success',
       });

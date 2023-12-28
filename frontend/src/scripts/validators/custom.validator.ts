@@ -15,6 +15,7 @@ export class CustomValidators {
     if (control.value && regex.test(control.value)) {
       return { hasIncremental: true };
     }
+    return undefined;
   }
 
   static sequential(control: FormControl): { [key: string]: boolean } | undefined {
@@ -23,6 +24,7 @@ export class CustomValidators {
     if (control.value && regex.test(control.value)) {
       return { hasSequential: true };
     }
+    return undefined;
   }
 
   static capitalized(control: FormControl): { [key: string]: boolean } | undefined {
@@ -30,6 +32,7 @@ export class CustomValidators {
     if (control.value && !regex.test(control.value)) {
       return { hasntCapitalized: true };
     }
+    return undefined;
   }
 
   static number(control: FormControl): { [key: string]: boolean } | undefined {
@@ -37,6 +40,7 @@ export class CustomValidators {
     if (control.value && !regex.test(control.value)) {
       return { hasntNumber: true };
     }
+    return undefined;
   }
 
   static specialCharacters(control: FormControl): { [key: string]: boolean } | undefined {
@@ -44,14 +48,16 @@ export class CustomValidators {
     if (control.value && !regex.test(control.value)) {
       return { hasntSpecialCharacter: true };
     }
+    return undefined;
   }
 
-  static equalsTo(otherField: string): (AbstractControl) => { [key: string]: boolean } | undefined {
+  static equalsTo(otherField: string): (arg0: FormControl) => { [key: string]: boolean } | undefined {
     return (formControl: FormControl): { [key: string]: boolean } | undefined => {
       const field = (<FormGroup>formControl.root).get(otherField);
       if (field?.value !== formControl.value) {
         return { equalsTo: true };
       }
+      return undefined;
     };
   }
 

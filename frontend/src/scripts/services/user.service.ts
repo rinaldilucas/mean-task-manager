@@ -49,8 +49,15 @@ export class UserService extends CrudService<IUser> {
           ...this.authService.getLoggedUser(),
           refresh: this.authService.getRefreshToken(),
         })
-        .pipe(tap((response: IQueryResult<IJwtPayload>) => this.authService.authenticateToken(response.data[0])))
-        .pipe(catchError(this.sharedService.errorHandler)),
+        .pipe(
+          tap((response: IQueryResult<IJwtPayload>) => {
+            const jwtPayload = response.data[0];
+            if (jwtPayload) {
+              this.authService.authenticateToken(jwtPayload);
+            }
+          }),
+          catchError(this.sharedService.errorHandler),
+        ),
     );
   }
 

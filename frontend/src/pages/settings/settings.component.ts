@@ -75,7 +75,7 @@ export class SettingsComponent implements OnInit {
     });
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
-    this.categories.push(result.data[0]);
+    this.categories.push(result.data[0] as ICategory);
     this.isProcessing = this.sharedService.handleLoading({
       isLoading: false,
       changeDetector: this.changeDetector,
