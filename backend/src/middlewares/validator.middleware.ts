@@ -11,6 +11,10 @@ export const verifyValidations = (
 ): Response<any, Record<string, any>> | undefined => {
   const errors = validationResult(request);
 
-  if (!errors.isEmpty()) return responseError(response, errors.array(), StatusCode.ClientErrorBadRequest);
-  else next();
+  if (!errors.isEmpty()) {
+    return responseError(response, errors.array(), StatusCode.ClientErrorBadRequest);
+  } else {
+    next();
+    return undefined;
+  }
 };

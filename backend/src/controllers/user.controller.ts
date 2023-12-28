@@ -1,6 +1,7 @@
 import Async from 'async';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import { QueryOptions } from 'mongoose';
 import { StatusCode } from 'status-code-enum';
 
 import { User as Model } from '@api/models/user.model';
@@ -12,14 +13,14 @@ class UserController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
     const language = request.headers.language;
 
-    const countQuery = (callback): any => {
+    const countQuery = (callback: Function): any => {
       Model.find().countDocuments({}, (error, count) => {
         if (error) callback(error, null);
         else callback(null, count);
       });
     };
 
-    const retrieveQuery = (callback): any => {
+    const retrieveQuery = (callback: Function): any => {
       Model.find().exec((error, documents) => {
         if (error) callback(error, null);
         else callback(null, documents);
@@ -237,7 +238,7 @@ class UserController {
   }
 
   async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
-    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email }));
+    const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email } as QueryOptions));
     if (error) return;
     if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
 

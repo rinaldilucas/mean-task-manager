@@ -32,6 +32,9 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.21.5",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/compression": "^1.7.5",
+    "@types/express-brute": "^1.0.5",
+    "@types/redis": "^2.8.32",
     "@typescript-eslint/eslint-plugin": "5.43.0",
     "@typescript-eslint/parser": "5.43.0",
     "babel-plugin-module-resolver": "^5.0.0",
@@ -54,7 +57,7 @@
     "debug": "nodemon --inspect --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register server.ts\" -e ts,json",
     "dev": "nodemon --watch api --exec \"node -r sucrase/register -r tsconfig-paths/register server.ts\" -e ts,json",
     "format": "prettier . !dist !node_modules --log-level warn --write .",
-    "lint": "npx eslint ./ --fix --ext .ts && yarn lint:types && yarn format",
+    "lint": "yarn format &&  npx eslint ./ --fix --ext .ts && yarn lint:types",
     "lint:types": "tsc --noemit",
     "start": "node dist/server.js --prod=true"
   }

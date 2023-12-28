@@ -39,7 +39,17 @@ class JwtService {
     return { access, refresh };
   }
 
-  async refreshJwt({ email, userId, role, token }): Promise<{ access: string; refresh: string }> {
+  async refreshJwt({
+    email,
+    userId,
+    role,
+    token,
+  }: {
+    email: string;
+    userId: string;
+    role: string;
+    token: string;
+  }): Promise<{ access: string; refresh: string }> {
     await addToBlacklist(token);
     return this.generate(email, userId, role);
   }
