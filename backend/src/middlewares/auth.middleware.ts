@@ -13,7 +13,7 @@ export default async (request: Request, response: Response, next: NextFunction):
 
     if (bearerToken === 'Bearer') {
       try {
-        const blacklistedToken = await verifyBlacklistForToken(token);
+        const blacklistedToken = await verifyBlacklistForToken(token as string);
 
         if (blacklistedToken) {
           if (language === 'en-US')
@@ -21,7 +21,7 @@ export default async (request: Request, response: Response, next: NextFunction):
           else return next(responseError(response, {}, StatusCode.ClientErrorUnauthorized, 'Token invalidado por logout.'));
         }
 
-        const decoded: any = jwt.verify(token, String(process.env.JWT_KEY));
+        const decoded: any = jwt.verify(token as string, String(process.env.JWT_KEY));
         if (
           decoded.type !== process.env.JWT_ACCESS ||
           decoded.aud !== process.env.JWT_AUDIENCE ||

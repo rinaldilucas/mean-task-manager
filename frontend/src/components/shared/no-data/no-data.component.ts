@@ -7,6 +7,6 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
   encapsulation: ViewEncapsulation.None,
 })
 export class NoDataComponent {
-  @Input() message;
-  @Input() icon;
+  @Input() message!: string;
+  @Input() icon!: string;
 }

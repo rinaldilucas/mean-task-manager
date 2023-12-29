@@ -1,12 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "declaration": false,
+    "declaration": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
@@ -14,12 +14,12 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./dist",
     "paths": {
       "@api/*": ["./src/*"],
@@ -31,6 +31,7 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ES2021",
+    "types": ["node"],
     "useDefineForClassFields": false
   },
   "include": ["./"]

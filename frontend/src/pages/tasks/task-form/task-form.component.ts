@@ -14,7 +14,7 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, lastValueFrom, map, startWith, take } from 'rxjs';
+import { Observable, lastValueFrom, map, of, startWith, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -157,7 +157,7 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
         return;
       }
 
-      this.task = taskResult.data[0];
+      this.task = taskResult.data[0] as ITask;
       this.form.patchValue(this.task);
     }
 
@@ -203,18 +203,19 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
   }
 
   setAutoCompletes(): void {
-    this.categoriesFilteredOptions = this.form.controls.category.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const filterValue = value?.toString().toLowerCase();
-        return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
-      }),
-    );
+    this.categoriesFilteredOptions =
+      this.form.controls.category?.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const filterValue = value?.toString().toLowerCase();
+          return this.categories.filter((option) => option.title.toLowerCase().includes(filterValue as string));
+        }),
+      ) ?? of([]);
   }
 
   ngAfterViewInit(): void {
     this.subs.sink = this.categoryTrigger?.panelClosingActions.subscribe(() => {
-      if (this.categoryTrigger.activeOption) this.form.controls.category.setValue(this.categoryTrigger.activeOption.value);
+      if (this.categoryTrigger.activeOption) this.form.controls.category?.setValue(this.categoryTrigger.activeOption.value);
     });
   }
 }

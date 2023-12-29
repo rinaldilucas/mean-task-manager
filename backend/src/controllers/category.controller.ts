@@ -9,20 +9,22 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 class CategoryController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
     const language = request.headers.language;
-    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
+    const authorizationHeader = request.headers.authorization as string;
+    const token = authorizationHeader ? authorizationHeader.split(' ')[1] : undefined;
+    const userId = token ? (jwt.verify(token, String(process.env.JWT_KEY)) as any).userId : undefined;
     let onlyMine = request.query.onlyMine == 'true' ? true : false;
 
     let findQuery = {} as any;
     if (onlyMine) findQuery = { userId } as any;
 
-    const countQuery = (callback): any => {
+    const countQuery = (callback: Function): any => {
       Model.find(findQuery).countDocuments({}, (error, count) => {
         if (error) callback(error, null);
         else callback(null, count);
       });
     };
 
-    const retrieveQuery = (callback): any => {
+    const retrieveQuery = (callback: Function): any => {
       Model.find(findQuery).exec((error, documents) => {
         if (error) callback(error, null);
         else callback(null, documents);

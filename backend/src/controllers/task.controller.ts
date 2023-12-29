@@ -1,6 +1,6 @@
 import Async from 'async';
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { StatusCode } from 'status-code-enum';
 
 import { Task as Model } from '@api/models/task.model';
@@ -8,7 +8,9 @@ import { handlePromises, responseError, responseSuccess } from '@api/utils/http.
 
 class TaskController {
   async getAll(request: Request, response: Response): Promise<Response | any> {
-    const userId = (jwt.verify((request.headers.authorization as string).split(' ')[1], String(process.env.JWT_KEY)) as any).userId;
+    const userId = (
+      jwt.verify((request.headers.authorization as string).split(' ')[1] as string, String(process.env.JWT_KEY)) as JwtPayload
+    ).userId as string;
     const language = request.headers.language;
     const pageIndex = Number(request.query.pageIndex) ?? 1;
     const pageSize = Number(request.query.pageSize) ?? 5;
@@ -16,7 +18,7 @@ class TaskController {
     const startDate = request.query.startDate ? new Date((request.query as any).startDate) : null;
     const finalDate = request.query.finalDate ? new Date((request.query as any).finalDate) : null;
 
-    const countQuery = (callback): any => {
+    const countQuery = (callback: Function): any => {
       const findQuery = { userId } as any;
 
       if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
@@ -30,7 +32,7 @@ class TaskController {
         });
     };
 
-    const retrieveQuery = (callback): any => {
+    const retrieveQuery = (callback: Function): any => {
       const findQuery = { userId } as any;
       if (searchTerm) findQuery.title = { $regex: request.query.searchTerm, $options: 'i' };
       if (startDate && finalDate) findQuery.createdAt = { $gte: startDate, $lte: finalDate };
