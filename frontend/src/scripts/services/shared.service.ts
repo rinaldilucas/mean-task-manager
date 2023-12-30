@@ -147,11 +147,7 @@ export class SharedService {
           .open(text, this.translateService.instant('button.dismiss').toUpperCase(), { duration, panelClass: 'accent' })
           .afterDismissed()
           .subscribe(() => {
-            if (queuedTranslationKey)
-              this.handleSnackbars({
-                translationKey: queuedTranslationKey,
-                customDuration: duration,
-              });
+            if (queuedTranslationKey) this.handleSnackbars({ translationKey: queuedTranslationKey, customDuration: duration });
           });
       });
   }
@@ -196,9 +192,9 @@ export class SharedService {
     return lastValueFrom(sheetRef.afterDismissed());
   }
 
-  async handlePromises(promise: Promise<any>): Promise<Promise<any>> {
+  async handleObservables(observable: Observable<any>): Promise<[any, any]> {
     try {
-      const data = await promise;
+      const data = await lastValueFrom(observable);
       return [data, null];
     } catch (error) {
       return [null, error];

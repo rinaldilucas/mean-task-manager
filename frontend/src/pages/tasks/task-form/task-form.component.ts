@@ -14,7 +14,7 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, lastValueFrom, map, of, startWith, take } from 'rxjs';
+import { Observable, map, of, startWith, take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -132,28 +132,22 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     this.title = this.isNew ? this.translate.instant('title.add-task') : this.translate.instant('title.edit-task');
     this.sharedService.handleTitle(this.title);
 
-    const [categoryResult, categoryError]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(
-      lastValueFrom(this.categoryService.getAll()),
+    const [categoryResult, categoryError]: IQueryResult<ICategory>[] = await this.sharedService.handleObservables(
+      this.categoryService.getAll(),
     );
     if (!categoryResult || !categoryResult.success || categoryError) {
-      this.sharedService.handleSnackbars({
-        translationKey: 'task-form.category-fetch-error',
-        error: true,
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'task-form.category-fetch-error', error: true });
       return;
     }
 
     this.categories = categoryResult.data;
 
     if (!this.isNew) {
-      const [taskResult, taskError]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(
-        lastValueFrom(this.taskService.get(this.bottomsheetData.id)),
+      const [taskResult, taskError]: IQueryResult<ITask>[] = await this.sharedService.handleObservables(
+        this.taskService.get(this.bottomsheetData.id),
       );
       if (!taskResult || !taskResult.success || taskError) {
-        this.sharedService.handleSnackbars({
-          translationKey: 'task-form.task-fetch-error',
-          error: true,
-        });
+        this.sharedService.handleSnackbars({ translationKey: 'task-form.task-fetch-error', error: true });
         return;
       }
 
@@ -178,12 +172,9 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
 
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(this.taskService.save(task));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handleObservables(this.taskService.save(task));
     if (!result || !result.success || error) {
-      this.isLoading = this.sharedService.handleLoading({
-        isLoading: false,
-        changeDetector: this.changeDetector,
-      });
+      this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
       this.sharedService.handleSnackbars(
         this.isNew ? { translationKey: 'task-form.create-error' } : { translationKey: 'task-form.edit-error', error: true },
       );

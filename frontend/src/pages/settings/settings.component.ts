@@ -53,26 +53,18 @@ export class SettingsComponent implements OnInit {
     const value = (event.value || '').trim();
     if (!value) return;
 
-    this.isProcessing = this.sharedService.handleLoading({
-      isLoading: true,
-      changeDetector: this.changeDetector,
-    });
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
     const category = { title: value } as ICategory;
 
-    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.save(category));
+    const [result, error]: IQueryResult<ICategory>[] = await this.sharedService.handleObservables(this.categoryService.save(category));
     if (!result || !result.success || error) {
-      this.sharedService.handleSnackbars({
-        translationKey: 'settings.category-create-error',
-        error: true,
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-error', error: true });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
       return;
     }
 
-    this.sharedService.handleSnackbars({
-      translationKey: 'settings.category-create-success',
-    });
+    this.sharedService.handleSnackbars({ translationKey: 'settings.category-create-success' });
     this.categoryControl.setValue(null);
     this.categoryInput.nativeElement.value = '';
     this.categories.push(result.data[0] as ICategory);
@@ -88,19 +80,14 @@ export class SettingsComponent implements OnInit {
       changeDetector: this.changeDetector,
     });
 
-    const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handlePromises(this.categoryService.remove(category._id));
+    const [, error]: IQueryResult<ICategory>[] = await this.sharedService.handleObservables(this.categoryService.remove(category._id));
     if (error) {
-      this.sharedService.handleSnackbars({
-        translationKey: 'settings.category-remove-error',
-        error: true,
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-error', error: true });
       this.categoryControl.setValue(null);
       this.categoryInput.nativeElement.value = '';
     }
 
-    this.sharedService.handleSnackbars({
-      translationKey: 'settings.category-remove-success',
-    });
+    this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
     const index = this.categories.indexOf(category);
     this.categories.splice(index, 1);
     this.isProcessing = this.sharedService.handleLoading({
@@ -119,9 +106,7 @@ export class SettingsComponent implements OnInit {
   changeLanguage(language: string): void {
     this.translate.use(language);
     localStorage.setItem('language', language);
-    this.sharedService.handleSnackbars({
-      translationKey: 'messages.language-changed',
-    });
+    this.sharedService.handleSnackbars({ translationKey: 'messages.language-changed' });
     this.changeDetector.markForCheck();
     this.sharedService.onTitleChange.emit();
   }
