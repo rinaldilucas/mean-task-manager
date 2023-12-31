@@ -1,32 +1,46 @@
 import { createHash } from 'crypto';
-import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import Redis from 'ioredis';
 import { promisify } from 'util';
 
-import redis from '@api/utils/redis.handler';
+class RedisService {
+  private redisClient: Redis;
 
-const existsAsync = promisify(redis.exists).bind(redis);
-const setAsync = promisify(redis.set).bind(redis);
-const generateTokenHash = (token: any): any => {
-  return createHash('sha256').update(token).digest('hex');
-};
-
-export const add = async (token: string): Promise<any> => {
-  if (token) {
-    const expirationDate = (jwt as any).decode(token).exp;
-    const tokenHash = generateTokenHash(token);
-    await setAsync(tokenHash, '');
-    (redis as any).expireat(tokenHash, expirationDate);
+  constructor() {
+    dotenv.config();
+    this.redisClient = new Redis({ connectionName: process?.env?.REDIS_HOST as string });
   }
-};
 
-export const hasToken = async (token: string): Promise<any> => {
-  const tokenHash = generateTokenHash(token);
-  const result = await existsAsync(tokenHash);
-  return result === 1;
-};
+  private async redisSet(key: string, value: string, expiration: number): Promise<any> {
+    const redisSetFunction = promisify(this.redisClient.setex).bind(this.redisClient);
+    return redisSetFunction(key, expiration, value);
+  }
 
-export const verifyBlacklistForToken = async (token: string): Promise<any> => {
-  const isTokenBlacklisted = await hasToken(token);
-  if (isTokenBlacklisted) return true;
-  else return false;
-};
+  private async redisGet(key: string): Promise<any> {
+    const redisGetFunction = promisify(this.redisClient.get).bind(this.redisClient);
+    return redisGetFunction(key);
+  }
+
+  private generateTokenHash(token: any): any {
+    return createHash('sha256').update(token).digest('hex');
+  }
+
+  private async hasToken(token: string): Promise<any> {
+    const tokenHash = this.generateTokenHash(token);
+    const result = await this.redisGet(tokenHash);
+    return !!result;
+  }
+
+  async addToBlacklist(token: string): Promise<any> {
+    const expiration = Number(process.env.JWT_ACCESS_TIME);
+    const keyHash = this.generateTokenHash(token);
+    return this.redisSet(keyHash, token, expiration);
+  }
+
+  async findBlacklistedToken(token: string): Promise<any> {
+    const isTokenBlacklisted = await this.hasToken(token);
+    return isTokenBlacklisted;
+  }
+}
+
+export default new RedisService();

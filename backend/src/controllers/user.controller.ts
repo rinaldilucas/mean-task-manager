@@ -6,7 +6,7 @@ import { StatusCode } from 'status-code-enum';
 
 import { User as Model } from '@api/models/user.model';
 import jwtService from '@api/services/jwt.service';
-import { add as addToBlacklist } from '@api/services/redis.service';
+import RedisService from '@api/services/redis.service';
 import { handlePromises, responseError, responseSuccess } from '@api/utils/http.handler';
 
 class UserController {
@@ -240,7 +240,7 @@ class UserController {
   async checkIfEmailExists(request: Request, response: Response): Promise<Response | undefined> {
     const [data, error] = await handlePromises(request, response, Model.findOne({ email: request.params.email } as QueryOptions));
     if (error) return;
-    if (!data) return responseSuccess(response, {}, StatusCode.SuccessNoContent, 0);
+    if (!data) return responseSuccess(response, { emailExists: false }, StatusCode.SuccessOK);
 
     return responseSuccess(response, { emailExists: true }, StatusCode.SuccessOK);
   }
@@ -319,7 +319,7 @@ class UserController {
 
   async logout(request: Request, response: Response): Promise<Response | undefined> {
     const token = request.body.token;
-    const [, addToBlacklistError] = await handlePromises(request, response, addToBlacklist(token));
+    const [, addToBlacklistError] = await handlePromises(request, response, RedisService.addToBlacklist(token));
     if (addToBlacklistError) return;
 
     return responseSuccess(response, {}, StatusCode.SuccessOK);

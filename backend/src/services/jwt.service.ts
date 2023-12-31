@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { add as addToBlacklist } from '@api/services/redis.service';
+import RedisService from '@api/services/redis.service';
 
 class JwtService {
   generate(email: string, userId: string, role: string): { access: string; refresh: string } {
@@ -50,7 +50,7 @@ class JwtService {
     role: string;
     token: string;
   }): Promise<{ access: string; refresh: string }> {
-    await addToBlacklist(token);
+    await RedisService.findBlacklistedToken(token);
     return this.generate(email, userId, role);
   }
 }

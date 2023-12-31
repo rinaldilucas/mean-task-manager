@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import StatusCode from 'status-code-enum';
 
-import { verifyBlacklistForToken } from '@api/services/redis.service';
+import RedisService from '@api/services/redis.service';
 import { responseError } from '@api/utils/http.handler';
 
 export default async (request: Request, response: Response, next: NextFunction): Promise<NextFunction | undefined | void> => {
@@ -13,7 +13,7 @@ export default async (request: Request, response: Response, next: NextFunction):
 
     if (bearerToken === 'Bearer') {
       try {
-        const blacklistedToken = await verifyBlacklistForToken(token as string);
+        const blacklistedToken = await RedisService.findBlacklistedToken(token as string);
 
         if (blacklistedToken) {
           if (language === 'en-US')
