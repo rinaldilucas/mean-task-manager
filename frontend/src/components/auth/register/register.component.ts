@@ -70,38 +70,21 @@ export class RegisterComponent implements OnInit {
 
   async registerAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
-    this.isLoading = this.sharedService.handleLoading({
-      isLoading: true,
-      changeDetector: this.changeDetector,
-    });
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     const user = { ...this.form.value, role: ERole.user } as IUser;
-    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handlePromises(this.userService.save(user));
+    const [result, error]: IQueryResult<IUser>[] = await this.sharedService.handleObservables(this.userService.save(user));
     if (!result || !result.success || error) {
       if (error?.status === StatusCode.ClientErrorConflict)
-        return this.sharedService.handleSnackbars({
-          translationKey: 'register.email-error',
-          error: true,
-        });
-      else
-        this.sharedService.handleSnackbars({
-          translationKey: 'register.create-error',
-          error: true,
-        });
-      this.isLoading = this.sharedService.handleLoading({
-        isLoading: false,
-        changeDetector: this.changeDetector,
-      });
+        return this.sharedService.handleSnackbars({ translationKey: 'register.email-error', error: true });
+      else this.sharedService.handleSnackbars({ translationKey: 'register.create-error', error: true });
+
+      this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
       return;
     }
 
-    this.isLoading = this.sharedService.handleLoading({
-      isLoading: false,
-      changeDetector: this.changeDetector,
-    });
-    this.sharedService.handleSnackbars({
-      translationKey: 'register.create-success',
-    });
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
+    this.sharedService.handleSnackbars({ translationKey: 'register.create-success' });
     this.router.navigate(['login']);
   }
 

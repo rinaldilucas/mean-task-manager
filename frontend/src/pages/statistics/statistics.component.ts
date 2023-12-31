@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { lastValueFrom, take } from 'rxjs';
+import { take } from 'rxjs';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
@@ -31,7 +31,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   async refreshAsync(): Promise<void> {
-    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handlePromises(lastValueFrom(this.taskService.getAll()));
+    const [result, error]: IQueryResult<ITask>[] = await this.sharedService.handleObservables(this.taskService.getAll());
     if (!result || !result.success || error)
       return this.sharedService.handleSnackbars({
         translationKey: 'task-list.refresh-error',
@@ -39,10 +39,7 @@ export class StatisticsComponent implements OnInit {
       });
 
     this.tasks = result.data;
-    this.isLoading = this.sharedService.handleLoading({
-      isLoading: false,
-      changeDetector: this.changeDetector,
-    });
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   updateTitle(): void {

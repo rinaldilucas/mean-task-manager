@@ -132,7 +132,7 @@ export class AuthService {
 
     if (this.getKeepUserLoggedIn()) {
       this.refreshTokenTimeout = setTimeout(async () => {
-        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(userService.refreshToken());
+        const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handleObservables(userService.refreshToken());
 
         if (!result || !result.success || error) {
           this.logoutAsync();
@@ -160,14 +160,12 @@ export class AuthService {
 
   async logoutAsync(): Promise<void> {
     const userService = this.injector.get(UserService);
-    await this.sharedService.handlePromises(userService.logout(this.getAccessToken()));
+    await this.sharedService.handleObservables(userService.logout(this.getAccessToken()));
     this.stopRefreshTokenTimer();
     this.accessToken = '';
     this.isAuthenticated = false;
     this.clearAuthData();
-    this.sharedService.handleSnackbars({
-      translationKey: 'login.logout-success',
-    });
+    this.sharedService.handleSnackbars({ translationKey: 'login.logout-success' });
     this.router.navigate(['']);
     this.onMenuChange.emit(false);
     this.onSidebarChange.emit(false);

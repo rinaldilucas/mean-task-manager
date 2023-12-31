@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { IJwtPayload } from '@app/scripts/models/jwt-payload.interface';
@@ -18,13 +18,11 @@ export class UserService extends CrudService<IUser> {
     super(http, injector, endpoint);
   }
 
-  authenticate(email: string, password: string, keepUserLoggedIn: boolean): Promise<IQueryResult<IJwtPayload>> {
+  authenticate(email: string, password: string, keepUserLoggedIn: boolean): Observable<IQueryResult<IJwtPayload>> {
     const credentials = { email, password, keepUserLoggedIn };
     const url = `${endpoint}/authenticate`;
 
-    return lastValueFrom(
-      this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler)),
-    );
+    return this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler));
   }
 
   checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
@@ -33,37 +31,35 @@ export class UserService extends CrudService<IUser> {
     return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 
-  changePassword(userId: string, password: string): Promise<IQueryResult<IUser>> {
+  changePassword(userId: string, password: string): Observable<IQueryResult<IUser>> {
     const url = `${endpoint}/changePassword/${userId}`;
     const body = { password };
 
-    return lastValueFrom(this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler)));
+    return this.http.put<IQueryResult<IUser>>(url, body).pipe(catchError(this.sharedService.errorHandler));
   }
 
-  refreshToken(): Promise<IQueryResult<IJwtPayload>> {
+  refreshToken(): Observable<IQueryResult<IJwtPayload>> {
     const url = `${endpoint}/refreshToken`;
 
-    return lastValueFrom(
-      this.http
-        .post<IQueryResult<IJwtPayload>>(url, {
-          ...this.authService.getLoggedUser(),
-          refresh: this.authService.getRefreshToken(),
-        })
-        .pipe(
-          tap((response: IQueryResult<IJwtPayload>) => {
-            const jwtPayload = response.data[0];
-            if (jwtPayload) {
-              this.authService.authenticateToken(jwtPayload);
-            }
-          }),
-          catchError(this.sharedService.errorHandler),
-        ),
-    );
+    return this.http
+      .post<IQueryResult<IJwtPayload>>(url, {
+        ...this.authService.getLoggedUser(),
+        refresh: this.authService.getRefreshToken(),
+      })
+      .pipe(
+        tap((response: IQueryResult<IJwtPayload>) => {
+          const jwtPayload = response.data[0];
+          if (jwtPayload) {
+            this.authService.authenticateToken(jwtPayload);
+          }
+        }),
+        catchError(this.sharedService.errorHandler),
+      );
   }
 
-  logout(token: string): Promise<IQueryResult<IUser>> {
+  logout(token: string): Observable<IQueryResult<IUser>> {
     const url = `${endpoint}/logout`;
 
-    return lastValueFrom(this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler)));
+    return this.http.post<IQueryResult<IUser>>(url, { token }).pipe(catchError(this.sharedService.errorHandler));
   }
 }

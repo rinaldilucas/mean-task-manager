@@ -14,13 +14,7 @@ module.exports = {
   trailingComma: 'all',
   overrides: [
     {
-      files: '*.ts',
-      options: {
-        singleQuote: true,
-      },
-    },
-    {
-      files: '*.js',
+      files: ['*.ts', '*.js'],
       options: {
         singleQuote: true,
       },

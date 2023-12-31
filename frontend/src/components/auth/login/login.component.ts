@@ -54,41 +54,27 @@ export class LogInComponent implements OnInit {
     if (!this.sharedService.isValidForm(this.form)) return;
 
     const user = { ...this.form.value } as IUser;
-    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handlePromises(
+    const [result, error]: IQueryResult<IJwtPayload>[] = await this.sharedService.handleObservables(
       this.userService.authenticate(user.email, user.password, this.form.controls.keepUserLogged?.value),
     );
 
     if (!result || !result.success || error) {
       if (error?.status === StatusCode.ClientErrorUnauthorized) {
-        this.sharedService.handleSnackbars({
-          translationKey: 'login.credentials-error',
-          error: true,
-        });
+        this.sharedService.handleSnackbars({ translationKey: 'login.credentials-error', error: true });
         return;
       }
       if (error?.status === StatusCode.ClientErrorTooManyRequests) {
-        this.sharedService.handleSnackbars({
-          translationKey: 'login.too-many-requests-error',
-          error: true,
-        });
+        this.sharedService.handleSnackbars({ translationKey: 'login.too-many-requests-error', error: true });
         return;
       }
-      this.sharedService.handleSnackbars({
-        translationKey: 'login.authentication-error',
-        error: true,
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
     }
 
     if (result && this.authService.authenticateToken(result.data[0] as IJwtPayload)) {
-      this.sharedService.handleSnackbars({
-        translationKey: 'login.authentication-success',
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-success' });
       this.router.navigate(['tasks']);
     } else {
-      this.sharedService.handleSnackbars({
-        translationKey: 'login.authentication-error',
-        error: true,
-      });
+      this.sharedService.handleSnackbars({ translationKey: 'login.authentication-error', error: true });
     }
   }
 
