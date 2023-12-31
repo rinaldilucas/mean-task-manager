@@ -30,25 +30,25 @@ export class CrudService<T> {
   }
 
   save(record: T): Observable<IQueryResult<T>> {
-    if ((record as any)['userId']) return this.update(record);
+    if ((record as any).userId) return this.update(record);
     else return this.create(record);
   }
 
   private create(record: T): Observable<IQueryResult<T>> {
     if (!this.sharedService.isUserType(record)) {
-      (record as any)['userId'] = this.authService.getUserId();
+      (record as any).userId = this.authService.getUserId();
     }
     return this.http.post<IQueryResult<T>>(this.endpoint, record).pipe(catchError(this.sharedService.errorHandler));
   }
 
   private update(record: T): Observable<IQueryResult<T>> {
-    const url = `${this.endpoint}/${(record as any)['_id']}`;
+    const url = `${this.endpoint}/${(record as any)._id}`;
 
     return this.http.put<IQueryResult<T>>(url, record).pipe(catchError(this.sharedService.errorHandler));
   }
 
   remove(record: T | string): Observable<IQueryResult<T>> {
-    const id = typeof record === 'string' ? record : (record as any)['_id'];
+    const id = typeof record === 'string' ? record : (record as any)._id;
     const url = `${this.endpoint}/${id}`;
 
     return this.http.delete<IQueryResult<T>>(url).pipe(catchError(this.sharedService.errorHandler));
