@@ -25,10 +25,10 @@ export class UserService extends CrudService<IUser> {
     return this.http.post<IQueryResult<IJwtPayload>>(url, credentials).pipe(catchError(this.sharedService.errorHandler));
   }
 
-  checkIfEmailExists(email: string): Observable<IQueryResult<IUser>> {
+  checkIfEmailExists(email: string): Observable<IQueryResult<{ emailExists: string }>> {
     const url = `${endpoint}/exists/${email}`;
 
-    return this.http.get<IQueryResult<IUser>>(url).pipe(catchError(this.sharedService.errorHandler));
+    return this.http.get<IQueryResult<{ emailExists: string }>>(url).pipe(catchError(this.sharedService.errorHandler));
   }
 
   changePassword(userId: string, password: string): Observable<IQueryResult<IUser>> {
