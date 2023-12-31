@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 import Redis from 'ioredis';
 import { promisify } from 'util';
 
+dotenv.config();
 class RedisService {
   private redisClient: Redis;
 
   constructor() {
-    dotenv.config();
-    this.redisClient = new Redis({ connectionName: process?.env?.REDIS_HOST as string });
+    this.redisClient = new Redis({ connectionName: process.env.REDIS_HOST as string });
   }
 
   private async redisSet(key: string, value: string, expiration: number): Promise<any> {
