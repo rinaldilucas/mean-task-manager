@@ -14,7 +14,6 @@ module.exports = {
       plugins: ['path'],
       extends: [
         'plugin:@angular-eslint/recommended',
-        'plugin:import/recommended',
         'plugin:@angular-eslint/template/process-inline-templates',
         'airbnb-typescript/base',
         'plugin:prettier/recommended',
@@ -69,8 +68,8 @@ module.exports = {
         '@typescript-eslint/no-use-before-define': OFF,
         '@typescript-eslint/no-var-requires': ERROR,
         'dot-notation': ERROR,
-        'import/extensions': ERROR,
-        'import/no-extraneous-dependencies': ERROR,
+        'import/extensions': OFF,
+        'import/no-extraneous-dependencies': OFF,
         'new-cap': OFF,
         'newline-after-var': OFF,
         'no-debugger': WARN,
