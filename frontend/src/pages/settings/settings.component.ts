@@ -90,10 +90,7 @@ export class SettingsComponent implements OnInit {
     this.sharedService.handleSnackbars({ translationKey: 'settings.category-remove-success' });
     const index = this.categories.indexOf(category);
     this.categories.splice(index, 1);
-    this.isProcessing = this.sharedService.handleLoading({
-      isLoading: false,
-      changeDetector: this.changeDetector,
-    });
+    this.isProcessing = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   updateTitle(): void {

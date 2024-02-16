@@ -30,7 +30,7 @@ export class CrudService<T> {
   }
 
   save(record: T): Observable<IQueryResult<T>> {
-    if ((record as any).userId) return this.update(record);
+    if ((record as any)._id) return this.update(record);
     else return this.create(record);
   }
 

@@ -156,18 +156,12 @@ export class TaskFormComponent extends Unsubscriber implements OnInit, AfterView
     }
 
     this.setAutoCompletes();
-    this.isLoading = this.sharedService.handleLoading({
-      isLoading: false,
-      changeDetector: this.changeDetector,
-    });
+    this.isLoading = this.sharedService.handleLoading({ isLoading: false, changeDetector: this.changeDetector });
   }
 
   async saveAsync(): Promise<void> {
     if (!this.sharedService.isValidForm(this.form)) return;
-    this.isLoading = this.sharedService.handleLoading({
-      isLoading: true,
-      changeDetector: this.changeDetector,
-    });
+    this.isLoading = this.sharedService.handleLoading({ isLoading: true, changeDetector: this.changeDetector });
 
     const task = { ...this.form.value } as ITask;
     task.status = this.isNew ? EStatus.toDo : task.status;
