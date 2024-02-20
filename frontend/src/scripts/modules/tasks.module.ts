@@ -23,7 +23,7 @@ import { ConvertDatePipe } from '@app/scripts/pipes/convert-date.pipe';
     FlexLayoutModule,
     AngularMaterialModule,
     TableVirtualScrollModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     CustomComponentsModule,
   ],
 })
