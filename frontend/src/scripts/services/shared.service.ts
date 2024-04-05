@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -14,6 +14,7 @@ import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { Observable, Subscription, lastValueFrom, take, throwError } from 'rxjs';
 
 import { IColumnsOptions } from '@app/scripts/models/columns-options.interface';
+import { IHandleLoading } from '@app/scripts/models/handle-loading.interface';
 import { ITask } from '@app/scripts/models/task.interface';
 import { IUser } from '@app/scripts/models/user.interface';
 
@@ -201,21 +202,26 @@ export class SharedService {
     }
   }
 
-  handleTitle(title: string): void {
+  handleTitle(translationKey: string): void {
+    const title = this.translateService.instant(translationKey);
     this.titleService.setTitle(`${title} — Task Manager`);
+    SharedService.subscriptions.push(
+      this.onTitleChange.pipe(take(1)).subscribe(() => {
+        // todo: test
+        this.titleService.setTitle(`${title} — Task Manager`);
+      }),
+    );
   }
 
-  handleLoading({
-    isLoading,
-    changeDetector,
-    detectChanges,
-  }: {
-    isLoading: boolean;
-    changeDetector: ChangeDetectorRef;
-    detectChanges?: boolean;
-  }): boolean {
-    if (!detectChanges) changeDetector.markForCheck();
-    else changeDetector.detectChanges();
+  handleLoading({ isLoading, changeDetector, detectChanges, bothDetections }: IHandleLoading): boolean {
+    if (bothDetections) {
+      changeDetector.markForCheck();
+      changeDetector.detectChanges();
+    } else if (detectChanges) {
+      changeDetector.detectChanges();
+    } else {
+      changeDetector.markForCheck();
+    }
 
     return isLoading;
   }

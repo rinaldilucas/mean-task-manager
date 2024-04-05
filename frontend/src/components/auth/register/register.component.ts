@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.register'));
+    this.sharedService.handleTitle('title.register');
   }
 
   async registerAsync(): Promise<void> {

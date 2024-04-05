@@ -16,6 +16,6 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.home'));
+    this.sharedService.handleTitle('title.home');
   }
 }

@@ -12,17 +12,13 @@ import { SharedService } from '@app/scripts/services/shared.service';
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class Unsubscriber implements OnDestroy {
   subs = new SubSink();
-  removeSubscriptionsFromService = false;
 
   ngOnDestroy(): void {
-    this.resetSubscriptions();
+    this.removeSubscriptions();
   }
 
-  resetSubscriptions(): void {
+  removeSubscriptions(): void {
     this.subs.unsubscribe();
-
-    if (this.removeSubscriptionsFromService) {
-      SharedService.removeSubscriptions();
-    }
+    SharedService.removeSubscriptions();
   }
 }

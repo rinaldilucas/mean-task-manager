@@ -41,7 +41,7 @@ export class LogInComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.login'));
+    this.sharedService.handleTitle('title.login');
 
     if (this.authService.getKeepUserLoggedIn()) {
       this.form.controls.keepUserLogged?.setValue(true);

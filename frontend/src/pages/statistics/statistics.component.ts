@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { ITask } from '@app/scripts/models/task.interface';
@@ -43,9 +42,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.statistics'));
-    this.sharedService.onTitleChange
-      .pipe(take(1))
-      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.statistics')));
+    this.sharedService.handleTitle('title.statistics');
   }
 }

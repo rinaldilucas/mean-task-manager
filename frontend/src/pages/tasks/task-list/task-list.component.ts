@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { take } from 'rxjs';
 
 import { ConfirmationDialogComponent } from '@app/components/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from '@app/components/shared/unsubscriber/unsubscriber.component';
@@ -64,7 +63,6 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
       pageSize: this.pageSize,
       pageSizeOptions: this.pageSizeOptions,
     });
-    this.removeSubscriptionsFromService = true;
 
     this.subs.sink = this.taskService.onTaskChange.subscribe(() => this.refreshAsync());
     this.subs.sink = this.sharedService.onTableColumnChange.subscribe(
@@ -212,10 +210,7 @@ export class TaskListComponent extends Unsubscriber implements OnInit {
   }
 
   updateTitle(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.tasks'));
-    this.sharedService.onTitleChange
-      .pipe(take(1))
-      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.tasks')));
+    this.sharedService.handleTitle('title.tasks');
   }
 
   async confirmDelete(task: ITask): Promise<void> {

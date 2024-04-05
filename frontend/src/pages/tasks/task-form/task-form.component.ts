@@ -31,7 +31,7 @@ import { TaskService } from '@app/scripts/services/task.service';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate, CanDeactivate<boolean> {
+export class TaskFormEntryComponent implements OnDeactivate, CanDeactivate<boolean> {
   isFormSubmitted = false;
   isFormDirty = false;
 
@@ -41,7 +41,8 @@ export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate
     private sharedService: SharedService,
     private matBottomSheet: MatBottomSheet,
   ) {
-    super();
+    this.sharedService.onFormSubmitChange.subscribe((res) => (this.isFormSubmitted = res));
+    this.sharedService.onFormDirtyChange.subscribe((res) => (this.isFormDirty = res));
     this.open();
   }
 
@@ -54,7 +55,7 @@ export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate
       disableClose: true,
     });
 
-    this.sharedService.handleTitle(this.translate.instant('title.tasks'));
+    this.sharedService.handleTitle('title.tasks');
   }
 
   async onDeactivate(): Promise<boolean> {
@@ -72,12 +73,7 @@ export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate
       },
     });
 
-    if (dialogRes) {
-      this.matBottomSheet.dismiss();
-      return true;
-    } else {
-      return false;
-    }
+    return dialogRes ? (this.matBottomSheet.dismiss(), true) : false;
   }
 
   @HostListener('window:beforeunload')
@@ -93,13 +89,11 @@ export class TaskFormEntryComponent extends Unsubscriber implements OnDeactivate
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormComponent extends Unsubscriber implements OnInit, AfterViewInit {
-  @ViewChild('category', { read: MatAutocompleteTrigger })
-  categoryTrigger!: MatAutocompleteTrigger;
+  @ViewChild('category', { read: MatAutocompleteTrigger }) categoryTrigger!: MatAutocompleteTrigger;
 
   title!: string;
   isLoading = true;
   form!: FormGroup;
-
   isNew = !this.bottomsheetData?.id;
   task!: ITask;
   categories!: ICategory[];

@@ -5,7 +5,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs';
 
 import { ICategory } from '@app/scripts/models/category.interface';
 import { ELanguage } from '@app/scripts/models/enums/language.enum';
@@ -94,10 +93,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.settings'));
-    this.sharedService.onTitleChange
-      .pipe(take(1))
-      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.settings')));
+    this.sharedService.handleTitle('title.settings');
   }
 
   changeLanguage(language: string): void {

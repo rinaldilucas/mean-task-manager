@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs/operators';
 
 import { IQueryResult } from '@app/scripts/models/query-result.interface';
 import { IUser } from '@app/scripts/models/user.interface';
@@ -56,10 +55,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateTitle(): void {
-    this.sharedService.handleTitle(this.translate.instant('title.profile'));
-    this.sharedService.onTitleChange
-      .pipe(take(1))
-      .subscribe(() => this.sharedService.handleTitle(this.translate.instant('title.profile')));
+    this.sharedService.handleTitle('title.profile');
   }
 
   togglePasswordVisibility(event: MouseEvent): void {
