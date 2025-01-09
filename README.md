@@ -15,7 +15,7 @@
   <h3 align="center">MEAN Stack Task Manager</h3>
 
   <p align="center">
-    Project built using Angular, NodeJS, Express.j and MongoDB<br> with Angular Material to jump start your studies!
+    A project built using Angular, NodeJS, Express.j, and MongoDB<br> with Angular Material to jump-start your studies!
     <br />
     <a href="https://github.com/rinaldilucas/mean-task-manager"><strong>Explore the docs »</strong></a>
     <br />
@@ -27,7 +27,7 @@
     <a href="#donations">Donate</a>       
   </p>
   <small>
-    * hosted on render.com free tier, so API need a little time to start after accessing
+    * hosted on render.com free tier, so API needs a little time to start after accessing
   </small>
   <br>
   <br>
@@ -71,47 +71,47 @@
 
 </div>
 
-I built this project to make a cool template for those who wants to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!
+I built this project to make a cool template for those who want to learn the MEAN stack. If this repository helped you, don't hesitate to leave a star!
 
 Here are some of the features:
 
 ### Backend
 
 - Node.js API written with TypeScript
-- Search, ordering and pagination integrate with frontend to shorten response sizes
+- Search, ordering, and pagination integrate with frontend to shorten response sizes
 - JWT implementation with refresh token using Redis and cookies on strict mode
 - Blacklist of access/refresh token
 - Password encryption using bcrypt with salt rounds
 - Authentication with brute force prevention using ExpressBrute
 - Error handling to maintain error readability
 - Backend (API) validation on controllers and routes using express-validator, which improves error readability using third-party software such as Insomnia and Postman
-- Database and model validation using mongoose
+- Database and model validation using Mongoose
 - API documentation using Swagger
-- ESlint rules focused on backend
-- Multiple scripts to facilitate development, builds and deployment
+- ESlint rules focused on the backend
+- Multiple scripts to facilitate development, builds, and deployment
 - Scripts to format, lint, debug, develop, build and deploy
 - And more
 
 ### Frontend
 
 - Multilingual features implemented in both the client-side and API responses
-- Examples of autocomplete, mat-chips, calendar, dialogs, bottomsheet and more
+- Examples of autocomplete, mat-chips, calendars, dialogs, bottom sheet and more
 - Routed bottom sheet example implemented using only one component
-- Virtual scrolling with pagination, ordering and search integrated with api to shorten response sizes
+- Virtual scrolling with pagination, ordering, and search integrated with API to shorten response sizes
 - Charts using chart.js library
 - Angular routing animations using dynamic params
 - Authentication and role guard
-- Deactivate guard to prevent the user of discarding changes
+- Deactivate the guard to prevent the user from discarding changes
 - Multiple examples of synchronous custom validators
-- Multiple handlers to ease the use of dialogs, bottomsheets, snackbars and more
+- Multiple handlers to ease the use of dialogs, bottom sheets, snack bars and more
 - Custom async validator to check already registered user
 - Registering using password techniques
 - Example using functional resolvers with loading on routes
-- Interceptor modules added to verify bearer token, errors, and headers language
+- Interceptor modules added to verify bearer tokens, errors, and headers language
 - Front-end validation on requests and inputs
 - Handler of promises and errors using destructuring
-- Improved http security using HttpParams
-- Unsubscriber component with subsink to facilitate the maneuvering of unsubscribes
+- Improved HTTP security using HttpParams
+- Unsubscriber component with sub sink to facilitate the maneuvering of unsubscribes
 - CRUD operations built using POO paradigms, allowing services to inherit its operations
 - Example of custom pipes to convert date to selected language
 - Example of custom directive to prevent form autofill
@@ -119,13 +119,13 @@ Here are some of the features:
 - SCSS algorithm which uses rem unit to maintain aspect ratio
 - Stylesheets written using BEM methodology
 - Custom SCSS structure to improve reusability
-- Material components are overwritten to support rem unit and improve mobile/table compatibility coding less
+- Material components are overwritten to support the rem unit and improve mobile/table compatibility coding less
 - Improved readability on media queries using include-media library
-- ESlint rules focused on frontend, like keyboard accessibility, ARIA, focus and accessible HTML
+- ESlint rules focused on the frontend, like keyboard accessibility, ARIA, focus and accessible HTML
 - Input validators with multilingual features added
-- Implementation of sass-lint which guarantees the order of css properties, maintaining the writing pattern and avoiding unnecessary code revisions
+- Implementation of sass-lint which guarantees the order of CSS properties, maintaining the writing pattern and avoiding unnecessary code revisions
 - Prettier rules implemented to improve code readability
-- Multiple scripts to facilitate development, builds and deployment
+- Multiple scripts to facilitate development builds and deployment
 - Custom folder structure organized by responsibility
 - Scripts to format, lint, debug, develop, build and deploy
 - And more
@@ -201,11 +201,11 @@ _More scripts at package.json_
    ```js
    ng serve
    ```
-4. Run angular, express and mongoDB as development mode
+4. Run angular, express, and MongoDB in development mode
    ```js
    yarn dev
    ```
-5. Deploy to github pages
+5. Deploy to GitHub pages
    ```js
    yarn deploy
    ```
@@ -217,7 +217,7 @@ _More scripts at package.json_
 
 ## Usage
 
-You can import the Insomnia routes via file `./backend/db/routes-collection.json` and import the mongodb collections via file `./backend/db/routes-collection`. <br>Below are the implemented routes: you also can view them inside `./backend/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
+You can import the Insomnia routes via file `./backend/db/routes-collection.json` and import the MongoDB collections via file `./backend/db/routes-collection`. <br>Below are the implemented routes: you also can view them inside `./backend/routes` folder or through the Swagger documentation at `http://localhost:3000/api-docs/`.
 
 ```js
 -------------------------------
@@ -257,7 +257,7 @@ You can import the Insomnia routes via file `./backend/db/routes-collection.json
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
@@ -298,7 +298,7 @@ Project Link: [https://github.com/rinaldilucas/mean-task-manager](https://github
 ## Donations
 
 If you feel that this project has helped you in any way, whether it's attracting clients or teaching you about the technologies used, feel free to make a donation.
-It helps me a lot to continue developing open source codes.
+It helps me a lot to continue developing open-source codes.
 
 - Metamask (USDT):
   ```sh
